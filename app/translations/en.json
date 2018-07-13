@@ -1,0 +1,19 @@
+{
+  "each.components.Footer.author.message": "Made by {author}.",
+  "each.components.Footer.license.message": "This project is licensed under the ...",
+  "each.components.Header.features": "Features",
+  "each.components.Header.home": "Home",
+  "each.components.Header.login": "Login",
+  "each.containers.FeaturePage.header": "Features",
+  "each.containers.FeaturePage.text.header": "Title",
+  "each.containers.FeaturePage.text.message": "Text.",
+  "each.containers.HomePage.start_project.header": "EACH",
+  "each.containers.HomePage.start_project.message": "Hello World!",
+  "each.containers.LoginPage.login": "LOGIN",
+  "each.containers.LoginPage.password": "PASSWORD",
+  "each.containers.LoginPage.signIn": "SIGN IN",
+  "each.containers.LoginPage.registration": "not registered yet?",
+  "each.containers.LocaleToggle.ru": "ru",
+  "each.containers.LocaleToggle.en": "en",
+  "each.containers.NotFoundPage.header": "Page not found."
+}

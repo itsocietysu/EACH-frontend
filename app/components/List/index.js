@@ -17,7 +17,6 @@ function List(props) {
     // Otherwise render a single component
     content = <ComponentToRender />;
   }
-
   return (
     <Wrapper>
       <Ul>{content}</Ul>

@@ -20,14 +20,10 @@ const makeSelectLoading = () =>
 const makeSelectError = () =>
   createSelector(selectGlobal, globalState => globalState.get('error'));
 
-const makeSelectCorrectLogin = () =>
-  createSelector(selectGlobal, globalState => globalState.get('correctLogin'));
-
 export {
   selectGlobal,
   makeSelectCurrentUser,
   makeSelectLoading,
   makeSelectError,
-  makeSelectCorrectLogin,
   makeSelectLocation,
 };

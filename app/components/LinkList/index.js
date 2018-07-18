@@ -1,17 +1,18 @@
 /*
  *
- * LinkToggle
+ * LinkList
  *
  */
 
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import LogoutButton from 'containers/LogoutButton';
 import LinkL from './Link';
 import Nav from './Nav';
 import Ul from './Ul';
 
-function LinkToggle(props) {
+function LinkList(props) {
   let content = <li>--</li>;
 
   // If we have items, render them
@@ -28,13 +29,14 @@ function LinkToggle(props) {
   return (
     <Nav>
       <Ul>{content}</Ul>
+      <LogoutButton />
     </Nav>
   );
 }
 
-LinkToggle.propTypes = {
+LinkList.propTypes = {
   values: PropTypes.array,
   messages: PropTypes.object,
 };
 
-export default LinkToggle;
+export default LinkList;

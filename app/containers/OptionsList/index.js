@@ -1,12 +1,12 @@
 /*
  *
- * OptionsToggle
+ * OptionsList
  *
  */
 /* eslint-disable react/prefer-stateless-function */
 import React from 'react';
 
-import LinkToggle from 'components/LinkToggle';
+import LinkList from 'components/LinkList';
 import Wrapper from './Wrapper';
 import messages from './messages';
 
@@ -16,7 +16,7 @@ class OptionsToggle extends React.PureComponent {
   render() {
     return (
       <Wrapper>
-        <LinkToggle values={appOptions} messages={messages} />
+        <LinkList values={appOptions} messages={messages} />
       </Wrapper>
     );
   }

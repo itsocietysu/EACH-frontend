@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /*
  * AppReducer
  *
@@ -12,14 +13,17 @@
 
 import { fromJS } from 'immutable';
 
-import { CHECK_LOGIN_SUCCESS, CHECK_LOGIN, CHECK_LOGIN_ERROR } from './constants';
+import {
+  CHECK_LOGIN_SUCCESS,
+  CHECK_LOGIN,
+  CHECK_LOGIN_ERROR,
+} from './constants';
 
 // The initial state of the App
-const initialState = fromJS({
+export const initialState = fromJS({
   loading: false,
   error: false,
-  currentUser: false,
-  correctLogin: false,
+  currentUser: 'A',
 });
 
 function appReducer(state = initialState, action) {
@@ -27,11 +31,9 @@ function appReducer(state = initialState, action) {
     case CHECK_LOGIN:
       return state
         .set('loading', true)
-        .set('error', false)
-        .set('correctLogin', false)
+        .set('error', false);
     case CHECK_LOGIN_SUCCESS:
       return state
-        .set('correctLogin', true)
         .set('loading', false)
         .set('currentUser', action.username);
     case CHECK_LOGIN_ERROR:

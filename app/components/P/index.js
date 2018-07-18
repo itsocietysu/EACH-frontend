@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 
-const H1 = styled.h1`
-  font-size: 2em;
-  margin-bottom: 0.25em;
+const P = styled.p`
   font-family: 'Book Antiqua', Palatino, 'Palatino Linotype', serif;
 `;
 
-export default H1;
+export default P;

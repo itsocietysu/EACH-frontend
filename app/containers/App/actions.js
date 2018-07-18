@@ -15,7 +15,11 @@
  *    }
  */
 
-import { CHECK_LOGIN, CHECK_LOGIN_SUCCESS, CHECK_LOGIN_ERROR } from './constants';
+import {
+  CHECK_LOGIN,
+  CHECK_LOGIN_SUCCESS,
+  CHECK_LOGIN_ERROR,
+} from './constants';
 
 /**
  * Check the login data, this action starts the request saga

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /*
  * LoginPage
  *
@@ -23,7 +24,7 @@ import CenteredSection from './CenteredSection';
 import Form from './Form';
 import Input from './Input';
 import Button from './Button';
-import Link from './Link';
+import LinkL from './Link';
 import messages from './messages';
 import { checkLogin } from '../App/actions';
 import { changeUsername, changePassword } from './actions';
@@ -84,9 +85,9 @@ export class LoginPage extends React.PureComponent {
                 </FormattedMessage>
               </label>
             </Form>
-            <Link to="/registration">
+            <LinkL to="/registration">
               <FormattedMessage {...messages.registration} />
-            </Link>
+            </LinkL>
           </CenteredSection>
         </div>
       </article>
@@ -124,7 +125,7 @@ const withConnect = connect(
 );
 
 const withReducer = injectReducer({ key: 'login', reducer });
-const withSaga = injectSaga({ key: 'home', saga });
+const withSaga = injectSaga({ key: 'login', saga });
 
 export default compose(
   withReducer,

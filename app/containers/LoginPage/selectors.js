@@ -1,5 +1,5 @@
 /**
- * Loginpage selectors
+ * LoginPage selectors
  */
 
 import { createSelector } from 'reselect';

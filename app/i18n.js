@@ -17,7 +17,7 @@ const ruTranslationMessages = require('./translations/ru.json');
 addLocaleData(enLocaleData);
 addLocaleData(ruLocaleData);
 
-const DEFAULT_LOCALE = 'en';
+const DEFAULT_LOCALE = 'ru';
 
 // prettier-ignore
 const appLocales = [

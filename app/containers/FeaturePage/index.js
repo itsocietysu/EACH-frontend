@@ -8,6 +8,7 @@ import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 
 import H1 from 'components/H1';
+import P from 'components/P';
 import messages from './messages';
 import List from './List';
 import ListItem from './ListItem';
@@ -26,10 +27,7 @@ export default class FeaturePage extends React.Component {
       <div>
         <Helmet>
           <title>Feature Page</title>
-          <meta
-            name="description"
-            content="Feature page of EACH application"
-          />
+          <meta name="description" content="Feature page of EACH application" />
         </Helmet>
         <H1>
           <FormattedMessage {...messages.header} />
@@ -39,9 +37,9 @@ export default class FeaturePage extends React.Component {
             <ListItemTitle>
               <FormattedMessage {...messages.textHeader} />
             </ListItemTitle>
-            <p>
+            <P>
               <FormattedMessage {...messages.textMessage} />
-            </p>
+            </P>
           </ListItem>
         </List>
       </div>

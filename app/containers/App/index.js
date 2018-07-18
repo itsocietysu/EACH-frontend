@@ -13,6 +13,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import HomePage from 'containers/HomePage/Loadable';
 import FeaturePage from 'containers/FeaturePage/Loadable';
+import MuseumsPage from 'containers/MuseumsPage/Loadable';
 import LoginPage from 'containers/LoginPage/Loadable';
 import RegistrationPage from 'containers/RegistrationPage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
@@ -32,11 +33,8 @@ const AppWrapper = styled.div`
 export default function App() {
   return (
     <AppWrapper>
-      <Helmet
-        titleTemplate="%s - EACH"
-        defaultTitle="EACH"
-      >
-        <meta name="description" content="A EACH application" />
+      <Helmet titleTemplate="%s - EACH" defaultTitle="EACH">
+        <meta name="description" content="An EACH application" />
       </Helmet>
       <Header />
       <Switch>
@@ -44,6 +42,7 @@ export default function App() {
         <Route path="/features" component={FeaturePage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/registration" component={RegistrationPage} />
+        <Route path="/museums" component={MuseumsPage} />
         <Route path="" component={NotFoundPage} />
       </Switch>
       <Footer />

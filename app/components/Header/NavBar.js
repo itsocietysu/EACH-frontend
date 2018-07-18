@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
 export default styled.div`
-  text-align: center;
+  overflow: hidden;
+  width: 1000%
+  text-align: left;
 `;

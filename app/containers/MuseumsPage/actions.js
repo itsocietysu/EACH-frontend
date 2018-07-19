@@ -36,7 +36,7 @@ export function loadMuseums() {
 export function museumsLoaded(museums) {
   return {
     type: LOAD_MUSEUMS_SUCCESS,
-    data: museums,
+    museums,
   };
 }
 

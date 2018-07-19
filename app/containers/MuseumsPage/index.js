@@ -39,9 +39,8 @@ export class MuseumsPage extends React.Component {
       error,
       data,
     };
-
     return (
-      <div>
+      <article>
         <Helmet>
           <title>Museums Page</title>
           <meta name="description" content="Museums page of EACH application" />
@@ -50,7 +49,7 @@ export class MuseumsPage extends React.Component {
           <FormattedMessage {...messages.header} />
         </H1>
         <MuseumsList {...dataListProps} />
-      </div>
+      </article>
     );
   }
 }

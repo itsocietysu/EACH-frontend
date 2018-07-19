@@ -1,7 +1,7 @@
 /**
- * MuseumListItem
+ * FeedListItem
  *
- * Item of list of museums
+ * Item of list of feeds
  */
 
 import React from 'react';
@@ -13,30 +13,30 @@ import P from 'components/P';
 import Img from './Img';
 import Wrapper from './Wrapper';
 
-export class MuseumListItem extends React.PureComponent {
+export class FeedListItem extends React.PureComponent {
   render() {
     const { item } = this.props;
 
-    // Put together the content of the museum
+    // Put together the content of the feed
     const content = (
       <Wrapper>
         <div style={{ display: 'flex' }}>
-          <Img src={item.image} alt={`Museum-${item.eid}`} />
-          <H2 style={{ display: 'block', marginLeft: '15px' }}>{item.name}</H2>
+          <Img src={item.image} alt={`Feed-${item.eid}`} />
+          <H2 style={{ display: 'block', marginLeft: '15px' }}>{item.title}</H2>
         </div>
         <div>
-          <P>{item.desc}</P>
+          <P>{item.text}</P>
         </div>
       </Wrapper>
     );
 
     // Render the content into a list item
-    return <ListItem key={`museum-list-item-${item.eid}`} item={content} />;
+    return <ListItem key={`feed-list-item-${item.eid}`} item={content} />;
   }
 }
 
-MuseumListItem.propTypes = {
+FeedListItem.propTypes = {
   item: PropTypes.object,
 };
 
-export default MuseumListItem;
+export default FeedListItem;

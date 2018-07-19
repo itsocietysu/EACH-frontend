@@ -15,6 +15,7 @@
   "each.containers.MuseumsPage.text.message": "Текст.",
   "each.containers.HomePage.start_project.header": "EACH",
   "each.containers.HomePage.start_project.message": "Привет мир!",
+  "each.containers.HomePage.feeds.header": "Новости",
   "each.containers.LoginButton.login": "Вход",
   "each.containers.LogoutButton.logout": "Выход",
   "each.containers.LocaleToggle.ru": "рус",

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /*
  * MuseumsReducer
  *
@@ -28,9 +29,13 @@ function museumsReducer(state = initialState, action) {
         .set('error', false)
         .set('data', false);
     case LOAD_MUSEUMS_SUCCESS:
-      return state.set('loading', false).set('data', action.data);
+      return state
+        .set('loading', false)
+        .set('data', action.museums);
     case LOAD_MUSEUMS_ERROR:
-      return state.set('error', action.error).set('loading', false);
+      return state
+        .set('error', action.error)
+        .set('loading', false);
     default:
       return state;
   }

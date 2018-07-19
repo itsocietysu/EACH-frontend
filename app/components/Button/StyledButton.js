@@ -1,9 +1,21 @@
 import styled from 'styled-components';
 
-import buttonStyles from './buttonStyles';
-
 const StyledButton = styled.button`
-  ${buttonStyles};
+  padding: 0.25em 2em;
+  margin: 0;
+  text-decoration: none;
+  cursor: pointer;
+  outline: 0;
+  font-family: 'Book Antiqua', Palatino, 'Palatino Linotype', serif;
+  font-weight: bold;
+  font-size: 16px;
+  color: rgb(66, 31, 25);
+  white-space: nowrap;
+
+  &:hover {
+    background: rgb(217, 146, 92);
+    color: #fff;
+  }
 `;
 
 export default StyledButton;

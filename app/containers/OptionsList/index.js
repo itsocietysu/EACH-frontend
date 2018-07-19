@@ -6,7 +6,7 @@
 /* eslint-disable react/prefer-stateless-function */
 import React from 'react';
 
-import LinkList from 'components/LinkList';
+import LinkList from 'containers/LinkList';
 import Wrapper from './Wrapper';
 import messages from './messages';
 

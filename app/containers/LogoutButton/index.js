@@ -1,4 +1,4 @@
-/* eslint-disable react/prefer-stateless-function,react/prop-types */
+/* eslint-disable react/prefer-stateless-function,react/prop-types,react/no-children-prop */
 /*
  * LogoutButton
  *
@@ -13,23 +13,21 @@ import { compose } from 'redux';
 import injectSaga from 'utils/injectSaga';
 import { withRouter } from 'react-router-dom';
 
-import Button from './Button';
+import Button from 'components/Button';
 import messages from './messages';
 import { checkLogin } from '../App/actions';
 import saga from './saga';
 
 class LogoutButton extends React.Component {
-  handleSubmit = () => {
-    this.props.onLogout();
-    this.props.history.push('/');
-  };
   render() {
     return (
-      <div>
-        <Button type="button" onClick={this.handleSubmit}>
-          <FormattedMessage {...messages.logout} />
-        </Button>
-      </div>
+      <Button
+        onClick={() => {
+          this.props.onLogout();
+          this.props.history.push(`/`);
+        }}
+        children={<FormattedMessage {...messages.logout} />}
+      />
     );
   }
 }

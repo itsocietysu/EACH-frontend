@@ -22,7 +22,8 @@ import {
 } from './selectors';
 import H1 from 'components/H1';
 import messages from './messages';
-import FeedsList from 'components/FeedsList';
+import DataList from 'components/DataList';
+import FeedsListItem from 'containers/FeedListItem';
 import { loadFeeds } from './actions';
 import reducer from './reducer';
 import saga from './saga';
@@ -39,6 +40,7 @@ export class HomePage extends React.PureComponent {
       loading,
       error,
       data,
+      component: FeedsListItem,
     };
     return (
       <article>
@@ -49,7 +51,7 @@ export class HomePage extends React.PureComponent {
         <H1>
           <FormattedMessage {...messages.feeds} />
         </H1>
-        <FeedsList {...dataListProps} />
+        <DataList {...dataListProps} />
       </article>
     );
   }

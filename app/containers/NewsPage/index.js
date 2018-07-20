@@ -20,6 +20,8 @@ import {
 } from 'containers/HomePage/selectors';
 import messages from './messages';
 import H1 from 'components/H1';
+import DataList from 'components/DataList';
+import NewsListItem from 'containers/NewsListItem';
 import { loadFeeds } from 'containers/HomePage/actions';
 // import reducer from './reducer';
 import saga from './saga';
@@ -35,6 +37,7 @@ export class NewsPage extends React.Component {
       loading,
       error,
       data,
+      component: NewsListItem,
     };
     return (
       <article>
@@ -45,6 +48,7 @@ export class NewsPage extends React.Component {
         <H1>
           <FormattedMessage {...messages.header} />
         </H1>
+        <DataList {...dataListProps} />
       </article>
     );
   }

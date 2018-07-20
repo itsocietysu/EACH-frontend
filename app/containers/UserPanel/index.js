@@ -22,7 +22,7 @@ function List(props) {
   if (props.show)
     return (
       <DivVisible>
-        <OptionsList />
+        <OptionsList username={props.username} />
       </DivVisible>
     );
   return (
@@ -42,7 +42,7 @@ class UserPanel extends React.Component {
             values={{ user: this.props.username }}
           />
         </Button>
-        <List show={this.props.show} />
+        <List show={this.props.show} username={this.props.username} />
       </div>
     );
   }

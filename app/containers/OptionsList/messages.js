@@ -10,8 +10,8 @@ export default defineMessages({
     id: 'each.containers.OptionsToggle.museums',
     defaultMessage: 'Museums',
   },
-  smth: {
-    id: 'each.containers.OptionsToggle.smth',
-    defaultMessage: 'Smth more',
+  editNews: {
+    id: 'each.containers.OptionsToggle.editNews',
+    defaultMessage: 'Edit news',
   },
 });

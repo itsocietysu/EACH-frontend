@@ -6,7 +6,7 @@ import { feedsLoaded, feedsLoadingError } from './actions';
 import request from 'utils/request';
 
 /**
- * Museums data load handler
+ * Feeds data load handler
  */
 export function* loadFeeds() {
   const requestURL = `http://each.itsociety.su:4201/each/feed/all`;

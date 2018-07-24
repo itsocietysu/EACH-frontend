@@ -9,7 +9,7 @@ import request from 'utils/request';
  * Museums data load handler
  */
 export function* loadMuseums() {
-  const requestURL = `http://each.itsociety.su:4201/each/all`;
+  const requestURL = `http://each.itsociety.su:4201/each/museum/all`;
   try {
     const museums = yield call(request, requestURL);
     let data = false;

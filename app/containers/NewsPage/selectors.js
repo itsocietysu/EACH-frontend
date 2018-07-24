@@ -1,3 +1,0 @@
-/**
- * NewsPage selectors
- */

@@ -10,4 +10,8 @@ export default defineMessages({
     id: 'each.containers.NewsPage.header',
     defaultMessage: 'Editing news',
   },
+  add: {
+    id: 'each.containers.NewsPage.add',
+    defaultMessage: 'Add news',
+  },
 });

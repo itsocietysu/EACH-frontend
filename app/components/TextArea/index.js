@@ -6,7 +6,11 @@ import TextArea from './TextArea';
 
 export default function createTextArea({ name, value, change, message, rows }) {
   return (
-    <div>
+    <div
+      style={{
+        fontFamily: '"Book Antiqua", Palatino, "Palatino Linotype", serif',
+      }}
+    >
       <FormattedMessage {...message} />
       <br />
       <TextArea

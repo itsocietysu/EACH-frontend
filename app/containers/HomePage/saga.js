@@ -14,17 +14,11 @@ export function* loadFeeds() {
     const feeds = yield call(request, requestURL);
     let data = false;
     if (feeds.length) {
-      const withImages = [feeds.length];
-      for (let i = 0; i < feeds.length; i += 1)
-        withImages[i] = yield call(
-          request,
-          `http://each.itsociety.su:4201/each/feed/${feeds[i].eid}`,
-        );
-      data = withImages.map(item => ({
-        eid: item[0].eid,
-        title: item[0].title,
-        text: item[0].text,
-        image: `http://${item[0].image[0].url}`,
+      data = feeds.map(item => ({
+        eid: item.eid,
+        title: item.title,
+        text: item.text,
+        image: `http://${item.image[0].url}`,
       }));
     }
     yield put(feedsLoaded(data));

@@ -10,10 +10,6 @@ import Popup from 'reactjs-popup';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { compose } from 'redux';
-
-import injectReducer from 'utils/injectReducer';
-import injectSaga from 'utils/injectSaga';
 
 import ListItem from 'components/ListItem';
 import H2 from 'components/H2';
@@ -23,10 +19,9 @@ import Button from 'components/Button';
 import Img from 'containers/FeedListItem/Img';
 import Wrapper from 'containers/FeedListItem/Wrapper';
 import Nav from 'containers/LinkList/Nav';
+import MsgBox from 'components/MsgBox';
+import { deleteData } from 'containers/NewsPage/actions';
 import messages from './messages';
-import { deleteData } from './actions';
-import reducer from './reducer';
-import saga from './saga';
 
 export class NewsListItem extends React.PureComponent {
   render() {
@@ -38,13 +33,18 @@ export class NewsListItem extends React.PureComponent {
         <Popup
           trigger={
             <img
-              src="https://vk.com/images/post_more.png?1"
-              alt=""
-              style={{ width: '3%', float: 'right', marginTop: '1em' }}
+              src="/feed_more.png"
+              alt="prop"
+              style={{
+                width: '3%',
+                float: 'right',
+                marginTop: '1em',
+                cursor: 'pointer',
+              }}
             />
           }
           closeOnDocumentClick
-          position="bottom center"
+          position="bottom right"
           arrowStyle={{
             border: '2px solid rgb(217, 146, 92)',
             borderLeft: 'none',
@@ -52,7 +52,7 @@ export class NewsListItem extends React.PureComponent {
           }}
           contentStyle={{
             boxShadow: 'none',
-            width: '150px',
+            width: '100px',
             padding: '0px',
             border: 'none',
           }}
@@ -65,9 +65,12 @@ export class NewsListItem extends React.PureComponent {
               item={item}
               mod="edit"
             />
-            <Button
-              children={<FormattedMessage {...messages.delete} />}
-              onClick={evt => this.props.onDelete(evt, item.eid)}
+            <MsgBox
+              trigger={
+                <Button children={<FormattedMessage {...messages.delete} />} />
+              }
+              onSubmit={() => this.props.onDelete(item.eid)}
+              message={messages.deleteMessage}
             />
           </Nav>
         </Popup>
@@ -98,10 +101,7 @@ NewsListItem.propTypes = {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onDelete: (evt, eid) => {
-      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      dispatch(deleteData(eid));
-    },
+    onDelete: eid => dispatch(deleteData(eid)),
   };
 }
 
@@ -110,11 +110,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'deleteNews', reducer });
-const withSaga = injectSaga({ key: 'deleteNews', saga });
-
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-)(NewsListItem);
+export default withConnect(NewsListItem);

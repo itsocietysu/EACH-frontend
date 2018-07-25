@@ -4,6 +4,8 @@
     "Проект лицензирован в соответсвии с ...",
   "each.components.Header.features": "Особенности",
   "each.components.Header.home": "Домой",
+  "each.components.MsgBox.yes": "Да",
+  "each.components.MsgBox.no": "Нет",
   "each.containers.UserPanel.user": "{user}",
   "each.containers.OptionsToggle.museums": "Музеи",
   "each.containers.OptionsToggle.editNews": "Редактировать новости",
@@ -26,6 +28,8 @@
   "each.containers.EditNews.confirm": "Подтвердить",
   "each.containers.NewsListItem.edit": "Изменить",
   "each.containers.NewsListItem.delete": "Удалить",
+  "each.containers.NewsListItem.deleteMessage":
+    "Вы уверены, что хотите удалить эту новость?",
   "each.containers.LoginButton.login": "Вход",
   "each.containers.LogoutButton.logout": "Выход",
   "each.containers.LocaleToggle.ru": "рус",

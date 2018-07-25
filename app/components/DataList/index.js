@@ -12,6 +12,7 @@ function DataList({ loading, error, data, component }) {
 
   if (error !== false) {
     const ErrorComponent = () => <ListItem item="Something went wrong" />;
+    console.error(error);
     return <List component={ErrorComponent} />;
   }
 

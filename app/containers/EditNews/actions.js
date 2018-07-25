@@ -52,9 +52,9 @@ export function changeText(text) {
 /**
  * Changes the input field of the form
  *
- * @param  {url} url The new text of the input field
+ * @param  {string} url The new text of the input field
  *
- * @param  {image} image The new text of the img field
+ * @param  {string} image The new text of the img field
  *
  * @return {object}    An action object with a type of CHANGE_URL
  */
@@ -69,9 +69,9 @@ export function changeUrl(url, image) {
 /**
  * Changes the input field of the form
  *
- * @param  {file} file The new text of the input field
+ * @param  {object} file The new file
  *
- * @param  {image} image The new text of the img field
+ * @param  {string} image The new text of the img field
  *
  * @return {object}    An action object with a type of CHANGE_FILE
  */
@@ -85,7 +85,7 @@ export function changeFile(file, image) {
 
 /**
  *
- * @param  {data} data
+ * @param  {object} data The new data of news
  *
  * @return {object}    An action object with a type of CHANGE_DATA
  */
@@ -98,7 +98,7 @@ export function changeData(data) {
 
 /**
  *
- * @param  {mod} mod
+ * @param  {string} mod The new mod of sending data
  *
  * @return {object}    An action object with a type of CHANGE_MOD
  */
@@ -121,11 +121,11 @@ export function sendData() {
 }
 
 /**
- * Dispatched when data is sended by the request saga
+ * Dispatched when data is sent by the request saga
  *
  * @return {object} An action object with a type of SEND_DATA_SUCCESS
  */
-export function dataSended() {
+export function dataSent() {
   return {
     type: SEND_DATA_SUCCESS,
   };

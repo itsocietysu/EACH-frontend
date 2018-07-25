@@ -1,5 +1,5 @@
 /*
- * NewsListItem Actions
+ * NewsPage Actions
  *
  * To add a new Action:
  * 1) Import your constant
@@ -18,7 +18,9 @@ import {
 /**
  * Delete data, this action starts the request saga
  *
- * @return {object} An action object with a type of DELETE_DATA
+ * @param  {number} eid The eid of feed that would to be deleted
+ *
+ * @return {object} An action object with a type of DELETE_DATA passeing the eid
  */
 export function deleteData(eid) {
   return {

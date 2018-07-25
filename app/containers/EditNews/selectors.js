@@ -28,7 +28,7 @@ const makeSelectText = () =>
     editNewsState.getIn(['newsData', 'text']),
   );
 
-const makeSelectData = () =>
+const makeSelectNewsData = () =>
   createSelector(selectEditNews, editNewsState =>
     editNewsState.get('newsData'),
   );
@@ -43,6 +43,6 @@ export {
   makeSelectFile,
   makeSelectTitle,
   makeSelectText,
-  makeSelectData,
+  makeSelectNewsData,
   makeSelectMod,
 };

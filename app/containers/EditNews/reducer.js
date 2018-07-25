@@ -43,7 +43,6 @@ function editNewsReducer(state = initialState, action) {
         .set('url', action.url)
         .setIn(['newsData', 'image'], action.image);
     case CHANGE_FILE:
-      console.log(action.file);
       return state
         .set('file', action.file)
         .set('url', '')

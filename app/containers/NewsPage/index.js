@@ -5,13 +5,13 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import Popup from 'reactjs-popup';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
+import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 import {
   makeSelectData,
@@ -24,8 +24,9 @@ import Nav from 'containers/LinkList/Nav';
 import H1 from 'components/H1';
 import DataList from 'components/DataList';
 import NewsListItem from 'containers/NewsListItem';
-import PopupEl from 'containers/EditNews';
+import Popup from 'containers/EditNews';
 import { loadFeeds } from 'containers/HomePage/actions';
+import reducer from './reducer';
 import saga from './saga';
 
 export class NewsPage extends React.Component {
@@ -46,51 +47,23 @@ export class NewsPage extends React.Component {
           <title>News Page</title>
           <meta name="description" content="News page of EACH application" />
         </Helmet>
-        <H1 style={{ float: 'left' }}>
+        <H1>
           <FormattedMessage {...messages.header} />
         </H1>
-        <Popup
-          trigger={
-            <img
-              src="https://vk.com/images/post_more.png?1"
-              alt=""
-              style={{
-                width: '3%',
-                float: 'left',
-                marginLeft: '3em',
-                marginTop: '3em',
-              }}
-            />
-          }
-          closeOnDocumentClick
-          position="bottom center"
-          arrowStyle={{
-            border: '2px solid rgb(217, 146, 92)',
-            borderLeft: 'none',
-            borderTop: 'none',
-          }}
-          contentStyle={{
-            boxShadow: 'none',
-            width: '150px',
-            padding: '0px',
-            border: 'none',
-          }}
-        >
-          <Nav>
-            <PopupEl
-              trigger={
-                <Button children={<FormattedMessage {...messages.add} />} />
-              }
-              item={{
-                eid: 'addNews',
-                image: '',
-                title: '',
-                text: '',
-              }}
-              mod="add"
-            />
-          </Nav>
-        </Popup>
+        <Nav>
+          <Popup
+            trigger={
+              <Button children={<FormattedMessage {...messages.add} />} />
+            }
+            item={{
+              eid: 'addNews',
+              image: '',
+              title: '',
+              text: '',
+            }}
+            mod="add"
+          />
+        </Nav>
         <DataList {...dataListProps} />
       </article>
     );
@@ -106,10 +79,7 @@ NewsPage.propTypes = {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    init: evt => {
-      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      dispatch(loadFeeds());
-    },
+    init: () => dispatch(loadFeeds()),
   };
 }
 
@@ -124,9 +94,11 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
+const withReducer = injectReducer({ key: 'news', reducer });
 const withSaga = injectSaga({ key: 'news', saga });
 
 export default compose(
+  withReducer,
   withSaga,
   withConnect,
 )(NewsPage);

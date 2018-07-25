@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 /*
- * NewsListItemReducer
+ * NewsPageReducer
  *
  * Example:
  * case YOUR_ACTION_CONSTANT:
@@ -16,7 +16,7 @@ import {
 } from './constants';
 
 export const initialState = fromJS({
-  eid: '0',
+  eid: 0,
   deleting: false,
   error: false,
 });
@@ -26,10 +26,12 @@ function deleteNewsReducer(state = initialState, action) {
     case DELETE_DATA:
       return state
         .set('eid', action.eid)
-        .set('sending', true)
+        .set('deleting', true)
         .set('error', false);
     case DELETE_DATA_SUCCESS:
-      return state.set('deleting', true);
+      return state
+        .set('deleting', false)
+        .set('eid', 0);
     case DELETE_DATA_ERROR:
       return state
         .set('deleting', false)

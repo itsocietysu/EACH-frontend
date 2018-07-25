@@ -4,6 +4,8 @@
     "This project is licensed under the ...",
   "each.components.Header.features": "Features",
   "each.components.Header.home": "Home",
+  "each.components.MsgBox.yes": "Yes",
+  "each.components.MsgBox.no": "No",
   "each.containers.UserPanel.user": "{user}",
   "each.containers.OptionsToggle.museums": "Museums",
   "each.containers.OptionsToggle.editNews": "Edit news",
@@ -26,6 +28,8 @@
   "each.containers.EditNews.confirm": "Confirm",
   "each.containers.NewsListItem.edit": "Edit",
   "each.containers.NewsListItem.delete": "Delete",
+  "each.containers.NewsListItem.deleteMessage":
+    "Are you sure that you want to delete this news?",
   "each.containers.LoginButton.login": "Login",
   "each.containers.LogoutButton.logout": "Logout",
   "each.containers.LocaleToggle.ru": "ru",

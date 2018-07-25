@@ -26,6 +26,10 @@ import LanguageProvider from 'containers/LanguageProvider';
 import '!file-loader?name=[name].[ext]!./images/favicon.ico';
 import 'file-loader?name=[name].[ext]!./.htaccess'; // eslint-disable-line import/extensions
 
+import '!file-loader?name=[name].[ext]!./images/feed_more.png';
+import '!file-loader?name=[name].[ext]!./images/border_top.PNG';
+import '!file-loader?name=[name].[ext]!./images/Photo.png';
+
 import configureStore from './configureStore';
 
 // Import i18n messages

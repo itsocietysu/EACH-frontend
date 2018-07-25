@@ -1,36 +1,44 @@
 /* eslint-disable import/first,no-param-reassign */
 import { select, call, put, takeLatest } from 'redux-saga/effects';
 import { SEND_DATA } from './constants';
-import { dataSended, dataSendingError } from './actions';
+import { dataSent, dataSendingError } from './actions';
 
 import request from 'utils/request';
-import { makeSelectData, makeSelectMod } from './selectors';
+import { makeSelectNewsData, makeSelectMod } from './selectors';
 
 /**
  * Feed data send handler
  */
 export function* sendFeed() {
   const mod = yield select(makeSelectMod());
-  const data = yield select(makeSelectData());
+  const newsData = yield select(makeSelectNewsData());
   const requestURL = `http://each.itsociety.su:4201/each/feed`;
+  if (
+    !newsData.get('title') ||
+    !newsData.get('text') ||
+    !newsData.get('image')
+  ) {
+    yield put(dataSendingError('Empty fields'));
+    return;
+  }
   const options = {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      id: data.get('eid'),
-      title: data.get('title'),
-      text: data.get('text'),
+      id: newsData.get('eid'),
+      title: newsData.get('title'),
+      text: newsData.get('text'),
       prop: {
-        image: data.get('image'),
+        image: newsData.get('image'),
       },
     }),
   };
   if (mod === 'edit') options.method = 'PUT';
   try {
     yield call(request, requestURL, options);
-    yield put(dataSended());
+    yield put(dataSent());
   } catch (err) {
     yield put(dataSendingError(err));
   }

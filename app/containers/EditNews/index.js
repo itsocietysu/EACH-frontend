@@ -1,4 +1,4 @@
-/* eslint-disable prettier/prettier,react/prefer-stateless-function */
+/* eslint-disable prettier/prettier,react/prefer-stateless-function,react/no-children-prop */
 import React from 'react';
 import Popup from 'reactjs-popup';
 import PropTypes from 'prop-types';
@@ -13,6 +13,9 @@ import Img from 'containers/FeedListItem/Img';
 import TextArea from 'components/TextArea';
 import LabelInput from 'components/LabelInput';
 import Button from 'containers/UserPanel/Button';
+import CenteredDiv from 'components/MsgBox/CenteredDiv';
+import Close from 'components/MsgBox/Cross';
+import BorderTopImage from 'components/MsgBox/Img';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 import {
@@ -28,20 +31,33 @@ import reducer from './reducer';
 import saga from './saga';
 
 class EditForm extends React.Component {
-  componentWillMount() {
-    this.props.init(this.props.item, this.props.mod);
-  }
   render() {
     return (
-      <Popup trigger={this.props.trigger} modal closeOnDocumentClick contentStyle={{ width: '50em' }}>
+      <Popup
+        trigger={this.props.trigger}
+        modal
+        closeOnDocumentClick
+        contentStyle={{
+          width: '40em',
+          padding: '0',
+          border: '1px solid rgb(217, 146, 92)',
+          borderRadius: '5px',
+        }}
+        onOpen={() => {this.props.init(this.props.item, this.props.mod)}}
+      >
         {close => (
-          <div>
-            <form style={{ textAlign: 'left' }}>
-              <div>
-                <Img src={`data:image/jpeg;base64,${this.props.image}`} alt={`Feed-${this.props.item.eid}`} />
+          <CenteredDiv>
+            <BorderTopImage />
+            <Close onClick={close} />
+            <form>
+              <div style={{ marginBottom: '0.5em' }}>
+                <Img src={this.props.image ? `data:image/jpeg;base64,${this.props.image}` : '/Photo.png'} alt={`Feed-${this.props.item.eid}`} />
+              </div>
+              <div style={{ marginBottom: '0.5em' }}>
                 <LabelInput id="urlNews" type="text" value={this.props.url} change={this.props.onChangeUrl} message={messages.url} />
-                <br />
-                <LabelInput id="fileNews" type="file" change={this.props.onChangeFile} message={messages.file} />
+              </div>
+              <div style={{ marginBottom: '0.5em' }}>
+                <LabelInput id="fileNews" type="file" change={this.props.onChangeFile} accept="image/*" message={messages.file} />
               </div>
               <TextArea
                 name={`title-${this.props.item.eid}`}
@@ -50,7 +66,6 @@ class EditForm extends React.Component {
                 rows="2"
                 change={this.props.onChangeTitle}
               />
-              <br />
               <TextArea
                 name={`text-${this.props.item.eid}`}
                 value={this.props.text}
@@ -59,13 +74,20 @@ class EditForm extends React.Component {
                 change={this.props.onChangeText}
               />
             </form>
-            <Button onClick={evt => {this.props.onSubmit(evt); close();}}>
-              <FormattedMessage {...messages.confirm} />
-            </Button>
-            <Button onClick={close}>
-              <FormattedMessage {...messages.close} />
-            </Button>
-          </div>
+            <div>
+              <Button
+                children={<FormattedMessage {...messages.confirm} />}
+                onClick={() => {
+                  this.props.onSubmit();
+                  close();
+                }}
+              />
+              <Button
+                children={<FormattedMessage {...messages.close} />}
+                onClick={close}
+              />
+            </div>
+          </CenteredDiv>
         )}
       </Popup>
     );
@@ -111,13 +133,15 @@ export function mapDispatchToProps(dispatch) {
     onChangeTitle: evt => dispatch(changeTitle(evt.target.value)),
     onChangeText: evt => dispatch(changeText(evt.target.value)),
     init: (item, mod) => {
-      console.log(item);
-      console.log(mod);
-      dispatch(changeData(item));
-      dispatch(changeMod(mod));
+      const url = item.image;
+      URL2Base64(item.image, res => {
+        dispatch(changeData(item));
+        dispatch(changeMod(mod));
+        if (mod === 'edit')
+          dispatch(changeUrl(url, res.replace(/^data:image\/(png|jpg|jpeg);base64,/, '')));
+      });
     },
-    onSubmit: evt => {
-      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
+    onSubmit: () => {
       dispatch(sendData());
     },
   };

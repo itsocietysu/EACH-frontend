@@ -14,17 +14,11 @@ export function* loadMuseums() {
     const museums = yield call(request, requestURL);
     let data = false;
     if (museums.length) {
-      const withImages = [museums.length];
-      for (let i = 0; i < museums.length; i += 1)
-        withImages[i] = yield call(
-          request,
-          `http://each.itsociety.su:4201/each/museum/${museums[i].eid}`,
-        );
-      data = withImages.map(item => ({
-        eid: item[0].eid,
-        name: item[0].name,
-        desc: item[0].desc,
-        image: `http://${item[0].image[0].url}`,
+      data = museums.map(item => ({
+        eid: item.eid,
+        name: item.name,
+        desc: item.desc,
+        image: `http://${item.image[0].url}`,
       }));
     }
     yield put(museumsLoaded(data));

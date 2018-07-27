@@ -8,6 +8,8 @@ import { makeSelectEid } from './selectors';
 
 import { LOAD_FEEDS } from 'containers/HomePage/constants';
 import { loadFeeds } from 'containers/HomePage/saga';
+import { makeSelectData } from 'containers/HomePage/selectors';
+import { feedsLoaded } from 'containers/HomePage/actions';
 
 /**
  * Feed data delete handler
@@ -21,6 +23,8 @@ export function* deleteFeed() {
   try {
     yield call(request, requestURL, options);
     yield put(dataDeleted());
+    const data = yield select(makeSelectData());
+    yield put(feedsLoaded(data.filter(element => element.eid !== eid)));
   } catch (err) {
     yield put(dataDeletingError(err));
     console.error(err);

@@ -1,10 +1,13 @@
-/* eslint-disable import/first,no-param-reassign */
+/* eslint-disable import/first */
 import { select, call, put, takeLatest } from 'redux-saga/effects';
 import { SEND_DATA } from './constants';
 import { dataSent, dataSendingError } from './actions';
 
 import request from 'utils/request';
 import { makeSelectNewsData, makeSelectMod } from './selectors';
+
+import { makeSelectData } from 'containers/HomePage/selectors';
+import { feedsLoaded } from 'containers/HomePage/actions';
 
 /**
  * Feed data send handler
@@ -37,7 +40,32 @@ export function* sendFeed() {
   };
   if (mod === 'edit') options.method = 'PUT';
   try {
-    yield call(request, requestURL, options);
+    const resp = yield call(request, requestURL, options);
+    const data = yield select(makeSelectData());
+    let newData = data;
+    if (mod === 'add') {
+      newData = data.concat([
+        {
+          eid: resp[0].eid,
+          title: resp[0].title,
+          text: resp[0].text,
+          image: `http://${resp[0].image[0].url}`,
+        },
+      ]);
+    } else {
+      newData = data.map(element => {
+        if (element.eid === resp[0].eid) {
+          return {
+            eid: resp[0].eid,
+            title: resp[0].title,
+            text: resp[0].text,
+            image: `http://${resp[0].image[0].url}`,
+          };
+        }
+        return element;
+      }, resp);
+    }
+    yield put(feedsLoaded(newData));
     yield put(dataSent());
   } catch (err) {
     yield put(dataSendingError(err));

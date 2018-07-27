@@ -18,6 +18,7 @@ import Close from 'components/MsgBox/Cross';
 import BorderTopImage from 'components/MsgBox/Img';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
+import { DAEMON } from 'utils/constants';
 import {
   makeSelectText,
   makeSelectTitle,
@@ -161,7 +162,7 @@ const withConnect = connect(
 );
 
 const withReducer = injectReducer({ key: 'editNews', reducer });
-const withSaga = injectSaga({ key: 'editNews', saga });
+const withSaga = injectSaga({ key: 'editNews', saga, mode: DAEMON });
 
 export default compose(
   withReducer,

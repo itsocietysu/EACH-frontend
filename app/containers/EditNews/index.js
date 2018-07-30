@@ -9,9 +9,8 @@ import { compose } from 'redux';
 
 import { URL2Base64, File2Base64 } from 'toBase64';
 
-import Img from 'containers/FeedListItem/Img';
 import TextArea from 'components/TextArea';
-import LabelInput from 'components/LabelInput';
+import LabelFile from 'components/LabelFile';
 import Button from 'containers/UserPanel/Button';
 import CenteredDiv from 'components/MsgBox/CenteredDiv';
 import Close from 'components/MsgBox/Cross';
@@ -22,11 +21,11 @@ import { DAEMON } from 'utils/constants';
 import {
   makeSelectText,
   makeSelectTitle,
-  makeSelectUrl,
   makeSelectFile,
   makeSelectImage,
 } from "./selectors";
 import messages from './messages';
+import Img from './Img';
 import { changeUrl, changeFile, changeTitle, changeText, changeData, changeMod, sendData } from "./actions";
 import reducer from './reducer';
 import saga from './saga';
@@ -55,10 +54,7 @@ class EditForm extends React.Component {
                 <Img src={this.props.image ? `data:image/jpeg;base64,${this.props.image}` : '/Photo.png'} alt={`Feed-${this.props.item.eid}`} />
               </div>
               <div style={{ marginBottom: '0.5em' }}>
-                <LabelInput id="urlNews" type="text" value={this.props.url} change={this.props.onChangeUrl} message={messages.url} />
-              </div>
-              <div style={{ marginBottom: '0.5em' }}>
-                <LabelInput id="fileNews" type="file" change={this.props.onChangeFile} accept="image/*" message={messages.file} />
+                <LabelFile id="fileNews" change={this.props.onChangeFile} accept="image/*" message={messages.file} value={this.props.file} />
               </div>
               <TextArea
                 name={`title-${this.props.item.eid}`}
@@ -101,7 +97,7 @@ EditForm.propTypes = {
   image: PropTypes.string,
   title: PropTypes.string,
   text: PropTypes.string,
-  url: PropTypes.string,
+  file: PropTypes.string,
   item: PropTypes.shape({
     eid: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     image: PropTypes.string,
@@ -119,27 +115,21 @@ EditForm.propTypes = {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onChangeUrl: evt => {
-      const url = evt.target.value;
-      URL2Base64(evt.target.value, res => {
-        dispatch(changeUrl(url, res.replace(/^data:image\/(png|jpg|jpeg);base64,/, '')));
-      });
-    },
     onChangeFile: evt => {
       const file = evt.target.files[0];
-      File2Base64(evt.target.files[0], res => {
-        dispatch(changeFile(file, res.replace(/^data:image\/(png|jpg|jpeg);base64,/, '')));
-      });
+      if (file)
+        File2Base64(evt.target.files[0], res => {
+          dispatch(changeFile(file.name.replace("C:\\fakepath\\", ''), res.replace(/^data:image\/(png|jpg|jpeg);base64,/, '')));
+        });
     },
     onChangeTitle: evt => dispatch(changeTitle(evt.target.value)),
     onChangeText: evt => dispatch(changeText(evt.target.value)),
     init: (item, mod) => {
-      const url = item.image;
       URL2Base64(item.image, res => {
         dispatch(changeData(item));
         dispatch(changeMod(mod));
         if (mod === 'edit')
-          dispatch(changeUrl(url, res.replace(/^data:image\/(png|jpg|jpeg);base64,/, '')));
+          dispatch(changeUrl(res.replace(/^data:image\/(png|jpg|jpeg);base64,/, '')));
       });
     },
     onSubmit: () => {
@@ -153,7 +143,6 @@ const mapStateToProps = createStructuredSelector({
   file: makeSelectFile(),
   title: makeSelectTitle(),
   text: makeSelectText(),
-  url: makeSelectUrl(),
 });
 
 const withConnect = connect(

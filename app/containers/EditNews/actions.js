@@ -52,16 +52,13 @@ export function changeText(text) {
 /**
  * Changes the input field of the form
  *
- * @param  {string} url The new text of the input field
- *
  * @param  {string} image The new text of the img field
  *
  * @return {object}    An action object with a type of CHANGE_URL
  */
-export function changeUrl(url, image) {
+export function changeUrl(image) {
   return {
     type: CHANGE_URL,
-    url,
     image,
   };
 }
@@ -69,7 +66,7 @@ export function changeUrl(url, image) {
 /**
  * Changes the input field of the form
  *
- * @param  {object} file The new file
+ * @param  {string} file The name of new file
  *
  * @param  {string} image The new text of the img field
  *

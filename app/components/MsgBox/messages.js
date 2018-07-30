@@ -1,7 +1,7 @@
 /*
- * EditNews Messages
+ * MsgBox Messages
  *
- * This contains all the text for the EditNews component.
+ * This contains all the text for the MsgBox component.
  */
 import { defineMessages } from 'react-intl';
 

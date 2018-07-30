@@ -6,10 +6,6 @@
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
-  url: {
-    id: 'each.containers.EditNews.url',
-    defaultMessage: 'URL',
-  },
   file: {
     id: 'each.containers.EditNews.file',
     defaultMessage: 'File',

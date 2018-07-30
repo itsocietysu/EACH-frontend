@@ -28,7 +28,6 @@ export const initialState = fromJS({
     title: '',
     text: '',
   },
-  url: '',
   file: '',
   mod: 'add',
   sending: false,
@@ -40,12 +39,10 @@ function editNewsReducer(state = initialState, action) {
     case CHANGE_URL:
       return state
         .set('file', '')
-        .set('url', action.url)
         .setIn(['newsData', 'image'], action.image);
     case CHANGE_FILE:
       return state
         .set('file', action.file)
-        .set('url', '')
         .setIn(['newsData', 'image'], action.image);
     case CHANGE_TITLE:
       return state.setIn(['newsData', 'title'], action.title);
@@ -57,7 +54,6 @@ function editNewsReducer(state = initialState, action) {
         .setIn(['newsData', 'image'], action.data.image)
         .setIn(['newsData', 'title'], action.data.title)
         .setIn(['newsData', 'text'], action.data.text)
-        .set('url', '')
         .set('file', '');
     case CHANGE_MOD:
       return state.set('mod', action.mod);

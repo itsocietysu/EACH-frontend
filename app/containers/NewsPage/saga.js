@@ -10,6 +10,7 @@ import { LOAD_FEEDS } from 'containers/HomePage/constants';
 import { loadFeeds } from 'containers/HomePage/saga';
 import { makeSelectData } from 'containers/HomePage/selectors';
 import { feedsLoaded } from 'containers/HomePage/actions';
+import { getSession } from 'cookieManager';
 
 /**
  * Feed data delete handler
@@ -19,6 +20,9 @@ export function* deleteFeed() {
   const requestURL = `http://each.itsociety.su:4201/each/feed/${eid}?hard=true`;
   const options = {
     method: 'DELETE',
+    headers: {
+      authorization: `Bearer ${getSession()}`,
+    },
   };
   try {
     yield call(request, requestURL, options);

@@ -8,6 +8,7 @@ import { makeSelectNewsData, makeSelectMod } from './selectors';
 
 import { makeSelectData } from 'containers/HomePage/selectors';
 import { feedsLoaded } from 'containers/HomePage/actions';
+import { getSession } from 'cookieManager';
 
 /**
  * Feed data send handler
@@ -27,6 +28,7 @@ export function* sendFeed() {
   const options = {
     method: 'POST',
     headers: {
+      authorization: `Bearer ${getSession()}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({

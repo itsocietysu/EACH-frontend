@@ -12,7 +12,10 @@ export default defineMessages({
   },
   startProjectMessage: {
     id: 'each.containers.HomePage.start_project.message',
-    defaultMessage:
-      'Hello World!',
+    defaultMessage: 'Hello World!',
+  },
+  feeds: {
+    id: 'each.containers.HomePage.feeds.header',
+    defaultMessage: 'Feeds',
   },
 });

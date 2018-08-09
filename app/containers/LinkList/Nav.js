@@ -13,4 +13,5 @@ export default styled.div`
   color: rgb(66, 31, 25);
   box-shadow: 0 0 10px rgb(217, 146, 92);
   text-align: center;
+  background: white;
 `;

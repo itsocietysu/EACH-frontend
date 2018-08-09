@@ -21,7 +21,8 @@ import {
 } from './selectors';
 import messages from './messages';
 import H1 from 'components/H1';
-import MuseumsList from 'components/MuseumsList';
+import DataList from 'components/DataList';
+import MuseumListItem from 'containers/MuseumListItem';
 import { loadMuseums } from './actions';
 import reducer from './reducer';
 import saga from './saga';
@@ -38,10 +39,10 @@ export class MuseumsPage extends React.Component {
       loading,
       error,
       data,
+      component: MuseumListItem,
     };
-
     return (
-      <div>
+      <article>
         <Helmet>
           <title>Museums Page</title>
           <meta name="description" content="Museums page of EACH application" />
@@ -49,8 +50,8 @@ export class MuseumsPage extends React.Component {
         <H1>
           <FormattedMessage {...messages.header} />
         </H1>
-        <MuseumsList {...dataListProps} />
-      </div>
+        <DataList {...dataListProps} />
+      </article>
     );
   }
 }

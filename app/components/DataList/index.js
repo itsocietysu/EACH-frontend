@@ -4,29 +4,30 @@ import PropTypes from 'prop-types';
 import List from 'components/List';
 import ListItem from 'components/ListItem';
 import LoadingIndicator from 'components/LoadingIndicator';
-import MuseumListItem from 'containers/MuseumListItem';
 
-function MuseumsList({ loading, error, data }) {
+function DataList({ loading, error, data, component }) {
   if (loading) {
     return <List component={LoadingIndicator} />;
   }
 
   if (error !== false) {
     const ErrorComponent = () => <ListItem item="Something went wrong" />;
+    console.error(error);
     return <List component={ErrorComponent} />;
   }
 
   if (data !== false) {
-    return <List items={data} component={MuseumListItem} />;
+    return <List items={data} component={component} />;
   }
 
   return null;
 }
 
-MuseumsList.propTypes = {
+DataList.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.any,
   data: PropTypes.any,
+  component: PropTypes.func.isRequired,
 };
 
-export default MuseumsList;
+export default DataList;

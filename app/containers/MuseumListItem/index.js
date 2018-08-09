@@ -21,7 +21,7 @@ export class MuseumListItem extends React.PureComponent {
     const content = (
       <Wrapper>
         <div style={{ display: 'flex' }}>
-          <Img icon={item.icon} alt={`Museum-${item.name}`} />
+          <Img src={item.image} alt={`Museum-${item.eid}`} />
           <H2 style={{ display: 'block', marginLeft: '15px' }}>{item.name}</H2>
         </div>
         <div>
@@ -31,7 +31,7 @@ export class MuseumListItem extends React.PureComponent {
     );
 
     // Render the content into a list item
-    return <ListItem key={`museum-list-item-${item.name}`} item={content} />;
+    return <ListItem key={`museum-list-item-${item.eid}`} item={content} />;
   }
 }
 

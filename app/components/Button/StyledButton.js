@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const StyledButton = styled.button`
-  padding: 0.25em 2em;
+  padding: 0.25em 0.5em;
   margin: 0;
   text-decoration: none;
   cursor: pointer;
@@ -10,7 +10,6 @@ const StyledButton = styled.button`
   font-weight: bold;
   font-size: 16px;
   color: rgb(66, 31, 25);
-  white-space: nowrap;
 
   &:hover {
     background: rgb(217, 146, 92);

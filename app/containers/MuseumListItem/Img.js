@@ -1,17 +1,10 @@
-/* eslint-disable react/prop-types */
 import NormalImg from 'components/Img';
+import styled from 'styled-components';
 
-import React from 'react';
-
-function Img(props) {
-  return (
-    // eslint-disable-next-line react/prop-types
-    <NormalImg
-      src={`data:image;base64,${props.icon}`}
-      alt={props.alt}
-      style={{ display: 'block' }}
-    />
-  );
-}
+const Img = styled(NormalImg)`
+  display: block;
+  width: 100%;
+  height: 100%;
+`;
 
 export default Img;

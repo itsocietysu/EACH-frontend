@@ -1,81 +1,47 @@
-/* eslint-disable import/first,react/prop-types,react/prefer-stateless-function */
+/* eslint-disable import/first,react/prop-types,react/prefer-stateless-function,jsx-a11y/no-static-element-interactions,jsx-a11y/click-events-have-key-events */
 import React from 'react';
-import PropTypes from 'prop-types';
+import Popup from 'reactjs-popup';
 import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { createStructuredSelector } from 'reselect';
 
-import injectReducer from 'utils/injectReducer';
-import injectSaga from 'utils/injectSaga';
 import Button from './Button';
 import messages from './messages';
-import DivVisible from './DivVisible';
-import DivHidden from './DivHidden';
 import OptionsList from 'containers/OptionsList';
-import { changeShow } from './actions';
-import { makeSelectShow } from './selectors';
-import reducer from './reducer';
-import saga from './saga';
-
-function List(props) {
-  if (props.show)
-    return (
-      <DivVisible>
-        <OptionsList username={props.username} />
-      </DivVisible>
-    );
-  return (
-    <DivHidden>
-      <OptionsList />
-    </DivHidden>
-  );
-}
 
 class UserPanel extends React.Component {
   render() {
     return (
       <div style={{ float: 'right', marginRight: '30px' }}>
-        <Button type="button" onClick={this.props.onChangeShow}>
-          <FormattedMessage
-            {...messages.user}
-            values={{ user: this.props.username }}
-          />
-        </Button>
-        <List show={this.props.show} username={this.props.username} />
+        <Popup
+          trigger={
+            <Button type="button">
+              <FormattedMessage
+                {...messages.user}
+                values={{ user: this.props.username }}
+              />
+            </Button>
+          }
+          closeOnDocumentClick
+          arrowStyle={{
+            border: '2px solid rgb(217, 146, 92)',
+            borderLeft: 'none',
+            borderTop: 'none',
+          }}
+          contentStyle={{
+            boxShadow: 'none',
+            width: '150px',
+            padding: '0px',
+            border: 'none',
+          }}
+        >
+          {close => (
+            <div style={{ textAlign: 'center' }} onClick={close}>
+              <OptionsList username={this.props.username} />
+            </div>
+          )}
+        </Popup>
       </div>
     );
   }
 }
 
-UserPanel.propTypes = {
-  show: PropTypes.bool,
-  onChangeShow: PropTypes.func,
-};
-
-export function mapDispatchToProps(dispatch) {
-  return {
-    onChangeShow: evt => {
-      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      dispatch(changeShow());
-    },
-  };
-}
-
-const mapStateToProps = createStructuredSelector({
-  show: makeSelectShow(),
-});
-
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
-
-const withReducer = injectReducer({ key: 'userPanel', reducer });
-const withSaga = injectSaga({ key: 'userPanel', saga });
-
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-)(UserPanel);
+export default UserPanel;

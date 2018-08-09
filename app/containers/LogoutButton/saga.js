@@ -2,7 +2,6 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import { CHECK_LOGIN } from 'containers/App/constants';
 import { loginChecked } from 'containers/App/actions';
-import { showChanged } from 'containers/UserPanel/actions';
 
 import { setLogined } from 'cookieManager';
 
@@ -11,7 +10,6 @@ import { setLogined } from 'cookieManager';
  */
 export function* logout() {
   yield put(loginChecked(''));
-  yield put(showChanged(false));
   setLogined(false);
 }
 

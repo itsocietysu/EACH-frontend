@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 
 import { getSession } from 'cookieManager';
 import oauth2Authorize from 'containers/AuthPage/oauth2-authorize';
-import { writeUsername, clearError, newError } from 'containers/App/actions';
+import { getUserData, clearError, newError } from 'containers/App/actions';
 import Button from './Button';
 import messages from './messages';
 
@@ -70,10 +70,7 @@ LoginButton.propTypes = {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onAuth: () => {
-      // todo: get username by user_id or token
-      dispatch(writeUsername('Admin'));
-    },
+    onAuth: () => dispatch(getUserData()),
     errCb: error => dispatch(newError(error)),
     clearErr: () => dispatch(clearError()),
   };

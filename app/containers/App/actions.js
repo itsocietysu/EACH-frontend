@@ -15,7 +15,12 @@
  *    }
  */
 
-import { WRITE_USERNAME, NEW_ERROR, CLEAR_ERROR } from './constants';
+import {
+  GET_USER_DATA,
+  GET_USER_DATA_SUCCESS,
+  NEW_ERROR,
+  CLEAR_ERROR,
+} from './constants';
 
 /**
  * @return {object} An action object with a type of CLEAR_ERROR
@@ -23,18 +28,6 @@ import { WRITE_USERNAME, NEW_ERROR, CLEAR_ERROR } from './constants';
 export function clearError() {
   return {
     type: CLEAR_ERROR,
-  };
-}
-
-/**
- * @param  {string} username The current username
- *
- * @return {object} An action object with a type of WRITE_USERNAME passing the login data
- */
-export function writeUsername(username) {
-  return {
-    type: WRITE_USERNAME,
-    username,
   };
 }
 
@@ -47,5 +40,30 @@ export function newError(error) {
   return {
     type: NEW_ERROR,
     error,
+  };
+}
+
+/**
+ * Get user data, this action starts the request saga
+ *
+ * @return {object} An action object with a type of GET_USER_DATA
+ */
+export function getUserData() {
+  return {
+    type: GET_USER_DATA,
+  };
+}
+
+/**
+ * Dispatched when user data is got by the request saga
+ *
+ * @param  {object} data The current user
+ *
+ * @return {object} An action object with a type of GET_USER_DATA_SUCCESS passing user data
+ */
+export function userdataGot(data) {
+  return {
+    type: GET_USER_DATA_SUCCESS,
+    data,
   };
 }

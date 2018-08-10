@@ -7,43 +7,62 @@ import { makeSelectCurrentUser } from 'containers/App/selectors';
 
 import { getLogined, getSession } from 'cookieManager';
 
+import injectSaga from 'utils/injectSaga';
 import LoginButton from 'containers/LoginButton';
 import UserPanel from 'containers/UserPanel';
-import { writeUsername } from 'containers/App/actions';
+import { getUserData } from 'containers/App/actions';
+import saga from 'containers/App/saga';
+import { compose } from 'redux';
 
 class UserButton extends React.Component {
   componentWillMount() {
-    // todo: get user's rights by user_id or token
-    if (getLogined() === 'true' && getSession() !== 'undefined')
+    if (
+      getLogined() === 'true' &&
+      getSession() !== 'undefined' &&
+      getSession() !== ''
+    )
       this.props.onAuth();
   }
   render() {
-    // todo: get user's rights by user_id or token
-    if (getLogined() === 'true' && getSession() !== 'undefined')
-      return <UserPanel username={this.props.username} />;
+    if (
+      getLogined() === 'true' &&
+      getSession() !== 'undefined' &&
+      getSession() !== '' &&
+      this.props.user.get('name') !== ''
+    )
+      return (
+        <UserPanel
+          username={this.props.user.get('name')}
+          accessType={this.props.user.get('accessType')}
+        />
+      );
     return <LoginButton />;
   }
 }
 
 UserButton.propTypes = {
-  username: PropTypes.string,
+  user: PropTypes.object,
   onAuth: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
-  username: makeSelectCurrentUser(),
+  user: makeSelectCurrentUser(),
 });
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onAuth: () => {
-      // todo: get username by user_id or token
-      dispatch(writeUsername('Admin'));
-    },
+    onAuth: () => dispatch(getUserData()),
   };
 }
 
-export default connect(
+const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
+);
+
+const withSaga = injectSaga({ key: 'user', saga });
+
+export default compose(
+  withSaga,
+  withConnect,
 )(UserButton);

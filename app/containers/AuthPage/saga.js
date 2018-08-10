@@ -61,7 +61,7 @@ export function* getToken() {
       code: qp.code,
       client_id: oauth2.auth.clientId,
       client_secret: oauth2.auth.clientSecret,
-      redirect_uri: oauth2.auth.oauth2RedirectUrl,
+      redirect_uri: oauth2.redirectUrl,
     };
     const options = {
       method: 'post',

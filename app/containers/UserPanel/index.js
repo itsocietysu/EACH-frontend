@@ -35,7 +35,7 @@ class UserPanel extends React.Component {
         >
           {close => (
             <div style={{ textAlign: 'center' }} onClick={close}>
-              <OptionsList username={this.props.username} />
+              <OptionsList accessType={this.props.accessType} />
             </div>
           )}
         </Popup>

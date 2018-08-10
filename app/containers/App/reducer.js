@@ -14,14 +14,19 @@
 import { fromJS } from 'immutable';
 
 import {
-  WRITE_USERNAME,
+  GET_USER_DATA,
+  GET_USER_DATA_SUCCESS,
   NEW_ERROR,
   CLEAR_ERROR,
 } from './constants';
 
 // The initial state of the App
 export const initialState = fromJS({
-  currentUser: 'A',
+  userData: {
+    name: '',
+    accessType: 'user',
+  },
+  loading: false,
   errors: [],
 });
 
@@ -30,8 +35,16 @@ function appReducer(state = initialState, action) {
   switch (action.type) {
     case CLEAR_ERROR:
       return state.set('errors', []);
-    case WRITE_USERNAME:
-      return state.set('currentUser', action.username);
+    case GET_USER_DATA:
+      return state
+        .setIn(['userData', 'name'], '')
+        .setIn(['userData', 'accessType'], 'user')
+        .set('loading', true);
+    case GET_USER_DATA_SUCCESS:
+      return state
+        .setIn(['userData', 'name'], action.data.name)
+        .setIn(['userData', 'accessType'], action.data.accessType)
+        .set('loading', false);
     case NEW_ERROR:
       return state.set('errors', errors.concat(action.error));
     default:

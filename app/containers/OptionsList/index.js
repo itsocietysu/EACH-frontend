@@ -18,7 +18,9 @@ class OptionsToggle extends React.PureComponent {
     return (
       <Wrapper>
         <LinkList
-          values={this.props.username === 'Admin' ? adminOptions : userOptions}
+          values={
+            this.props.accessType === 'admin' ? adminOptions : userOptions
+          }
           messages={messages}
         />
       </Wrapper>

@@ -12,7 +12,7 @@ const makeSelectLocation = () =>
 const selectGlobal = state => state.get('global');
 
 const makeSelectCurrentUser = () =>
-  createSelector(selectGlobal, globalState => globalState.get('currentUser'));
+  createSelector(selectGlobal, globalState => globalState.get('userData'));
 
 const makeSelectErrors = () =>
   createSelector(selectGlobal, globalState => globalState.get('errors'));

@@ -1,5 +1,5 @@
 /* eslint-disable no-buffer-constructor */
-import getConfigs from './configs';
+import configs from './configs';
 
 const btoa = str => {
   let buffer;
@@ -14,7 +14,6 @@ const btoa = str => {
 };
 
 export default function authorize(errCb) {
-  const configs = getConfigs();
   const query = [];
   query.push('response_type=code');
 
@@ -22,7 +21,7 @@ export default function authorize(errCb) {
     query.push(`client_id=${encodeURIComponent(configs.clientId)}`);
   }
 
-  const redirectUrl = configs.oauth2RedirectUrl;
+  const redirectUrl = window.location.origin + configs.oauth2RedirectUrl;
 
   if (typeof redirectUrl === 'undefined') {
     errCb({
@@ -50,8 +49,7 @@ export default function authorize(errCb) {
     configs.authorizationUrl.indexOf('?') === -1 ? '?' : '&',
   );
 
-  const auth = getConfigs();
-  window.eachRedirectOauth2 = { auth, state, errCb };
+  window.eachRedirectOauth2 = { auth: configs, state, errCb, redirectUrl };
 
   const authWindow = window.open(url);
   return authWindow;

@@ -20,7 +20,7 @@ import {
  *
  * @param  {number} eid The eid of feed that would to be deleted
  *
- * @return {object} An action object with a type of DELETE_DATA passeing the eid
+ * @return {object} An action object with a type of DELETE_DATA passing the eid
  */
 export function deleteData(eid) {
   return {

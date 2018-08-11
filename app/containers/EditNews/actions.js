@@ -24,7 +24,7 @@ import {
 /**
  * Changes the input field of the form
  *
- * @param  {title} title The new text of the input field
+ * @param  {string} title The new text of the input field
  *
  * @return {object}    An action object with a type of CHANGE_TITLE
  */
@@ -38,7 +38,7 @@ export function changeTitle(title) {
 /**
  * Changes the input field of the form
  *
- * @param  {text} text The new text of the input field
+ * @param  {string} text The new text of the input field
  *
  * @return {object}    An action object with a type of CHANGE_TEXT
  */

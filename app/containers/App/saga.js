@@ -4,7 +4,7 @@ import { GET_USER_DATA } from './constants';
 import { userdataGot, newError } from './actions';
 
 import request from 'utils/request';
-import { getSession } from 'cookieManager';
+import { getSession, setLogined } from 'cookieManager';
 
 /**
  * User data get handler
@@ -22,6 +22,7 @@ export function* getUser() {
     yield put(
       newError({ source: 'user', level: 'error', message: err.message }),
     );
+    setLogined(false);
   }
 }
 

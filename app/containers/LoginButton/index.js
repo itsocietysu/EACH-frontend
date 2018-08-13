@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 
-import { getSession } from 'cookieManager';
 import oauth2Authorize from 'containers/AuthPage/oauth2-authorize';
 import { getUserData, clearError, newError } from 'containers/App/actions';
 import Button from './Button';
@@ -39,12 +38,7 @@ export class LoginButton extends React.Component {
   };
 
   checkChildWindow() {
-    if (
-      this.state.authWindow &&
-      this.state.authWindow.closed &&
-      getSession() !== '' &&
-      getSession() !== 'undefined'
-    ) {
+    if (this.state.authWindow && this.state.authWindow.closed) {
       clearInterval(this.state.authTimer);
       this.setState({ authTimer: null, authWindow: null });
       this.props.onAuth();

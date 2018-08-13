@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { makeSelectCurrentUser } from 'containers/App/selectors';
 
-import { getLogined, getSession } from 'cookieManager';
+import { getLogined } from 'cookieManager';
 
 import injectSaga from 'utils/injectSaga';
 import LoginButton from 'containers/LoginButton';
@@ -16,20 +16,10 @@ import { compose } from 'redux';
 
 class UserButton extends React.Component {
   componentWillMount() {
-    if (
-      getLogined() === 'true' &&
-      getSession() !== 'undefined' &&
-      getSession() !== ''
-    )
-      this.props.onAuth();
+    if (getLogined() === 'true') this.props.onAuth();
   }
   render() {
-    if (
-      getLogined() === 'true' &&
-      getSession() !== 'undefined' &&
-      getSession() !== '' &&
-      this.props.user.get('name') !== ''
-    )
+    if (getLogined() === 'true' && this.props.user.get('name') !== '')
       return (
         <UserPanel
           username={this.props.user.get('name')}

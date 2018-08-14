@@ -16,46 +16,54 @@
  */
 
 import {
-  CHECK_LOGIN,
-  CHECK_LOGIN_SUCCESS,
-  CHECK_LOGIN_ERROR,
+  GET_USER_DATA,
+  GET_USER_DATA_SUCCESS,
+  NEW_ERROR,
+  CLEAR_ERROR,
 } from './constants';
 
 /**
- * Check the login data, this action starts the request saga
- *
- * @return {object} An action object with a type of CHECK_LOGIN
+ * @return {object} An action object with a type of CLEAR_ERROR
  */
-export function checkLogin() {
+export function clearError() {
   return {
-    type: CHECK_LOGIN,
+    type: CLEAR_ERROR,
   };
 }
 
 /**
- * Dispatched when the login data is checked by the request saga
- *
- * @param  {string} username The current username
- *
- * @return {object} An action object with a type of CHECK_LOGIN_SUCCESS passing the login data
- */
-export function loginChecked(username) {
-  return {
-    type: CHECK_LOGIN_SUCCESS,
-    username,
-  };
-}
-
-/**
- * Dispatched when checking login data fails
- *
  * @param  {object} error The error
  *
- * @return {object} An action object with a type of CHECK_LOGIN_ERROR passing the error
+ * @return {object} An action object with a type of NEW_ERROR passing the error
  */
-export function loginCheckingError(error) {
+export function newError(error) {
   return {
-    type: CHECK_LOGIN_ERROR,
+    type: NEW_ERROR,
     error,
+  };
+}
+
+/**
+ * Get user data, this action starts the request saga
+ *
+ * @return {object} An action object with a type of GET_USER_DATA
+ */
+export function getUserData() {
+  return {
+    type: GET_USER_DATA,
+  };
+}
+
+/**
+ * Dispatched when user data is got by the request saga
+ *
+ * @param  {object} data The current user
+ *
+ * @return {object} An action object with a type of GET_USER_DATA_SUCCESS passing user data
+ */
+export function userdataGot(data) {
+  return {
+    type: GET_USER_DATA_SUCCESS,
+    data,
   };
 }

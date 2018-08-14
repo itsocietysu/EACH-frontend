@@ -12,18 +12,14 @@ const makeSelectLocation = () =>
 const selectGlobal = state => state.get('global');
 
 const makeSelectCurrentUser = () =>
-  createSelector(selectGlobal, globalState => globalState.get('currentUser'));
+  createSelector(selectGlobal, globalState => globalState.get('userData'));
 
-const makeSelectLoading = () =>
-  createSelector(selectGlobal, globalState => globalState.get('loading'));
-
-const makeSelectError = () =>
-  createSelector(selectGlobal, globalState => globalState.get('error'));
+const makeSelectErrors = () =>
+  createSelector(selectGlobal, globalState => globalState.get('errors'));
 
 export {
   selectGlobal,
   makeSelectCurrentUser,
-  makeSelectLoading,
-  makeSelectError,
+  makeSelectErrors,
   makeSelectLocation,
 };

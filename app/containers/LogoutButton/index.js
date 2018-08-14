@@ -10,13 +10,12 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 
-import injectSaga from 'utils/injectSaga';
 import { withRouter } from 'react-router-dom';
+import { setSession, setLogined } from 'cookieManager';
 
 import Button from 'components/Button';
+import { userdataGot } from 'containers/App/actions';
 import messages from './messages';
-import { checkLogin } from '../App/actions';
-import saga from './saga';
 
 class LogoutButton extends React.Component {
   render() {
@@ -38,9 +37,10 @@ LogoutButton.propTypes = {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onLogout: evt => {
-      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      dispatch(checkLogin());
+    onLogout: () => {
+      setLogined(false);
+      setSession('');
+      dispatch(userdataGot({ name: '', accessType: 'user' }));
     },
   };
 }
@@ -50,10 +50,7 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withSaga = injectSaga({ key: 'logout', saga });
-
 export default compose(
-  withSaga,
   withConnect,
   withRouter,
 )(LogoutButton);

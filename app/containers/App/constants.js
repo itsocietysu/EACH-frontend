@@ -9,6 +9,7 @@
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
 
-export const CHECK_LOGIN = 'each/App/CHECK_LOGIN';
-export const CHECK_LOGIN_SUCCESS = 'each/App/CHECK_LOGIN_SUCCESS';
-export const CHECK_LOGIN_ERROR = 'each/App/CHECK_LOGIN_ERROR';
+export const GET_USER_DATA = 'each/App/GET_USER_DATA';
+export const GET_USER_DATA_SUCCESS = 'each/App/GET_USER_DATA_SUCCESS';
+export const NEW_ERROR = 'each/App/NEW_ERROR';
+export const CLEAR_ERROR = 'each/App/CLEAR_ERROR';

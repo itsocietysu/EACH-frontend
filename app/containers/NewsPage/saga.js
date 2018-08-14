@@ -3,7 +3,7 @@ import { select, call, put, takeLatest } from 'redux-saga/effects';
 import { DELETE_DATA } from './constants';
 import { dataDeleted, dataDeletingError } from './actions';
 
-import request from 'utils/request';
+import requestAuth from 'utils/requestAuth';
 import { makeSelectEid } from './selectors';
 
 import { LOAD_FEEDS } from 'containers/HomePage/constants';
@@ -21,7 +21,7 @@ export function* deleteFeed() {
     method: 'DELETE',
   };
   try {
-    yield call(request, requestURL, options);
+    yield call(requestAuth, requestURL, options);
     yield put(dataDeleted());
     const data = yield select(makeSelectData());
     yield put(feedsLoaded(data.filter(element => element.eid !== eid)));

@@ -14,12 +14,21 @@ export function* loadFeeds() {
     const feeds = yield call(request, requestURL);
     let data = false;
     if (feeds.length) {
-      data = feeds.map(item => ({
-        eid: item.eid,
-        title: item.title,
-        text: item.text,
-        image: `http://${item.image[0].url}`,
-      }));
+      data = feeds.map(item => {
+        if (item.image[0])
+          return {
+            eid: item.eid,
+            title: item.title,
+            text: item.text,
+            image: `http://${item.image[0].url}`,
+          };
+        return {
+          eid: item.eid,
+          title: item.title,
+          text: item.text,
+          image: `/Photo.png`,
+        };
+      });
     }
     yield put(feedsLoaded(data));
   } catch (err) {

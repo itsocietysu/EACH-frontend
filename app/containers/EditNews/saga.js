@@ -3,7 +3,7 @@ import { select, call, put, takeLatest } from 'redux-saga/effects';
 import { SEND_DATA } from './constants';
 import { dataSent, dataSendingError } from './actions';
 
-import request from 'utils/request';
+import requestAuth from 'utils/requestAuth';
 import { makeSelectNewsData, makeSelectMod } from './selectors';
 
 import { makeSelectData } from 'containers/HomePage/selectors';
@@ -40,7 +40,7 @@ export function* sendFeed() {
   };
   if (mod === 'edit') options.method = 'PUT';
   try {
-    const resp = yield call(request, requestURL, options);
+    const resp = yield call(requestAuth, requestURL, options);
     const data = yield select(makeSelectData());
     let newData = data;
     if (mod === 'add') {

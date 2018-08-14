@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-vars,react/prefer-stateless-function */
 /*
  * LoginButton
  *
@@ -8,20 +8,47 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { compose } from 'redux';
 
-import injectSaga from 'utils/injectSaga';
+import oauth2Authorize from 'containers/AuthPage/oauth2-authorize';
+import { getUserData, clearError, newError } from 'containers/App/actions';
 import Button from './Button';
 import messages from './messages';
-import { checkLogin } from '../App/actions';
-import saga from './saga';
 
-/* eslint-disable react/prefer-stateless-function */
 export class LoginButton extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      authTimer: null,
+      authWindow: null,
+    };
+  }
+
+  authorize = () => {
+    if (this.state.authTimer) {
+      clearInterval(this.state.authTimer);
+      this.setState({ authTimer: null, authWindow: null });
+    }
+    this.props.clearErr();
+    const authWindow = oauth2Authorize(this.props.errCb);
+    if (authWindow)
+      this.setState({
+        authTimer: setInterval(() => this.checkChildWindow(), 250),
+        authWindow,
+      });
+  };
+
+  checkChildWindow() {
+    if (this.state.authWindow && this.state.authWindow.closed) {
+      clearInterval(this.state.authTimer);
+      this.setState({ authTimer: null, authWindow: null });
+      this.props.onAuth();
+    }
+  }
+
   render() {
     return (
       <div style={{ float: 'right', marginRight: '30px' }}>
-        <Button type="button" onClick={this.props.onAuth}>
+        <Button type="button" onClick={this.authorize}>
           <FormattedMessage {...messages.login} />
         </Button>
       </div>
@@ -31,14 +58,15 @@ export class LoginButton extends React.Component {
 
 LoginButton.propTypes = {
   onAuth: PropTypes.func,
+  errCb: PropTypes.func,
+  clearErr: PropTypes.func,
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onAuth: evt => {
-      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      dispatch(checkLogin());
-    },
+    onAuth: () => dispatch(getUserData()),
+    errCb: error => dispatch(newError(error)),
+    clearErr: () => dispatch(clearError()),
   };
 }
 
@@ -47,9 +75,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withSaga = injectSaga({ key: 'login', saga });
-
-export default compose(
-  withSaga,
-  withConnect,
-)(LoginButton);
+export default withConnect(LoginButton);

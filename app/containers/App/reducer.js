@@ -14,32 +14,39 @@
 import { fromJS } from 'immutable';
 
 import {
-  CHECK_LOGIN_SUCCESS,
-  CHECK_LOGIN,
-  CHECK_LOGIN_ERROR,
+  GET_USER_DATA,
+  GET_USER_DATA_SUCCESS,
+  NEW_ERROR,
+  CLEAR_ERROR,
 } from './constants';
 
 // The initial state of the App
 export const initialState = fromJS({
+  userData: {
+    name: '',
+    accessType: 'user',
+  },
   loading: false,
-  error: false,
-  currentUser: 'A',
+  errors: [],
 });
 
 function appReducer(state = initialState, action) {
+  const errors = state.get('errors');
   switch (action.type) {
-    case CHECK_LOGIN:
+    case CLEAR_ERROR:
+      return state.set('errors', []);
+    case GET_USER_DATA:
       return state
-        .set('loading', true)
-        .set('error', false);
-    case CHECK_LOGIN_SUCCESS:
+        .setIn(['userData', 'name'], '')
+        .setIn(['userData', 'accessType'], 'user')
+        .set('loading', true);
+    case GET_USER_DATA_SUCCESS:
       return state
-        .set('loading', false)
-        .set('currentUser', action.username);
-    case CHECK_LOGIN_ERROR:
-      return state
-        .set('error', action.error)
+        .setIn(['userData', 'name'], action.data.name)
+        .setIn(['userData', 'accessType'], action.data.accessType)
         .set('loading', false);
+    case NEW_ERROR:
+      return state.set('errors', errors.concat(action.error));
     default:
       return state;
   }

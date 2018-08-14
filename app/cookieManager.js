@@ -9,3 +9,11 @@ export function setLogined(logined) {
 export function getLogined() {
   return cookies.get('logined');
 }
+
+export function setSession(session) {
+  cookies.set('session', session, { path: '/' });
+}
+
+export function getSession() {
+  return cookies.get('session');
+}

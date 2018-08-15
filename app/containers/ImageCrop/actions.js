@@ -9,7 +9,7 @@
  *    }
  */
 
-import { CHANGE_CROP, IMAGE_LOADED, SET_COMPLETE } from './constants';
+import { CHANGE_CROP, IMAGE_LOADED } from './constants';
 
 /**
  * Changes the crop of the image
@@ -44,19 +44,5 @@ export function imageLoaded(image, crop, pixelCrop, sizes) {
     crop,
     pixelCrop,
     sizes,
-  };
-}
-
-/**
- * Set the complete base64
- *
- * @param  {string} base64 The new base64 of complete image
- *
- * @return {object}    An action object with a type of SET_COMPLETE passing the image
- */
-export function setComplete(base64) {
-  return {
-    type: SET_COMPLETE,
-    base64,
   };
 }

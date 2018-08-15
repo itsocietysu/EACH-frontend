@@ -7,4 +7,3 @@
 
 export const CHANGE_CROP = 'each/ImageCrop/CHANGE_CROP';
 export const IMAGE_LOADED = 'each/ImageCrop/IMAGE_LOADED';
-export const SET_COMPLETE = 'each/ImageCrop/SET_COMPLETE';

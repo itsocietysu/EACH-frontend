@@ -20,11 +20,6 @@ const makeSelectImageElement = () =>
     imageCropState.get('image'),
   );
 
-const makeSelectBase64 = () =>
-  createSelector(selectImageCrop, imageCropState =>
-    imageCropState.get('complete'),
-  );
-
 const makeSelectSizes = () =>
   createSelector(selectImageCrop, imageCropState =>
     imageCropState.get('sizes'),
@@ -35,6 +30,5 @@ export {
   makeSelectCrop,
   makeSelectPixelCrop,
   makeSelectImageElement,
-  makeSelectBase64,
   makeSelectSizes,
 };

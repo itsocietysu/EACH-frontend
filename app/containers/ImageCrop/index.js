@@ -8,8 +8,6 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 
-import { File2Base64 } from 'toBase64';
-
 import injectReducer from 'utils/injectReducer';
 import { changeCrop, imageLoaded } from './actions';
 import { makeSelectCrop, makeSelectSizes } from './selectors';
@@ -29,15 +27,13 @@ export const bigImage = (base64, callback) => {
   };
 };
 
-export async function getCroppedImg(image, pixelCrop, callback) {
+export function getCroppedImg(image, pixelCrop) {
   if (
     pixelCrop.height < MIN_IMAGE_SIDE ||
     pixelCrop.width < MIN_IMAGE_SIDE ||
     pixelCrop.width !== pixelCrop.height
-  ) {
-    callback(null);
-    return;
-  }
+  )
+    return null;
   const canvas = document.createElement('canvas');
   canvas.width = pixelCrop.width;
   canvas.height = pixelCrop.height;
@@ -55,14 +51,8 @@ export async function getCroppedImg(image, pixelCrop, callback) {
     pixelCrop.height,
   );
 
-  const blob = await new Promise(resolve => {
-    canvas.toBlob(file => {
-      resolve(file);
-    }, 'image/jpeg');
-  });
-  File2Base64(blob, res =>
-    callback(res.replace(/^data:image\/(png|jpg|jpeg);base64,/, '')),
-  );
+  const base64 = canvas.toDataURL('image/jpeg');
+  return base64.replace(/^data:image\/jpeg;base64,/, '');
 }
 
 export class ImageCrop extends React.Component {

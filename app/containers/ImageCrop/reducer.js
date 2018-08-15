@@ -8,7 +8,7 @@
 
 import { fromJS } from 'immutable';
 
-import { CHANGE_CROP, IMAGE_LOADED, SET_COMPLETE } from './constants';
+import { CHANGE_CROP, IMAGE_LOADED } from './constants';
 
 export const initialState = fromJS({
   crop: {
@@ -31,7 +31,6 @@ export const initialState = fromJS({
     minHeight: 0,
   },
   image: null,
-  complete: null,
 });
 
 function imageCropReducer(state = initialState, action) {
@@ -44,8 +43,6 @@ function imageCropReducer(state = initialState, action) {
         .set('pixelCrop', action.pixelCrop)
         .set('sizes', action.sizes)
         .set('image', action.image);
-    case SET_COMPLETE:
-      return state.set('complete', action.base64);
     default:
       return state;
   }

@@ -71,6 +71,7 @@ export class NewsListItem extends React.PureComponent {
               }
               onSubmit={() => this.props.onDelete(item.eid)}
               message={messages.deleteMessage}
+              cancel
             />
           </Nav>
         </Popup>

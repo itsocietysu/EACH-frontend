@@ -10,38 +10,72 @@ import CenteredDiv from './CenteredDiv';
 import Close from './Cross';
 import Img from './Img';
 
-export default function MsgBox({ trigger, onSubmit, message }) {
+function Content({ onSubmit, message, cancel, close }) {
   return (
-    <Popup
-      trigger={trigger}
-      closeOnDocumentClick
-      modal
-      contentStyle={{
-        maxWidth: '30em',
-        padding: '0',
-        border: '1px solid rgb(217, 146, 92)',
-        borderRadius: '5px',
-      }}
-    >
+    <CenteredDiv>
+      <Img />
+      <Close onClick={close} />
+      <FormattedMessage {...message} />
+      <div>
+        <Button
+          onClick={() => {
+            onSubmit();
+            close();
+          }}
+          children={<FormattedMessage {...messages.yes} />}
+        />
+        {cancel && (
+          <Button
+            onClick={close}
+            children={<FormattedMessage {...messages.no} />}
+          />
+        )}
+      </div>
+    </CenteredDiv>
+  );
+}
+
+Content.propTypes = {
+  message: PropTypes.object,
+  onSubmit: PropTypes.func,
+  cancel: PropTypes.bool,
+  close: PropTypes.func,
+};
+
+export default function MsgBox({ trigger, onSubmit, message, cancel, open }) {
+  const contentStyle = {
+    maxWidth: '30em',
+    padding: '0',
+    border: '1px solid rgb(217, 146, 92)',
+    borderRadius: '5px',
+  };
+  if (trigger)
+    return (
+      <Popup
+        trigger={trigger}
+        closeOnDocumentClick
+        modal
+        contentStyle={contentStyle}
+      >
+        {close => (
+          <Content
+            close={close}
+            onSubmit={onSubmit}
+            cancel={cancel}
+            message={message}
+          />
+        )}
+      </Popup>
+    );
+  return (
+    <Popup open={open} closeOnDocumentClick modal contentStyle={contentStyle}>
       {close => (
-        <CenteredDiv>
-          <Img />
-          <Close onClick={close} />
-          <FormattedMessage {...message} />
-          <div>
-            <Button
-              onClick={() => {
-                close();
-                onSubmit();
-              }}
-              children={<FormattedMessage {...messages.yes} />}
-            />
-            <Button
-              onClick={close}
-              children={<FormattedMessage {...messages.no} />}
-            />
-          </div>
-        </CenteredDiv>
+        <Content
+          close={close}
+          onSubmit={onSubmit}
+          cancel={cancel}
+          message={message}
+        />
       )}
     </Popup>
   );
@@ -51,4 +85,6 @@ MsgBox.propTypes = {
   trigger: PropTypes.object,
   message: PropTypes.object,
   onSubmit: PropTypes.func,
+  cancel: PropTypes.bool,
+  open: PropTypes.bool,
 };

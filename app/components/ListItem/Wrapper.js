@@ -5,6 +5,7 @@ const Wrapper = styled.li`
   position: relative;
   border-top: 1px solid #eee;
   margin: 5px 0;
+  padding-top: 5px;
 
   &:first-child {
     border-top: none;

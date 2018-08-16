@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import Ul from './Ul';
 import Wrapper from './Wrapper';
+import UlNoScroll from './UlNoScroll';
+import WrapperNoScroll from './WrapperNoScroll';
 
 function List(props) {
   const ComponentToRender = props.component;
@@ -17,16 +19,23 @@ function List(props) {
     // Otherwise render a single component
     content = <ComponentToRender />;
   }
+  if (props.scroll)
+    return (
+      <Wrapper>
+        <Ul>{content}</Ul>
+      </Wrapper>
+    );
   return (
-    <Wrapper>
-      <Ul>{content}</Ul>
-    </Wrapper>
+    <WrapperNoScroll>
+      <UlNoScroll>{content}</UlNoScroll>
+    </WrapperNoScroll>
   );
 }
 
 List.propTypes = {
   component: PropTypes.func.isRequired,
   items: PropTypes.array,
+  scroll: PropTypes.bool,
 };
 
 export default List;

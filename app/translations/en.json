@@ -30,6 +30,7 @@
     "Selection area is small or not square. Change the selection area and try not to go beyond the image.",
   "each.containers.EditNews.imageSmall":
     "Small image. Minimum size is 256x256.",
+  "each.containers.EditNews.empty": "There are empty fields",
   "each.containers.NewsListItem.edit": "Edit",
   "each.containers.NewsListItem.delete": "Delete",
   "each.containers.NewsListItem.deleteMessage":

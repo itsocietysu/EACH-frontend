@@ -35,4 +35,8 @@ export default defineMessages({
     id: 'each.containers.EditNews.imageSmall',
     defaultMessage: 'Small image. Minimum size is 256x256.',
   },
+  empty: {
+    id: 'each.containers.EditNews.empty',
+    defaultMessage: 'There are empty fields',
+  },
 });

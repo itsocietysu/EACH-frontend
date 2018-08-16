@@ -113,12 +113,21 @@ class EditForm extends React.Component {
               <Button
                 children={<FormattedMessage {...messages.confirm} />}
                 onClick={() => {
-                  const base64 = getCroppedImg(this.props.imageByCrop, this.props.pixelCrop);
-                  if (base64 === null) {
-                    this.props.onChangeOpenMsg(messages.imageSize);
-                  } else {
-                    this.props.onSubmit(base64);
-                    close();
+                  if (
+                    !this.props.title ||
+                    !this.props.text ||
+                    !this.props.image ||
+                    !this.props.priority
+                  )
+                    this.props.onChangeOpenMsg(messages.empty);
+                  else {
+                    const base64 = getCroppedImg(this.props.imageByCrop, this.props.pixelCrop);
+                    if (base64 === null) {
+                      this.props.onChangeOpenMsg(messages.imageSize);
+                    } else {
+                      this.props.onSubmit(base64);
+                      close();
+                    }
                   }
                 }}
               />

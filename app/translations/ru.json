@@ -30,6 +30,7 @@
     "Выбранная область маленькая или не квадратная. Измените область выделения и постарайтесь не выходить за пределы изображения.",
   "each.containers.EditNews.imageSmall":
     "Маленькое изображение. Минимальный размер - 256x256.",
+  "each.containers.EditNews.empty": "Есть незаполненные поля",
   "each.containers.NewsListItem.edit": "Изменить",
   "each.containers.NewsListItem.delete": "Удалить",
   "each.containers.NewsListItem.deleteMessage":

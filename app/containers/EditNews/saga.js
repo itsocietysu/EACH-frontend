@@ -16,14 +16,6 @@ export function* sendFeed() {
   const mod = yield select(makeSelectMod());
   const newsData = yield select(makeSelectNewsData());
   const requestURL = `http://each.itsociety.su:4201/each/feed`;
-  if (
-    !newsData.get('title') ||
-    !newsData.get('text') ||
-    !newsData.get('image')
-  ) {
-    yield put(dataSendingError('Empty fields'));
-    return;
-  }
   const options = {
     method: 'POST',
     headers: {

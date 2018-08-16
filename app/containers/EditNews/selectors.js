@@ -22,6 +22,11 @@ const makeSelectText = () =>
     editNewsState.getIn(['newsData', 'text']),
   );
 
+const makeSelectPriority = () =>
+  createSelector(selectEditNews, editNewsState =>
+    editNewsState.getIn(['newsData', 'priority']),
+  );
+
 const makeSelectNewsData = () =>
   createSelector(selectEditNews, editNewsState =>
     editNewsState.get('newsData'),
@@ -43,6 +48,7 @@ export {
   makeSelectImage,
   makeSelectTitle,
   makeSelectText,
+  makeSelectPriority,
   makeSelectNewsData,
   makeSelectMod,
   makeSelectMessage,

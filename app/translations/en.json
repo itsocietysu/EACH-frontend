@@ -23,6 +23,7 @@
   "each.containers.NewsPage.add": "Add news",
   "each.containers.EditNews.title": "Title",
   "each.containers.EditNews.text": "Text",
+  "each.containers.EditNews.priority": "Priority",
   "each.containers.EditNews.close": "Close",
   "each.containers.EditNews.confirm": "Confirm",
   "each.containers.EditNews.imageSize":

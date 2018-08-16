@@ -23,6 +23,7 @@
   "each.containers.NewsPage.add": "Добавить новость",
   "each.containers.EditNews.title": "Заголовок",
   "each.containers.EditNews.text": "Текст",
+  "each.containers.EditNews.priority": "Приоритет",
   "each.containers.EditNews.close": "Закрыть",
   "each.containers.EditNews.confirm": "Подтвердить",
   "each.containers.EditNews.imageSize":

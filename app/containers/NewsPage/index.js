@@ -60,6 +60,7 @@ export class NewsPage extends React.Component {
               image: '',
               title: '',
               text: '',
+              priority: '',
             }}
             mod="add"
           />

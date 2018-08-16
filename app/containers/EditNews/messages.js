@@ -14,6 +14,10 @@ export default defineMessages({
     id: 'each.containers.EditNews.text',
     defaultMessage: 'Text',
   },
+  priority: {
+    id: 'each.containers.EditNews.priority',
+    defaultMessage: 'Priority',
+  },
   close: {
     id: 'each.containers.EditNews.close',
     defaultMessage: 'Close',

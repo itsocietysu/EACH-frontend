@@ -35,6 +35,7 @@ export function* sendFeed() {
       text: newsData.get('text'),
       prop: {
         image: newsData.get('image'),
+        priority: newsData.get('priority'),
       },
     }),
   };
@@ -50,6 +51,7 @@ export function* sendFeed() {
           title: resp[0].title,
           text: resp[0].text,
           image: `http://${resp[0].image[0].url}`,
+          priority: `${resp[0].priority[0]}`,
         },
       ]);
     } else {
@@ -60,6 +62,7 @@ export function* sendFeed() {
             title: resp[0].title,
             text: resp[0].text,
             image: `http://${resp[0].image[0].url}`,
+            priority: `${resp[0].priority[0]}`,
           };
         }
         return element;

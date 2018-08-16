@@ -13,6 +13,7 @@ import {
   CHANGE_TITLE,
   CHANGE_TEXT,
   CHANGE_IMAGE,
+  CHANGE_PRIORITY,
   CHANGE_DATA,
   CHANGE_OPEN_MSG,
   SEND_DATA,
@@ -59,6 +60,20 @@ export function changeImg(image) {
   return {
     type: CHANGE_IMAGE,
     image,
+  };
+}
+
+/**
+ * Changes the input field of the form
+ *
+ * @param  {string} priority The new text of the input field
+ *
+ * @return {object}    An action object with a type of CHANGE_PRIORITY passing the priority
+ */
+export function changePriority(priority) {
+  return {
+    type: CHANGE_PRIORITY,
+    priority,
   };
 }
 

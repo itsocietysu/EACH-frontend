@@ -14,6 +14,7 @@ import { makeSelectPixelCrop, makeSelectImageElement } from 'containers/ImageCro
 import MsgBox from 'components/MsgBox';
 import TextArea from 'components/TextArea';
 import LabelFile from 'components/LabelFile';
+import LabelInput from 'components/LabelInput';
 import Button from 'containers/UserPanel/Button';
 import CenteredDiv from 'components/MsgBox/CenteredDiv';
 import Close from 'components/MsgBox/Cross';
@@ -25,6 +26,7 @@ import {
   makeSelectText,
   makeSelectTitle,
   makeSelectImage,
+  makeSelectPriority,
   makeSelectMessage,
   makeSelectOpenMsg,
 } from './selectors';
@@ -34,6 +36,7 @@ import {
   changeImg,
   changeTitle,
   changeText,
+  changePriority,
   changeData,
   sendData,
   changeOpenMsg,
@@ -84,6 +87,13 @@ class EditForm extends React.Component {
               <div style={{ marginBottom: '0.5em' }}>
                 <LabelFile id="fileNews" change={this.props.onChangeFile} accept="image/*" />
               </div>
+              <LabelInput
+                id={`priority-${this.props.item.eid}`}
+                type="text"
+                value={this.props.priority}
+                change={this.props.onChangePriority}
+                message={messages.priority}
+              />
               <TextArea
                 name={`title-${this.props.item.eid}`}
                 value={this.props.title}
@@ -131,17 +141,20 @@ EditForm.propTypes = {
   image: PropTypes.string,
   title: PropTypes.string,
   text: PropTypes.string,
+  priority: PropTypes.string,
   item: PropTypes.shape({
     eid: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     image: PropTypes.string,
     title: PropTypes.string,
     text: PropTypes.string,
+    priority: PropTypes.string,
   }),
   mod: PropTypes.oneOf(['add', 'edit']),
   onChangeUrl: PropTypes.func,
   onChangeFile: PropTypes.func,
   onChangeTitle: PropTypes.func,
   onChangeText: PropTypes.func,
+  onChangePriority: PropTypes.func,
   init: PropTypes.func,
   onSubmit: PropTypes.func,
   isOpenMessage: PropTypes.bool,
@@ -164,6 +177,7 @@ export function mapDispatchToProps(dispatch) {
     },
     onChangeTitle: evt => dispatch(changeTitle(evt.target.value)),
     onChangeText: evt => dispatch(changeText(evt.target.value)),
+    onChangePriority: evt => dispatch(changePriority(evt.target.value)),
     init: (item, mod) => {
       if (item.image === '/Photo.png') {
         const i = {};
@@ -188,6 +202,7 @@ const mapStateToProps = createStructuredSelector({
   image: makeSelectImage(),
   title: makeSelectTitle(),
   text: makeSelectText(),
+  priority: makeSelectPriority(),
   message: makeSelectMessage(),
   isOpenMessage: makeSelectOpenMsg(),
   imageByCrop: makeSelectImageElement(),

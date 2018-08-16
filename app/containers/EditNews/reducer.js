@@ -13,6 +13,7 @@ import {
   CHANGE_TITLE,
   CHANGE_TEXT,
   CHANGE_IMAGE,
+  CHANGE_PRIORITY,
   CHANGE_DATA,
   CHANGE_OPEN_MSG,
   SEND_DATA,
@@ -26,6 +27,7 @@ export const initialState = fromJS({
     image: '',
     title: '',
     text: '',
+    priority: '',
   },
   mod: 'add',
   sending: false,
@@ -37,18 +39,20 @@ export const initialState = fromJS({
 function editNewsReducer(state = initialState, action) {
   switch (action.type) {
     case CHANGE_IMAGE:
-      return state
-        .setIn(['newsData', 'image'], action.image);
+      return state.setIn(['newsData', 'image'], action.image);
     case CHANGE_TITLE:
       return state.setIn(['newsData', 'title'], action.title);
     case CHANGE_TEXT:
       return state.setIn(['newsData', 'text'], action.text);
+    case CHANGE_PRIORITY:
+      return state.setIn(['newsData', 'priority'], action.priority);
     case CHANGE_DATA:
       return state
         .setIn(['newsData', 'eid'], action.data.eid)
         .setIn(['newsData', 'image'], action.data.image)
         .setIn(['newsData', 'title'], action.data.title)
         .setIn(['newsData', 'text'], action.data.text)
+        .setIn(['newsData', 'priority'], action.data.priority)
         .set('mod', action.mod);
     case CHANGE_OPEN_MSG:
       return state

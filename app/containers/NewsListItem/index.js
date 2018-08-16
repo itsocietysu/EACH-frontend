@@ -96,6 +96,7 @@ NewsListItem.propTypes = {
     image: PropTypes.string,
     title: PropTypes.string,
     text: PropTypes.string,
+    priority: PropTypes.string,
   }),
   onDelete: PropTypes.func,
 };

@@ -5,6 +5,13 @@ const TextArea = styled.textarea`
   border: 1px solid rgb(217, 146, 92);
   text-align: left;
   font-family: 'Book Antiqua', Palatino, 'Palatino Linotype', serif;
+  max-height: 6em;
+  @media screen and (max-width: 1280px) {
+    max-width: 50em;
+  }
+  @media screen and (max-width: 420px) {
+    max-width: 20em;
+  }
 `;
 
 export default TextArea;

@@ -25,7 +25,7 @@ export function loadFeeds() {
 /**
  * Dispatched when feeds data is loaded by the request saga
  *
- * @param  {array} feeds The current museums
+ * @param  {array} feeds The current feeds
  *
  * @return {object} An action object with a type of LOAD_FEEDS_SUCCESS passing feeds data
  */

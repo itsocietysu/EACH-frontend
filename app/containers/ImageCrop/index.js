@@ -15,7 +15,7 @@ import reducer from './reducer';
 
 const MIN_IMAGE_SIDE = 256;
 
-export const bigImage = (base64, callback) => {
+export const bigImage = (base64, callback, callbackSmall) => {
   const img = new Image();
   img.src = base64;
   img.onload = () => {
@@ -24,6 +24,7 @@ export const bigImage = (base64, callback) => {
       img.naturalWidth >= MIN_IMAGE_SIDE
     )
       callback();
+    else callbackSmall();
   };
 };
 

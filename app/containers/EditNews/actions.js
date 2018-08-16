@@ -12,10 +12,9 @@
 import {
   CHANGE_TITLE,
   CHANGE_TEXT,
-  CHANGE_URL,
-  CHANGE_FILE,
+  CHANGE_IMAGE,
   CHANGE_DATA,
-  CHANGE_MOD,
+  CHANGE_OPEN_MSG,
   SEND_DATA,
   SEND_DATA_SUCCESS,
   SEND_DATA_ERROR,
@@ -26,7 +25,7 @@ import {
  *
  * @param  {string} title The new text of the input field
  *
- * @return {object}    An action object with a type of CHANGE_TITLE
+ * @return {object}    An action object with a type of CHANGE_TITLE passing the title
  */
 export function changeTitle(title) {
   return {
@@ -40,7 +39,7 @@ export function changeTitle(title) {
  *
  * @param  {string} text The new text of the input field
  *
- * @return {object}    An action object with a type of CHANGE_TEXT
+ * @return {object}    An action object with a type of CHANGE_TEXT passing the text
  */
 export function changeText(text) {
   return {
@@ -52,56 +51,29 @@ export function changeText(text) {
 /**
  * Changes the input field of the form
  *
- * @param  {string} image The new text of the img field
+ * @param  {string} image The new base64 of the img field
  *
- * @return {object}    An action object with a type of CHANGE_URL
+ * @return {object}    An action object with a type of CHANGE_IMAGE passing the image
  */
-export function changeUrl(image) {
+export function changeImg(image) {
   return {
-    type: CHANGE_URL,
+    type: CHANGE_IMAGE,
     image,
   };
 }
 
 /**
- * Changes the input field of the form
- *
- * @param  {string} file The name of new file
- *
- * @param  {string} image The new text of the img field
- *
- * @return {object}    An action object with a type of CHANGE_FILE
- */
-export function changeFile(file, image) {
-  return {
-    type: CHANGE_FILE,
-    file,
-    image,
-  };
-}
-
-/**
+ * Dispatched when popup modal opens
  *
  * @param  {object} data The new data of news
+ * @param  {string} mod The new mod of sending data
  *
- * @return {object}    An action object with a type of CHANGE_DATA
+ * @return {object}    An action object with a type of CHANGE_DATA passing the data and mod
  */
-export function changeData(data) {
+export function changeData(data, mod) {
   return {
     type: CHANGE_DATA,
     data,
-  };
-}
-
-/**
- *
- * @param  {string} mod The new mod of sending data
- *
- * @return {object}    An action object with a type of CHANGE_MOD
- */
-export function changeMod(mod) {
-  return {
-    type: CHANGE_MOD,
     mod,
   };
 }
@@ -139,5 +111,19 @@ export function dataSendingError(error) {
   return {
     type: SEND_DATA_ERROR,
     error,
+  };
+}
+
+/**
+ * Dispatched when need open or close message box
+ *
+ * @param  {object} message The new message
+ *
+ * @return {object} An action object with a type of CHANGE_OPEN_MSG passing the message
+ */
+export function changeOpenMsg(message) {
+  return {
+    type: CHANGE_OPEN_MSG,
+    message,
   };
 }

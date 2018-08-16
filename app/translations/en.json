@@ -6,7 +6,6 @@
   "each.components.Header.home": "Home",
   "each.components.MsgBox.yes": "Yes",
   "each.components.MsgBox.no": "No",
-  "each.components.LabelFile.select": "Select",
   "each.components.LabelFile.selectFile": "Select File",
   "each.containers.UserPanel.user": "{user}",
   "each.containers.OptionsToggle.museums": "Museums",
@@ -22,11 +21,14 @@
   "each.containers.HomePage.feeds.header": "Feeds",
   "each.containers.NewsPage.header": "Editing news",
   "each.containers.NewsPage.add": "Add news",
-  "each.containers.EditNews.file": "File",
   "each.containers.EditNews.title": "Title",
   "each.containers.EditNews.text": "Text",
   "each.containers.EditNews.close": "Close",
   "each.containers.EditNews.confirm": "Confirm",
+  "each.containers.EditNews.imageSize":
+    "Selection area is small or not square. Change the selection area and try not to go beyond the image.",
+  "each.containers.EditNews.imageSmall":
+    "Small image. Minimum size is 256x256.",
   "each.containers.NewsListItem.edit": "Edit",
   "each.containers.NewsListItem.delete": "Delete",
   "each.containers.NewsListItem.deleteMessage":

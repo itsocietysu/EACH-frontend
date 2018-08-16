@@ -6,10 +6,6 @@
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
-  file: {
-    id: 'each.containers.EditNews.file',
-    defaultMessage: 'File',
-  },
   title: {
     id: 'each.containers.EditNews.title',
     defaultMessage: 'Title',
@@ -25,5 +21,14 @@ export default defineMessages({
   confirm: {
     id: 'each.containers.EditNews.confirm',
     defaultMessage: 'Confirm',
+  },
+  imageSize: {
+    id: 'each.containers.EditNews.imageSize',
+    defaultMessage:
+      'Selection area is small or not square. Change the selection area and try not to go beyond the image.',
+  },
+  imageSmall: {
+    id: 'each.containers.EditNews.imageSmall',
+    defaultMessage: 'Small image. Minimum size is 256x256.',
   },
 });

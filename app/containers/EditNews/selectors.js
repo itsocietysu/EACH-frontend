@@ -33,6 +33,14 @@ const makeSelectNewsData = () =>
 const makeSelectMod = () =>
   createSelector(selectEditNews, editNewsState => editNewsState.get('mod'));
 
+const makeSelectMessage = () =>
+  createSelector(selectEditNews, editNewsState => editNewsState.get('message'));
+
+const makeSelectOpenMsg = () =>
+  createSelector(selectEditNews, editNewsState =>
+    editNewsState.get('isOpenMsg'),
+  );
+
 export {
   selectEditNews,
   makeSelectImage,
@@ -41,4 +49,6 @@ export {
   makeSelectText,
   makeSelectNewsData,
   makeSelectMod,
+  makeSelectMessage,
+  makeSelectOpenMsg,
 };

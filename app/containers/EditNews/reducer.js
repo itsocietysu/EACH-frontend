@@ -12,10 +12,9 @@ import { fromJS } from 'immutable';
 import {
   CHANGE_TITLE,
   CHANGE_TEXT,
-  CHANGE_URL,
-  CHANGE_FILE,
+  CHANGE_IMAGE,
   CHANGE_DATA,
-  CHANGE_MOD,
+  CHANGE_OPEN_MSG,
   SEND_DATA,
   SEND_DATA_SUCCESS,
   SEND_DATA_ERROR,
@@ -28,21 +27,17 @@ export const initialState = fromJS({
     title: '',
     text: '',
   },
-  file: '',
   mod: 'add',
   sending: false,
   error: false,
+  isOpenMsg: false,
+  message: {},
 });
 
 function editNewsReducer(state = initialState, action) {
   switch (action.type) {
-    case CHANGE_URL:
+    case CHANGE_IMAGE:
       return state
-        .set('file', '')
-        .setIn(['newsData', 'image'], action.image);
-    case CHANGE_FILE:
-      return state
-        .set('file', action.file)
         .setIn(['newsData', 'image'], action.image);
     case CHANGE_TITLE:
       return state.setIn(['newsData', 'title'], action.title);
@@ -54,9 +49,11 @@ function editNewsReducer(state = initialState, action) {
         .setIn(['newsData', 'image'], action.data.image)
         .setIn(['newsData', 'title'], action.data.title)
         .setIn(['newsData', 'text'], action.data.text)
-        .set('file', '');
-    case CHANGE_MOD:
-      return state.set('mod', action.mod);
+        .set('mod', action.mod);
+    case CHANGE_OPEN_MSG:
+      return state
+        .set('isOpenMsg', !state.get('isOpenMsg'))
+        .set('message', action.message);
     case SEND_DATA:
       return state
         .set('sending', true)

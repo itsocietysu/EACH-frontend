@@ -14,4 +14,8 @@ export default defineMessages({
     id: 'each.containers.OptionsToggle.editNews',
     defaultMessage: 'Edit news',
   },
+  editMuseums: {
+    id: 'each.containers.OptionsToggle.editMuseums',
+    defaultMessage: 'Edit museums',
+  },
 });

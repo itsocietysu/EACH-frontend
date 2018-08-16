@@ -14,21 +14,14 @@ export function* loadMuseums() {
     const museums = yield call(requestAuth, requestURL);
     let data = false;
     if (museums.length) {
-      data = museums.map(item => {
-        if (item.image[0])
-          return {
-            eid: item.eid,
-            name: item.name,
-            desc: item.desc,
-            image: `http://${item.image[0].url}`,
-          };
-        return {
-          eid: item.eid,
-          name: item.name,
-          desc: item.desc,
-          image: `/Photo.png`,
-        };
-      });
+      data = museums.map(item => ({
+        eid: item.eid,
+        name: item.name,
+        desc: item.desc,
+        image: `${
+          item.image[0] ? `http://${item.image[0].url}` : '/Photo.png'
+        }`,
+      }));
     }
     yield put(museumsLoaded(data));
   } catch (err) {

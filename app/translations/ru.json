@@ -31,6 +31,18 @@
   "each.containers.EditNews.imageSmall":
     "Маленькое изображение. Минимальный размер - 256x256.",
   "each.containers.EditNews.empty": "Есть незаполненные поля",
+  "each.containers.EditForm.title": "Заголовок",
+  "each.containers.EditForm.text": "Текст",
+  "each.containers.EditForm.name": "Название",
+  "each.containers.EditForm.desc": "Описание",
+  "each.containers.EditForm.priority": "Приоритет",
+  "each.containers.EditForm.close": "Закрыть",
+  "each.containers.EditForm.confirm": "Подтвердить",
+  "each.containers.EditForm.imageSize":
+    "Выбранная область маленькая или не квадратная. Измените область выделения и постарайтесь не выходить за пределы изображения.",
+  "each.containers.EditForm.imageSmall":
+    "Маленькое изображение. Минимальный размер - 256x256.",
+  "each.containers.EditForm.empty": "Есть незаполненные поля",
   "each.containers.NewsListItem.edit": "Изменить",
   "each.containers.NewsListItem.delete": "Удалить",
   "each.containers.NewsListItem.deleteMessage":

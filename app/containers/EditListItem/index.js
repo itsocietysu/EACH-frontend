@@ -19,7 +19,7 @@ import Button from 'components/Button';
 import Img from 'containers/FeedListItem/Img';
 import DivLeft from 'containers/FeedListItem/DivLeft';
 import DivRight from 'containers/FeedListItem/DivRight';
-import Wrapper from 'containers/MuseumListItem/Wrapper';
+import Wrapper from 'containers/FeedListItem/Wrapper';
 import Nav from 'containers/LinkList/Nav';
 import MsgBox from 'components/MsgBox';
 import { deleteData as deleteMuseum } from 'containers/EditMuseumsPage/actions';

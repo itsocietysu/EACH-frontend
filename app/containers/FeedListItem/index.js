@@ -11,6 +11,8 @@ import ListItem from 'components/ListItem';
 import H2 from 'components/H2';
 import P from 'components/P';
 import Img from './Img';
+import DivLeft from './DivLeft';
+import DivRight from './DivRight';
 import Wrapper from './Wrapper';
 
 export class FeedListItem extends React.PureComponent {
@@ -21,11 +23,13 @@ export class FeedListItem extends React.PureComponent {
     const content = (
       <Wrapper>
         <div style={{ display: 'flex' }}>
-          <Img src={item.image} alt={`Feed-${item.eid}`} />
-          <H2 style={{ display: 'block', marginLeft: '15px' }}>{item.title}</H2>
-        </div>
-        <div>
-          <P>{item.text}</P>
+          <DivLeft>
+            <Img src={item.image} alt={`Feed-${item.eid}`} />
+          </DivLeft>
+          <DivRight>
+            <H2>{item.title}</H2>
+            <P>{item.text}</P>
+          </DivRight>
         </div>
       </Wrapper>
     );

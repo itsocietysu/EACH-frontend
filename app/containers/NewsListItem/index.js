@@ -17,6 +17,8 @@ import P from 'components/P';
 import PopupEl from 'containers/EditNews';
 import Button from 'components/Button';
 import Img from 'containers/FeedListItem/Img';
+import DivLeft from 'containers/FeedListItem/DivLeft';
+import DivRight from 'containers/FeedListItem/DivRight';
 import Wrapper from 'containers/FeedListItem/Wrapper';
 import Nav from 'containers/LinkList/Nav';
 import MsgBox from 'components/MsgBox';
@@ -76,8 +78,12 @@ export class NewsListItem extends React.PureComponent {
           </Nav>
         </Popup>
         <div style={{ display: 'flex' }}>
-          <Img src={item.image} alt={`News-${item.eid}`} />
-          <H2 style={{ display: 'block', marginLeft: '15px' }}>{item.title}</H2>
+          <DivLeft>
+            <Img src={item.image} alt={`News-${item.eid}`} />
+          </DivLeft>
+          <DivRight>
+            <H2>{item.title}</H2>
+          </DivRight>
         </div>
         <div>
           <P>{item.text}</P>

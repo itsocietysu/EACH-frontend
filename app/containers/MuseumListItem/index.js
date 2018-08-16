@@ -10,7 +10,9 @@ import PropTypes from 'prop-types';
 import ListItem from 'components/ListItem';
 import H2 from 'components/H2';
 import P from 'components/P';
-import Img from './Img';
+import Img from 'containers/FeedListItem/Img';
+import DivLeft from 'containers/FeedListItem/DivLeft';
+import DivRight from 'containers/FeedListItem/DivRight';
 import Wrapper from './Wrapper';
 
 export class MuseumListItem extends React.PureComponent {
@@ -21,8 +23,12 @@ export class MuseumListItem extends React.PureComponent {
     const content = (
       <Wrapper>
         <div style={{ display: 'flex' }}>
-          <Img src={item.image} alt={`Museum-${item.eid}`} />
-          <H2 style={{ display: 'block', marginLeft: '15px' }}>{item.name}</H2>
+          <DivLeft>
+            <Img src={item.image} alt={`Museum-${item.eid}`} />
+          </DivLeft>
+          <DivRight>
+            <H2>{item.name}</H2>
+          </DivRight>
         </div>
         <div>
           <P>{item.desc}</P>

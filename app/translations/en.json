@@ -47,6 +47,12 @@
   "each.containers.NewsListItem.delete": "Delete",
   "each.containers.NewsListItem.deleteMessage":
     "Are you sure that you want to delete this news?",
+  "each.containers.EditListItem.edit": "Edit",
+  "each.containers.EditListItem.delete": "Delete",
+  "each.containers.EditListItem.deleteFeed":
+    "Are you sure that you want to delete this news?",
+  "each.containers.EditListItem.deleteMuseum":
+    "Are you sure that you want to delete this museum?",
   "each.containers.LoginButton.login": "Login",
   "each.containers.LogoutButton.logout": "Logout",
   "each.containers.LocaleToggle.ru": "ru",

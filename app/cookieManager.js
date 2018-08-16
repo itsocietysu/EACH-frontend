@@ -11,9 +11,9 @@ export function getLogined() {
 }
 
 export function setSession(session) {
-  cookies.set('session', session, { path: '/' });
+  cookies.set('user_session', session, { path: '/' });
 }
 
 export function getSession() {
-  return cookies.get('session');
+  return cookies.get('user_session');
 }

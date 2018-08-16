@@ -55,6 +55,7 @@ const ImageCropStyle = {
   maxWidth: '256px',
   maxHeight: '256px',
   margin: 'auto',
+  backgroundColor: 'transparent',
 };
 
 class EditForm extends React.Component {

@@ -9,6 +9,9 @@ import { compose } from 'redux';
 
 import { URL2Base64, File2Base64 } from 'toBase64';
 
+import ImageCrop, { bigImage, getCroppedImg } from 'containers/ImageCrop';
+import { makeSelectPixelCrop, makeSelectImageElement } from 'containers/ImageCrop/selectors';
+import MsgBox from 'components/MsgBox';
 import TextArea from 'components/TextArea';
 import LabelFile from 'components/LabelFile';
 import Button from 'containers/UserPanel/Button';
@@ -21,14 +24,38 @@ import { DAEMON } from 'utils/constants';
 import {
   makeSelectText,
   makeSelectTitle,
-  makeSelectFile,
   makeSelectImage,
-} from "./selectors";
+  makeSelectMessage,
+  makeSelectOpenMsg,
+} from './selectors';
 import messages from './messages';
 import Img from './Img';
-import { changeUrl, changeFile, changeTitle, changeText, changeData, changeMod, sendData } from "./actions";
+import {
+  changeImg,
+  changeTitle,
+  changeText,
+  changeData,
+  sendData,
+  changeOpenMsg,
+} from './actions';
 import reducer from './reducer';
 import saga from './saga';
+
+const PopupStyle = {
+  width: '40em',
+  padding: '0',
+  border: '1px solid rgb(217, 146, 92)',
+  borderRadius: '5px',
+  maxHeight: '100%',
+  overflow: 'auto',
+};
+
+const ImageCropStyle = {
+  maxWidth: '256px',
+  maxHeight: '256px',
+  margin: 'auto',
+  backgroundColor: 'transparent',
+};
 
 class EditForm extends React.Component {
   render() {
@@ -37,12 +64,8 @@ class EditForm extends React.Component {
         trigger={this.props.trigger}
         modal
         closeOnDocumentClick
-        contentStyle={{
-          width: '40em',
-          padding: '0',
-          border: '1px solid rgb(217, 146, 92)',
-          borderRadius: '5px',
-        }}
+        lockScroll
+        contentStyle={PopupStyle}
         onOpen={() => {this.props.init(this.props.item, this.props.mod)}}
       >
         {close => (
@@ -51,10 +74,15 @@ class EditForm extends React.Component {
             <Close onClick={close} />
             <form>
               <div style={{ marginBottom: '0.5em' }}>
-                <Img src={this.props.image ? `data:image/jpeg;base64,${this.props.image}` : '/Photo.png'} alt={`Feed-${this.props.item.eid}`} />
+                {this.props.image ?
+                  <ImageCrop
+                    image={`data:image/jpeg;base64,${this.props.image}`}
+                    style={ImageCropStyle}/>
+                  : <Img src="/Photo.png" alt={`Feed-${this.props.item.eid}`}/>
+                }
               </div>
               <div style={{ marginBottom: '0.5em' }}>
-                <LabelFile id="fileNews" change={this.props.onChangeFile} accept="image/*" message={messages.file} value={this.props.file} />
+                <LabelFile id="fileNews" change={this.props.onChangeFile} accept="image/*" />
               </div>
               <TextArea
                 name={`title-${this.props.item.eid}`}
@@ -75,8 +103,13 @@ class EditForm extends React.Component {
               <Button
                 children={<FormattedMessage {...messages.confirm} />}
                 onClick={() => {
-                  this.props.onSubmit();
-                  close();
+                  const base64 = getCroppedImg(this.props.imageByCrop, this.props.pixelCrop);
+                  if (base64 === null) {
+                    this.props.onChangeOpenMsg(messages.imageSize);
+                  } else {
+                    this.props.onSubmit(base64);
+                    close();
+                  }
                 }}
               />
               <Button
@@ -84,6 +117,7 @@ class EditForm extends React.Component {
                 onClick={close}
               />
             </div>
+            <MsgBox message={this.props.message} open={this.props.isOpenMessage} onSubmit={this.props.onChangeOpenMsg}/>
           </CenteredDiv>
         )}
       </Popup>
@@ -97,7 +131,6 @@ EditForm.propTypes = {
   image: PropTypes.string,
   title: PropTypes.string,
   text: PropTypes.string,
-  file: PropTypes.string,
   item: PropTypes.shape({
     eid: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     image: PropTypes.string,
@@ -111,28 +144,41 @@ EditForm.propTypes = {
   onChangeText: PropTypes.func,
   init: PropTypes.func,
   onSubmit: PropTypes.func,
+  isOpenMessage: PropTypes.bool,
+  message: PropTypes.object,
+  onChangeOpenMsg: PropTypes.func,
+  imageByCrop: PropTypes.object,
+  pixelCrop: PropTypes.object,
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
     onChangeFile: evt => {
-      const file = evt.target.files[0];
-      if (file)
+      if (evt.target.files[0])
         File2Base64(evt.target.files[0], res => {
-          dispatch(changeFile(file.name.replace("C:\\fakepath\\", ''), res.replace(/^data:image\/(png|jpg|jpeg);base64,/, '')));
+          bigImage(res,
+            () => dispatch(changeImg(res.replace(/^data:image\/(png|jpg|jpeg);base64,/, ''))),
+            () => dispatch(changeOpenMsg(messages.imageSmall))
+          );
         });
     },
     onChangeTitle: evt => dispatch(changeTitle(evt.target.value)),
     onChangeText: evt => dispatch(changeText(evt.target.value)),
     init: (item, mod) => {
-      URL2Base64(item.image, res => {
-        dispatch(changeData(item));
-        dispatch(changeMod(mod));
-        if (mod === 'edit')
-          dispatch(changeUrl(res.replace(/^data:image\/(png|jpg|jpeg);base64,/, '')));
-      });
+      if (item.image === '/Photo.png') {
+        const i = {};
+        Object.keys(item).forEach(k => {if (k === 'image') i[k] = ''; else i[k] = item[k];});
+        dispatch(changeData(i, mod));
+      } else
+        URL2Base64(item.image, res => {
+          dispatch(changeData(item, mod));
+          if (mod === 'edit')
+            dispatch(changeImg(res.replace(/^data:image\/(png|jpg|jpeg);base64,/, '')));
+        });
     },
-    onSubmit: () => {
+    onChangeOpenMsg: message => dispatch(changeOpenMsg(message)),
+    onSubmit: base64 => {
+      dispatch(changeImg(base64));
       dispatch(sendData());
     },
   };
@@ -140,9 +186,12 @@ export function mapDispatchToProps(dispatch) {
 
 const mapStateToProps = createStructuredSelector({
   image: makeSelectImage(),
-  file: makeSelectFile(),
   title: makeSelectTitle(),
   text: makeSelectText(),
+  message: makeSelectMessage(),
+  isOpenMessage: makeSelectOpenMsg(),
+  imageByCrop: makeSelectImageElement(),
+  pixelCrop: makeSelectPixelCrop(),
 });
 
 const withConnect = connect(

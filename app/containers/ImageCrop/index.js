@@ -15,7 +15,7 @@ import reducer from './reducer';
 
 const MIN_IMAGE_SIDE = 256;
 
-export const bigImage = (base64, callback) => {
+export const bigImage = (base64, callback, callbackSmall) => {
   const img = new Image();
   img.src = base64;
   img.onload = () => {
@@ -24,6 +24,7 @@ export const bigImage = (base64, callback) => {
       img.naturalWidth >= MIN_IMAGE_SIDE
     )
       callback();
+    else callbackSmall();
   };
 };
 
@@ -58,7 +59,7 @@ export function getCroppedImg(image, pixelCrop) {
 export class ImageCrop extends React.Component {
   render() {
     return (
-      <div style={this.props.style}>
+      <div>
         {this.props.image && (
           <ReactCrop
             src={this.props.image}
@@ -71,6 +72,7 @@ export class ImageCrop extends React.Component {
             minWidth={this.props.sizes.minWidth}
             maxHeight={this.props.sizes.maxHeight}
             minHeight={this.props.sizes.minHeight}
+            style={this.props.style}
           />
         )}
       </div>

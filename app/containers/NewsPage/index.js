@@ -1,4 +1,4 @@
-/* eslint-disable import/first,react/no-children-prop,react/prefer-stateless-function */
+/* eslint-disable react/no-children-prop,react/prefer-stateless-function */
 /*
  * NewsPage
  *
@@ -18,14 +18,14 @@ import {
   makeSelectError,
   makeSelectLoading,
 } from 'containers/HomePage/selectors';
-import messages from './messages';
 import Button from 'components/Button';
 import Nav from 'containers/LinkList/Nav';
 import H1 from 'components/H1';
 import DataList from 'components/DataList';
-import NewsListItem from 'containers/NewsListItem';
-import Popup from 'containers/EditNews';
+import Popup from 'containers/EditForm';
 import { loadFeeds } from 'containers/HomePage/actions';
+import messages from './messages';
+import NewsListItem from './ListItem';
 import reducer from './reducer';
 import saga from './saga';
 
@@ -64,6 +64,7 @@ export class NewsPage extends React.Component {
               priority: '',
             }}
             mod="add"
+            Feed
           />
         </Nav>
         <DataList {...dataListProps} />

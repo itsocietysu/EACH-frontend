@@ -40,6 +40,7 @@ export class MuseumsPage extends React.Component {
       error,
       data,
       component: MuseumListItem,
+      scroll: true,
     };
     return (
       <article>

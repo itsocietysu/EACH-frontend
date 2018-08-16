@@ -41,6 +41,7 @@ export class HomePage extends React.PureComponent {
       error,
       data,
       component: FeedsListItem,
+      scroll: false,
     };
     return (
       <article>

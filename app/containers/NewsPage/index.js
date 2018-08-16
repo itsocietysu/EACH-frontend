@@ -40,6 +40,7 @@ export class NewsPage extends React.Component {
       error,
       data,
       component: NewsListItem,
+      scroll: true,
     };
     return (
       <article>

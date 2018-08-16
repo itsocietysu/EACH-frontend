@@ -21,16 +21,6 @@
   "each.containers.HomePage.feeds.header": "Feeds",
   "each.containers.NewsPage.header": "Editing news",
   "each.containers.NewsPage.add": "Add news",
-  "each.containers.EditNews.title": "Title",
-  "each.containers.EditNews.text": "Text",
-  "each.containers.EditNews.priority": "Priority",
-  "each.containers.EditNews.close": "Close",
-  "each.containers.EditNews.confirm": "Confirm",
-  "each.containers.EditNews.imageSize":
-    "Selection area is small or not square. Change the selection area and try not to go beyond the image.",
-  "each.containers.EditNews.imageSmall":
-    "Small image. Minimum size is 256x256.",
-  "each.containers.EditNews.empty": "There are empty fields",
   "each.containers.EditForm.title": "Title",
   "each.containers.EditForm.text": "Text",
   "each.containers.EditForm.name": "Name",
@@ -43,10 +33,6 @@
   "each.containers.EditForm.imageSmall":
     "Small image. Minimum size is 256x256.",
   "each.containers.EditForm.empty": "There are empty fields",
-  "each.containers.NewsListItem.edit": "Edit",
-  "each.containers.NewsListItem.delete": "Delete",
-  "each.containers.NewsListItem.deleteMessage":
-    "Are you sure that you want to delete this news?",
   "each.containers.EditListItem.edit": "Edit",
   "each.containers.EditListItem.delete": "Delete",
   "each.containers.EditListItem.deleteFeed":

@@ -21,16 +21,6 @@
   "each.containers.HomePage.feeds.header": "Новости",
   "each.containers.NewsPage.header": "Редактирование новостей",
   "each.containers.NewsPage.add": "Добавить новость",
-  "each.containers.EditNews.title": "Заголовок",
-  "each.containers.EditNews.text": "Текст",
-  "each.containers.EditNews.priority": "Приоритет",
-  "each.containers.EditNews.close": "Закрыть",
-  "each.containers.EditNews.confirm": "Подтвердить",
-  "each.containers.EditNews.imageSize":
-    "Выбранная область маленькая или не квадратная. Измените область выделения и постарайтесь не выходить за пределы изображения.",
-  "each.containers.EditNews.imageSmall":
-    "Маленькое изображение. Минимальный размер - 256x256.",
-  "each.containers.EditNews.empty": "Есть незаполненные поля",
   "each.containers.EditForm.title": "Заголовок",
   "each.containers.EditForm.text": "Текст",
   "each.containers.EditForm.name": "Название",
@@ -43,10 +33,6 @@
   "each.containers.EditForm.imageSmall":
     "Маленькое изображение. Минимальный размер - 256x256.",
   "each.containers.EditForm.empty": "Есть незаполненные поля",
-  "each.containers.NewsListItem.edit": "Изменить",
-  "each.containers.NewsListItem.delete": "Удалить",
-  "each.containers.NewsListItem.deleteMessage":
-    "Вы уверены, что хотите удалить эту новость?",
   "each.containers.EditListItem.edit": "Изменить",
   "each.containers.EditListItem.delete": "Удалить",
   "each.containers.EditListItem.deleteFeed":

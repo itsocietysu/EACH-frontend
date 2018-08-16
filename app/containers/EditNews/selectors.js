@@ -12,9 +12,6 @@ const makeSelectImage = () =>
     editNewsState.getIn(['newsData', 'image']),
   );
 
-const makeSelectFile = () =>
-  createSelector(selectEditNews, editNewsState => editNewsState.get('file'));
-
 const makeSelectTitle = () =>
   createSelector(selectEditNews, editNewsState =>
     editNewsState.getIn(['newsData', 'title']),
@@ -44,7 +41,6 @@ const makeSelectOpenMsg = () =>
 export {
   selectEditNews,
   makeSelectImage,
-  makeSelectFile,
   makeSelectTitle,
   makeSelectText,
   makeSelectNewsData,

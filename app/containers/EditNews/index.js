@@ -24,7 +24,6 @@ import { DAEMON } from 'utils/constants';
 import {
   makeSelectText,
   makeSelectTitle,
-  makeSelectFile,
   makeSelectImage,
   makeSelectMessage,
   makeSelectOpenMsg,
@@ -83,7 +82,7 @@ class EditForm extends React.Component {
                 }
               </div>
               <div style={{ marginBottom: '0.5em' }}>
-                <LabelFile id="fileNews" change={this.props.onChangeFile} accept="image/*" message={messages.file} value={this.props.file} />
+                <LabelFile id="fileNews" change={this.props.onChangeFile} accept="image/*" />
               </div>
               <TextArea
                 name={`title-${this.props.item.eid}`}
@@ -132,7 +131,6 @@ EditForm.propTypes = {
   image: PropTypes.string,
   title: PropTypes.string,
   text: PropTypes.string,
-  file: PropTypes.string,
   item: PropTypes.shape({
     eid: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     image: PropTypes.string,
@@ -188,7 +186,6 @@ export function mapDispatchToProps(dispatch) {
 
 const mapStateToProps = createStructuredSelector({
   image: makeSelectImage(),
-  file: makeSelectFile(),
   title: makeSelectTitle(),
   text: makeSelectText(),
   message: makeSelectMessage(),

@@ -1,4 +1,4 @@
-/* eslint-disable react/no-children-prop */
+/* eslint-disable react/no-children-prop,no-param-reassign */
 /**
  * EditListItem
  *
@@ -26,6 +26,26 @@ import { deleteData as deleteMuseum } from 'containers/EditMuseumsPage/actions';
 import { deleteData as deleteFeed } from 'containers/NewsPage/actions';
 import messages from './messages';
 
+const imgStyle = {
+  width: '3%',
+  float: 'right',
+  marginTop: '1em',
+  cursor: 'pointer',
+};
+
+const arrowStyle = {
+  border: '2px solid rgb(217, 146, 92)',
+  borderLeft: 'none',
+  borderTop: 'none',
+};
+
+const contentStyle = {
+  boxShadow: 'none',
+  maxWidth: '100px',
+  padding: '0px',
+  border: 'none',
+};
+
 const FeedSet = {
   content: 'Feed',
   messages: {
@@ -43,60 +63,24 @@ const MuseumSet = {
 export class EditListItem extends React.PureComponent {
   constructor(props) {
     super(props);
-    const { item } = this.props.item;
-    if (props.Feed) this.state = Object.assign(FeedSet, { item });
-    if (props.Museum) {
-      this.state = Object.assign(MuseumSet, {
-        item: {
-          eid: item.eid,
-          image: item.image,
-          title: item.name,
-          text: item.desc,
-          priority: '0',
-        },
-      });
-    }
-  }
-  componentWillUpdate(nextProps) {
-    const { item } = nextProps.item;
-    if (this.props.Feed) this.state.item = item;
-    if (this.props.Museum) {
-      this.state.item.title = item.name;
-      this.state.item.text = item.desc;
-      this.state.item.image = item.image;
-    }
+    if (props.Feed) this.state = FeedSet;
+    if (props.Museum) this.state = MuseumSet;
   }
   render() {
-    const { item } = this.state;
-
+    const { item } = this.props.item;
+    if (this.props.Museum) {
+      item.title = item.name;
+      item.text = item.desc;
+      item.priority = '0';
+    }
     const content = (
       <Wrapper>
         <Popup
-          trigger={
-            <img
-              src="/feed_more.png"
-              alt="prop"
-              style={{
-                width: '3%',
-                float: 'right',
-                marginTop: '1em',
-                cursor: 'pointer',
-              }}
-            />
-          }
+          trigger={<img src="/feed_more.png" alt="props" style={imgStyle} />}
           closeOnDocumentClick
           position="bottom right"
-          arrowStyle={{
-            border: '2px solid rgb(217, 146, 92)',
-            borderLeft: 'none',
-            borderTop: 'none',
-          }}
-          contentStyle={{
-            boxShadow: 'none',
-            maxWidth: '100px',
-            padding: '0px',
-            border: 'none',
-          }}
+          arrowStyle={arrowStyle}
+          contentStyle={contentStyle}
         >
           <Nav style={{ right: '0', position: 'absolute' }}>
             <PopupEl

@@ -24,9 +24,6 @@ import H1 from 'components/H1';
 import DataList from 'components/DataList';
 import Popup from 'containers/EditForm';
 import { loadMuseums } from 'containers/MuseumsPage/actions';
-import PageLayout from 'components/PageLayout';
-import Header from 'components/Header';
-import Footer from 'components/Footer';
 import EditMuseumListItem from './ListItem';
 import messages from './messages';
 import reducer from './reducer';
@@ -106,16 +103,8 @@ const withConnect = connect(
 const withReducer = injectReducer({ key: 'deleteMuseum', reducer });
 const withSaga = injectSaga({ key: 'deleteMuseum', saga });
 
-export default function() {
-  return (
-    <PageLayout
-      header={Header}
-      component={compose(
-        withReducer,
-        withSaga,
-        withConnect,
-      )(EditMuseumsPage)}
-      footer={Footer}
-    />
-  );
-}
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect,
+)(EditMuseumsPage);

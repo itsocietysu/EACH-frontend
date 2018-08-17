@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /**
  *
  * App
@@ -9,7 +10,9 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
+
+import { getLogined, getSession } from 'cookieManager';
 
 import HomePage from 'containers/HomePage/Loadable';
 import FeaturePage from 'containers/FeaturePage/Loadable';
@@ -31,6 +34,19 @@ const AppWrapper = styled.div`
   background-color: white;
 `;
 
+const AuthRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={() =>
+      getLogined() === 'true' && getSession() ? (
+        <Component />
+      ) : (
+        <Redirect to="/" />
+      )
+    }
+  />
+);
+
 export default function App() {
   return (
     <AppWrapper>
@@ -41,9 +57,9 @@ export default function App() {
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/features" component={FeaturePage} />
-        <Route path="/museums" component={MuseumsPage} />
-        <Route path="/editNews" component={NewsPage} />
-        <Route path="/editMuseums" component={EditMuseumsPage} />
+        <AuthRoute path="/museums" component={MuseumsPage} />
+        <AuthRoute path="/editNews" component={NewsPage} />
+        <AuthRoute path="/editMuseums" component={EditMuseumsPage} />
         <Route path="/auth" component={AuthPage} />
         <Route path="" component={NotFoundPage} />
       </Switch>

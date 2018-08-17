@@ -14,9 +14,15 @@ import { connect } from 'react-redux';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 import LoadingIndicator from 'components/LoadingIndicator';
+import PageLayout from 'components/PageLayout';
+import P from 'components/P';
 import { getToken } from './actions';
 import reducer from './reducer';
 import saga from './saga';
+
+const PStyle = {
+  textAlign: 'center',
+};
 
 export class AuthPage extends React.Component {
   componentWillMount() {
@@ -29,6 +35,7 @@ export class AuthPage extends React.Component {
           <title>Auth Page</title>
           <meta name="description" content="An EACH application auth page" />
         </Helmet>
+        <P style={PStyle}>Authorization</P>
         <LoadingIndicator />
       </article>
     );
@@ -53,8 +60,14 @@ const withConnect = connect(
 const withReducer = injectReducer({ key: 'auth', reducer });
 const withSaga = injectSaga({ key: 'auth', saga });
 
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-)(AuthPage);
+export default function() {
+  return (
+    <PageLayout
+      component={compose(
+        withReducer,
+        withSaga,
+        withConnect,
+      )(AuthPage)}
+    />
+  );
+}

@@ -24,6 +24,9 @@ import H1 from 'components/H1';
 import DataList from 'components/DataList';
 import Popup from 'containers/EditForm';
 import { loadFeeds } from 'containers/HomePage/actions';
+import PageLayout from 'components/PageLayout';
+import Header from 'components/Header';
+import Footer from 'components/Footer';
 import messages from './messages';
 import NewsListItem from './ListItem';
 import reducer from './reducer';
@@ -100,8 +103,16 @@ const withConnect = connect(
 const withReducer = injectReducer({ key: 'news', reducer });
 const withSaga = injectSaga({ key: 'news', saga });
 
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-)(NewsPage);
+export default function() {
+  return (
+    <PageLayout
+      header={Header}
+      component={compose(
+        withReducer,
+        withSaga,
+        withConnect,
+      )(NewsPage)}
+      footer={Footer}
+    />
+  );
+}

@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 /*
- * EditNewsReducer
+ * EditFormReducer
  *
  * Example:
  * case YOUR_ACTION_CONSTANT:
@@ -16,13 +16,14 @@ import {
   CHANGE_PRIORITY,
   CHANGE_DATA,
   CHANGE_OPEN_MSG,
-  SEND_DATA,
+  SEND_FEED_DATA,
+  SEND_MUSEUM_DATA,
   SEND_DATA_SUCCESS,
   SEND_DATA_ERROR,
 } from "./constants";
 
 export const initialState = fromJS({
-  newsData: {
+  formData: {
     eid: '',
     image: '',
     title: '',
@@ -36,29 +37,33 @@ export const initialState = fromJS({
   message: {},
 });
 
-function editNewsReducer(state = initialState, action) {
+function editFormReducer(state = initialState, action) {
   switch (action.type) {
     case CHANGE_IMAGE:
-      return state.setIn(['newsData', 'image'], action.image);
+      return state.setIn(['formData', 'image'], action.image);
     case CHANGE_TITLE:
-      return state.setIn(['newsData', 'title'], action.title);
+      return state.setIn(['formData', 'title'], action.title);
     case CHANGE_TEXT:
-      return state.setIn(['newsData', 'text'], action.text);
+      return state.setIn(['formData', 'text'], action.text);
     case CHANGE_PRIORITY:
-      return state.setIn(['newsData', 'priority'], action.priority);
+      return state.setIn(['formData', 'priority'], action.priority);
     case CHANGE_DATA:
       return state
-        .setIn(['newsData', 'eid'], action.data.eid)
-        .setIn(['newsData', 'image'], action.data.image)
-        .setIn(['newsData', 'title'], action.data.title)
-        .setIn(['newsData', 'text'], action.data.text)
-        .setIn(['newsData', 'priority'], action.data.priority)
+        .setIn(['formData', 'eid'], action.data.eid)
+        .setIn(['formData', 'image'], action.data.image)
+        .setIn(['formData', 'title'], action.data.title)
+        .setIn(['formData', 'text'], action.data.text)
+        .setIn(['formData', 'priority'], action.data.priority)
         .set('mod', action.mod);
     case CHANGE_OPEN_MSG:
       return state
         .set('isOpenMsg', !state.get('isOpenMsg'))
         .set('message', action.message);
-    case SEND_DATA:
+    case SEND_FEED_DATA:
+      return state
+        .set('sending', true)
+        .set('error', false);
+    case SEND_MUSEUM_DATA:
       return state
         .set('sending', true)
         .set('error', false);
@@ -73,4 +78,4 @@ function editNewsReducer(state = initialState, action) {
   }
 }
 
-export default editNewsReducer;
+export default editFormReducer;

@@ -11,7 +11,7 @@ import Wrapper from './Wrapper';
 import messages from './messages';
 
 const userOptions = ['museums'];
-const adminOptions = ['museums', 'editNews'];
+const adminOptions = ['museums', 'editNews', 'editMuseums'];
 
 class OptionsToggle extends React.PureComponent {
   render() {

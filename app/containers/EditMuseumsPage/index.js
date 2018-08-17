@@ -1,6 +1,6 @@
 /* eslint-disable react/no-children-prop,react/prefer-stateless-function */
 /*
- * NewsPage
+ * EditMuseumsPage
  *
  */
 import React from 'react';
@@ -17,19 +17,19 @@ import {
   makeSelectData,
   makeSelectError,
   makeSelectLoading,
-} from 'containers/HomePage/selectors';
+} from 'containers/MuseumsPage/selectors';
 import Button from 'components/Button';
 import Nav from 'containers/LinkList/Nav';
 import H1 from 'components/H1';
 import DataList from 'components/DataList';
 import Popup from 'containers/EditForm';
-import { loadFeeds } from 'containers/HomePage/actions';
+import { loadMuseums } from 'containers/MuseumsPage/actions';
+import EditMuseumListItem from './ListItem';
 import messages from './messages';
-import NewsListItem from './ListItem';
 import reducer from './reducer';
 import saga from './saga';
 
-export class NewsPage extends React.Component {
+export class EditMuseumsPage extends React.Component {
   componentDidMount() {
     this.props.init();
   }
@@ -39,14 +39,17 @@ export class NewsPage extends React.Component {
       loading,
       error,
       data,
-      component: NewsListItem,
+      component: EditMuseumListItem,
       scroll: true,
     };
     return (
       <article>
         <Helmet>
-          <title>News Page</title>
-          <meta name="description" content="News page of EACH application" />
+          <title>Edit Museums Page</title>
+          <meta
+            name="description"
+            content="Edit museums page of EACH application"
+          />
         </Helmet>
         <H1>
           <FormattedMessage {...messages.header} />
@@ -57,14 +60,14 @@ export class NewsPage extends React.Component {
               <Button children={<FormattedMessage {...messages.add} />} />
             }
             item={{
-              eid: 'addNews',
+              eid: 'addMuseum',
               image: '',
               title: '',
               text: '',
-              priority: '',
+              priority: '0',
             }}
             mod="add"
-            Feed
+            Museum
           />
         </Nav>
         <DataList {...dataListProps} />
@@ -73,7 +76,7 @@ export class NewsPage extends React.Component {
   }
 }
 
-NewsPage.propTypes = {
+EditMuseumsPage.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   data: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
@@ -82,7 +85,7 @@ NewsPage.propTypes = {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    init: () => dispatch(loadFeeds()),
+    init: () => dispatch(loadMuseums()),
   };
 }
 
@@ -97,11 +100,11 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'news', reducer });
-const withSaga = injectSaga({ key: 'news', saga });
+const withReducer = injectReducer({ key: 'deleteMuseum', reducer });
+const withSaga = injectSaga({ key: 'deleteMuseum', saga });
 
 export default compose(
   withReducer,
   withSaga,
   withConnect,
-)(NewsPage);
+)(EditMuseumsPage);

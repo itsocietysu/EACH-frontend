@@ -1,5 +1,5 @@
 /*
- * EditNews Actions
+ * EditForm Actions
  *
  * To add a new Action:
  * 1) Import your constant
@@ -16,7 +16,8 @@ import {
   CHANGE_PRIORITY,
   CHANGE_DATA,
   CHANGE_OPEN_MSG,
-  SEND_DATA,
+  SEND_FEED_DATA,
+  SEND_MUSEUM_DATA,
   SEND_DATA_SUCCESS,
   SEND_DATA_ERROR,
 } from './constants';
@@ -80,7 +81,7 @@ export function changePriority(priority) {
 /**
  * Dispatched when popup modal opens
  *
- * @param  {object} data The new data of news
+ * @param  {object} data The new data of form
  * @param  {string} mod The new mod of sending data
  *
  * @return {object}    An action object with a type of CHANGE_DATA passing the data and mod
@@ -94,13 +95,24 @@ export function changeData(data, mod) {
 }
 
 /**
- * Send data, this action starts the request saga
+ * Send feed data, this action starts the request saga
  *
- * @return {object} An action object with a type of SEND_DATA
+ * @return {object} An action object with a type of SEND_FEED_DATA
  */
-export function sendData() {
+export function sendFeedData() {
   return {
-    type: SEND_DATA,
+    type: SEND_FEED_DATA,
+  };
+}
+
+/**
+ * Send museum data, this action starts the request saga
+ *
+ * @return {object} An action object with a type of SEND_MUSEUM_DATA
+ */
+export function sendMuseumData() {
+  return {
+    type: SEND_MUSEUM_DATA,
   };
 }
 

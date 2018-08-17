@@ -38,7 +38,8 @@ import {
   changeText,
   changePriority,
   changeData,
-  sendData,
+  sendFeedData,
+  sendMuseumData,
   changeOpenMsg,
 } from './actions';
 import reducer from './reducer';
@@ -60,7 +61,34 @@ const ImageCropStyle = {
   backgroundColor: 'transparent',
 };
 
+const FeedSet = {
+  content: 'Feed',
+  title: 'title',
+  text: 'text',
+  file: 'fileFeed',
+  messages: {
+    title: messages.title,
+    text: messages.text,
+  },
+};
+
+const MuseumSet = {
+  content: 'Museum',
+  title: 'name',
+  text: 'desc',
+  file: 'fileMuseum',
+  messages: {
+    title: messages.name,
+    text: messages.desc,
+  },
+};
+
 class EditForm extends React.Component {
+  constructor(props) {
+    super(props);
+    if (props.Feed) this.state = FeedSet;
+    if (props.Museum) this.state = MuseumSet;
+  }
   render() {
     return (
       <Popup
@@ -81,28 +109,30 @@ class EditForm extends React.Component {
                   <ImageCrop
                     image={`data:image/jpeg;base64,${this.props.image}`}
                     style={ImageCropStyle}/>
-                  : <Img src="/Photo.png" alt={`Feed-${this.props.item.eid}`}/>
+                  : <Img src="/Photo.png" alt={`${this.state.content}-${this.props.item.eid}`}/>
                 }
               </div>
               <div style={{ marginBottom: '0.5em' }}>
-                <LabelFile id="fileNews" change={this.props.onChangeFile} accept="image/*" />
+                <LabelFile id={`${this.state.file}`} change={this.props.onChangeFile} accept="image/*" />
               </div>
-              <LabelInput
-                id={`priority-${this.props.item.eid}`}
-                type="text"
-                value={this.props.priority}
-                change={this.props.onChangePriority}
-                message={messages.priority}
-              />
+              {this.props.Feed &&
+                <LabelInput
+                  id={`priority-${this.props.item.eid}`}
+                  type="text"
+                  value={this.props.priority}
+                  change={this.props.onChangePriority}
+                  message={messages.priority}
+                />
+              }
               <TextArea
-                name={`title-${this.props.item.eid}`}
+                name={`${this.state.title}-${this.props.item.eid}`}
                 value={this.props.title}
                 message={messages.title}
                 rows="2"
                 change={this.props.onChangeTitle}
               />
               <TextArea
-                name={`text-${this.props.item.eid}`}
+                name={`${this.state.text}-${this.props.item.eid}`}
                 value={this.props.text}
                 message={messages.text}
                 rows="15"
@@ -117,7 +147,7 @@ class EditForm extends React.Component {
                     !this.props.title ||
                     !this.props.text ||
                     !this.props.image ||
-                    !this.props.priority
+                    (this.props.Feed && !this.props.priority)
                   )
                     this.props.onChangeOpenMsg(messages.empty);
                   else {
@@ -125,7 +155,7 @@ class EditForm extends React.Component {
                     if (base64 === null) {
                       this.props.onChangeOpenMsg(messages.imageSize);
                     } else {
-                      this.props.onSubmit(base64);
+                      this.props.onSubmit(base64, this.props.Feed, this.props.Museum);
                       close();
                     }
                   }
@@ -151,15 +181,8 @@ EditForm.propTypes = {
   title: PropTypes.string,
   text: PropTypes.string,
   priority: PropTypes.string,
-  item: PropTypes.shape({
-    eid: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    image: PropTypes.string,
-    title: PropTypes.string,
-    text: PropTypes.string,
-    priority: PropTypes.string,
-  }),
+  item: PropTypes.object,
   mod: PropTypes.oneOf(['add', 'edit']),
-  onChangeUrl: PropTypes.func,
   onChangeFile: PropTypes.func,
   onChangeTitle: PropTypes.func,
   onChangeText: PropTypes.func,
@@ -171,6 +194,8 @@ EditForm.propTypes = {
   onChangeOpenMsg: PropTypes.func,
   imageByCrop: PropTypes.object,
   pixelCrop: PropTypes.object,
+  Feed: PropTypes.bool,
+  Museum: PropTypes.bool,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -200,9 +225,10 @@ export function mapDispatchToProps(dispatch) {
         });
     },
     onChangeOpenMsg: message => dispatch(changeOpenMsg(message)),
-    onSubmit: base64 => {
+    onSubmit: (base64, Feed, Museum) => {
       dispatch(changeImg(base64));
-      dispatch(sendData());
+      if (Feed) dispatch(sendFeedData());
+      if (Museum) dispatch(sendMuseumData());
     },
   };
 }
@@ -223,8 +249,8 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'editNews', reducer });
-const withSaga = injectSaga({ key: 'editNews', saga, mode: DAEMON });
+const withReducer = injectReducer({ key: 'editForm', reducer });
+const withSaga = injectSaga({ key: 'editForm', saga, mode: DAEMON });
 
 export default compose(
   withReducer,

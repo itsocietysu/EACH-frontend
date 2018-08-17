@@ -15,6 +15,7 @@ import HomePage from 'containers/HomePage/Loadable';
 import FeaturePage from 'containers/FeaturePage/Loadable';
 import MuseumsPage from 'containers/MuseumsPage/Loadable';
 import NewsPage from 'containers/NewsPage/Loadable';
+import EditMuseumsPage from 'containers/EditMuseumsPage/Loadable';
 import AuthPage from 'containers/AuthPage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import Header from 'components/Header';
@@ -42,6 +43,7 @@ export default function App() {
         <Route path="/features" component={FeaturePage} />
         <Route path="/museums" component={MuseumsPage} />
         <Route path="/editNews" component={NewsPage} />
+        <Route path="/editMuseums" component={EditMuseumsPage} />
         <Route path="/auth" component={AuthPage} />
         <Route path="" component={NotFoundPage} />
       </Switch>

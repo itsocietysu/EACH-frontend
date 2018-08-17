@@ -21,8 +21,6 @@ import NewsPage from 'containers/NewsPage/Loadable';
 import EditMuseumsPage from 'containers/EditMuseumsPage/Loadable';
 import AuthPage from 'containers/AuthPage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
-import Header from 'components/Header';
-import Footer from 'components/Footer';
 
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
@@ -53,7 +51,6 @@ export default function App() {
       <Helmet titleTemplate="%s - EACH" defaultTitle="EACH">
         <meta name="description" content="An EACH application" />
       </Helmet>
-      <Header />
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/features" component={FeaturePage} />
@@ -63,7 +60,6 @@ export default function App() {
         <Route path="/auth" component={AuthPage} />
         <Route path="" component={NotFoundPage} />
       </Switch>
-      <Footer />
     </AppWrapper>
   );
 }

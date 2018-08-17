@@ -24,6 +24,9 @@ import H1 from 'components/H1';
 import messages from './messages';
 import DataList from 'components/DataList';
 import FeedsListItem from 'containers/FeedListItem';
+import PageLayout from 'components/PageLayout';
+import Header from 'components/Header';
+import Footer from 'components/Footer';
 import { loadFeeds } from './actions';
 import reducer from './reducer';
 import saga from './saga';
@@ -88,8 +91,16 @@ const withConnect = connect(
 const withReducer = injectReducer({ key: 'feeds', reducer });
 const withSaga = injectSaga({ key: 'feeds', saga });
 
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-)(HomePage);
+export default function() {
+  return (
+    <PageLayout
+      header={Header}
+      component={compose(
+        withReducer,
+        withSaga,
+        withConnect,
+      )(HomePage)}
+      footer={Footer}
+    />
+  );
+}

@@ -26,18 +26,12 @@ const AppWrapper = styled.div`
   background-color: white;
 `;
 
-const AuthRoute = ({ component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={() =>
-      getLogined() === 'true' && getSession() ? (
-        <Component />
-      ) : (
-        <Redirect to="/" />
-      )
-    }
-  />
-);
+const AuthRoute = ({ component: Component, ...rest }) =>
+  getLogined() === 'true' && getSession() ? (
+    <Route {...rest} component={Component} />
+  ) : (
+    <Redirect to="/" />
+  );
 
 export default function App() {
   return (

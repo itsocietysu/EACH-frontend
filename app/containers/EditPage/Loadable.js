@@ -1,5 +1,5 @@
 /**
- * Asynchronously loads the component for EditMuseumsPage
+ * Asynchronously loads the component for EditPage
  */
 import Loadable from 'react-loadable';
 

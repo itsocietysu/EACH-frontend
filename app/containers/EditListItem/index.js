@@ -22,8 +22,7 @@ import DivRight from 'containers/FeedListItem/DivRight';
 import Wrapper from 'containers/FeedListItem/Wrapper';
 import Nav from 'containers/LinkList/Nav';
 import MsgBox from 'components/MsgBox';
-import { deleteData as deleteMuseum } from 'containers/EditMuseumsPage/actions';
-import { deleteData as deleteFeed } from 'containers/NewsPage/actions';
+import { deleteFeedData, deleteMuseumData } from 'containers/EditPage/actions';
 import messages from './messages';
 
 const imgStyle = {
@@ -141,8 +140,8 @@ EditListItem.propTypes = {
 export function mapDispatchToProps(dispatch) {
   return {
     onDelete: (eid, Feed, Museum) => {
-      if (Feed) dispatch(deleteFeed(eid));
-      if (Museum) dispatch(deleteMuseum(eid));
+      if (Feed) dispatch(deleteFeedData(eid));
+      if (Museum) dispatch(deleteMuseumData(eid));
     },
   };
 }

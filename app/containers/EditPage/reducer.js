@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 /*
- * NewsPageReducer
+ * EditPageReducer
  *
  * Example:
  * case YOUR_ACTION_CONSTANT:
@@ -10,7 +10,8 @@
 import { fromJS } from 'immutable';
 
 import {
-  DELETE_DATA,
+  DELETE_FEED_DATA,
+  DELETE_MUSEUM_DATA,
   DELETE_DATA_SUCCESS,
   DELETE_DATA_ERROR,
 } from './constants';
@@ -21,9 +22,14 @@ export const initialState = fromJS({
   error: false,
 });
 
-function deleteNewsReducer(state = initialState, action) {
+function deleteDataReducer(state = initialState, action) {
   switch (action.type) {
-    case DELETE_DATA:
+    case DELETE_FEED_DATA:
+      return state
+        .set('eid', action.eid)
+        .set('deleting', true)
+        .set('error', false);
+    case DELETE_MUSEUM_DATA:
       return state
         .set('eid', action.eid)
         .set('deleting', true)
@@ -41,4 +47,4 @@ function deleteNewsReducer(state = initialState, action) {
   }
 }
 
-export default deleteNewsReducer;
+export default deleteDataReducer;

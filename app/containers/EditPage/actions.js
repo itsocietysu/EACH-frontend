@@ -1,5 +1,5 @@
 /*
- * NewsPage Actions
+ * EditPage Actions
  *
  * To add a new Action:
  * 1) Import your constant
@@ -10,21 +10,36 @@
  */
 
 import {
-  DELETE_DATA,
+  DELETE_FEED_DATA,
+  DELETE_MUSEUM_DATA,
   DELETE_DATA_SUCCESS,
   DELETE_DATA_ERROR,
 } from './constants';
 
 /**
- * Delete data, this action starts the request saga
+ * Delete feed data, this action starts the request saga
  *
  * @param  {number} eid The eid of feed that would to be deleted
  *
- * @return {object} An action object with a type of DELETE_DATA passing the eid
+ * @return {object} An action object with a type of DELETE_FEED_DATA passing the eid
  */
-export function deleteData(eid) {
+export function deleteFeedData(eid) {
   return {
-    type: DELETE_DATA,
+    type: DELETE_FEED_DATA,
+    eid,
+  };
+}
+
+/**
+ * Delete museum data, this action starts the request saga
+ *
+ * @param  {number} eid The eid of museum that would to be deleted
+ *
+ * @return {object} An action object with a type of DELETE_MUSEUM_DATA passing the eid
+ */
+export function deleteMuseumData(eid) {
+  return {
+    type: DELETE_MUSEUM_DATA,
     eid,
   };
 }

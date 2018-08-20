@@ -19,8 +19,15 @@ class Route {
   component: any;
 }
 
-function Page(header, component, footer) {
-  return <PageLayout header={header} component={component} footer={footer} />;
+function Page(header, component, footer, props) {
+  return (
+    <PageLayout
+      header={header}
+      component={component}
+      footer={footer}
+      {...props}
+    />
+  );
 }
 
 const HomeRoute = (() => {

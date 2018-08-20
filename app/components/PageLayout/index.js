@@ -7,11 +7,16 @@ const Wrapper = styled.div`
   flex-direction: column;
 `;
 
-function PageLayout({ header: Header, component: Component, footer: Footer }) {
+function PageLayout({
+  header: Header,
+  component: Component,
+  footer: Footer,
+  ...props
+}) {
   return (
     <Wrapper>
       {Header && <Header />}
-      <Component />
+      <Component {...props} />
       {Footer && <Footer />}
     </Wrapper>
   );

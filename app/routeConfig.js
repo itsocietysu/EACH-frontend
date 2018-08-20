@@ -7,8 +7,6 @@ import Footer from 'components/Footer';
 import HomePage from 'containers/HomePage/Loadable';
 import FeaturePage from 'containers/FeaturePage/Loadable';
 import MuseumsPage from 'containers/MuseumsPage/Loadable';
-import NewsPage from 'containers/NewsPage/Loadable';
-import EditMuseumsPage from 'containers/EditMuseumsPage/Loadable';
 import AuthPage from 'containers/AuthPage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import EditPage from 'containers/EditPage/Loadable';
@@ -58,24 +56,6 @@ const MuseumRoute = (() => {
   return r;
 })();
 
-const EditMuseumRoute = (() => {
-  const r = new Route();
-  r.path = '/editMuseums';
-  r.exact = false;
-  r.auth = true;
-  r.component = () => Page(Header, EditMuseumsPage, Footer);
-  return r;
-})();
-
-const EditNewsRoute = (() => {
-  const r = new Route();
-  r.path = '/editNews';
-  r.exact = false;
-  r.auth = true;
-  r.component = () => Page(Header, NewsPage, Footer);
-  return r;
-})();
-
 const EditRoute = (() => {
   const r = new Route();
   r.path = '/edit/:content(news|museums)';
@@ -107,8 +87,6 @@ const routes: Array<Route> = [
   HomeRoute,
   FeatureRoute,
   MuseumRoute,
-  EditMuseumRoute,
-  EditNewsRoute,
   EditRoute,
   AuthRoute,
   NotFoundRoute,

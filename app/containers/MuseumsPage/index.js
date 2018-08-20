@@ -23,9 +23,6 @@ import messages from './messages';
 import H1 from 'components/H1';
 import DataList from 'components/DataList';
 import MuseumListItem from 'containers/MuseumListItem';
-import PageLayout from 'components/PageLayout';
-import Header from 'components/Header';
-import Footer from 'components/Footer';
 import { loadMuseums } from './actions';
 import reducer from './reducer';
 import saga from './saga';
@@ -90,16 +87,8 @@ const withConnect = connect(
 const withReducer = injectReducer({ key: 'museums', reducer });
 const withSaga = injectSaga({ key: 'museums', saga });
 
-export default function() {
-  return (
-    <PageLayout
-      header={Header}
-      component={compose(
-        withReducer,
-        withSaga,
-        withConnect,
-      )(MuseumsPage)}
-      footer={Footer}
-    />
-  );
-}
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect,
+)(MuseumsPage);

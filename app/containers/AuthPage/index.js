@@ -14,7 +14,6 @@ import { connect } from 'react-redux';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 import LoadingIndicator from 'components/LoadingIndicator';
-import PageLayout from 'components/PageLayout';
 import P from 'components/P';
 import { getToken } from './actions';
 import reducer from './reducer';
@@ -60,14 +59,8 @@ const withConnect = connect(
 const withReducer = injectReducer({ key: 'auth', reducer });
 const withSaga = injectSaga({ key: 'auth', saga });
 
-export default function() {
-  return (
-    <PageLayout
-      component={compose(
-        withReducer,
-        withSaga,
-        withConnect,
-      )(AuthPage)}
-    />
-  );
-}
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect,
+)(AuthPage);

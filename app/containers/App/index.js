@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+/* eslint-disable react/prop-types,react/no-array-index-key */
 /**
  *
  * App
@@ -14,13 +14,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 
 import { getLogined, getSession } from 'cookieManager';
 
-import HomePage from 'containers/HomePage/Loadable';
-import FeaturePage from 'containers/FeaturePage/Loadable';
-import MuseumsPage from 'containers/MuseumsPage/Loadable';
-import NewsPage from 'containers/NewsPage/Loadable';
-import EditMuseumsPage from 'containers/EditMuseumsPage/Loadable';
-import AuthPage from 'containers/AuthPage/Loadable';
-import NotFoundPage from 'containers/NotFoundPage/Loadable';
+import routes from 'routeConfig';
 
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
@@ -52,13 +46,24 @@ export default function App() {
         <meta name="description" content="An EACH application" />
       </Helmet>
       <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route path="/features" component={FeaturePage} />
-        <AuthRoute path="/museums" component={MuseumsPage} />
-        <AuthRoute path="/editNews" component={NewsPage} />
-        <AuthRoute path="/editMuseums" component={EditMuseumsPage} />
-        <Route path="/auth" component={AuthPage} />
-        <Route path="" component={NotFoundPage} />
+        {routes.map(
+          (route, i) =>
+            route.auth ? (
+              <AuthRoute
+                key={i}
+                path={route.path}
+                exact={route.exact}
+                component={route.component}
+              />
+            ) : (
+              <Route
+                key={i}
+                path={route.path}
+                exact={route.exact}
+                component={route.component}
+              />
+            ),
+        )}
       </Switch>
     </AppWrapper>
   );

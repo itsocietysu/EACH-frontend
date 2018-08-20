@@ -17,3 +17,11 @@ export function setSession(session) {
 export function getSession() {
   return cookies.get('user_session');
 }
+
+export function setLocale(locale) {
+  cookies.set('locale', locale, { path: '/' });
+}
+
+export function getLocale() {
+  return cookies.get('locale');
+}

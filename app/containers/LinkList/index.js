@@ -1,4 +1,4 @@
-/* eslint-disable react/no-children-prop,react/prop-types,react/prefer-stateless-function */
+/* eslint-disable react/no-children-prop,react/prop-types,react/prefer-stateless-function,jsx-a11y/anchor-is-valid */
 /*
  *
  * LinkList
@@ -7,11 +7,10 @@
 
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { withRouter } from 'react-router-dom';
 
-import Button from 'components/Button';
 import LogoutButton from 'containers/LogoutButton';
 
+import Link from './Link';
 import Nav from './Nav';
 import Ul from './Ul';
 
@@ -22,13 +21,9 @@ class LinkList extends React.Component {
     // If we have items, render them
     if (this.props.values) {
       content = this.props.values.map(value => (
-        <Button
-          key={value}
-          onClick={() => {
-            this.props.history.push(`/${value}`);
-          }}
-          children={<FormattedMessage {...this.props.messages[value]} />}
-        />
+        <Link key={value.path} to={value.path}>
+          <FormattedMessage {...value.message} />
+        </Link>
       ));
     }
     return (
@@ -42,4 +37,4 @@ class LinkList extends React.Component {
   }
 }
 
-export default withRouter(LinkList);
+export default LinkList;

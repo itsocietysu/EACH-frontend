@@ -1,21 +1,21 @@
 /*
- * OptionsToggle Messages
+ * OptionsList Messages
  *
- * This contains all the text for the OptionsToggle component.
+ * This contains all the text for the OptionsList component.
  */
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
   museums: {
-    id: 'each.containers.OptionsToggle.museums',
+    id: 'each.containers.OptionsList.museums',
     defaultMessage: 'Museums',
   },
   editNews: {
-    id: 'each.containers.OptionsToggle.editNews',
+    id: 'each.containers.OptionsList.editNews',
     defaultMessage: 'Edit news',
   },
   editMuseums: {
-    id: 'each.containers.OptionsToggle.editMuseums',
+    id: 'each.containers.OptionsList.editMuseums',
     defaultMessage: 'Edit museums',
   },
 });

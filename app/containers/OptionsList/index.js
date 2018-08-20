@@ -8,24 +8,18 @@ import React from 'react';
 
 import LinkList from 'containers/LinkList';
 import Wrapper from './Wrapper';
-import messages from './messages';
+import { userLinks, adminLinks } from './linkConfig';
 
-const userOptions = ['museums'];
-const adminOptions = ['museums', 'editNews', 'editMuseums'];
-
-class OptionsToggle extends React.PureComponent {
+class OptionsList extends React.PureComponent {
   render() {
     return (
       <Wrapper>
         <LinkList
-          values={
-            this.props.accessType === 'admin' ? adminOptions : userOptions
-          }
-          messages={messages}
+          values={this.props.accessType === 'admin' ? adminLinks : userLinks}
         />
       </Wrapper>
     );
   }
 }
 
-export default OptionsToggle;
+export default OptionsList;

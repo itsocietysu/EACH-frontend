@@ -11,6 +11,7 @@ import NewsPage from 'containers/NewsPage/Loadable';
 import EditMuseumsPage from 'containers/EditMuseumsPage/Loadable';
 import AuthPage from 'containers/AuthPage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
+import EditPage from 'containers/EditPage/Loadable';
 
 class Route {
   path: string;
@@ -75,6 +76,15 @@ const EditNewsRoute = (() => {
   return r;
 })();
 
+const EditRoute = (() => {
+  const r = new Route();
+  r.path = '/edit/:content(news|museums)';
+  r.exact = false;
+  r.auth = true;
+  r.component = ({ match }) => Page(Header, EditPage, Footer, match.params);
+  return r;
+})();
+
 const AuthRoute = (() => {
   const r = new Route();
   r.path = '/auth';
@@ -99,6 +109,7 @@ const routes: Array<Route> = [
   MuseumRoute,
   EditMuseumRoute,
   EditNewsRoute,
+  EditRoute,
   AuthRoute,
   NotFoundRoute,
 ];

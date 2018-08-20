@@ -14,14 +14,14 @@ const MuseumsLink = (() => {
 
 const EditNewsLink = (() => {
   const l = new Link();
-  l.path = '/editNews';
+  l.path = '/edit/news';
   l.message = messages.editNews;
   return l;
 })();
 
 const EditMuseumsLink = (() => {
   const l = new Link();
-  l.path = '/editMuseums';
+  l.path = '/edit/museums';
   l.message = messages.editMuseums;
   return l;
 })();

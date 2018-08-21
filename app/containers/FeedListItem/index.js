@@ -23,14 +23,23 @@ export class FeedListItem extends React.PureComponent {
     // Put together the content of the feed
     const content = (
       <Wrapper>
-        <div style={{ display: 'flex' }}>
+        <div className="flex">
           <div className="container">
-            <img src={item.image} alt={`Feed-${item.eid}`} />
+            <img src={item[0].image} alt={`Feed-${item[0].eid}`} />
             <div className="overlay">
-              <H2>{item.title}</H2>
-              <H3>{item.text}</H3>
+              <H2>{item[0].title}</H2>
+              <H3>{item[0].text}</H3>
             </div>
           </div>
+          {item[1] && (
+            <div className="container">
+              <img src={item[1].image} alt={`Feed-${item[1].eid}`} />
+              <div className="overlay">
+                <H2>{item[1].title}</H2>
+                <H3>{item[1].text}</H3>
+              </div>
+            </div>
+          )}
         </div>
       </Wrapper>
     );
@@ -41,7 +50,7 @@ export class FeedListItem extends React.PureComponent {
 }
 
 FeedListItem.propTypes = {
-  item: PropTypes.object,
+  item: PropTypes.array,
 };
 
 export default FeedListItem;

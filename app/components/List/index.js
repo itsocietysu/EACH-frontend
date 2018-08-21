@@ -12,9 +12,14 @@ function List(props) {
 
   // If we have items, render them
   if (props.items) {
-    content = props.items.map(item => (
-      <ComponentToRender key={`item-${item.eid}`} item={item} />
-    ));
+    content = props.items.map(
+      item =>
+        props.array ? (
+          <ComponentToRender key={`item-${item[0].eid}`} item={item} />
+        ) : (
+          <ComponentToRender key={`item-${item.eid}`} item={item} />
+        ),
+    );
   } else {
     // Otherwise render a single component
     content = <ComponentToRender />;
@@ -36,6 +41,7 @@ List.propTypes = {
   component: PropTypes.func.isRequired,
   items: PropTypes.array,
   scroll: PropTypes.bool,
+  array: PropTypes.bool,
 };
 
 export default List;

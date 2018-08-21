@@ -5,7 +5,7 @@ import List from 'components/List';
 import ListItem from 'components/ListItem';
 import LoadingIndicator from 'components/LoadingIndicator';
 
-function DataList({ loading, error, data, component, scroll }) {
+function DataList({ loading, error, data, component, scroll, array }) {
   if (loading) {
     return <List component={LoadingIndicator} scroll={scroll} />;
   }
@@ -17,7 +17,9 @@ function DataList({ loading, error, data, component, scroll }) {
   }
 
   if (data !== false) {
-    return <List items={data} component={component} scroll={scroll} />;
+    return (
+      <List items={data} array={array} component={component} scroll={scroll} />
+    );
   }
 
   return null;
@@ -29,6 +31,7 @@ DataList.propTypes = {
   data: PropTypes.any,
   component: PropTypes.func.isRequired,
   scroll: PropTypes.bool,
+  array: PropTypes.bool,
 };
 
 export default DataList;

@@ -28,6 +28,20 @@ import { loadFeeds } from './actions';
 import reducer from './reducer';
 import saga from './saga';
 
+function separateData(data) {
+  const derData = [];
+  let item = [];
+  data.forEach(element => {
+    const len = item.push(element);
+    if (len === 2) {
+      derData.push(item);
+      item = [];
+    }
+  });
+  if (item) derData.push(item);
+  return derData;
+}
+
 /* eslint-disable react/prefer-stateless-function */
 export class HomePage extends React.PureComponent {
   componentDidMount() {
@@ -36,12 +50,14 @@ export class HomePage extends React.PureComponent {
 
   render() {
     const { loading, error, data } = this.props;
+    const setData = data ? separateData(data) : false;
     const dataListProps = {
       loading,
       error,
-      data,
+      data: setData,
       component: FeedsListItem,
       scroll: false,
+      array: true,
     };
     return (
       <article>

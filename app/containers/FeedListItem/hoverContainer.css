@@ -33,8 +33,7 @@
 
   .overlay H3 {
     position: absolute;
-    // top: 10em;
-    bottom: -700%;
+    top: 10em;
     width: 100%;
     transition: .5s ease;
     text-align: center;
@@ -43,24 +42,51 @@
   .container:hover .overlay {
     height: 100%;
   }
-
-  .container:hover .overlay H3{
-    bottom: 0;
-  }
 }
 
-@media screen and (max-width: 470px) {
+@media screen and (max-width: 640px) {
   .flex {
     flex-direction: column;
   }
 
   .overlay {
-    height: 7em;
+    height: 6em;
   }
 
   .overlay H3 {
-    font-size: 1em;
-    //top: 7em;
+    font-size: 0.91em;
+    top: 6em;
+  }
+
+  .overlay H2 {
+    font-size: 1.17em;
   }
 }
 
+@media screen and (max-width: 420px) {
+  .overlay {
+    height: 5em;
+  }
+
+  .overlay H3 {
+    font-size: 0.77em;
+  }
+
+  .overlay H2 {
+    font-size: 1em;
+  }
+}
+
+@media screen and (max-width: 280px) {
+  .overlay {
+    height: 4em;
+  }
+
+  .overlay H3 {
+    font-size: 0.55em;
+  }
+
+  .overlay H2 {
+    font-size: 0.7em;
+  }
+}

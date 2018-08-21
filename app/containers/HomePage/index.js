@@ -38,7 +38,7 @@ function separateData(data) {
       item = [];
     }
   });
-  if (item) derData.push(item);
+  if (item.length) derData.push(item);
   return derData;
 }
 

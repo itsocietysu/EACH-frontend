@@ -10,11 +10,18 @@ import PropTypes from 'prop-types';
 import ListItem from 'components/ListItem';
 import H2 from 'components/H2';
 import H3 from 'components/H3';
-// import Img from './Img';
-// import DivLeft from './DivLeft';
-// import DivRight from './DivRight';
 import Wrapper from './Wrapper';
 import './hoverContainer.css';
+
+const ItemDiv = item => (
+  <div className="container">
+    <img src={item.image} alt={`Feed-${item.eid}`} />
+    <div className="overlay">
+      <H2>{item.title}</H2>
+      <H3>{item.text}</H3>
+    </div>
+  </div>
+);
 
 export class FeedListItem extends React.PureComponent {
   render() {
@@ -24,22 +31,8 @@ export class FeedListItem extends React.PureComponent {
     const content = (
       <Wrapper>
         <div className="flex">
-          <div className="container">
-            <img src={item[0].image} alt={`Feed-${item[0].eid}`} />
-            <div className="overlay">
-              <H2>{item[0].title}</H2>
-              <H3>{item[0].text}</H3>
-            </div>
-          </div>
-          {item[1] && (
-            <div className="container">
-              <img src={item[1].image} alt={`Feed-${item[1].eid}`} />
-              <div className="overlay">
-                <H2>{item[1].title}</H2>
-                <H3>{item[1].text}</H3>
-              </div>
-            </div>
-          )}
+          {ItemDiv(item[0])}
+          {item[1] && ItemDiv(item[1])}
         </div>
       </Wrapper>
     );

@@ -9,11 +9,12 @@ import PropTypes from 'prop-types';
 
 import ListItem from 'components/ListItem';
 import H2 from 'components/H2';
-import P from 'components/P';
-import Img from './Img';
-import DivLeft from './DivLeft';
-import DivRight from './DivRight';
+import H3 from 'components/H3';
+// import Img from './Img';
+// import DivLeft from './DivLeft';
+// import DivRight from './DivRight';
 import Wrapper from './Wrapper';
+import './hoverContainer.css';
 
 export class FeedListItem extends React.PureComponent {
   render() {
@@ -23,13 +24,13 @@ export class FeedListItem extends React.PureComponent {
     const content = (
       <Wrapper>
         <div style={{ display: 'flex' }}>
-          <DivLeft>
-            <Img src={item.image} alt={`Feed-${item.eid}`} />
-          </DivLeft>
-          <DivRight>
-            <H2>{item.title}</H2>
-            <P>{item.text}</P>
-          </DivRight>
+          <div className="container">
+            <img src={item.image} alt={`Feed-${item.eid}`} />
+            <div className="overlay">
+              <H2>{item.title}</H2>
+              <H3>{item.text}</H3>
+            </div>
+          </div>
         </div>
       </Wrapper>
     );

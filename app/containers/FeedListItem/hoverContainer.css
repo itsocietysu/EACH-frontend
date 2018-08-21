@@ -1,0 +1,41 @@
+.container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.container img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: white;
+  width: 100%;
+  text-align: center;
+  overflow: hidden;
+  height: 7em;
+  transition: .5s ease;
+}
+
+.overlay H3 {
+  position: absolute;
+  bottom: -300%;
+  width: 100%;
+  transition: .5s ease;
+  text-align: center;
+}
+
+.container:hover .overlay {
+  height: 100%;
+}
+
+.container:hover .overlay H3 {
+  bottom: 0;
+}

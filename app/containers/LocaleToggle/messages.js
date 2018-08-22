@@ -6,11 +6,11 @@
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
-  en: {
+  EN: {
     id: 'each.containers.LocaleToggle.en',
     defaultMessage: 'en',
   },
-  ru: {
+  RU: {
     id: 'each.containers.LocaleToggle.ru',
     defaultMessage: 'ru',
   },

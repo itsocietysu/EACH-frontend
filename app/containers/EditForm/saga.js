@@ -22,12 +22,14 @@ export function* sendFeed() {
   const options = {
     method: 'POST',
     headers: {
+      Accept: 'application/json',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       id: newsData.get('eid'),
       title: newsData.get('title'),
       text: newsData.get('text'),
+      desc: newsData.get('desc'),
       prop: {
         image: newsData.get('image'),
         priority: newsData.get('priority'),
@@ -44,6 +46,7 @@ export function* sendFeed() {
           eid: resp[0].eid,
           title: resp[0].title,
           text: resp[0].text,
+          desc: resp[0].desc,
           image: `http://${resp[0].image[0].url}`,
           priority: `${resp[0].priority[0]}`,
         },
@@ -55,6 +58,7 @@ export function* sendFeed() {
             eid: resp[0].eid,
             title: resp[0].title,
             text: resp[0].text,
+            desc: resp[0].desc,
             image: `http://${resp[0].image[0].url}`,
             priority: `${resp[0].priority[0]}`,
           };
@@ -80,6 +84,7 @@ export function* sendMuseum() {
   const options = {
     method: 'POST',
     headers: {
+      Accept: 'application/json',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({

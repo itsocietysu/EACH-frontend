@@ -1,4 +1,4 @@
-/* eslint-disable prettier/prettier,react/prefer-stateless-function,react/no-children-prop */
+/* eslint-disable prettier/prettier,react/prefer-stateless-function,react/no-children-prop,no-restricted-syntax,no-unused-expressions */
 import React from 'react';
 import Popup from 'reactjs-popup';
 import PropTypes from 'prop-types';
@@ -25,6 +25,7 @@ import { DAEMON } from 'utils/constants';
 import {
   makeSelectText,
   makeSelectTitle,
+  makeSelectDesc,
   makeSelectImage,
   makeSelectPriority,
   makeSelectMessage,
@@ -36,6 +37,7 @@ import {
   changeImg,
   changeTitle,
   changeText,
+  changeDesc,
   changePriority,
   changeData,
   sendFeedData,
@@ -44,6 +46,8 @@ import {
 } from './actions';
 import reducer from './reducer';
 import saga from './saga';
+
+import { appLocales } from '../../i18n';
 
 const PopupStyle = {
   width: '40em',
@@ -58,29 +62,37 @@ const ImageCropStyle = {
   maxWidth: '256px',
   maxHeight: '256px',
   margin: 'auto',
-  backgroundColor: 'transparent',
 };
 
 const FeedSet = {
   content: 'Feed',
   title: 'title',
-  text: 'text',
   file: 'fileFeed',
   messages: {
     title: messages.title,
-    text: messages.text,
   },
 };
 
 const MuseumSet = {
   content: 'Museum',
   title: 'name',
-  text: 'desc',
   file: 'fileMuseum',
   messages: {
     title: messages.name,
-    text: messages.desc,
   },
+};
+
+const isEmpty = props => {
+  const empty = appLocales.map(locale => !!(!props.title.get(locale) ||
+      !props.desc.get(locale) ||
+      (props.Feed && !props.text.get(locale)) ||
+      !props.image ||
+      (props.Feed && !props.priority)));
+  for (const key in empty) {
+    if (empty[key])
+      return true;
+  }
+  return false;
 };
 
 class EditForm extends React.Component {
@@ -90,6 +102,41 @@ class EditForm extends React.Component {
     if (props.Museum) this.state = MuseumSet;
   }
   render() {
+    const title = [];
+    const text = [];
+    const desc = [];
+    appLocales.forEach(locale => {
+      title.push(
+        <TextArea
+          key={`${this.state.title}-${this.props.item.eid}-${locale}`}
+          name={`${this.state.title}-${this.props.item.eid}-${locale}`}
+          value={this.props.title.get(locale)}
+          message={this.state.messages.title[locale]}
+          rows="2"
+          change={evt => this.props.onChangeTitle(evt, locale)}
+        />
+      );
+      desc.push(
+        <TextArea
+          key={`desc-${this.props.item.eid}-${locale}`}
+          name={`desc-${this.props.item.eid}-${locale}`}
+          value={this.props.desc.get(locale)}
+          message={messages.desc[locale]}
+          rows="2"
+          change={evt => this.props.onChangeDesc(evt, locale)}
+        />
+      );
+      this.props.Feed && text.push(
+        <TextArea
+          key={`text-${this.props.item.eid}-${locale}`}
+          name={`text-${this.props.item.eid}-${locale}`}
+          value={this.props.text.get(locale)}
+          message={messages.text[locale]}
+          rows="15"
+          change={evt => this.props.onChangeText(evt, locale)}
+        />
+      );
+    });
     return (
       <Popup
         trigger={this.props.trigger}
@@ -118,37 +165,21 @@ class EditForm extends React.Component {
               {this.props.Feed &&
                 <LabelInput
                   id={`priority-${this.props.item.eid}`}
-                  type="text"
+                  type="number"
                   value={this.props.priority}
                   change={this.props.onChangePriority}
                   message={messages.priority}
                 />
               }
-              <TextArea
-                name={`${this.state.title}-${this.props.item.eid}`}
-                value={this.props.title}
-                message={messages.title}
-                rows="2"
-                change={this.props.onChangeTitle}
-              />
-              <TextArea
-                name={`${this.state.text}-${this.props.item.eid}`}
-                value={this.props.text}
-                message={messages.text}
-                rows="15"
-                change={this.props.onChangeText}
-              />
+              {title}
+              {desc}
+              {this.props.Feed && text}
             </form>
             <div>
               <Button
                 children={<FormattedMessage {...messages.confirm} />}
                 onClick={() => {
-                  if (
-                    !this.props.title ||
-                    !this.props.text ||
-                    !this.props.image ||
-                    (this.props.Feed && !this.props.priority)
-                  )
+                  if (isEmpty(this.props))
                     this.props.onChangeOpenMsg(messages.empty);
                   else {
                     const base64 = getCroppedImg(this.props.imageByCrop, this.props.pixelCrop);
@@ -178,14 +209,16 @@ EditForm.propTypes = {
   trigger: PropTypes.object,
   eid: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   image: PropTypes.string,
-  title: PropTypes.string,
-  text: PropTypes.string,
+  title: PropTypes.object,
+  text: PropTypes.object,
+  desc: PropTypes.object,
   priority: PropTypes.string,
   item: PropTypes.object,
   mod: PropTypes.oneOf(['add', 'edit']),
   onChangeFile: PropTypes.func,
   onChangeTitle: PropTypes.func,
   onChangeText: PropTypes.func,
+  onChangeDesc: PropTypes.func,
   onChangePriority: PropTypes.func,
   init: PropTypes.func,
   onSubmit: PropTypes.func,
@@ -209,8 +242,9 @@ export function mapDispatchToProps(dispatch) {
           );
         });
     },
-    onChangeTitle: evt => dispatch(changeTitle(evt.target.value)),
-    onChangeText: evt => dispatch(changeText(evt.target.value)),
+    onChangeTitle: (evt, locale) => dispatch(changeTitle(evt.target.value, locale)),
+    onChangeText: (evt, locale) => dispatch(changeText(evt.target.value, locale)),
+    onChangeDesc: (evt, locale) => dispatch(changeDesc(evt.target.value, locale)),
     onChangePriority: evt => dispatch(changePriority(evt.target.value)),
     init: (item, mod) => {
       if (item.image === '/Photo.png') {
@@ -237,6 +271,7 @@ const mapStateToProps = createStructuredSelector({
   image: makeSelectImage(),
   title: makeSelectTitle(),
   text: makeSelectText(),
+  desc: makeSelectDesc(),
   priority: makeSelectPriority(),
   message: makeSelectMessage(),
   isOpenMessage: makeSelectOpenMsg(),

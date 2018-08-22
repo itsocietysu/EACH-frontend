@@ -11,8 +11,11 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 
+import { getLocale } from 'cookieManager';
+
 import ListItem from 'components/ListItem';
 import H2 from 'components/H2';
+import H3 from 'components/H3';
 import P from 'components/P';
 import PopupEl from 'containers/EditForm';
 import Button from 'components/Button';
@@ -24,6 +27,8 @@ import Nav from 'containers/LinkList/Nav';
 import MsgBox from 'components/MsgBox';
 import { deleteFeedData, deleteMuseumData } from 'containers/EditPage/actions';
 import messages from './messages';
+
+import { DEFAULT_LOCALE } from '../../i18n';
 
 const imgStyle = {
   width: '3%',
@@ -69,9 +74,9 @@ export class EditListItem extends React.PureComponent {
     const { item } = this.props.item;
     if (this.props.Museum) {
       item.title = item.name;
-      item.text = item.desc;
       item.priority = '0';
     }
+    const locale = getLocale() || DEFAULT_LOCALE;
     const content = (
       <Wrapper>
         <Popup
@@ -112,11 +117,12 @@ export class EditListItem extends React.PureComponent {
             <Img src={item.image} alt={`${this.state.content}-${item.eid}`} />
           </DivLeft>
           <DivRight>
-            <H2>{item.title}</H2>
+            <H2>{item.title[locale]}</H2>
           </DivRight>
         </div>
         <div>
-          <P>{item.text}</P>
+          <H3>{item.desc[locale]}</H3>
+          <P>{this.props.Feed && item.text[locale]}</P>
         </div>
       </Wrapper>
     );

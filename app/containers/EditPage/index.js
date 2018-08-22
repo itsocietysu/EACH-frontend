@@ -1,4 +1,4 @@
-/* eslint-disable react/no-children-prop,react/prefer-stateless-function */
+/* eslint-disable react/no-children-prop,react/prefer-stateless-function,jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions */
 /*
  * EditPage
  *
@@ -34,6 +34,25 @@ import EditListItem from 'containers/EditListItem';
 import messages from './messages';
 import reducer from './reducer';
 import saga from './saga';
+
+const emptyItem = {
+  eid: '0',
+  image: '',
+  title: { RU: '', EN: '' },
+  text: { RU: '', EN: '' },
+  desc: { RU: '', EN: '' },
+  priority: '0',
+};
+
+const rowStyle = {
+  display: 'flex',
+  flexDirection: 'row',
+};
+
+const refreshStyle = {
+  maxWidth: '27px',
+  cursor: 'pointer',
+};
 
 export class EditPage extends React.Component {
   FeedSet = {
@@ -111,7 +130,7 @@ export class EditPage extends React.Component {
     return (
       <article>
         <Helmet>
-          <title>Edit Museums Page</title>
+          <title>Edit {this.state.default.match} Page</title>
           <meta
             name="description"
             content={`Edit ${
@@ -122,27 +141,33 @@ export class EditPage extends React.Component {
         <H1>
           <FormattedMessage {...this.state.default.messages.header} />
         </H1>
-        <Nav>
-          <Popup
-            trigger={
-              <Button
-                children={
-                  <FormattedMessage {...this.state.default.messages.add} />
-                }
+        <div style={rowStyle}>
+          <Nav>
+            <Popup
+              trigger={
+                <Button
+                  children={
+                    <FormattedMessage {...this.state.default.messages.add} />
+                  }
+                />
+              }
+              item={emptyItem}
+              mod="add"
+              Museum={content === 'museums'}
+              Feed={content === 'news'}
+            />
+          </Nav>
+          {content === 'news' && (
+            <Nav>
+              <img
+                style={refreshStyle}
+                src="/Refresh.png"
+                alt="Refresh"
+                onClick={this.state.default.init}
               />
-            }
-            item={{
-              eid: '0',
-              image: '',
-              title: '',
-              text: '',
-              priority: '0',
-            }}
-            mod="add"
-            Museum={content === 'museums'}
-            Feed={content === 'news'}
-          />
-        </Nav>
+            </Nav>
+          )}
+        </div>
         <DataList {...dataListProps} />
       </article>
     );

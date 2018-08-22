@@ -7,20 +7,44 @@ import { defineMessages } from 'react-intl';
 
 export default defineMessages({
   title: {
-    id: 'each.containers.EditForm.title',
-    defaultMessage: 'Title',
+    RU: {
+      id: 'each.containers.EditForm.titleRU',
+      defaultMessage: 'Title ru',
+    },
+    EN: {
+      id: 'each.containers.EditForm.titleEN',
+      defaultMessage: 'Title en',
+    },
   },
   text: {
-    id: 'each.containers.EditForm.text',
-    defaultMessage: 'Text',
+    RU: {
+      id: 'each.containers.EditForm.textRU',
+      defaultMessage: 'Text ru',
+    },
+    EN: {
+      id: 'each.containers.EditForm.textEN',
+      defaultMessage: 'Text en',
+    },
   },
   name: {
-    id: 'each.containers.EditForm.name',
-    defaultMessage: 'Name',
+    RU: {
+      id: 'each.containers.EditForm.nameRU',
+      defaultMessage: 'Name ru',
+    },
+    EN: {
+      id: 'each.containers.EditForm.nameEN',
+      defaultMessage: 'Name en',
+    },
   },
   desc: {
-    id: 'each.containers.EditForm.desc',
-    defaultMessage: 'Description',
+    RU: {
+      id: 'each.containers.EditForm.descRU',
+      defaultMessage: 'Description ru',
+    },
+    EN: {
+      id: 'each.containers.EditForm.descEN',
+      defaultMessage: 'Description en',
+    },
   },
   priority: {
     id: 'each.containers.EditForm.priority',

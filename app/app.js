@@ -29,6 +29,7 @@ import 'file-loader?name=[name].[ext]!./.htaccess'; // eslint-disable-line impor
 import '!file-loader?name=[name].[ext]!./images/feed_more.png';
 import '!file-loader?name=[name].[ext]!./images/border_top.PNG';
 import '!file-loader?name=[name].[ext]!./images/Photo.png';
+import '!file-loader?name=[name].[ext]!./images/Refresh.png';
 
 import configureStore from './configureStore';
 

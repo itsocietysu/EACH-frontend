@@ -76,6 +76,7 @@ export class EditListItem extends React.PureComponent {
       item.title = item.name;
       item.priority = '0';
     }
+    const locale = getLocale() || DEFAULT_LOCALE;
     const content = (
       <Wrapper>
         <Popup
@@ -116,12 +117,12 @@ export class EditListItem extends React.PureComponent {
             <Img src={item.image} alt={`${this.state.content}-${item.eid}`} />
           </DivLeft>
           <DivRight>
-            <H2>{item.title[getLocale() || DEFAULT_LOCALE]}</H2>
+            <H2>{item.title[locale]}</H2>
           </DivRight>
         </div>
         <div>
-          <H3>{item.desc[getLocale() || DEFAULT_LOCALE]}</H3>
-          <P>{this.props.Feed && item.text[getLocale() || DEFAULT_LOCALE]}</P>
+          <H3>{item.desc[locale]}</H3>
+          <P>{this.props.Feed && item.text[locale]}</P>
         </div>
       </Wrapper>
     );

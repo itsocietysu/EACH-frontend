@@ -17,12 +17,12 @@ const ruTranslationMessages = require('./translations/ru.json');
 addLocaleData(enLocaleData);
 addLocaleData(ruLocaleData);
 
-const DEFAULT_LOCALE = 'ru';
+const DEFAULT_LOCALE = 'RU';
 
 // prettier-ignore
 const appLocales = [
-  'en',
-  'ru',
+  'EN',
+  'RU',
 ];
 
 const formatTranslationMessages = (locale, messages) => {
@@ -41,8 +41,8 @@ const formatTranslationMessages = (locale, messages) => {
 };
 
 const translationMessages = {
-  en: formatTranslationMessages('en', enTranslationMessages),
-  ru: formatTranslationMessages('ru', ruTranslationMessages),
+  EN: formatTranslationMessages('en', enTranslationMessages),
+  RU: formatTranslationMessages('ru', ruTranslationMessages),
 };
 
 exports.appLocales = appLocales;

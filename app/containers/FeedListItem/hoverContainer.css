@@ -1,47 +1,46 @@
-@media screen and (max-width: 1920px) {
-  .flex {
-    display: flex;
-    flex-direction: row;
-  }
+.flex {
+  display: flex;
+  flex-direction: row;
+}
 
-  .container {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    margin: 2px;
-  }
+.container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin: 2px;
+  cursor: pointer;
+}
 
-  .container img {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
+.container img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
 
-  .overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.2);
-    color: white;
-    width: 100%;
-    text-align: center;
-    overflow: hidden;
-    height: 10em;
-    transition: .5s ease;
-  }
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: white;
+  width: 100%;
+  text-align: center;
+  overflow: hidden;
+  height: 10em;
+  transition: .5s ease;
+}
 
-  .overlay H3 {
-    position: absolute;
-    top: 10em;
-    width: 100%;
-    transition: .5s ease;
-    text-align: center;
-  }
+.overlay H3 {
+  position: absolute;
+  top: 10em;
+  width: 100%;
+  transition: .5s ease;
+  text-align: center;
+}
 
-  .container:hover .overlay {
-    height: 100%;
-  }
+.container:hover .overlay {
+  height: 100%;
 }
 
 @media screen and (max-width: 640px) {

@@ -9,11 +9,19 @@ import PropTypes from 'prop-types';
 
 import ListItem from 'components/ListItem';
 import H2 from 'components/H2';
-import P from 'components/P';
-import Img from './Img';
-import DivLeft from './DivLeft';
-import DivRight from './DivRight';
+import H3 from 'components/H3';
 import Wrapper from './Wrapper';
+import './hoverContainer.css';
+
+const ItemDiv = item => (
+  <div className="container">
+    <img src={item.image} alt={`Feed-${item.eid}`} />
+    <div className="overlay">
+      <H2>{item.title}</H2>
+      <H3>{item.text}</H3>
+    </div>
+  </div>
+);
 
 export class FeedListItem extends React.PureComponent {
   render() {
@@ -22,14 +30,9 @@ export class FeedListItem extends React.PureComponent {
     // Put together the content of the feed
     const content = (
       <Wrapper>
-        <div style={{ display: 'flex' }}>
-          <DivLeft>
-            <Img src={item.image} alt={`Feed-${item.eid}`} />
-          </DivLeft>
-          <DivRight>
-            <H2>{item.title}</H2>
-            <P>{item.text}</P>
-          </DivRight>
+        <div className="flex">
+          {ItemDiv(item[0])}
+          {item[1] && ItemDiv(item[1])}
         </div>
       </Wrapper>
     );
@@ -40,7 +43,7 @@ export class FeedListItem extends React.PureComponent {
 }
 
 FeedListItem.propTypes = {
-  item: PropTypes.object,
+  item: PropTypes.array,
 };
 
 export default FeedListItem;

@@ -1,0 +1,91 @@
+.flex {
+  display: flex;
+  flex-direction: row;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin: 2px;
+  cursor: pointer;
+}
+
+.container img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: white;
+  width: 100%;
+  text-align: center;
+  overflow: hidden;
+  height: 10em;
+  transition: .5s ease;
+}
+
+.overlay H3 {
+  position: absolute;
+  top: 10em;
+  width: 100%;
+  transition: .5s ease;
+  text-align: center;
+}
+
+.container:hover .overlay {
+  height: 100%;
+}
+
+@media screen and (max-width: 640px) {
+  .flex {
+    flex-direction: column;
+  }
+
+  .overlay {
+    height: 6em;
+  }
+
+  .overlay H3 {
+    font-size: 0.91em;
+    top: 6em;
+  }
+
+  .overlay H2 {
+    font-size: 1.17em;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .overlay {
+    height: 5em;
+  }
+
+  .overlay H3 {
+    font-size: 0.77em;
+  }
+
+  .overlay H2 {
+    font-size: 1em;
+  }
+}
+
+@media screen and (max-width: 280px) {
+  .overlay {
+    height: 4em;
+  }
+
+  .overlay H3 {
+    font-size: 0.55em;
+  }
+
+  .overlay H2 {
+    font-size: 0.7em;
+  }
+}

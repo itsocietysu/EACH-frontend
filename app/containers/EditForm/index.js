@@ -1,4 +1,4 @@
-/* eslint-disable prettier/prettier,react/prefer-stateless-function,react/no-children-prop */
+/* eslint-disable prettier/prettier,react/prefer-stateless-function,react/no-children-prop,no-restricted-syntax */
 import React from 'react';
 import Popup from 'reactjs-popup';
 import PropTypes from 'prop-types';
@@ -80,6 +80,19 @@ const MuseumSet = {
   messages: {
     title: messages.name,
   },
+};
+
+const isEmpty = props => {
+  const empty = appLocales.map(locale => !!(!props.title.get(locale) ||
+      !props.desc.get(locale) ||
+      (props.Feed && !props.text.get(locale)) ||
+      !props.image ||
+      (props.Feed && !props.priority)));
+  for (const key in empty) {
+    if (empty[key])
+      return true;
+  }
+  return false;
 };
 
 class EditForm extends React.Component {
@@ -166,13 +179,7 @@ class EditForm extends React.Component {
               <Button
                 children={<FormattedMessage {...messages.confirm} />}
                 onClick={() => {
-                  if (
-                    !this.props.title ||
-                    !this.props.desc ||
-                    (this.props.Feed && !this.props.text) ||
-                    !this.props.image ||
-                    (this.props.Feed && !this.props.priority)
-                  )
+                  if (isEmpty(this.props))
                     this.props.onChangeOpenMsg(messages.empty);
                   else {
                     const base64 = getCroppedImg(this.props.imageByCrop, this.props.pixelCrop);

@@ -8,6 +8,7 @@
 export const CHANGE_IMAGE = 'each/EditForm/CHANGE_IMAGE';
 export const CHANGE_TITLE = 'each/EditForm/CHANGE_TITLE';
 export const CHANGE_TEXT = 'each/EditForm/CHANGE_TEXT';
+export const CHANGE_DESC = 'each/EditForm/CHANGE_DESC';
 export const CHANGE_PRIORITY = 'each/EditForm/CHANGE_PRIORITY';
 export const CHANGE_DATA = 'each/EditForm/CHANGE_DATA';
 export const CHANGE_OPEN_MSG = 'each/EditForm/CHANGE_OPEN_MSG';

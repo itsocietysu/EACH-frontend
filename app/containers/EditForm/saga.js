@@ -17,6 +17,7 @@ import { museumsLoaded } from 'containers/MuseumsPage/actions';
 export function* sendFeed() {
   const mod = yield select(makeSelectMod());
   const newsData = yield select(makeSelectFormData());
+  const data = yield select(makeSelectNewsData());
   const requestURL = `http://each.itsociety.su:4201/each/feed`;
   const options = {
     method: 'POST',
@@ -36,10 +37,9 @@ export function* sendFeed() {
   if (mod === 'edit') options.method = 'PUT';
   try {
     const resp = yield call(requestAuth, requestURL, options);
-    const data = yield select(makeSelectNewsData());
     let newData = data;
     if (mod === 'add') {
-      newData = data.concat([
+      newData = [
         {
           eid: resp[0].eid,
           title: resp[0].title,
@@ -47,7 +47,7 @@ export function* sendFeed() {
           image: `http://${resp[0].image[0].url}`,
           priority: `${resp[0].priority[0]}`,
         },
-      ]);
+      ].concat(data);
     } else {
       newData = data.map(element => {
         if (element.eid === resp[0].eid) {
@@ -75,6 +75,7 @@ export function* sendFeed() {
 export function* sendMuseum() {
   const mod = yield select(makeSelectMod());
   const museumData = yield select(makeSelectFormData());
+  const data = yield select(makeSelectMuseumsData());
   let requestURL = `http://each.itsociety.su:4201/each/add`;
   const options = {
     method: 'POST',
@@ -83,9 +84,8 @@ export function* sendMuseum() {
     },
     body: JSON.stringify({
       id: museumData.get('eid'),
-      ownerid: 96,
       name: museumData.get('title'),
-      desc: museumData.get('text'),
+      desc: museumData.get('desc'),
       prop: {
         image: museumData.get('image'),
       },
@@ -97,17 +97,16 @@ export function* sendMuseum() {
   }
   try {
     const resp = yield call(requestAuth, requestURL, options);
-    const data = yield select(makeSelectMuseumsData());
     let newData = data;
     if (mod === 'add') {
-      newData = data.concat([
+      newData = [
         {
           eid: resp[0].eid,
           name: resp[0].name,
           desc: resp[0].desc,
           image: `http://${resp[0].image[0].url}`,
         },
-      ]);
+      ].concat(data);
     } else {
       newData = data.map(element => {
         if (element.eid === resp[0].eid) {

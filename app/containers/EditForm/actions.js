@@ -12,6 +12,7 @@
 import {
   CHANGE_TITLE,
   CHANGE_TEXT,
+  CHANGE_DESC,
   CHANGE_IMAGE,
   CHANGE_PRIORITY,
   CHANGE_DATA,
@@ -25,28 +26,51 @@ import {
 /**
  * Changes the input field of the form
  *
- * @param  {string} title The new text of the input field
+ * @param  {object} title The new text of the textarea field
+ *
+ * @param  {string} locale The locale of the textarea field
  *
  * @return {object}    An action object with a type of CHANGE_TITLE passing the title
  */
-export function changeTitle(title) {
+export function changeTitle(title, locale) {
   return {
     type: CHANGE_TITLE,
     title,
+    locale,
   };
 }
 
 /**
  * Changes the input field of the form
  *
- * @param  {string} text The new text of the input field
+ * @param  {object} text The new text of the textarea field
+ *
+ * @param  {string} locale The locale of the textarea field
  *
  * @return {object}    An action object with a type of CHANGE_TEXT passing the text
  */
-export function changeText(text) {
+export function changeText(text, locale) {
   return {
     type: CHANGE_TEXT,
     text,
+    locale,
+  };
+}
+
+/**
+ * Changes the input field of the form
+ *
+ * @param  {object} desc The new desc of the textarea field
+ *
+ * @param  {string} locale The locale of the textarea field
+ *
+ * @return {object}    An action object with a type of CHANGE_DESC passing the desc
+ */
+export function changeDesc(desc, locale) {
+  return {
+    type: CHANGE_DESC,
+    desc,
+    locale,
   };
 }
 

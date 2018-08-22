@@ -22,6 +22,11 @@ const makeSelectText = () =>
     editFormState.getIn(['formData', 'text']),
   );
 
+const makeSelectDesc = () =>
+  createSelector(selectEditForm, editFormState =>
+    editFormState.getIn(['formData', 'desc']),
+  );
+
 const makeSelectPriority = () =>
   createSelector(selectEditForm, editFormState =>
     editFormState.getIn(['formData', 'priority']),
@@ -48,6 +53,7 @@ export {
   makeSelectImage,
   makeSelectTitle,
   makeSelectText,
+  makeSelectDesc,
   makeSelectPriority,
   makeSelectFormData,
   makeSelectMod,

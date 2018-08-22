@@ -12,6 +12,7 @@ import { fromJS } from 'immutable';
 import {
   CHANGE_TITLE,
   CHANGE_TEXT,
+  CHANGE_DESC,
   CHANGE_IMAGE,
   CHANGE_PRIORITY,
   CHANGE_DATA,
@@ -26,8 +27,9 @@ export const initialState = fromJS({
   formData: {
     eid: '',
     image: '',
-    title: '',
-    text: '',
+    title: { RU: '', EN: '' },
+    text: { RU: '', EN: '' },
+    desc: { RU: '', EN: '' },
     priority: '',
   },
   mod: 'add',
@@ -42,17 +44,20 @@ function editFormReducer(state = initialState, action) {
     case CHANGE_IMAGE:
       return state.setIn(['formData', 'image'], action.image);
     case CHANGE_TITLE:
-      return state.setIn(['formData', 'title'], action.title);
+      return state.setIn(['formData', 'title', `${action.locale}`], action.title);
     case CHANGE_TEXT:
-      return state.setIn(['formData', 'text'], action.text);
+      return state.setIn(['formData', 'text', `${action.locale}`], action.text);
+    case CHANGE_DESC:
+      return state.setIn(['formData', 'desc', `${action.locale}`], action.desc);
     case CHANGE_PRIORITY:
       return state.setIn(['formData', 'priority'], action.priority);
     case CHANGE_DATA:
       return state
         .setIn(['formData', 'eid'], action.data.eid)
         .setIn(['formData', 'image'], action.data.image)
-        .setIn(['formData', 'title'], action.data.title)
-        .setIn(['formData', 'text'], action.data.text)
+        .setIn(['formData', 'title'], fromJS(action.data.title))
+        .setIn(['formData', 'text'], fromJS(action.data.text))
+        .setIn(['formData', 'desc'], fromJS(action.data.desc))
         .setIn(['formData', 'priority'], action.data.priority)
         .set('mod', action.mod);
     case CHANGE_OPEN_MSG:

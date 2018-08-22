@@ -1,4 +1,4 @@
-/* eslint-disable prettier/prettier,react/prefer-stateless-function,react/no-children-prop,no-restricted-syntax */
+/* eslint-disable prettier/prettier,react/prefer-stateless-function,react/no-children-prop,no-restricted-syntax,no-unused-expressions */
 import React from 'react';
 import Popup from 'reactjs-popup';
 import PropTypes from 'prop-types';
@@ -126,7 +126,7 @@ class EditForm extends React.Component {
           change={evt => this.props.onChangeDesc(evt, locale)}
         />
       );
-      text.push(
+      this.props.Feed && text.push(
         <TextArea
           key={`text-${this.props.item.eid}-${locale}`}
           name={`text-${this.props.item.eid}-${locale}`}

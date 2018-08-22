@@ -89,8 +89,8 @@ export function* sendMuseum() {
     },
     body: JSON.stringify({
       id: museumData.get('eid'),
-      name: museumData.get('title'),
-      desc: museumData.get('desc'),
+      name: museumData.get('title').get('RU'),
+      desc: museumData.get('desc').get('RU'),
       prop: {
         image: museumData.get('image'),
       },
@@ -107,8 +107,8 @@ export function* sendMuseum() {
       newData = [
         {
           eid: resp[0].eid,
-          name: resp[0].name,
-          desc: resp[0].desc,
+          name: { RU: resp[0].name, EN: resp[0].name },
+          desc: { RU: resp[0].desc, EN: resp[0].desc },
           image: `http://${resp[0].image[0].url}`,
         },
       ].concat(data);
@@ -117,8 +117,8 @@ export function* sendMuseum() {
         if (element.eid === resp[0].eid) {
           return {
             eid: resp[0].eid,
-            name: resp[0].name,
-            desc: resp[0].desc,
+            name: { RU: resp[0].name, EN: resp[0].name },
+            desc: { RU: resp[0].desc, EN: resp[0].desc },
             image: `http://${resp[0].image[0].url}`,
           };
         }

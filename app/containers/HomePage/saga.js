@@ -18,6 +18,7 @@ export function* loadFeeds() {
         eid: item.eid,
         title: item.title,
         text: item.text,
+        desc: item.desc,
         image: `${
           item.image[0] ? `http://${item.image[0].url}` : '/Photo.png'
         }`,

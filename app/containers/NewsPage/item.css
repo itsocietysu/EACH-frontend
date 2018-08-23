@@ -1,0 +1,50 @@
+.wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.divUp {
+  display: flex;
+}
+
+.divSep {
+  margin-left: 15px;
+}
+
+@media screen and (max-width: 640px) {
+  .divSep {
+    margin-left: 10px;
+  }
+
+  .divUp .divSep H1 {
+    font-size: 1.56em;
+  }
+
+  .wrapper P {
+    font-size: small;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .divSep {
+    margin-left: 7px;
+  }
+
+  .divUp .divSep H1 {
+    font-size: 1.3em;
+  }
+}
+
+@media screen and (max-width: 280px) {
+  .divSep {
+    margin-left: 5px;
+  }
+
+  .divUp .divSep H1 {
+    font-size: 0.93em;
+  }
+
+  .wrapper P {
+    font-size: x-small;
+  }
+}

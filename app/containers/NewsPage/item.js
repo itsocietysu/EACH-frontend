@@ -10,7 +10,7 @@ import P from 'components/P';
 import { getLocale } from 'cookieManager';
 import { DEFAULT_LOCALE } from '../../i18n';
 
-const DivUpStyle = { display: 'flex' };
+import './item.css';
 
 class Item extends React.Component {
   componentDidMount() {
@@ -25,12 +25,12 @@ class Item extends React.Component {
     const { item } = this.props;
     const locale = getLocale() || DEFAULT_LOCALE;
     return (
-      <div>
-        <div style={DivUpStyle}>
+      <div className="wrapper">
+        <div className="divUp">
           <DivSep width="50%">
             <Img src={item.image} alt={`Feed-${item.eid}`} />
           </DivSep>
-          <DivSep width="50%" marginLeft="15px">
+          <DivSep width="50%" className="divSep">
             <H1>{item.title[locale]}</H1>
           </DivSep>
         </div>

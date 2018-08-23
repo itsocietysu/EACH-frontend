@@ -11,8 +11,7 @@ import ListItem from 'components/ListItem';
 import H2 from 'components/H2';
 import P from 'components/P';
 import Img from 'containers/FeedListItem/Img';
-import DivLeft from 'containers/FeedListItem/DivLeft';
-import DivRight from 'containers/FeedListItem/DivRight';
+import DivSep from 'containers/FeedListItem/DivSep';
 import Wrapper from './Wrapper';
 
 export class MuseumListItem extends React.PureComponent {
@@ -23,12 +22,12 @@ export class MuseumListItem extends React.PureComponent {
     const content = (
       <Wrapper>
         <div style={{ display: 'flex' }}>
-          <DivLeft>
+          <DivSep width="30%">
             <Img src={item.image} alt={`Museum-${item.eid}`} />
-          </DivLeft>
-          <DivRight>
+          </DivSep>
+          <DivSep width="70%" marginLeft="15px">
             <H2>{item.name}</H2>
-          </DivRight>
+          </DivSep>
         </div>
         <div>
           <P>{item.desc}</P>

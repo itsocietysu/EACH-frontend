@@ -20,8 +20,7 @@ import P from 'components/P';
 import PopupEl from 'containers/EditForm';
 import Button from 'components/Button';
 import Img from 'containers/FeedListItem/Img';
-import DivLeft from 'containers/FeedListItem/DivLeft';
-import DivRight from 'containers/FeedListItem/DivRight';
+import DivSep from 'containers/FeedListItem/DivSep';
 import Wrapper from 'containers/FeedListItem/Wrapper';
 import Nav from 'containers/LinkList/Nav';
 import MsgBox from 'components/MsgBox';
@@ -113,12 +112,12 @@ export class EditListItem extends React.PureComponent {
           </Nav>
         </Popup>
         <div style={{ display: 'flex' }}>
-          <DivLeft>
+          <DivSep width="30%">
             <Img src={item.image} alt={`${this.state.content}-${item.eid}`} />
-          </DivLeft>
-          <DivRight>
+          </DivSep>
+          <DivSep width="70%" marginLeft="15px">
             <H2>{item.title[locale]}</H2>
-          </DivRight>
+          </DivSep>
         </div>
         <div>
           <H3>{item.desc[locale]}</H3>

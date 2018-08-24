@@ -2,14 +2,16 @@ import React from 'react';
 
 import PageLayout from 'components/PageLayout';
 import Header from 'components/Header';
+import HeaderSimply from 'components/HeaderSimply';
 import Footer from 'components/Footer';
 
 import HomePage from 'containers/HomePage/Loadable';
 import FeaturePage from 'containers/FeaturePage/Loadable';
 import MuseumsPage from 'containers/MuseumsPage/Loadable';
 import AuthPage from 'containers/AuthPage/Loadable';
-import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import EditPage from 'containers/EditPage/Loadable';
+import NewsPage from 'containers/NewsPage/Loadable';
+import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 class Route {
   path: string;
@@ -47,7 +49,7 @@ const FeatureRoute = (() => {
   return r;
 })();
 
-const MuseumRoute = (() => {
+const MuseumsRoute = (() => {
   const r = new Route();
   r.path = '/museums';
   r.exact = false;
@@ -62,6 +64,16 @@ const EditRoute = (() => {
   r.exact = false;
   r.auth = true;
   r.component = ({ match }) => Page(Header, EditPage, Footer, match.params);
+  return r;
+})();
+
+const NewsRoute = (() => {
+  const r = new Route();
+  r.path = '/news/:newsId';
+  r.exact = false;
+  r.auth = false;
+  r.component = ({ match }) =>
+    Page(HeaderSimply, NewsPage, Footer, match.params);
   return r;
 })();
 
@@ -86,8 +98,9 @@ const NotFoundRoute = (() => {
 const routes: Array<Route> = [
   HomeRoute,
   FeatureRoute,
-  MuseumRoute,
+  MuseumsRoute,
   EditRoute,
+  NewsRoute,
   AuthRoute,
   NotFoundRoute,
 ];

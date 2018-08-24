@@ -7,6 +7,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
 import { getLocale } from 'cookieManager';
 
@@ -18,14 +19,28 @@ import './hoverContainer.css';
 
 import { DEFAULT_LOCALE } from '../../i18n';
 
-const ItemDiv = item => {
+const ItemDiv = (item, history) => {
   const locale = getLocale() || DEFAULT_LOCALE;
   return (
-    <div className="container">
+    <div
+      className="container"
+      onClick={() =>
+        !document.documentElement.classList.contains('can-touch') &&
+        history.push(`/news/${item.eid}`)
+      }
+    >
       <img src={item.image} alt={`Feed-${item.eid}`} />
       <div className="overlay">
         <H2>{item.title[locale]}</H2>
         <H3>{item.desc[locale]}</H3>
+        <div
+          onClick={() =>
+            document.documentElement.classList.contains('can-touch') &&
+            history.push(`/news/${item.eid}`)
+          }
+        >
+          Click Me!!!
+        </div>
       </div>
     </div>
   );
@@ -39,8 +54,8 @@ export class FeedListItem extends React.PureComponent {
     const content = (
       <Wrapper>
         <div className="flex">
-          {ItemDiv(item[0])}
-          {item[1] && ItemDiv(item[1])}
+          {ItemDiv(item[0], this.props.history)}
+          {item[1] && ItemDiv(item[1], this.props.history)}
         </div>
       </Wrapper>
     );
@@ -52,6 +67,7 @@ export class FeedListItem extends React.PureComponent {
 
 FeedListItem.propTypes = {
   item: PropTypes.array,
+  history: PropTypes.object,
 };
 
-export default FeedListItem;
+export default withRouter(FeedListItem);

@@ -1,0 +1,12 @@
+.navBar {
+  overflow: hidden;
+  text-align: left;
+}
+
+.navBar div {
+  float: left;
+}
+
+.toggle {
+  text-align: right;
+}

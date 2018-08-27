@@ -8,6 +8,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 
 import { getLocale } from 'cookieManager';
 
@@ -15,6 +16,7 @@ import ListItem from 'components/ListItem';
 import H2 from 'components/H2';
 import H3 from 'components/H3';
 import Wrapper from './Wrapper';
+import messages from './messages';
 import './hoverContainer.css';
 
 import { DEFAULT_LOCALE } from '../../i18n';
@@ -32,14 +34,17 @@ const ItemDiv = (item, history) => {
       <img src={item.image} alt={`Feed-${item.eid}`} />
       <div className="overlay">
         <H2>{item.title[locale]}</H2>
-        <H3>{item.desc[locale]}</H3>
+        <H3 className="desc">{item.desc[locale]}</H3>
         <div
           onClick={() =>
             document.documentElement.classList.contains('can-touch') &&
             history.push(`/news/${item.eid}`)
           }
         >
-          Click Me!!!
+          <H3>
+            <FormattedMessage {...messages.Goto} />
+            <i className="fas fa-angle-right" />
+          </H3>
         </div>
       </div>
     </div>

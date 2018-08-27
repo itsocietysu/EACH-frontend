@@ -20,6 +20,7 @@
   "each.containers.HomePage.start_project.header": "EACH",
   "each.containers.HomePage.start_project.message": "Hello World!",
   "each.containers.HomePage.feeds.header": "Feeds",
+  "each.containers.FeedListItem.Goto": "Go to ",
   "each.containers.EditPage.headerFeed": "Editing news",
   "each.containers.EditPage.addFeed": "Add news",
   "each.containers.EditPage.headerMuseum": "Editing museums",

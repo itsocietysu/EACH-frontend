@@ -43,7 +43,7 @@ const ItemDiv = (item, history) => {
         >
           <H3>
             <FormattedMessage {...messages.Goto} />
-            <i className="fas fa-angle-right" />
+            <i className="fas fa-chevron-right" />
           </H3>
         </div>
       </div>

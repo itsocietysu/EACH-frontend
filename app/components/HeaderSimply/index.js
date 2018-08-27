@@ -6,6 +6,7 @@ import HeaderLink from '../Header/HeaderLink';
 import messages from '../Header/messages';
 import LocaleToggle from '../../containers/LocaleToggle';
 import '../Header/index.css';
+import './index.css';
 
 class HeaderSimply extends React.Component {
   render() {
@@ -16,7 +17,7 @@ class HeaderSimply extends React.Component {
             <FormattedMessage {...messages.home} />
           </HeaderLink>
         </div>
-        <section className="toggle">
+        <section className="toggleSimply">
           <LocaleToggle />
         </section>
       </div>

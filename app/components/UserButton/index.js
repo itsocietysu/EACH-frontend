@@ -3,27 +3,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { makeSelectCurrentUser } from 'containers/App/selectors';
-
-import { getLogined } from 'cookieManager';
-
-import injectSaga from 'utils/injectSaga';
-import LoginButton from 'containers/LoginButton';
-import UserPanel from 'containers/UserPanel';
-import { getUserData } from 'containers/App/actions';
-import saga from 'containers/App/saga';
 import { compose } from 'redux';
 
+import { makeSelectCurrentUser } from '../../containers/App/selectors';
+
+import { getLogined, getUser } from '../../cookieManager';
+
+import injectSaga from '../../utils/injectSaga';
+import LoginButton from '../../containers/LoginButton';
+import UserPanel from '../../containers/UserPanel';
+import { getUserData } from '../../containers/App/actions';
+import saga from '../../containers/App/saga';
+
 class UserButton extends React.Component {
-  componentWillMount() {
-    if (getLogined() === 'true') this.props.onAuth();
+  componentDidMount() {
+    if (getLogined() === 'true' && !this.props.user.name) this.props.onAuth();
   }
   render() {
-    if (getLogined() === 'true' && this.props.user.get('name') !== '')
+    if (getLogined() === 'true' && getUser())
       return (
         <UserPanel
-          username={this.props.user.get('name')}
-          accessType={this.props.user.get('accessType')}
+          username={getUser()}
+          accessType={this.props.user.accessType}
         />
       );
     return <LoginButton />;

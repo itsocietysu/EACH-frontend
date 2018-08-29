@@ -3,8 +3,9 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { GET_USER_DATA } from './constants';
 import { userdataGot, newError } from './actions';
 
-import request from 'utils/request';
-import { getSession, setLogined } from 'cookieManager';
+import request from '../../utils/request';
+import { getSession, setUser } from '../../cookieManager';
+import { Logout } from '../LogoutButton/index';
 
 /**
  * User data get handler
@@ -17,12 +18,13 @@ export function* getUser() {
       name: user.name,
       accessType: user.access_type,
     };
+    setUser(user.name);
     yield put(userdataGot(data));
   } catch (err) {
+    Logout();
     yield put(
       newError({ source: 'user', level: 'error', message: err.message }),
     );
-    setLogined(false);
   }
 }
 

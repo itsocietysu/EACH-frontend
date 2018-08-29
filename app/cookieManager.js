@@ -18,10 +18,26 @@ export function getSession() {
   return cookies.get('user_session');
 }
 
+export function rmSession() {
+  return cookies.remove('user_session', { path: '/' });
+}
+
 export function setLocale(locale) {
   cookies.set('locale', locale, { path: '/' });
 }
 
 export function getLocale() {
   return cookies.get('locale');
+}
+
+export function setUser(user) {
+  cookies.set('cur_user', user, { path: '/' });
+}
+
+export function getUser() {
+  return cookies.get('cur_user');
+}
+
+export function rmUser() {
+  return cookies.remove('cur_user', { path: '/' });
 }

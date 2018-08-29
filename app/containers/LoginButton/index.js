@@ -9,8 +9,9 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 
-import oauth2Authorize from 'containers/AuthPage/oauth2-authorize';
-import { getUserData, clearError, newError } from 'containers/App/actions';
+import { getLogined } from '../../cookieManager';
+import oauth2Authorize from '../AuthPage/oauth2-authorize';
+import { getUserData, clearError, newError } from '../App/actions';
 import Button from './Button';
 import messages from './messages';
 
@@ -41,7 +42,7 @@ export class LoginButton extends React.Component {
     if (this.state.authWindow && this.state.authWindow.closed) {
       clearInterval(this.state.authTimer);
       this.setState({ authTimer: null, authWindow: null });
-      this.props.onAuth();
+      if (getLogined() === 'true') this.props.onAuth();
     }
   }
 

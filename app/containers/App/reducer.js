@@ -31,10 +31,9 @@ export const initialState = fromJS({
 });
 
 function appReducer(state = initialState, action) {
-  const errors = state.get('errors');
   switch (action.type) {
     case CLEAR_ERROR:
-      return state.set('errors', []);
+      return state.set('errors', fromJS([]));
     case GET_USER_DATA:
       return state
         .setIn(['userData', 'name'], '')
@@ -46,7 +45,7 @@ function appReducer(state = initialState, action) {
         .setIn(['userData', 'accessType'], action.data.accessType)
         .set('loading', false);
     case NEW_ERROR:
-      return state.set('errors', errors.concat(action.error));
+      return state.set('errors', state.get('errors').concat(action.error));
     default:
       return state;
   }

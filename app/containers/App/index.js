@@ -10,11 +10,10 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
-import { Switch, Route, Redirect } from 'react-router-dom';
-
-import { getLogined, getSession } from 'cookieManager';
+import { Switch, Route } from 'react-router-dom';
 
 import routes from 'routeConfig';
+import AuthRoute from '../../authRoute';
 
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
@@ -25,13 +24,6 @@ const AppWrapper = styled.div`
   flex-direction: column;
   background-color: white;
 `;
-
-const AuthRoute = ({ component: Component, ...rest }) =>
-  getLogined() === 'true' && getSession() ? (
-    <Route {...rest} component={Component} />
-  ) : (
-    <Redirect to="/" />
-  );
 
 export default function App() {
   return (

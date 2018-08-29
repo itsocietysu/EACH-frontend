@@ -11,11 +11,17 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 
 import { withRouter } from 'react-router-dom';
-import { setSession, setLogined } from 'cookieManager';
+import { rmSession, setLogined, rmUser } from '../../cookieManager';
 
-import Button from 'components/Button';
-import { userdataGot } from 'containers/App/actions';
+import Button from '../../components/Button';
+import { userdataGot } from '../../containers/App/actions';
 import messages from './messages';
+
+export function Logout() {
+  setLogined(false);
+  rmSession();
+  rmUser();
+}
 
 class LogoutButton extends React.Component {
   render() {
@@ -38,8 +44,7 @@ LogoutButton.propTypes = {
 export function mapDispatchToProps(dispatch) {
   return {
     onLogout: () => {
-      setLogined(false);
-      setSession('');
+      Logout();
       dispatch(userdataGot({ name: '', accessType: 'user' }));
     },
   };

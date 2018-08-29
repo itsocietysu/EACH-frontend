@@ -7,15 +7,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ListItem from 'components/ListItem';
-import H2 from 'components/H2';
-import P from 'components/P';
-import Img from 'containers/FeedListItem/Img';
-import DivSep from 'containers/FeedListItem/DivSep';
+import { getLocale } from '../../cookieManager';
+
+import ListItem from '../../components/ListItem';
+import H2 from '../../components/H2';
+import P from '../../components/P';
+import Img from '../FeedListItem/Img';
+import DivSep from '../FeedListItem/DivSep';
 import Wrapper from './Wrapper';
+import { DEFAULT_LOCALE } from '../../i18n';
 
 export class MuseumListItem extends React.PureComponent {
   render() {
+    const locale = getLocale() || DEFAULT_LOCALE;
     const { item } = this.props;
 
     // Put together the content of the museum
@@ -26,11 +30,11 @@ export class MuseumListItem extends React.PureComponent {
             <Img src={item.image} alt={`Museum-${item.eid}`} />
           </DivSep>
           <DivSep width="70%" marginLeft="15px">
-            <H2>{item.name}</H2>
+            <H2>{item.name[locale]}</H2>
           </DivSep>
         </div>
         <div>
-          <P>{item.desc}</P>
+          <P>{item.desc[locale]}</P>
         </div>
       </Wrapper>
     );

@@ -167,6 +167,7 @@ class EditForm extends React.Component {
                   <ImageCrop
                     image={`data:image/jpeg;base64,${image}`}
                     style={ImageCropStyle}
+                    mod={this.props.mod}
                   />
                 ) : (
                   <Img

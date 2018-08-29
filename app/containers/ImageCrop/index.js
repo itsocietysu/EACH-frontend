@@ -69,7 +69,9 @@ export class ImageCrop extends React.Component {
           <ReactCrop
             src={this.props.image}
             crop={this.props.crop}
-            onImageLoaded={image => this.props.onImageLoaded(image)}
+            onImageLoaded={image =>
+              this.props.onImageLoaded(image, this.props.mod)
+            }
             onChange={(crop, pixelCrop) =>
               this.props.onCropChange(crop, pixelCrop)
             }
@@ -92,14 +94,17 @@ ImageCrop.propTypes = {
   onCropChange: PropTypes.func,
   crop: PropTypes.object,
   sizes: PropTypes.object,
+  mod: PropTypes.string,
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onImageLoaded: image => {
+    onImageLoaded: (image, mod) => {
       const minWidth = 25600 / image.naturalWidth;
       const minHeight = 25600 / image.naturalHeight;
-      const crop = makeAspectCrop(
+      const maxWidth = 102400 / image.naturalWidth;
+      const maxHeight = 102400 / image.naturalHeight;
+      let crop = makeAspectCrop(
         {
           x: (100 - minWidth) / 2,
           y: (100 - minHeight) / 2,
@@ -108,11 +113,23 @@ export function mapDispatchToProps(dispatch) {
         },
         image.naturalWidth / image.naturalHeight,
       );
+      if (mod === 'edit') {
+        const min = Math.min(100, maxWidth);
+        crop = makeAspectCrop(
+          {
+            x: (100 - min) / 2,
+            y: (100 - min) / 2,
+            aspect: 1,
+            width: min,
+          },
+          image.naturalWidth / image.naturalHeight,
+        );
+      }
       const pixelCrop = getPixelCrop(image, crop);
       dispatch(
         imageLoaded(image, crop, pixelCrop, {
-          maxWidth: 102400 / image.naturalWidth,
-          maxHeight: 102400 / image.naturalHeight,
+          maxWidth,
+          maxHeight,
           minWidth,
           minHeight,
         }),

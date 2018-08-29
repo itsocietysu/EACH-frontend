@@ -7,34 +7,9 @@ import { initialState } from './reducer';
 
 const selectEditForm = state => state.get('editForm', initialState);
 
-const makeSelectImage = () =>
-  createSelector(selectEditForm, editFormState =>
-    editFormState.getIn(['formData', 'image']),
-  );
-
-const makeSelectTitle = () =>
-  createSelector(selectEditForm, editFormState =>
-    editFormState.getIn(['formData', 'title']),
-  );
-
-const makeSelectText = () =>
-  createSelector(selectEditForm, editFormState =>
-    editFormState.getIn(['formData', 'text']),
-  );
-
-const makeSelectDesc = () =>
-  createSelector(selectEditForm, editFormState =>
-    editFormState.getIn(['formData', 'desc']),
-  );
-
-const makeSelectPriority = () =>
-  createSelector(selectEditForm, editFormState =>
-    editFormState.getIn(['formData', 'priority']),
-  );
-
 const makeSelectFormData = () =>
   createSelector(selectEditForm, editFormState =>
-    editFormState.get('formData'),
+    editFormState.get('formData').toJS(),
   );
 
 const makeSelectMod = () =>
@@ -50,11 +25,6 @@ const makeSelectOpenMsg = () =>
 
 export {
   selectEditForm,
-  makeSelectImage,
-  makeSelectTitle,
-  makeSelectText,
-  makeSelectDesc,
-  makeSelectPriority,
   makeSelectFormData,
   makeSelectMod,
   makeSelectMessage,

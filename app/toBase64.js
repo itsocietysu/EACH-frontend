@@ -6,7 +6,7 @@ function encodeImageFileAsURL(file, callback) {
   reader.readAsDataURL(file);
 }
 
-const toDataURL = url =>
+export const toDataURL = url =>
   fetch(url)
     .then(response => response.blob())
     .then(

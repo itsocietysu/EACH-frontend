@@ -10,9 +10,7 @@
 import { fromJS } from 'immutable';
 
 import {
-  CHANGE_TITLE,
   CHANGE_TEXT,
-  CHANGE_DESC,
   CHANGE_IMAGE,
   CHANGE_PRIORITY,
   CHANGE_DATA,
@@ -43,12 +41,8 @@ function editFormReducer(state = initialState, action) {
   switch (action.type) {
     case CHANGE_IMAGE:
       return state.setIn(['formData', 'image'], action.image);
-    case CHANGE_TITLE:
-      return state.setIn(['formData', 'title', `${action.locale}`], action.title);
     case CHANGE_TEXT:
-      return state.setIn(['formData', 'text', `${action.locale}`], action.text);
-    case CHANGE_DESC:
-      return state.setIn(['formData', 'desc', `${action.locale}`], action.desc);
+      return state.setIn(['formData', action.field, action.locale], action.text);
     case CHANGE_PRIORITY:
       return state.setIn(['formData', 'priority'], action.priority);
     case CHANGE_DATA:

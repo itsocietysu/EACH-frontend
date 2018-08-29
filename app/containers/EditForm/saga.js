@@ -1,15 +1,39 @@
-/* eslint-disable import/first */
+/* eslint-disable no-param-reassign */
 import { select, call, put, takeLatest } from 'redux-saga/effects';
 import { SEND_FEED_DATA, SEND_MUSEUM_DATA } from './constants';
 import { dataSent, dataSendingError } from './actions';
 
-import requestAuth from 'utils/requestAuth';
+import requestAuth from '../../utils/requestAuth';
 import { makeSelectFormData, makeSelectMod } from './selectors';
 
-import { makeSelectData as makeSelectNewsData } from 'containers/HomePage/selectors';
-import { feedsLoaded } from 'containers/HomePage/actions';
-import { makeSelectData as makeSelectMuseumsData } from 'containers/MuseumsPage/selectors';
-import { museumsLoaded } from 'containers/MuseumsPage/actions';
+import { makeSelectData as makeSelectNewsData } from '../HomePage/selectors';
+import { feedsLoaded } from '../HomePage/actions';
+import { makeSelectData as makeSelectMuseumsData } from '../MuseumsPage/selectors';
+import { museumsLoaded } from '../MuseumsPage/actions';
+
+import { appLocales } from '../../i18n';
+import { toDataURL } from '../../toBase64';
+
+function isChange(body, fields, propFields, newData, oldData) {
+  let change = false;
+  fields.forEach(field => {
+    appLocales.forEach(locale => {
+      if (newData[field][locale] !== oldData[field][locale]) {
+        if (!body[field]) body[field] = {};
+        body[field][locale] = newData[field][locale];
+        change = true;
+      }
+    });
+  });
+  propFields.forEach(field => {
+    if (newData[field] !== oldData[field]) {
+      if (!body.prop) body.prop = {};
+      body.prop[field] = newData[field];
+      change = true;
+    }
+  });
+  return change ? body : false;
+}
 
 /**
  * Feed data send handler
@@ -19,24 +43,52 @@ export function* sendFeed() {
   const newsData = yield select(makeSelectFormData());
   const data = yield select(makeSelectNewsData());
   const requestURL = `http://each.itsociety.su:4201/each/feed`;
+  let body = {};
+  let method = 'POST';
+  if (mod === 'add')
+    body = {
+      id: newsData.eid,
+      title: newsData.title,
+      text: newsData.text,
+      desc: newsData.desc,
+      prop: {
+        image: newsData.image,
+        priority: newsData.priority,
+      },
+    };
+  else {
+    method = 'PUT';
+    body.id = newsData.eid;
+    const oldData = data.map(feed => feed.eid === newsData.eid && feed)[0];
+    const oldImage = yield call(toDataURL, oldData.image);
+    const oldDataWithBase64 = {
+      eid: oldData.eid,
+      title: oldData.title,
+      text: oldData.text,
+      desc: oldData.desc,
+      image: oldImage.replace(/^data:image\/(png|jpg|jpeg);base64,/, ''),
+      priority: oldData.priority,
+    };
+    body = isChange(
+      body,
+      ['title', 'text', 'desc'],
+      ['image', 'priority'],
+      newsData,
+      oldDataWithBase64,
+    );
+    if (!body) {
+      yield put(dataSent());
+      return;
+    }
+  }
   const options = {
-    method: 'POST',
+    method,
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      id: newsData.get('eid'),
-      title: newsData.get('title'),
-      text: newsData.get('text'),
-      desc: newsData.get('desc'),
-      prop: {
-        image: newsData.get('image'),
-        priority: newsData.get('priority'),
-      },
-    }),
+    body: JSON.stringify(body),
   };
-  if (mod === 'edit') options.method = 'PUT';
   try {
     const resp = yield call(requestAuth, requestURL, options);
     let newData = data;
@@ -88,9 +140,9 @@ export function* sendMuseum() {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      id: museumData.get('eid'),
-      name: museumData.get('title').get('RU'),
-      desc: museumData.get('desc').get('RU'),
+      id: museumData.eid,
+      name: museumData.title.RU,
+      desc: museumData.desc.RU,
       prop: {
         image: museumData.get('image'),
       },

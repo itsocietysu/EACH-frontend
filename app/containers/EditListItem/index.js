@@ -84,32 +84,38 @@ export class EditListItem extends React.PureComponent {
           position="bottom right"
           arrowStyle={arrowStyle}
           contentStyle={contentStyle}
+          lockScroll
         >
-          <Nav style={{ right: '0', position: 'absolute' }}>
-            <PopupEl
-              trigger={
-                <Button children={<FormattedMessage {...messages.edit} />} />
-              }
-              item={item}
-              mod="edit"
-              Feed={this.props.Feed}
-              Museum={this.props.Museum}
-            />
-            <MsgBox
-              trigger={
-                <Button children={<FormattedMessage {...messages.delete} />} />
-              }
-              onSubmit={() =>
-                this.props.onDelete(
-                  item.eid,
-                  this.props.Feed,
-                  this.props.Museum,
-                )
-              }
-              message={this.state.messages.delete}
-              cancel
-            />
-          </Nav>
+          {close => (
+            <Nav style={{ right: '0', position: 'absolute' }}>
+              <PopupEl
+                trigger={
+                  <Button children={<FormattedMessage {...messages.edit} />} />
+                }
+                item={item}
+                mod="edit"
+                Feed={this.props.Feed}
+                Museum={this.props.Museum}
+                onClose={() => close()}
+              />
+              <MsgBox
+                trigger={
+                  <Button
+                    children={<FormattedMessage {...messages.delete} />}
+                  />
+                }
+                onSubmit={() =>
+                  this.props.onDelete(
+                    item.eid,
+                    this.props.Feed,
+                    this.props.Museum,
+                  )
+                }
+                message={this.state.messages.delete}
+                cancel
+              />
+            </Nav>
+          )}
         </Popup>
         <div style={{ display: 'flex' }}>
           <DivSep width="30%">

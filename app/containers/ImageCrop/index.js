@@ -35,6 +35,11 @@ export function getCroppedImg(image, pixelCrop) {
     pixelCrop.width !== pixelCrop.height
   )
     return null;
+  if (
+    pixelCrop.width === image.naturalWidth &&
+    pixelCrop.height === image.naturalHeight
+  )
+    return image.src.replace(/^data:image\/jpeg;base64,/, '');
   const canvas = document.createElement('canvas');
   canvas.width = pixelCrop.width;
   canvas.height = pixelCrop.height;

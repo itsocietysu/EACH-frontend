@@ -61,14 +61,15 @@ export function* sendFeed() {
     body.id = newsData.eid;
     const oldData = data.map(feed => feed.eid === newsData.eid && feed)[0];
     const oldImage = yield call(toDataURL, oldData.image);
-    const oldDataWithBase64 = {
-      eid: oldData.eid,
-      title: oldData.title,
-      text: oldData.text,
-      desc: oldData.desc,
-      image: oldImage.replace(/^data:image\/(png|jpg|jpeg);base64,/, ''),
-      priority: oldData.priority,
-    };
+    const oldDataWithBase64 = {};
+    Object.keys(oldData).forEach(k => {
+      if (k === 'image')
+        oldDataWithBase64[k] = oldImage.replace(
+          /^data:image\/(png|jpg|jpeg);base64,/,
+          '',
+        );
+      else oldDataWithBase64[k] = oldData[k];
+    });
     body = isChange(
       body,
       ['title', 'text', 'desc'],

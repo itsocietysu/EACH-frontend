@@ -1,10 +1,9 @@
-/* eslint-disable import/first */
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { LOAD_FEED } from './constants';
 import { feedLoaded, feedLoadingError } from './actions';
 import { makeSelectEid } from './selectors';
 
-import requestAuth from 'utils/requestAuth';
+import requestAuth from '../../utils/requestAuth';
 
 /**
  * Feed data load handler
@@ -14,15 +13,13 @@ export function* loadFeed() {
   const requestURL = `http://each.itsociety.su:4201/each/feed/${eid}`;
   let data;
   try {
-    const feed = yield call(requestAuth, requestURL);
+    const feed = (yield call(requestAuth, requestURL))[0];
     data = {
-      eid: feed[0].eid,
-      title: feed[0].title,
-      text: feed[0].text,
-      desc: feed[0].desc,
-      image: `${
-        feed[0].image[0] ? `http://${feed[0].image[0].url}` : '/Photo.png'
-      }`,
+      eid: feed.eid,
+      title: feed.title,
+      text: feed.text,
+      desc: feed.desc,
+      image: `${feed.image[0] ? `http://${feed.image[0].url}` : '/Photo.png'}`,
     };
     yield put(feedLoaded(data));
   } catch (err) {

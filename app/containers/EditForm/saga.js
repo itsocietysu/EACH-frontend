@@ -59,7 +59,7 @@ export function* sendFeed() {
   else {
     method = 'PUT';
     body.id = newsData.eid;
-    const oldData = data.map(feed => feed.eid === newsData.eid && feed)[0];
+    const oldData = data.filter(feed => feed.eid === newsData.eid)[0];
     const oldImage = yield call(toDataURL, oldData.image);
     const oldDataWithBase64 = {};
     Object.keys(oldData).forEach(k => {

@@ -9,26 +9,39 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import injectSaga from 'utils/injectSaga';
-import LoadingIndicator from 'components/LoadingIndicator';
-import { getLogined, getSession } from 'cookieManager';
+import injectSaga from '../utils/injectSaga';
+import LoadingIndicator from '../components/LoadingIndicator/index';
+import { getLogined, getSession } from '../cookieManager';
 import {
   makeSelectErrors,
   makeSelectLoading,
   makeSelectCurrentUser,
-} from 'containers/App/selectors';
-import { getUserData, clearError } from 'containers/App/actions';
-import saga from 'containers/App/saga';
+} from '../containers/App/selectors';
+import { getUserData, clearError } from '../containers/App/actions';
+import saga from '../containers/App/saga';
+import { DAEMON } from '../utils/constants';
 
 class AuthComponent extends React.Component {
   componentWillMount() {
+    this.props.user.name = '';
     this.props.init();
   }
   render() {
-    const { loading, errors, component: Component, user } = this.props;
+    const { loading, errors, component: Component, user, isAuth } = this.props;
     const error = errors.filter(element => element.source === 'user');
     if (error.length) return <Redirect to="/" />;
-    if (loading) return <LoadingIndicator />;
+    if (loading) {
+      if (isAuth) return <LoadingIndicator />;
+      return (
+        <div
+          style={{
+            width: '100%',
+            height: '100vh',
+            backgroundColor: '#FFFFFF',
+          }}
+        />
+      );
+    }
     if (user.name) return <Component />;
     return null;
   }
@@ -40,6 +53,7 @@ AuthComponent.propTypes = {
   loading: PropTypes.bool,
   errors: PropTypes.any,
   user: PropTypes.object,
+  isAuth: PropTypes.bool,
 };
 
 function mapDispatchToProps(dispatch) {
@@ -62,19 +76,24 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withSaga = injectSaga({ key: 'authRoute', saga });
+const withSaga = injectSaga({ key: 'global', saga, mode: DAEMON });
 
 export const Auth = compose(
   withSaga,
   withConnect,
 )(AuthComponent);
 
-const AuthRoute = ({ component: Component, ...rest }) => {
-  if (getLogined() !== 'true' || !getSession()) return <Redirect to="/" />;
+const AuthRoute = ({ component: Component, isRequest, isAuth, ...rest }) => {
+  if (!isRequest)
+    return <Route {...rest} component={params => <Component {...params} />} />;
+  if (isAuth && (getLogined() !== 'true' || !getSession()))
+    return <Redirect to="/" />;
   return (
     <Route
       {...rest}
-      component={params => <Auth component={() => <Component {...params} />} />}
+      component={params => (
+        <Auth component={() => <Component {...params} />} isAuth={isAuth} />
+      )}
     />
   );
 };

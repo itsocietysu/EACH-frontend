@@ -10,10 +10,10 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
-import { Switch, Route } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 
-import routes from 'routeConfig';
-import AuthRoute from '../../authRoute';
+import routes from '../../routes/routeConfig';
+import AuthRoute from '../../routes/authRoute';
 
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
@@ -32,24 +32,16 @@ export default function App() {
         <meta name="description" content="An EACH application" />
       </Helmet>
       <Switch>
-        {routes.map(
-          (route, i) =>
-            route.auth ? (
-              <AuthRoute
-                key={i}
-                path={route.path}
-                exact={route.exact}
-                component={route.component}
-              />
-            ) : (
-              <Route
-                key={i}
-                path={route.path}
-                exact={route.exact}
-                component={route.component}
-              />
-            ),
-        )}
+        {routes.map((route, i) => (
+          <AuthRoute
+            key={i}
+            path={route.path}
+            exact={route.exact}
+            component={route.component}
+            isRequest={route.request}
+            isAuth={route.auth}
+          />
+        ))}
       </Switch>
     </AppWrapper>
   );

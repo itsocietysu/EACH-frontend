@@ -61,7 +61,7 @@ export function getUserData() {
  *
  * @return {object} An action object with a type of GET_USER_DATA_SUCCESS passing user data
  */
-export function userdataGot(data) {
+export function userDataGot(data) {
   return {
     type: GET_USER_DATA_SUCCESS,
     data,

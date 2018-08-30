@@ -1,7 +1,6 @@
-/* eslint-disable import/first */
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { GET_USER_DATA } from './constants';
-import { userdataGot, newError } from './actions';
+import { userDataGot, newError } from './actions';
 
 import request from '../../utils/request';
 import { getSession, setUser } from '../../cookieManager';
@@ -19,7 +18,7 @@ export function* getUser() {
       accessType: user.access_type,
     };
     setUser(user.name);
-    yield put(userdataGot(data));
+    yield put(userDataGot(data));
   } catch (err) {
     Logout();
     yield put(

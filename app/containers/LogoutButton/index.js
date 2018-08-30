@@ -14,7 +14,7 @@ import { withRouter } from 'react-router-dom';
 import { rmSession, setLogined, rmUser } from '../../cookieManager';
 
 import Button from '../../components/Button';
-import { userdataGot } from '../../containers/App/actions';
+import { userDataGot } from '../../containers/App/actions';
 import messages from './messages';
 
 export function Logout() {
@@ -45,7 +45,7 @@ export function mapDispatchToProps(dispatch) {
   return {
     onLogout: () => {
       Logout();
-      dispatch(userdataGot({ name: '', accessType: 'user' }));
+      dispatch(userDataGot({ name: '', accessType: 'user' }));
     },
   };
 }

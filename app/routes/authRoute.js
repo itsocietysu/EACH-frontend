@@ -29,7 +29,7 @@ class AuthComponent extends React.Component {
   render() {
     const { loading, errors, component: Component, user, isAuth } = this.props;
     const error = errors.filter(element => element.source === 'user');
-    if (error.length) return <Redirect to="/" />;
+    if (error.length && isAuth) return <Redirect to="/" />;
     if (loading && isAuth) return <LoadingIndicator />;
     if (user.name) return <Component />;
     if (isAuth) return null;

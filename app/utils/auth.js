@@ -30,8 +30,8 @@ const Auth = ({ mode }) => WrappedComponent => {
 
     state = { req: false, func: false };
     componentWillMount() {
-      const requestURL = `http://each.itsociety.su:5000/oauth2/tokeninfo?access_token=${getSession()}`;
       if (getLogined() === 'true' && getSession()) {
+        const requestURL = `http://each.itsociety.su:5000/oauth2/tokeninfo?access_token=${getSession()}`;
         this.state.req = true;
         this.state.func = request(requestURL)
           .then(user => {
@@ -45,7 +45,6 @@ const Auth = ({ mode }) => WrappedComponent => {
           })
           .catch(err => {
             Logout();
-            console.log(err);
             this.context.store.dispatch(
               newError({
                 source: 'user',
@@ -55,11 +54,9 @@ const Auth = ({ mode }) => WrappedComponent => {
             );
           });
       }
-      console.log(this.context);
     }
 
     render() {
-      console.log(this.state);
       if (mode === AUTH && (getLogined() !== 'true' || !getSession()))
         return <Redirect to="/" />;
       if (!this.state.req || mode !== AUTH)

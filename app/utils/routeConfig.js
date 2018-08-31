@@ -1,9 +1,9 @@
 import React from 'react';
 
-import PageLayout from '../components/PageLayout/index';
-import Header from '../components/Header/index';
-import HeaderSimply from '../components/HeaderSimply/index';
-import Footer from '../components/Footer/index';
+import PageLayout from '../components/PageLayout';
+import Header from '../components/Header';
+import HeaderSimply from '../components/HeaderSimply';
+import Footer from '../components/Footer';
 
 import HomePage from '../containers/HomePage/Loadable';
 import FeaturePage from '../containers/FeaturePage/Loadable';

@@ -8,10 +8,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 
+import injectSaga from '../../utils/injectSaga';
 import { getLogined } from '../../cookieManager';
 import oauth2Authorize from '../AuthPage/oauth2-authorize';
 import { getUserData, clearError, newError } from '../App/actions';
+import saga from '../App/saga';
 import Button from './Button';
 import messages from './messages';
 
@@ -76,4 +79,9 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default withConnect(LoginButton);
+const withSaga = injectSaga({ key: 'user', saga });
+
+export default compose(
+  withSaga,
+  withConnect,
+)(LoginButton);

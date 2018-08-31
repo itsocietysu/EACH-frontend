@@ -16,8 +16,6 @@ import NotFoundPage from '../containers/NotFoundPage/Loadable';
 class Route {
   path: string;
   exact: boolean;
-  auth: boolean;
-  request: boolean;
   component: any;
 }
 
@@ -36,8 +34,6 @@ const HomeRoute = (() => {
   const r = new Route();
   r.path = '/';
   r.exact = true;
-  r.auth = false;
-  r.request = true;
   r.component = () => Page(Header, HomePage, Footer);
   return r;
 })();
@@ -46,8 +42,6 @@ const FeatureRoute = (() => {
   const r = new Route();
   r.path = '/features';
   r.exact = false;
-  r.auth = false;
-  r.request = true;
   r.component = () => Page(Header, FeaturePage, Footer);
   return r;
 })();
@@ -56,8 +50,6 @@ const MuseumsRoute = (() => {
   const r = new Route();
   r.path = '/museums';
   r.exact = false;
-  r.auth = true;
-  r.request = true;
   r.component = () => Page(Header, MuseumsPage, Footer);
   return r;
 })();
@@ -66,8 +58,6 @@ const EditRoute = (() => {
   const r = new Route();
   r.path = '/edit/:content(news|museums)';
   r.exact = false;
-  r.auth = true;
-  r.request = true;
   r.component = ({ match }) => Page(Header, EditPage, Footer, match.params);
   return r;
 })();
@@ -76,8 +66,6 @@ const NewsRoute = (() => {
   const r = new Route();
   r.path = '/news/:newsId';
   r.exact = false;
-  r.auth = false;
-  r.request = false;
   r.component = ({ match }) =>
     Page(HeaderSimply, NewsPage, Footer, match.params);
   return r;
@@ -87,8 +75,6 @@ const AuthRoute = (() => {
   const r = new Route();
   r.path = '/auth';
   r.exact = false;
-  r.auth = false;
-  r.request = false;
   r.component = () => Page(null, AuthPage, null);
   return r;
 })();
@@ -97,8 +83,6 @@ const NotFoundRoute = (() => {
   const r = new Route();
   r.path = '';
   r.exact = false;
-  r.auth = false;
-  r.request = true;
   r.component = () => Page(Header, NotFoundPage, Footer);
   return r;
 })();

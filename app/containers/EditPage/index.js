@@ -11,26 +11,27 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import injectReducer from 'utils/injectReducer';
-import injectSaga from 'utils/injectSaga';
+import injectReducer from '../../utils/injectReducer';
+import injectSaga from '../../utils/injectSaga';
+import { withAuth } from '../../utils/auth';
 import {
   makeSelectData as makeSelectMuseumData,
   makeSelectError as makeSelectMuseumError,
   makeSelectLoading as makeSelectMuseumLoading,
-} from 'containers/MuseumsPage/selectors';
+} from '../MuseumsPage/selectors';
 import {
   makeSelectData as makeSelectFeedData,
   makeSelectError as makeSelectFeedError,
   makeSelectLoading as makeSelectFeedLoading,
-} from 'containers/HomePage/selectors';
-import Button from 'components/Button';
-import Nav from 'containers/LinkList/Nav';
-import H1 from 'components/H1';
-import DataList from 'components/DataList';
-import Popup from 'containers/EditForm';
-import { loadMuseums } from 'containers/MuseumsPage/actions';
-import { loadFeeds } from 'containers/HomePage/actions';
-import EditListItem from 'containers/EditListItem';
+} from '../HomePage/selectors';
+import Button from '../../components/Button';
+import Nav from '../LinkList/Nav';
+import H1 from '../../components/H1';
+import DataList from '../../components/DataList';
+import Popup from '../EditForm';
+import { loadMuseums } from '../MuseumsPage/actions';
+import { loadFeeds } from '../HomePage/actions';
+import EditListItem from '../EditListItem';
 import messages from './messages';
 import reducer from './reducer';
 import saga from './saga';
@@ -211,6 +212,7 @@ const withReducer = injectReducer({ key: 'deleteData', reducer });
 const withSaga = injectSaga({ key: 'deleteData', saga });
 
 export default compose(
+  withAuth,
   withReducer,
   withSaga,
   withConnect,

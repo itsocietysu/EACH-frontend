@@ -1,4 +1,3 @@
-/* eslint-disable import/first */
 /*
  * MuseumsPage
  *
@@ -12,17 +11,18 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import injectReducer from 'utils/injectReducer';
-import injectSaga from 'utils/injectSaga';
+import injectReducer from '../../utils/injectReducer';
+import injectSaga from '../../utils/injectSaga';
+import { withAuth } from '../../utils/auth';
 import {
   makeSelectData,
   makeSelectError,
   makeSelectLoading,
 } from './selectors';
 import messages from './messages';
-import H1 from 'components/H1';
-import DataList from 'components/DataList';
-import MuseumListItem from 'containers/MuseumListItem';
+import H1 from '../../components/H1';
+import DataList from '../../components/DataList';
+import MuseumListItem from '../MuseumListItem';
 import { loadMuseums } from './actions';
 import reducer from './reducer';
 import saga from './saga';
@@ -88,6 +88,7 @@ const withReducer = injectReducer({ key: 'museums', reducer });
 const withSaga = injectSaga({ key: 'museums', saga });
 
 export default compose(
+  withAuth,
   withReducer,
   withSaga,
   withConnect,

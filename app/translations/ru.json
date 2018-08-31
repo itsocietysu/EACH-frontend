@@ -17,8 +17,6 @@
   "each.containers.MuseumsPage.header": "Музеи",
   "each.containers.MuseumsPage.text.header": "Заголовок",
   "each.containers.MuseumsPage.text.message": "Текст.",
-  "each.containers.HomePage.start_project.header": "EACH",
-  "each.containers.HomePage.start_project.message": "Привет мир!",
   "each.containers.HomePage.feeds.header": "Новости",
   "each.containers.FeedListItem.Goto": "Перейти ",
   "each.containers.EditPage.headerFeed": "Редактирование новостей",

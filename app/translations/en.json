@@ -17,8 +17,6 @@
   "each.containers.MuseumsPage.header": "Museums",
   "each.containers.MuseumsPage.text.header": "Title",
   "each.containers.MuseumsPage.text.message": "Text.",
-  "each.containers.HomePage.start_project.header": "EACH",
-  "each.containers.HomePage.start_project.message": "Hello World!",
   "each.containers.HomePage.feeds.header": "Feeds",
   "each.containers.FeedListItem.Goto": "Go to ",
   "each.containers.EditPage.headerFeed": "Editing news",

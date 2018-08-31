@@ -1,4 +1,3 @@
-/* eslint-disable import/first */
 /*
  * HomePage
  *
@@ -13,17 +12,18 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import injectReducer from 'utils/injectReducer';
-import injectSaga from 'utils/injectSaga';
+import injectReducer from '../../utils/injectReducer';
+import injectSaga from '../../utils/injectSaga';
+import { withRequest } from '../../utils/auth';
 import {
   makeSelectData,
   makeSelectError,
   makeSelectLoading,
 } from './selectors';
-import H1 from 'components/H1';
+import H1 from '../../components/H1';
 import messages from './messages';
-import DataList from 'components/DataList';
-import FeedsListItem from 'containers/FeedListItem';
+import DataList from '../../components/DataList';
+import FeedsListItem from '../../containers/FeedListItem';
 import { loadFeeds } from './actions';
 import reducer from './reducer';
 import saga from './saga';
@@ -105,6 +105,7 @@ const withReducer = injectReducer({ key: 'feeds', reducer });
 const withSaga = injectSaga({ key: 'feeds', saga });
 
 export default compose(
+  withRequest,
   withReducer,
   withSaga,
   withConnect,

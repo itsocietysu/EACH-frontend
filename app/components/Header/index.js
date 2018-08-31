@@ -19,17 +19,12 @@ class Header extends React.Component {
           <LocaleToggle />
         </section>
         <A>
-          <Img src={Logo} alt="EACH - Logo" />
+          <Img src={Logo} alt="MUSEEACH - Logo" />
         </A>
         <div className="navBar">
           <div>
             <HeaderLink to="/">
               <FormattedMessage {...messages.home} />
-            </HeaderLink>
-          </div>
-          <div>
-            <HeaderLink to="/features">
-              <FormattedMessage {...messages.features} />
             </HeaderLink>
           </div>
           <UserButton />

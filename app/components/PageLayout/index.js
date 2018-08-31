@@ -11,12 +11,13 @@ function PageLayout({
   header: Header,
   component: Component,
   footer: Footer,
-  ...props
+  headerProps,
+  componentProps,
 }) {
   return (
     <Wrapper>
-      {Header && <Header />}
-      <Component {...props} />
+      {Header && <Header {...headerProps} />}
+      <Component {...componentProps} />
       {Footer && <Footer />}
     </Wrapper>
   );
@@ -26,6 +27,8 @@ PageLayout.propTypes = {
   header: PropTypes.func,
   component: PropTypes.func.isRequired,
   footer: PropTypes.func,
+  headerProps: PropTypes.object,
+  componentProps: PropTypes.object,
 };
 
 export default PageLayout;

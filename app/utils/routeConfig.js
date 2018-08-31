@@ -2,7 +2,7 @@ import React from 'react';
 
 import PageLayout from '../components/PageLayout';
 import Header from '../components/Header';
-import HeaderSimply from '../components/HeaderSimply';
+import HeaderSimple from '../components/HeaderSimple';
 import Footer from '../components/Footer';
 
 import HomePage from '../containers/HomePage/Loadable';
@@ -19,13 +19,14 @@ class Route {
   component: any;
 }
 
-function Page(header, component, footer, props) {
+function Page(header, component, footer, headerProps, componentProps) {
   return (
     <PageLayout
       header={header}
       component={component}
       footer={footer}
-      {...props}
+      headerProps={headerProps}
+      componentProps={componentProps}
     />
   );
 }
@@ -42,7 +43,7 @@ const FeatureRoute = (() => {
   const r = new Route();
   r.path = '/features';
   r.exact = false;
-  r.component = () => Page(Header, FeaturePage, Footer);
+  r.component = () => Page(HeaderSimple, FeaturePage, Footer, { user: true });
   return r;
 })();
 
@@ -50,7 +51,7 @@ const MuseumsRoute = (() => {
   const r = new Route();
   r.path = '/museums';
   r.exact = false;
-  r.component = () => Page(Header, MuseumsPage, Footer);
+  r.component = () => Page(HeaderSimple, MuseumsPage, Footer, { user: true });
   return r;
 })();
 
@@ -58,7 +59,8 @@ const EditRoute = (() => {
   const r = new Route();
   r.path = '/edit/:content(news|museums)';
   r.exact = false;
-  r.component = ({ match }) => Page(Header, EditPage, Footer, match.params);
+  r.component = ({ match }) =>
+    Page(HeaderSimple, EditPage, Footer, { user: true }, match.params);
   return r;
 })();
 
@@ -67,7 +69,7 @@ const NewsRoute = (() => {
   r.path = '/news/:newsId';
   r.exact = false;
   r.component = ({ match }) =>
-    Page(HeaderSimply, NewsPage, Footer, match.params);
+    Page(HeaderSimple, NewsPage, Footer, null, match.params);
   return r;
 })();
 
@@ -83,7 +85,7 @@ const NotFoundRoute = (() => {
   const r = new Route();
   r.path = '';
   r.exact = false;
-  r.component = () => Page(Header, NotFoundPage, Footer);
+  r.component = () => Page(HeaderSimple, NotFoundPage, Footer, { user: true });
   return r;
 })();
 

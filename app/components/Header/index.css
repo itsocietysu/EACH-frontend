@@ -10,3 +10,7 @@
 .toggle {
   text-align: right;
 }
+
+.toggleSimple {
+  float: right;
+}

@@ -2,7 +2,6 @@ import React from 'react';
 
 import PageLayout from '../components/PageLayout';
 import Header from '../components/Header';
-import HeaderSimple from '../components/HeaderSimple';
 import Footer from '../components/Footer';
 
 import HomePage from '../containers/HomePage/Loadable';
@@ -35,7 +34,7 @@ const HomeRoute = (() => {
   const r = new Route();
   r.path = '/';
   r.exact = true;
-  r.component = () => Page(Header, HomePage, Footer);
+  r.component = () => Page(Header, HomePage, Footer, { user: true });
   return r;
 })();
 
@@ -43,7 +42,8 @@ const FeatureRoute = (() => {
   const r = new Route();
   r.path = '/features';
   r.exact = false;
-  r.component = () => Page(HeaderSimple, FeaturePage, Footer, { user: true });
+  r.component = () =>
+    Page(Header, FeaturePage, Footer, { user: true, simple: true });
   return r;
 })();
 
@@ -51,7 +51,8 @@ const MuseumsRoute = (() => {
   const r = new Route();
   r.path = '/museums';
   r.exact = false;
-  r.component = () => Page(HeaderSimple, MuseumsPage, Footer, { user: true });
+  r.component = () =>
+    Page(Header, MuseumsPage, Footer, { user: true, simple: true });
   return r;
 })();
 
@@ -60,7 +61,7 @@ const EditRoute = (() => {
   r.path = '/edit/:content(news|museums)';
   r.exact = false;
   r.component = ({ match }) =>
-    Page(HeaderSimple, EditPage, Footer, { user: true }, match.params);
+    Page(Header, EditPage, Footer, { user: true, simple: true }, match.params);
   return r;
 })();
 
@@ -69,7 +70,7 @@ const NewsRoute = (() => {
   r.path = '/news/:newsId';
   r.exact = false;
   r.component = ({ match }) =>
-    Page(HeaderSimple, NewsPage, Footer, null, match.params);
+    Page(Header, NewsPage, Footer, { simple: true }, match.params);
   return r;
 })();
 
@@ -85,7 +86,8 @@ const NotFoundRoute = (() => {
   const r = new Route();
   r.path = '';
   r.exact = false;
-  r.component = () => Page(HeaderSimple, NotFoundPage, Footer, { user: true });
+  r.component = () =>
+    Page(Header, NotFoundPage, Footer, { user: true, simple: true });
   return r;
 })();
 

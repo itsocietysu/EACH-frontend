@@ -1,12 +1,12 @@
+/* eslint-disable react/prefer-stateless-function,react/prop-types */
 /*
  *
  * OptionsList
  *
  */
-/* eslint-disable react/prefer-stateless-function,react/prop-types */
 import React from 'react';
 
-import LinkList from 'containers/LinkList';
+import LinkList from '../LinkList';
 import Wrapper from './Wrapper';
 import { userLinks, adminLinks } from './linkConfig';
 

@@ -1,4 +1,4 @@
-/* eslint-disable react/no-children-prop,react/prop-types,react/prefer-stateless-function,jsx-a11y/anchor-is-valid */
+/* eslint-disable react/prop-types,react/prefer-stateless-function,jsx-a11y/anchor-is-valid */
 /*
  *
  * LinkList
@@ -8,7 +8,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import LogoutButton from 'containers/LogoutButton';
+import LogoutButton from '../LogoutButton';
 
 import Link from './Link';
 import Nav from './Nav';

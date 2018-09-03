@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars,react/prefer-stateless-function */
+/* eslint-disable react/prefer-stateless-function,jsx-a11y/no-static-element-interactions,jsx-a11y/click-events-have-key-events */
 /*
  * LoginButton
  *
@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import Popup from 'reactjs-popup';
 
 import injectSaga from '../../utils/injectSaga';
 import { getLogined } from '../../cookieManager';
@@ -17,6 +18,23 @@ import { getUserData, clearError, newError } from '../App/actions';
 import saga from '../App/saga';
 import Button from './Button';
 import messages from './messages';
+import AuthList from '../AuthList';
+
+const PopupContentStyle = {
+  boxShadow: 'none',
+  width: 'initial',
+  padding: '0px',
+  borderRadius: '4px',
+  border: '0px',
+};
+
+const PopupArrowStyle = {
+  border: '2px solid rgb(217, 146, 92)',
+  borderLeft: 'none',
+  borderTop: 'none',
+};
+
+const panelStyle = { float: 'right' };
 
 export class LoginButton extends React.Component {
   constructor(props) {
@@ -27,13 +45,13 @@ export class LoginButton extends React.Component {
     };
   }
 
-  authorize = () => {
+  authorize = config => {
     if (this.state.authTimer) {
       clearInterval(this.state.authTimer);
       this.setState({ authTimer: null, authWindow: null });
     }
     this.props.clearErr();
-    const authWindow = oauth2Authorize(this.props.errCb);
+    const authWindow = oauth2Authorize(config, this.props.errCb);
     if (authWindow)
       this.setState({
         authTimer: setInterval(() => this.checkChildWindow(), 250),
@@ -51,10 +69,23 @@ export class LoginButton extends React.Component {
 
   render() {
     return (
-      <div style={{ float: 'right', marginRight: '30px' }}>
-        <Button type="button" onClick={this.authorize}>
-          <FormattedMessage {...messages.login} />
-        </Button>
+      <div style={panelStyle}>
+        <Popup
+          trigger={
+            <Button type="button">
+              <FormattedMessage {...messages.login} />
+            </Button>
+          }
+          closeOnDocumentClick
+          arrowStyle={PopupArrowStyle}
+          contentStyle={PopupContentStyle}
+        >
+          {close => (
+            <div onClick={close}>
+              <AuthList authFunc={config => this.authorize(config)} />
+            </div>
+          )}
+        </Popup>
       </div>
     );
   }

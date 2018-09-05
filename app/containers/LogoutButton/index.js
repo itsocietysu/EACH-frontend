@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 
 import { withRouter } from 'react-router-dom';
-import { rmSession, setLogined, rmUser } from '../../cookieManager';
+import { rmSession, setLogined, rmUser, rmOAuth } from '../../cookieManager';
 
 import Button from '../../components/Button';
 import { userDataGot } from '../../containers/App/actions';
@@ -21,6 +21,7 @@ export function Logout() {
   setLogined(false);
   rmSession();
   rmUser();
+  rmOAuth();
 }
 
 class LogoutButton extends React.Component {

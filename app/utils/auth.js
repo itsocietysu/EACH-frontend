@@ -4,7 +4,7 @@ import hoistNonReactStatics from 'hoist-non-react-statics';
 import { Redirect } from 'react-router-dom';
 
 import LoadingIndicator from '../components/LoadingIndicator/index';
-import { getLogined, getSession, setUser } from '../cookieManager';
+import { getLogined, getOAuth, getSession, setUser } from '../cookieManager';
 import request from './request';
 import { newError, userDataGot } from '../containers/App/actions';
 import { Logout } from '../containers/LogoutButton/index';
@@ -30,7 +30,8 @@ const Auth = ({ mode }) => WrappedComponent => {
 
     state = { req: false, func: false };
     componentWillMount() {
-      if (getLogined() === 'true' && getSession()) {
+      if (getLogined() === 'true' && getSession() && getOAuth()) {
+        console.log(getOAuth());
         const requestURL = `http://each.itsociety.su:5000/oauth2/tokeninfo?access_token=${getSession()}`;
         this.state.req = true;
         this.state.func = request(requestURL)

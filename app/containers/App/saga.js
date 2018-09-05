@@ -3,13 +3,14 @@ import { GET_USER_DATA } from './constants';
 import { userDataGot, newError } from './actions';
 
 import request from '../../utils/request';
-import { getSession, setUser } from '../../cookieManager';
+import { getSession, setUser, getOAuth } from '../../cookieManager';
 import { Logout } from '../LogoutButton/index';
 
 /**
  * User data get handler
  */
 export function* getUser() {
+  console.log(getOAuth());
   const requestURL = `http://each.itsociety.su:5000/oauth2/tokeninfo?access_token=${getSession()}`;
   try {
     const user = yield call(request, requestURL);

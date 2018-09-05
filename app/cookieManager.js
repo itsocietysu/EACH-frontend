@@ -41,3 +41,15 @@ export function getUser() {
 export function rmUser() {
   return cookies.remove('cur_user', { path: '/' });
 }
+
+export function setOAuth(app) {
+  cookies.set('oauth', app, { path: '/' });
+}
+
+export function getOAuth() {
+  return cookies.get('oauth');
+}
+
+export function rmOAuth() {
+  return cookies.remove('oauth', { path: '/' });
+}

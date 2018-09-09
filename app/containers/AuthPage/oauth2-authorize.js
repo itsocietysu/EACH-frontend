@@ -1,6 +1,8 @@
 /* eslint-disable no-buffer-constructor,guard-for-in,no-restricted-syntax,prettier/prettier,no-param-reassign */
 import request from '../../utils/request';
-import { setSession, getSession, setLogined, getLogined } from '../../cookieManager';
+import { setSession, setLogined, setOAuth } from '../../cookieManager';
+import { appEnum } from '../AuthList/configs';
+import config from '../../../../client_config.json';
 
 const btoa = str => {
   let buffer;
@@ -30,6 +32,8 @@ const buildFormData = data => {
 
 export function getToken() {
   const oauth2 = window.opener.eachRedirectOauth2;
+  const { app } = oauth2;
+  const configs = config.clients[config.clients_arr[app]];
   let qp;
 
   if (/code|token|error/.test(window.location.hash)) {
@@ -62,11 +66,12 @@ export function getToken() {
   if (qp.code) {
     delete oauth2.state;
     const form = {
-      grant_type: 'authorization_code',
-      code: qp.code,
-      client_id: oauth2.auth.clientId,
-      client_secret: oauth2.auth.clientSecret,
+      grant_type: `${(app !== appEnum.VK && app !== appEnum.Facebook) ? 'authorization_code' : ''}`,
+      client_id: configs.client_id,
+      client_secret: configs.client_secret,
       redirect_uri: oauth2.redirectUrl,
+      code: qp.code,
+      v: `${app === appEnum.VK ? '5.84' : ''}`,
     };
     const options = {
       method: 'post',
@@ -74,9 +79,11 @@ export function getToken() {
         Accept: 'application/json, text/plain, */*',
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: buildFormData(form),
     };
-    oauth2.cb(oauth2.auth.tokenUrl, options, oauth2.errCb);
+    const url = [configs.access_token_url, buildFormData(form)].join(
+      configs.access_token_url.indexOf('?') === -1 ? '?' : '&',
+    );
+    oauth2.cb(url, options, oauth2.errCb, window, app);
   } else {
     let oauthErrorMsg;
     if (qp.error) {
@@ -94,34 +101,39 @@ export function getToken() {
         oauthErrorMsg ||
         '[Authorization failed]: no accessCode received from the server',
     });
+    window.close();
   }
-  setInterval(() => {if (getLogined() === 'true' && getSession()) window.close();}, 100);
 }
 
-function getTokenRequest(tokenUrl, options, errCb) {
+function getTokenRequest(tokenUrl, options, errCb, window, app) {
   request(tokenUrl, options)
     .then(resp => {
       setSession(resp.access_token);
       setLogined(true);
+      setOAuth(app);
+      window.close();
     })
-    .catch(err =>
+    .catch(err => {
       errCb({
         source: 'auth',
         level: 'error',
         message: err.message,
-      }),
+      });
+      window.close();
+    }
     );
 }
 
-export default function authorize(configs, errCb) {
+export default function authorize(app, errCb) {
+  const configs = config.clients[config.clients_arr[app]];
   const query = [];
   query.push('response_type=code');
 
-  if (typeof configs.clientId === 'string') {
-    query.push(`client_id=${encodeURIComponent(configs.clientId)}`);
+  if (typeof configs.client_id === 'string') {
+    query.push(`client_id=${encodeURIComponent(configs.client_id)}`);
   }
 
-  const redirectUrl = window.location.origin + configs.oauth2RedirectUrl;
+  const redirectUrl = window.location.origin + config.oauth2RedirectUrl;
 
   if (typeof redirectUrl === 'undefined') {
     errCb({
@@ -133,6 +145,10 @@ export default function authorize(configs, errCb) {
     return false;
   }
   query.push(`redirect_uri=${encodeURIComponent(redirectUrl)}`);
+  if (app === appEnum.VK) {
+    query.push(`v=${encodeURIComponent("5.84")}`);
+    query.push(`revoke=${encodeURIComponent("1")}`);
+  }
 
   if (Array.isArray(configs.scopes) && configs.scopes.length > 0) {
     const scopeSeparator = ' ';
@@ -145,12 +161,12 @@ export default function authorize(configs, errCb) {
 
   query.push(`state=${encodeURIComponent(state)}`);
 
-  const url = [configs.authorizationUrl, query.join('&')].join(
-    configs.authorizationUrl.indexOf('?') === -1 ? '?' : '&',
+  const url = [configs.authorization_url, query.join('&')].join(
+    configs.authorization_url.indexOf('?') === -1 ? '?' : '&',
   );
 
   window.eachRedirectOauth2 = {
-    auth: configs,
+    app,
     state,
     cb: getTokenRequest,
     errCb,

@@ -18,7 +18,7 @@ class AuthList extends React.PureComponent {
         <FunctionList
           values={configs.map(config =>
             Object.assign(config, {
-              func: () => this.props.authFunc(config.configs),
+              func: () => this.props.authFunc(config.app),
             }),
           )}
         />

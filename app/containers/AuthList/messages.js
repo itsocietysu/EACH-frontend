@@ -6,8 +6,20 @@
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
-  museeach: {
-    id: 'each.containers.AuthList.museeach',
-    defaultMessage: 'MUSEEACH',
+  each: {
+    id: 'each.containers.AuthList.each',
+    defaultMessage: 'EACH',
+  },
+  vkontakte: {
+    id: 'each.containers.AuthList.vkontakte',
+    defaultMessage: 'VKontakte',
+  },
+  google: {
+    id: 'each.containers.AuthList.google',
+    defaultMessage: 'Google+',
+  },
+  facebook: {
+    id: 'each.containers.AuthList.facebook',
+    defaultMessage: 'Facebook',
   },
 });

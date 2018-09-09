@@ -17,7 +17,7 @@ const PStyle = {
 };
 
 export default class AuthPage extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
     getToken();
   }
   render() {

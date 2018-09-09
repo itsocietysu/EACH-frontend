@@ -45,13 +45,13 @@ export class LoginButton extends React.Component {
     };
   }
 
-  authorize = config => {
+  authorize = app => {
     if (this.state.authTimer) {
       clearInterval(this.state.authTimer);
       this.setState({ authTimer: null, authWindow: null });
     }
     this.props.clearErr();
-    const authWindow = oauth2Authorize(config, this.props.errCb);
+    const authWindow = oauth2Authorize(app, this.props.errCb);
     if (authWindow)
       this.setState({
         authTimer: setInterval(() => this.checkChildWindow(), 250),
@@ -82,7 +82,7 @@ export class LoginButton extends React.Component {
         >
           {close => (
             <div onClick={close}>
-              <AuthList authFunc={config => this.authorize(config)} />
+              <AuthList authFunc={app => this.authorize(app)} />
             </div>
           )}
         </Popup>

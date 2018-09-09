@@ -1,17 +1,32 @@
 import messages from './messages';
 
+export const appEnum = {
+  EACH: 0,
+  VK: 1,
+  Google: 2,
+  Facebook: 3,
+};
+
 const configs = [
   {
-    name: 'MUSEEACH',
-    message: messages.museeach,
-    configs: {
-      oauth2RedirectUrl: '/auth',
-      clientId: 'Gu2SCEBUwQV3TSlNIu8uMzvKRMYuGP5ePh044jGErO6O9RR0',
-      clientSecret: '',
-      scopes: ['email'],
-      authorizationUrl: 'http://each.itsociety.su:5000/oauth2/authorize',
-      tokenUrl: 'http://each.itsociety.su:5000/oauth2/token',
-    },
+    name: 'EACH',
+    message: messages.each,
+    app: appEnum.EACH,
+  },
+  {
+    name: 'VKontakte',
+    message: messages.vkontakte,
+    app: appEnum.VK,
+  },
+  {
+    name: 'Google+',
+    message: messages.google,
+    app: appEnum.Google,
+  },
+  {
+    name: 'Facebook',
+    message: messages.facebook,
+    app: appEnum.Facebook,
   },
 ];
 

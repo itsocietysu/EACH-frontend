@@ -15,12 +15,7 @@
  *    }
  */
 
-import {
-  GET_USER_DATA,
-  GET_USER_DATA_SUCCESS,
-  NEW_ERROR,
-  CLEAR_ERROR,
-} from './constants';
+import { GET_USER_DATA_SUCCESS, NEW_ERROR, CLEAR_ERROR } from './constants';
 
 /**
  * @return {object} An action object with a type of CLEAR_ERROR
@@ -40,17 +35,6 @@ export function newError(error) {
   return {
     type: NEW_ERROR,
     error,
-  };
-}
-
-/**
- * Get user data, this action starts the request saga
- *
- * @return {object} An action object with a type of GET_USER_DATA
- */
-export function getUserData() {
-  return {
-    type: GET_USER_DATA,
   };
 }
 

@@ -8,14 +8,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { compose } from 'redux';
 import Popup from 'reactjs-popup';
 
-import injectSaga from '../../utils/injectSaga';
-import { getLogined } from '../../cookieManager';
 import oauth2Authorize from '../AuthPage/oauth2-authorize';
-import { getUserData, clearError, newError } from '../App/actions';
-import saga from '../App/saga';
+import { clearError, newError, userDataGot } from '../App/actions';
 import Button from './Button';
 import messages from './messages';
 import AuthList from '../AuthList';
@@ -51,7 +47,11 @@ export class LoginButton extends React.Component {
       this.setState({ authTimer: null, authWindow: null });
     }
     this.props.clearErr();
-    const authWindow = oauth2Authorize(app, this.props.errCb);
+    const authWindow = oauth2Authorize(
+      app,
+      this.props.errCb,
+      this.props.onAuth,
+    );
     if (authWindow)
       this.setState({
         authTimer: setInterval(() => this.checkChildWindow(), 250),
@@ -63,7 +63,6 @@ export class LoginButton extends React.Component {
     if (this.state.authWindow && this.state.authWindow.closed) {
       clearInterval(this.state.authTimer);
       this.setState({ authTimer: null, authWindow: null });
-      if (getLogined() === 'true') this.props.onAuth();
     }
   }
 
@@ -99,7 +98,7 @@ LoginButton.propTypes = {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onAuth: () => dispatch(getUserData()),
+    onAuth: data => dispatch(userDataGot(data)),
     errCb: error => dispatch(newError(error)),
     clearErr: () => dispatch(clearError()),
   };
@@ -110,9 +109,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withSaga = injectSaga({ key: 'user', saga });
-
-export default compose(
-  withSaga,
-  withConnect,
-)(LoginButton);
+export default withConnect(LoginButton);

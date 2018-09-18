@@ -5,9 +5,11 @@ import { Redirect } from 'react-router-dom';
 
 import LoadingIndicator from '../components/LoadingIndicator/index';
 import { getLogined, getOAuth, getSession, setUser } from '../cookieManager';
-import request from './request';
+import requestAuth from './requestAuth';
 import { newError, userDataGot } from '../containers/App/actions';
 import { Logout } from '../containers/LogoutButton/index';
+
+import config from '../containers/AuthPage/client_config.json';
 
 export const AUTH = 'authorizeComponent';
 export const REQUEST = 'requestComponent';
@@ -31,16 +33,17 @@ const Auth = ({ mode }) => WrappedComponent => {
     state = { req: false, func: false };
     componentWillMount() {
       if (getLogined() === 'true' && getSession() && getOAuth()) {
-        console.log(getOAuth());
-        const requestURL = `http://each.itsociety.su:5000/oauth2/tokeninfo?access_token=${getSession()}`;
+        const requestURL = `${
+          config.token_info_url
+        }?access_token=${getSession()}&type=${config.clients_arr[getOAuth()]}`;
         this.state.req = true;
-        this.state.func = request(requestURL)
+        this.state.func = requestAuth(requestURL)
           .then(user => {
             const data = {
-              name: user.name,
+              name: user.login,
               accessType: user.access_type,
             };
-            setUser(user.name);
+            setUser(user.login);
             this.context.store.dispatch(userDataGot(data));
             this.setState({ req: false });
           })

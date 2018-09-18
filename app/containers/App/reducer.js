@@ -14,7 +14,6 @@
 import { fromJS } from 'immutable';
 
 import {
-  GET_USER_DATA,
   GET_USER_DATA_SUCCESS,
   NEW_ERROR,
   CLEAR_ERROR,
@@ -34,11 +33,6 @@ function appReducer(state = initialState, action) {
   switch (action.type) {
     case CLEAR_ERROR:
       return state.set('errors', fromJS([]));
-    case GET_USER_DATA:
-      return state
-        .setIn(['userData', 'name'], '')
-        .setIn(['userData', 'accessType'], 'user')
-        .set('loading', true);
     case GET_USER_DATA_SUCCESS:
       return state
         .setIn(['userData', 'name'], action.data.name)

@@ -1,8 +1,8 @@
 /* eslint-disable no-buffer-constructor,guard-for-in,no-restricted-syntax,prettier/prettier,no-param-reassign */
 import request from '../../utils/request';
-import { setSession, setLogined, setOAuth } from '../../cookieManager';
+import { setSession, setLogined, setOAuth, setUser } from '../../cookieManager';
 import { appEnum } from '../AuthList/configs';
-import config from '../../../../client_config.json';
+import config from './client_config.json';
 
 const btoa = str => {
   let buffer;
@@ -33,7 +33,6 @@ const buildFormData = data => {
 export function getToken() {
   const oauth2 = window.opener.eachRedirectOauth2;
   const { app } = oauth2;
-  const configs = config.clients[config.clients_arr[app]];
   let qp;
 
   if (/code|token|error/.test(window.location.hash)) {
@@ -66,12 +65,9 @@ export function getToken() {
   if (qp.code) {
     delete oauth2.state;
     const form = {
-      grant_type: `${(app !== appEnum.VK && app !== appEnum.Facebook) ? 'authorization_code' : ''}`,
-      client_id: configs.client_id,
-      client_secret: configs.client_secret,
       redirect_uri: oauth2.redirectUrl,
       code: qp.code,
-      v: `${app === appEnum.VK ? '5.84' : ''}`,
+      type: config.clients_arr[app],
     };
     const options = {
       method: 'post',
@@ -80,10 +76,10 @@ export function getToken() {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
     };
-    const url = [configs.access_token_url, buildFormData(form)].join(
-      configs.access_token_url.indexOf('?') === -1 ? '?' : '&',
+    const url = [config.access_token_url, buildFormData(form)].join(
+      config.access_token_url.indexOf('?') === -1 ? '?' : '&',
     );
-    oauth2.cb(url, options, oauth2.errCb, window, app);
+    getTokenRequest(url, options, oauth2.cb, oauth2.errCb, window, app);
   } else {
     let oauthErrorMsg;
     if (qp.error) {
@@ -105,12 +101,17 @@ export function getToken() {
   }
 }
 
-function getTokenRequest(tokenUrl, options, errCb, window, app) {
-  request(tokenUrl, options)
+function getTokenRequest(tokenUrl, options, cb, errCb, window, app) {
+  request(tokenUrl)
     .then(resp => {
       setSession(resp.access_token);
       setLogined(true);
+      setUser(resp.login);
       setOAuth(app);
+      cb({
+        name: resp.login,
+        accessType: resp.access_type,
+      });
       window.close();
     })
     .catch(err => {
@@ -124,7 +125,7 @@ function getTokenRequest(tokenUrl, options, errCb, window, app) {
     );
 }
 
-export default function authorize(app, errCb) {
+export default function authorize(app, errCb, cb) {
   const configs = config.clients[config.clients_arr[app]];
   const query = [];
   query.push('response_type=code');
@@ -146,7 +147,7 @@ export default function authorize(app, errCb) {
   }
   query.push(`redirect_uri=${encodeURIComponent(redirectUrl)}`);
   if (app === appEnum.VK) {
-    query.push(`v=${encodeURIComponent("5.84")}`);
+    query.push(`v=${encodeURIComponent("5.85")}`);
     query.push(`revoke=${encodeURIComponent("1")}`);
   }
 
@@ -168,7 +169,7 @@ export default function authorize(app, errCb) {
   window.eachRedirectOauth2 = {
     app,
     state,
-    cb: getTokenRequest,
+    cb,
     errCb,
     redirectUrl,
   };

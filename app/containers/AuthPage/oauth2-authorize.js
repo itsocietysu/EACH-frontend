@@ -70,7 +70,7 @@ export function getToken() {
       type: config.clients_arr[app],
     };
     const options = {
-      method: 'post',
+      method: 'POST',
       headers: {
         Accept: 'application/json, text/plain, */*',
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -102,14 +102,14 @@ export function getToken() {
 }
 
 function getTokenRequest(tokenUrl, options, cb, errCb, window, app) {
-  request(tokenUrl)
+  request(tokenUrl, options)
     .then(resp => {
       setSession(resp.access_token);
       setLogined(true);
-      setUser(resp.login);
+      setUser(resp.name);
       setOAuth(app);
       cb({
-        name: resp.login,
+        name: resp.name,
         accessType: resp.access_type,
       });
       window.close();

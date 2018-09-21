@@ -4,7 +4,6 @@ export const appEnum = {
   EACH: 0,
   VK: 1,
   Google: 2,
-  Facebook: 3,
 };
 
 const configs = [
@@ -22,11 +21,6 @@ const configs = [
     name: 'Google+',
     message: messages.google,
     app: appEnum.Google,
-  },
-  {
-    name: 'Facebook',
-    message: messages.facebook,
-    app: appEnum.Facebook,
   },
 ];
 

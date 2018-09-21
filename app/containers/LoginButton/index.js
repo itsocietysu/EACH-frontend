@@ -33,38 +33,10 @@ const PopupArrowStyle = {
 const panelStyle = { float: 'right' };
 
 export class LoginButton extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      authTimer: null,
-      authWindow: null,
-    };
-  }
-
   authorize = app => {
-    if (this.state.authTimer) {
-      clearInterval(this.state.authTimer);
-      this.setState({ authTimer: null, authWindow: null });
-    }
     this.props.clearErr();
-    const authWindow = oauth2Authorize(
-      app,
-      this.props.errCb,
-      this.props.onAuth,
-    );
-    if (authWindow)
-      this.setState({
-        authTimer: setInterval(() => this.checkChildWindow(), 250),
-        authWindow,
-      });
+    oauth2Authorize(app, this.props.errCb, this.props.onAuth);
   };
-
-  checkChildWindow() {
-    if (this.state.authWindow && this.state.authWindow.closed) {
-      clearInterval(this.state.authTimer);
-      this.setState({ authTimer: null, authWindow: null });
-    }
-  }
 
   render() {
     return (

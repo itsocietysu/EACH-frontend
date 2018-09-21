@@ -40,10 +40,10 @@ const Auth = ({ mode }) => WrappedComponent => {
         this.state.func = requestAuth(requestURL)
           .then(user => {
             const data = {
-              name: user.login,
+              name: user.name,
               accessType: user.access_type,
             };
-            setUser(user.login);
+            setUser(user.name);
             this.context.store.dispatch(userDataGot(data));
             this.setState({ req: false });
           })

@@ -11,11 +11,20 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 
 import { withRouter } from 'react-router-dom';
-import { rmSession, setLogined, rmUser, rmOAuth } from '../../cookieManager';
+import {
+  rmSession,
+  setLogined,
+  rmUser,
+  rmOAuth,
+  getSession,
+  getOAuth,
+} from '../../cookieManager';
 
 import Button from '../../components/Button';
 import { userDataGot } from '../../containers/App/actions';
 import messages from './messages';
+import requestAuth from '../../utils/requestAuth';
+import config from '../AuthPage/client_config.json';
 
 export function Logout() {
   setLogined(false);
@@ -45,6 +54,14 @@ LogoutButton.propTypes = {
 export function mapDispatchToProps(dispatch) {
   return {
     onLogout: () => {
+      const options = {
+        method: 'POST',
+        body: JSON.stringify({
+          access_token: getSession(),
+          type: config.clients_arr[getOAuth()],
+        }),
+      };
+      requestAuth(config.revoke_token_url, options);
       Logout();
       dispatch(userDataGot({ name: '', accessType: 'user' }));
     },

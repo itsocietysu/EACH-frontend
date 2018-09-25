@@ -14,7 +14,6 @@
   "each.containers.AuthList.each": "EACH",
   "each.containers.AuthList.vkontakte": "VKontakte",
   "each.containers.AuthList.google": "Google+",
-  "each.containers.AuthList.facebook": "Facebook",
   "each.containers.FeaturePage.header": "Features",
   "each.containers.FeaturePage.text.header": "Title",
   "each.containers.FeaturePage.text.message": "Text.",

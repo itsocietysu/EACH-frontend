@@ -18,8 +18,4 @@ export default defineMessages({
     id: 'each.containers.AuthList.google',
     defaultMessage: 'Google+',
   },
-  facebook: {
-    id: 'each.containers.AuthList.facebook',
-    defaultMessage: 'Facebook',
-  },
 });

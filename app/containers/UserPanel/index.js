@@ -7,22 +7,7 @@ import { FormattedMessage } from 'react-intl';
 import Button from './Button';
 import messages from './messages';
 import OptionsList from '../OptionsList';
-
-const PopupContentStyle = {
-  boxShadow: 'none',
-  width: 'initial',
-  padding: '0px',
-  borderRadius: '4px',
-  border: '0px',
-};
-
-const PopupArrowStyle = {
-  border: '2px solid rgb(217, 146, 92)',
-  borderLeft: 'none',
-  borderTop: 'none',
-};
-
-const panelStyle = { float: 'right' };
+import { PopupArrowStyle, PopupContentStyle, panelStyle } from '../LoginButton';
 
 class UserPanel extends React.Component {
   render() {

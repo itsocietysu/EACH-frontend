@@ -16,7 +16,7 @@ import Button from './Button';
 import messages from './messages';
 import AuthList from '../AuthList';
 
-const PopupContentStyle = {
+export const PopupContentStyle = {
   boxShadow: 'none',
   width: 'initial',
   padding: '0px',
@@ -24,13 +24,13 @@ const PopupContentStyle = {
   border: '0px',
 };
 
-const PopupArrowStyle = {
+export const PopupArrowStyle = {
   border: '2px solid rgb(217, 146, 92)',
   borderLeft: 'none',
   borderTop: 'none',
 };
 
-const panelStyle = { float: 'right' };
+export const panelStyle = { float: 'right' };
 
 export class LoginButton extends React.Component {
   authorize = app => {

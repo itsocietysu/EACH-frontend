@@ -1,5 +1,5 @@
 /**
- * Asynchronously loads the component for EditPage
+ * Asynchronously loads the component for EditNewsPage
  */
 import Loadable from 'react-loadable';
 

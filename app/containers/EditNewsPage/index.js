@@ -1,7 +1,7 @@
+/* eslint-disable react/no-children-prop,jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions */
 /*
- * MuseumsPage
+ * EditNewsPage
  *
- * List all the museums
  */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -16,23 +16,44 @@ import injectReducer from '../../utils/injectReducer';
 import injectSaga from '../../utils/injectSaga';
 import { withAuth } from '../../utils/auth';
 import {
-  makeSelectCount,
   makeSelectData,
   makeSelectError,
   makeSelectLoading,
+  makeSelectCount,
   makeSelectPage,
-} from './selectors';
-import messages from './messages';
-import H1 from '../../components/H1';
+} from '../HomePage/selectors';
 import { PageList } from '../PageList';
+import Button from '../../components/Button';
+import Nav from '../LinkList/Nav';
+import H1 from '../../components/H1';
 import DataList from '../../components/DataList';
-import MuseumListItem from '../MuseumListItem';
-import { loadMuseums } from './actions';
+import Popup from '../EditForm';
+import { loadFeeds } from '../HomePage/actions';
+import EditListItem from '../EditListItem';
+import messages from './messages';
 import reducer from './reducer';
 import saga from './saga';
 
-/* eslint-disable react/prefer-stateless-function */
-export class MuseumsPage extends React.Component {
+export const emptyItem = {
+  eid: '0',
+  image: '',
+  title: { RU: '', EN: '' },
+  text: { RU: '', EN: '' },
+  desc: { RU: '', EN: '' },
+  priority: '0',
+};
+
+export const rowStyle = {
+  display: 'flex',
+  flexDirection: 'row',
+};
+
+export const refreshStyle = {
+  maxWidth: '27px',
+  cursor: 'pointer',
+};
+
+export class EditNewsPage extends React.Component {
   componentDidMount() {
     const page = this.props.search.page ? Number(this.props.search.page) : 1;
     this.props.init(page);
@@ -42,7 +63,6 @@ export class MuseumsPage extends React.Component {
     const prevPage = prevProps.search.page ? Number(prevProps.search.page) : 1;
     if (prevPage !== page && page !== this.props.page) this.props.init(page);
   }
-
   render() {
     const pageUrl = this.props.search.page ? Number(this.props.search.page) : 1;
     const { loading, error, data, count, page } = this.props;
@@ -51,38 +71,61 @@ export class MuseumsPage extends React.Component {
       loading,
       error,
       data,
-      component: MuseumListItem,
+      component: item => <EditListItem item={item} Feed />,
       scroll: true,
     };
     return (
       <article>
         <Helmet>
-          <title>Museums Page</title>
-          <meta name="description" content="Museums page of EACH application" />
+          <title>Edit news page</title>
+          <meta
+            name="description"
+            content="Edit news page of EACH application"
+          />
         </Helmet>
         <H1>
           <FormattedMessage {...messages.header} />
         </H1>
         <PageList countElements={count} elementsPerPage={10} />
+        <div style={rowStyle}>
+          <Nav>
+            <Popup
+              trigger={
+                <Button children={<FormattedMessage {...messages.add} />} />
+              }
+              item={emptyItem}
+              mod="add"
+              Feed
+            />
+          </Nav>
+          <Nav>
+            <img
+              style={refreshStyle}
+              src="/Refresh.png"
+              alt="Refresh"
+              onClick={() => this.props.init(page)}
+            />
+          </Nav>
+        </div>
         <DataList {...dataListProps} />
       </article>
     );
   }
 }
 
-MuseumsPage.propTypes = {
+EditNewsPage.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   data: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
-  init: PropTypes.func,
   count: PropTypes.number,
-  search: PropTypes.object,
   page: PropTypes.number,
+  init: PropTypes.func,
+  search: PropTypes.object,
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
-    init: page => dispatch(loadMuseums(page)),
+    init: page => dispatch(loadFeeds(page)),
   };
 }
 
@@ -99,12 +142,12 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'museums', reducer });
-const withSaga = injectSaga({ key: 'museums', saga });
+const withReducer = injectReducer({ key: 'deleteNewsData', reducer });
+const withSaga = injectSaga({ key: 'deleteNewsData', saga });
 
 export default compose(
   withAuth,
   withReducer,
   withSaga,
   withConnect,
-)(MuseumsPage);
+)(EditNewsPage);

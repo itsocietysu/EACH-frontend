@@ -85,7 +85,7 @@ export function mapDispatchToProps(dispatch) {
   return {
     init: evt => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      dispatch(loadFeeds());
+      dispatch(loadFeeds(1));
     },
   };
 }

@@ -16,4 +16,17 @@ const makeSelectError = () =>
 const makeSelectData = () =>
   createSelector(selectFeeds, feedsState => feedsState.get('data'));
 
-export { selectFeeds, makeSelectLoading, makeSelectError, makeSelectData };
+const makeSelectCount = () =>
+  createSelector(selectFeeds, feedsState => feedsState.get('count'));
+
+const makeSelectPage = () =>
+  createSelector(selectFeeds, feedsState => feedsState.get('page'));
+
+export {
+  selectFeeds,
+  makeSelectLoading,
+  makeSelectError,
+  makeSelectData,
+  makeSelectCount,
+  makeSelectPage,
+};

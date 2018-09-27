@@ -8,7 +8,8 @@ import HomePage from '../containers/HomePage/Loadable';
 import FeaturePage from '../containers/FeaturePage/Loadable';
 import MuseumsPage from '../containers/MuseumsPage/Loadable';
 import AuthPage from '../containers/AuthPage/Loadable';
-import EditPage from '../containers/EditPage/Loadable';
+import EditNewsPage from '../containers/EditNewsPage/Loadable';
+import EditMuseumsPage from '../containers/EditMuseumsPage/Loadable';
 import NewsPage from '../containers/NewsPage/Loadable';
 import NotFoundPage from '../containers/NotFoundPage/Loadable';
 
@@ -64,12 +65,33 @@ const MuseumsRoute = (() => {
   return r;
 })();
 
-const EditRoute = (() => {
+const EditNewsRoute = (() => {
   const r = new Route();
-  r.path = '/edit/:content(news|museums)';
+  r.path = '/edit/news';
   r.exact = false;
-  r.component = ({ match }) =>
-    Page(Header, EditPage, Footer, { user: true, simple: true }, match.params);
+  r.component = ({ location }) =>
+    Page(
+      Header,
+      EditNewsPage,
+      Footer,
+      { user: true, simple: true },
+      { search: parseQueryString(location.search.substring(1)) },
+    );
+  return r;
+})();
+
+const EditMuseumsRoute = (() => {
+  const r = new Route();
+  r.path = '/edit/museums';
+  r.exact = false;
+  r.component = ({ location }) =>
+    Page(
+      Header,
+      EditMuseumsPage,
+      Footer,
+      { user: true, simple: true },
+      { search: parseQueryString(location.search.substring(1)) },
+    );
   return r;
 })();
 
@@ -103,7 +125,8 @@ const routes: Array<Route> = [
   HomeRoute,
   FeatureRoute,
   MuseumsRoute,
-  EditRoute,
+  EditNewsRoute,
+  EditMuseumsRoute,
   NewsRoute,
   AuthRoute,
   NotFoundRoute,

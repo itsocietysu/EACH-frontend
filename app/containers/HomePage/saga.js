@@ -1,20 +1,23 @@
-/* eslint-disable import/first */
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, select, put, takeLatest } from 'redux-saga/effects';
 import { LOAD_FEEDS } from './constants';
 import { feedsLoaded, feedsLoadingError } from './actions';
+import { makeSelectPage } from './selectors';
 
-import request from 'utils/request';
+import request from '../../utils/request';
 
 /**
  * Feeds data load handler
  */
 export function* loadFeeds() {
-  const requestURL = `http://each.itsociety.su:4201/each/feed/all`;
+  const page = yield select(makeSelectPage());
+  const requestURL = `http://each.itsociety.su:4201/each/feed/tape?FirstFeed=${(page -
+    1) *
+    10}&LastFeed=${page * 10 - 1}`;
   try {
     const feeds = yield call(request, requestURL);
     let data = false;
-    if (feeds.length) {
-      data = feeds.map(item => ({
+    if (feeds.result.length) {
+      data = feeds.result.map(item => ({
         eid: item.eid,
         title: item.title,
         text: item.text,
@@ -25,7 +28,7 @@ export function* loadFeeds() {
         priority: `${item.priority[0] ? item.priority[0] : 0}`,
       }));
     }
-    yield put(feedsLoaded(data));
+    yield put(feedsLoaded(data, feeds.count, feeds.page));
   } catch (err) {
     yield put(feedsLoadingError(err));
   }

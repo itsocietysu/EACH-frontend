@@ -11,20 +11,21 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 
-import { getLocale } from 'cookieManager';
+import { getLocale } from '../../cookieManager';
 
-import ListItem from 'components/ListItem';
-import H2 from 'components/H2';
-import H3 from 'components/H3';
-import P from 'components/P';
-import PopupEl from 'containers/EditForm';
-import Button from 'components/Button';
-import Img from 'containers/FeedListItem/Img';
-import DivSep from 'containers/FeedListItem/DivSep';
-import Wrapper from 'containers/FeedListItem/Wrapper';
-import Nav from 'containers/LinkList/Nav';
-import MsgBox from 'components/MsgBox';
-import { deleteFeedData, deleteMuseumData } from 'containers/EditPage/actions';
+import ListItem from '../../components/ListItem';
+import H2 from '../../components/H2';
+import H3 from '../../components/H3';
+import P from '../../components/P';
+import PopupEl from '../EditForm';
+import Button from '../../components/Button';
+import Img from '../FeedListItem/Img';
+import DivSep from '../FeedListItem/DivSep';
+import Wrapper from '../FeedListItem/Wrapper';
+import Nav from '../LinkList/Nav';
+import MsgBox from '../../components/MsgBox';
+import { deleteData as deleteFeedData } from '../EditNewsPage/actions';
+import { deleteData as deleteMuseumData } from '../EditMuseumsPage/actions';
 import messages from './messages';
 
 import { DEFAULT_LOCALE } from '../../i18n';

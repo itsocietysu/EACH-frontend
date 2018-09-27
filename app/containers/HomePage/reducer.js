@@ -14,6 +14,8 @@ export const initialState = fromJS({
   loading: false,
   error: false,
   data: false,
+  page: 1,
+  count: 0,
 });
 
 function feedsReducer(state = initialState, action) {
@@ -22,9 +24,14 @@ function feedsReducer(state = initialState, action) {
       return state
         .set('loading', true)
         .set('error', false)
-        .set('data', false);
+        .set('data', false)
+        .set('page', action.page);
     case LOAD_FEEDS_SUCCESS:
-      return state.set('loading', false).set('data', action.feeds);
+      return state
+        .set('loading', false)
+        .set('data', action.feeds)
+        .set('count', action.count)
+        .set('page', action.page);
     case LOAD_FEEDS_ERROR:
       return state.set('error', action.error).set('loading', false);
     default:

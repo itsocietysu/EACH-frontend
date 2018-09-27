@@ -19,6 +19,8 @@ export const initialState = fromJS({
   loading: false,
   error: false,
   data: false,
+  page: 1,
+  count: 0,
 });
 
 function museumsReducer(state = initialState, action) {
@@ -27,11 +29,14 @@ function museumsReducer(state = initialState, action) {
       return state
         .set('loading', true)
         .set('error', false)
-        .set('data', false);
+        .set('data', false)
+        .set('page', action.page);
     case LOAD_MUSEUMS_SUCCESS:
       return state
         .set('loading', false)
-        .set('data', action.museums);
+        .set('data', action.museums)
+        .set('count', action.count)
+        .set('page', action.page);
     case LOAD_MUSEUMS_ERROR:
       return state
         .set('error', action.error)

@@ -2,6 +2,7 @@
 import request from '../../utils/request';
 import { setSession, setLogined, setOAuth, setUser } from '../../cookieManager';
 import { appEnum } from '../AuthList/configs';
+import { parseQueryString } from '../../utils/utils';
 import config from './client_config.json';
 
 const btoa = str => {
@@ -40,17 +41,7 @@ export function getToken() {
   } else {
     qp = window.location.search.substring(1);
   }
-
-  const arr = qp.split('&');
-  arr.forEach((v, i, _arr) => {
-    _arr[i] = `"${v.replace('=', '":"')}"`;
-  });
-  qp = qp
-    ? JSON.parse(
-      `{${arr.join()}}`,
-      (key, value) => (key === '' ? value : decodeURIComponent(value)),
-    )
-    : {};
+  qp = parseQueryString(qp);
 
   const isValid = qp.state === oauth2.state;
   if (!isValid) {

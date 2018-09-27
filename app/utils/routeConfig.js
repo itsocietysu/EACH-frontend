@@ -12,6 +12,8 @@ import EditPage from '../containers/EditPage/Loadable';
 import NewsPage from '../containers/NewsPage/Loadable';
 import NotFoundPage from '../containers/NotFoundPage/Loadable';
 
+import { parseQueryString } from './utils';
+
 class Route {
   path: string;
   exact: boolean;
@@ -51,8 +53,14 @@ const MuseumsRoute = (() => {
   const r = new Route();
   r.path = '/museums';
   r.exact = false;
-  r.component = () =>
-    Page(Header, MuseumsPage, Footer, { user: true, simple: true });
+  r.component = ({ location }) =>
+    Page(
+      Header,
+      MuseumsPage,
+      Footer,
+      { user: true, simple: true },
+      { search: parseQueryString(location.search.substring(1)) },
+    );
   return r;
 })();
 

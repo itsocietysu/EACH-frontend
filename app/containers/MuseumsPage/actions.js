@@ -18,11 +18,14 @@ import {
 /**
  * Load museums data, this action starts the request saga
  *
- * @return {object} An action object with a type of LOAD_MUSEUMS
+ * @param  {number} page The number of new current page
+ *
+ * @return {object} An action object with a type of LOAD_MUSEUMS passing the page number
  */
-export function loadMuseums() {
+export function loadMuseums(page) {
   return {
     type: LOAD_MUSEUMS,
+    page,
   };
 }
 
@@ -31,12 +34,18 @@ export function loadMuseums() {
  *
  * @param  {array} museums The current museums
  *
- * @return {object} An action object with a type of LOAD_MUSEUMS_SUCCESS passing museums data
+ * @param  {number} count The count of all museums
+ *
+ * @param  {number} page The number page from response
+ *
+ * @return {object} An action object with a type of LOAD_MUSEUMS_SUCCESS passing museums data, count of all museums and number of page
  */
-export function museumsLoaded(museums) {
+export function museumsLoaded(museums, count, page) {
   return {
     type: LOAD_MUSEUMS_SUCCESS,
     museums,
+    count,
+    page,
   };
 }
 

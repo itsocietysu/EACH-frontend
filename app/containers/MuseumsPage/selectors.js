@@ -16,4 +16,17 @@ const makeSelectError = () =>
 const makeSelectData = () =>
   createSelector(selectMuseums, museumsState => museumsState.get('data'));
 
-export { selectMuseums, makeSelectLoading, makeSelectError, makeSelectData };
+const makeSelectCount = () =>
+  createSelector(selectMuseums, museumsState => museumsState.get('count'));
+
+const makeSelectPage = () =>
+  createSelector(selectMuseums, museumsState => museumsState.get('page'));
+
+export {
+  selectMuseums,
+  makeSelectLoading,
+  makeSelectError,
+  makeSelectData,
+  makeSelectPage,
+  makeSelectCount,
+};

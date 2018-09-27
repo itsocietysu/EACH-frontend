@@ -1,20 +1,23 @@
-/* eslint-disable import/first */
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, select, put, takeLatest } from 'redux-saga/effects';
 import { LOAD_MUSEUMS } from './constants';
 import { museumsLoaded, museumsLoadingError } from './actions';
 
-import requestAuth from 'utils/requestAuth';
+import requestAuth from '../../utils/requestAuth';
+import { makeSelectPage } from './selectors';
 
 /**
  * Museums data load handler
  */
 export function* loadMuseums() {
-  const requestURL = `http://each.itsociety.su:4201/each/museum/all`;
+  const page = yield select(makeSelectPage());
+  const requestURL = `http://each.itsociety.su:4201/each/museum/tape?FirstMuseum=${(page -
+    1) *
+    10}&LastMuseum=${page * 10 - 1}`;
   try {
     const museums = yield call(requestAuth, requestURL);
     let data = false;
-    if (museums.length) {
-      data = museums.map(item => ({
+    if (museums.result.length) {
+      data = museums.result.map(item => ({
         eid: item.eid,
         name: { RU: item.name, EN: item.name },
         desc: { RU: item.desc, EN: item.desc },
@@ -23,7 +26,7 @@ export function* loadMuseums() {
         }`,
       }));
     }
-    yield put(museumsLoaded(data));
+    yield put(museumsLoaded(data, museums.count, museums.page));
   } catch (err) {
     yield put(museumsLoadingError(err));
   }

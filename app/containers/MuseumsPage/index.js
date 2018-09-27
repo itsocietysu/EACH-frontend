@@ -10,17 +10,21 @@ import { FormattedMessage } from 'react-intl';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { Redirect } from 'react-router-dom';
 
 import injectReducer from '../../utils/injectReducer';
 import injectSaga from '../../utils/injectSaga';
 import { withAuth } from '../../utils/auth';
 import {
+  makeSelectCount,
   makeSelectData,
   makeSelectError,
   makeSelectLoading,
+  makeSelectPage,
 } from './selectors';
 import messages from './messages';
 import H1 from '../../components/H1';
+import { PageList } from '../PageList';
 import DataList from '../../components/DataList';
 import MuseumListItem from '../MuseumListItem';
 import { loadMuseums } from './actions';
@@ -30,11 +34,19 @@ import saga from './saga';
 /* eslint-disable react/prefer-stateless-function */
 export class MuseumsPage extends React.Component {
   componentDidMount() {
-    this.props.init();
+    const page = this.props.search.page ? Number(this.props.search.page) : 1;
+    this.props.init(page);
+  }
+  componentDidUpdate(prevProps) {
+    const page = this.props.search.page ? Number(this.props.search.page) : 1;
+    const prevPage = prevProps.search.page ? Number(prevProps.search.page) : 1;
+    if (prevPage !== page && page !== this.props.page) this.props.init(page);
   }
 
   render() {
-    const { loading, error, data } = this.props;
+    const pageUrl = this.props.search.page ? Number(this.props.search.page) : 1;
+    const { loading, error, data, page } = this.props;
+    if (data && pageUrl !== page) return <Redirect to={`?page=${page}`} />;
     const dataListProps = {
       loading,
       error,
@@ -51,6 +63,7 @@ export class MuseumsPage extends React.Component {
         <H1>
           <FormattedMessage {...messages.header} />
         </H1>
+        <PageList countElements={this.props.count} elementsPerPage={10} />
         <DataList {...dataListProps} />
       </article>
     );
@@ -62,14 +75,14 @@ MuseumsPage.propTypes = {
   error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   data: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   init: PropTypes.func,
+  count: PropTypes.number,
+  search: PropTypes.object,
+  page: PropTypes.number,
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
-    init: evt => {
-      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      dispatch(loadMuseums());
-    },
+    init: page => dispatch(loadMuseums(page)),
   };
 }
 
@@ -77,6 +90,8 @@ const mapStateToProps = createStructuredSelector({
   data: makeSelectData(),
   loading: makeSelectLoading(),
   error: makeSelectError(),
+  count: makeSelectCount(),
+  page: makeSelectPage(),
 });
 
 const withConnect = connect(

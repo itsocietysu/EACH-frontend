@@ -66,7 +66,9 @@ export class EditNewsPage extends React.Component {
   render() {
     const pageUrl = this.props.search.page ? Number(this.props.search.page) : 1;
     const { loading, error, data, count, page } = this.props;
-    if (data && pageUrl !== page) return <Redirect to={`?page=${page}`} />;
+    const maxPage = Math.ceil(this.props.count / 10.0);
+    if (data && pageUrl !== page && (pageUrl <= 0 || pageUrl > maxPage))
+      return <Redirect to={`?page=${page}`} />;
     const dataListProps = {
       loading,
       error,

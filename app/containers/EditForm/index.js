@@ -25,11 +25,7 @@ import BorderTopImage from '../../components/MsgBox/Img';
 import injectReducer from '../../utils/injectReducer';
 import injectSaga from '../../utils/injectSaga';
 import { DAEMON } from '../../utils/constants';
-import {
-  makeSelectFormData,
-  makeSelectMessage,
-  makeSelectOpenMsg,
-} from './selectors';
+import { makeSelectFormData, makeSelectMsgData } from './selectors';
 import messages from './messages';
 import Img from './Img';
 import {
@@ -105,7 +101,7 @@ class EditForm extends React.Component {
     if (props.Museum) this.state = MuseumSet;
   }
   render() {
-    const { data } = this.props;
+    const { data, message } = this.props;
     const { title, text, image, desc, priority } = data;
     const titles = [];
     const texts = [];
@@ -160,7 +156,20 @@ class EditForm extends React.Component {
         {close => (
           <CenteredDiv>
             <BorderTopImage />
-            <Close onClick={close} />
+            <Close
+              onClick={() =>
+                this.props.onChangeOpenMsg(
+                  messages.sure,
+                  () => {
+                    close();
+                  },
+                  true,
+                  () => {
+                    this.props.onChangeOpenMsg();
+                  },
+                )
+              }
+            />
             <form>
               <div style={{ marginBottom: '0.5em' }}>
                 {image ? (
@@ -201,14 +210,28 @@ class EditForm extends React.Component {
                 children={<FormattedMessage {...messages.confirm} />}
                 onClick={() => {
                   if (isEmpty(this.props))
-                    this.props.onChangeOpenMsg(messages.empty);
+                    this.props.onChangeOpenMsg(
+                      messages.empty,
+                      () => {},
+                      false,
+                      () => {
+                        this.props.onChangeOpenMsg();
+                      },
+                    );
                   else {
                     const base64 = getCroppedImg(
                       this.props.imageByCrop,
                       this.props.pixelCrop,
                     );
                     if (base64 === null) {
-                      this.props.onChangeOpenMsg(messages.imageSize);
+                      this.props.onChangeOpenMsg(
+                        messages.imageSize,
+                        () => {},
+                        false,
+                        () => {
+                          this.props.onChangeOpenMsg();
+                        },
+                      );
                     } else {
                       this.props.onSubmit(
                         base64,
@@ -222,13 +245,26 @@ class EditForm extends React.Component {
               />
               <Button
                 children={<FormattedMessage {...messages.close} />}
-                onClick={close}
+                onClick={() =>
+                  this.props.onChangeOpenMsg(
+                    messages.sure,
+                    () => {
+                      close();
+                    },
+                    true,
+                    () => {
+                      this.props.onChangeOpenMsg();
+                    },
+                  )
+                }
               />
             </div>
             <MsgBox
-              message={this.props.message}
-              open={this.props.isOpenMessage}
-              onSubmit={this.props.onChangeOpenMsg}
+              message={message.message}
+              open={message.isOpenMsg}
+              onSubmit={message.onSubmit}
+              cancel={message.isCancelMsg}
+              onClose={message.onClose}
             />
           </CenteredDiv>
         )}
@@ -247,7 +283,6 @@ EditForm.propTypes = {
   onChangePriority: PropTypes.func,
   init: PropTypes.func,
   onSubmit: PropTypes.func,
-  isOpenMessage: PropTypes.bool,
   message: PropTypes.object,
   onChangeOpenMsg: PropTypes.func,
   imageByCrop: PropTypes.object,
@@ -294,7 +329,8 @@ export function mapDispatchToProps(dispatch) {
             );
         });
     },
-    onChangeOpenMsg: message => dispatch(changeOpenMsg(message)),
+    onChangeOpenMsg: (message, onSubmit, cancel, onClose) =>
+      dispatch(changeOpenMsg(message, cancel, onSubmit, onClose)),
     onSubmit: (base64, Feed, Museum) => {
       dispatch(changeImg(base64));
       if (Feed) dispatch(sendFeedData());
@@ -305,8 +341,7 @@ export function mapDispatchToProps(dispatch) {
 
 const mapStateToProps = createStructuredSelector({
   data: makeSelectFormData(),
-  message: makeSelectMessage(),
-  isOpenMessage: makeSelectOpenMsg(),
+  message: makeSelectMsgData(),
   imageByCrop: makeSelectImageElement(),
   pixelCrop: makeSelectPixelCrop(),
 });

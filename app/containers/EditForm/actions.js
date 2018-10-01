@@ -134,12 +134,18 @@ export function dataSendingError(error) {
  * Dispatched when need open or close message box
  *
  * @param  {object} message The new message
+ * @param  {boolean} cancel If message can be cancel
+ * @param  {function} onSubmit The function to need to call if submit
+ * @param  {function} onClose The function to need to call if close
  *
  * @return {object} An action object with a type of CHANGE_OPEN_MSG passing the message
  */
-export function changeOpenMsg(message) {
+export function changeOpenMsg(message, cancel, onSubmit, onClose) {
   return {
     type: CHANGE_OPEN_MSG,
     message,
+    cancel,
+    onSubmit,
+    onClose,
   };
 }

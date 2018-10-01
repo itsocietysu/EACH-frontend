@@ -42,6 +42,8 @@
   "each.containers.EditForm.imageSmall":
     "Маленькое изображение. Минимальный размер - 256x256.",
   "each.containers.EditForm.empty": "Есть незаполненные поля",
+  "each.containers.EditForm.sure":
+    "Вы действительно хотите закрыть? Все несохранённые изменения будут утеряны.",
   "each.containers.EditListItem.edit": "Изменить",
   "each.containers.EditListItem.delete": "Удалить",
   "each.containers.EditListItem.deleteFeed":

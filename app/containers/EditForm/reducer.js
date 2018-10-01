@@ -33,8 +33,13 @@ export const initialState = fromJS({
   mod: 'add',
   sending: false,
   error: false,
-  isOpenMsg: false,
-  message: {},
+  msgData: {
+    isOpenMsg: false,
+    message: {},
+    isCancelMsg: false,
+    onSubmit: () => {},
+    onClose: () => {},
+  },
 });
 
 function editFormReducer(state = initialState, action) {
@@ -56,8 +61,11 @@ function editFormReducer(state = initialState, action) {
         .set('mod', action.mod);
     case CHANGE_OPEN_MSG:
       return state
-        .set('isOpenMsg', !state.get('isOpenMsg'))
-        .set('message', action.message);
+        .setIn(['msgData', 'isOpenMsg'], !state.getIn(['msgData', 'isOpenMsg']))
+        .setIn(['msgData', 'message'], action.message)
+        .setIn(['msgData', 'isCancelMsg'], action.cancel)
+        .setIn(['msgData', 'onSubmit'], action.onSubmit)
+        .setIn(['msgData', 'onClose'], action.onClose);
     case SEND_FEED_DATA:
       return state
         .set('sending', true)

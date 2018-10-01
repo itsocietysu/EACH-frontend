@@ -42,7 +42,14 @@ Content.propTypes = {
   close: PropTypes.func,
 };
 
-export default function MsgBox({ trigger, onSubmit, message, cancel, open }) {
+export default function MsgBox({
+  trigger,
+  onSubmit,
+  message,
+  cancel,
+  open,
+  onClose,
+}) {
   const contentStyle = {
     maxWidth: '30em',
     padding: '0',
@@ -69,14 +76,12 @@ export default function MsgBox({ trigger, onSubmit, message, cancel, open }) {
     );
   return (
     <Popup open={open} closeOnDocumentClick modal contentStyle={contentStyle}>
-      {close => (
-        <Content
-          close={close}
-          onSubmit={onSubmit}
-          cancel={cancel}
-          message={message}
-        />
-      )}
+      <Content
+        close={onClose}
+        onSubmit={onSubmit}
+        cancel={cancel}
+        message={message}
+      />
     </Popup>
   );
 }
@@ -85,6 +90,7 @@ MsgBox.propTypes = {
   trigger: PropTypes.object,
   message: PropTypes.object,
   onSubmit: PropTypes.func,
+  onClose: PropTypes.func,
   cancel: PropTypes.bool,
   open: PropTypes.bool,
 };

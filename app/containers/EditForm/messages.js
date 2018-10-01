@@ -71,4 +71,9 @@ export default defineMessages({
     id: 'each.containers.EditForm.empty',
     defaultMessage: 'There are empty fields',
   },
+  sure: {
+    id: 'each.containers.EditForm.sure',
+    defaultMessage:
+      'Are you sure you want to close? All unsaved changes will be lost.',
+  },
 });

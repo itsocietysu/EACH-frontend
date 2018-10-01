@@ -15,6 +15,11 @@ const makeSelectFormData = () =>
 const makeSelectMod = () =>
   createSelector(selectEditForm, editFormState => editFormState.get('mod'));
 
+const makeSelectMsgData = () =>
+  createSelector(selectEditForm, editFormState =>
+    editFormState.get('msgData').toJS(),
+  );
+
 const makeSelectMessage = () =>
   createSelector(selectEditForm, editFormState => editFormState.get('message'));
 
@@ -27,6 +32,7 @@ export {
   selectEditForm,
   makeSelectFormData,
   makeSelectMod,
+  makeSelectMsgData,
   makeSelectMessage,
   makeSelectOpenMsg,
 };

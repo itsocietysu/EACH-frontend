@@ -6,9 +6,17 @@ import { dataSent, dataSendingError } from './actions';
 import requestAuth from '../../utils/requestAuth';
 import { makeSelectFormData, makeSelectMod } from './selectors';
 
-import { makeSelectData as makeSelectNewsData } from '../HomePage/selectors';
+import {
+  makeSelectData as makeSelectNewsData,
+  makeSelectPage as makeSelectNewsPage,
+  makeSelectCount as makeSelectNewsCount,
+} from '../HomePage/selectors';
 import { feedsLoaded } from '../HomePage/actions';
-import { makeSelectData as makeSelectMuseumsData } from '../MuseumsPage/selectors';
+import {
+  makeSelectData as makeSelectMuseumsData,
+  makeSelectPage as makeSelectMuseumsPage,
+  makeSelectCount as makeSelectMuseumsCount,
+} from '../MuseumsPage/selectors';
 import { museumsLoaded } from '../MuseumsPage/actions';
 
 import { appLocales } from '../../i18n';
@@ -42,6 +50,8 @@ export function* sendFeed() {
   const mod = yield select(makeSelectMod());
   const newsData = yield select(makeSelectFormData());
   const data = yield select(makeSelectNewsData());
+  const page = yield select(makeSelectNewsPage());
+  let count = yield select(makeSelectNewsCount());
   const requestURL = `http://each.itsociety.su:4201/each/feed`;
   let body = {};
   let method = 'POST';
@@ -91,35 +101,36 @@ export function* sendFeed() {
     body: JSON.stringify(body),
   };
   try {
-    const resp = yield call(requestAuth, requestURL, options);
+    const resp = (yield call(requestAuth, requestURL, options))[0];
     let newData = data;
     if (mod === 'add') {
       newData = [
         {
-          eid: resp[0].eid,
-          title: resp[0].title,
-          text: resp[0].text,
-          desc: resp[0].desc,
-          image: `http://${resp[0].image[0].url}`,
-          priority: `${resp[0].priority[0]}`,
+          eid: resp.eid,
+          title: resp.title,
+          text: resp.text,
+          desc: resp.desc,
+          image: `http://${resp.image[0].url}`,
+          priority: `${resp.priority[0]}`,
         },
       ].concat(data);
+      count += 1;
     } else {
       newData = data.map(element => {
-        if (element.eid === resp[0].eid) {
+        if (element.eid === resp.eid) {
           return {
-            eid: resp[0].eid,
-            title: resp[0].title,
-            text: resp[0].text,
-            desc: resp[0].desc,
-            image: `http://${resp[0].image[0].url}`,
-            priority: `${resp[0].priority[0]}`,
+            eid: resp.eid,
+            title: resp.title,
+            text: resp.text,
+            desc: resp.desc,
+            image: `http://${resp.image[0].url}`,
+            priority: `${resp.priority[0]}`,
           };
         }
         return element;
       }, resp);
     }
-    yield put(feedsLoaded(newData));
+    yield put(feedsLoaded(newData, count, page));
     yield put(dataSent());
   } catch (err) {
     yield put(dataSendingError(err));
@@ -133,6 +144,8 @@ export function* sendMuseum() {
   const mod = yield select(makeSelectMod());
   const museumData = yield select(makeSelectFormData());
   const data = yield select(makeSelectMuseumsData());
+  const page = yield select(makeSelectMuseumsPage());
+  let count = yield select(makeSelectMuseumsCount());
   let requestURL = `http://each.itsociety.su:4201/each/add`;
   const options = {
     method: 'POST',
@@ -145,7 +158,7 @@ export function* sendMuseum() {
       name: museumData.title.RU,
       desc: museumData.desc.RU,
       prop: {
-        image: museumData.get('image'),
+        image: museumData.image,
       },
     }),
   };
@@ -154,31 +167,32 @@ export function* sendMuseum() {
     requestURL = `http://each.itsociety.su:4201/each/update`;
   }
   try {
-    const resp = yield call(requestAuth, requestURL, options);
+    const resp = (yield call(requestAuth, requestURL, options))[0];
     let newData = data;
     if (mod === 'add') {
       newData = [
         {
-          eid: resp[0].eid,
-          name: { RU: resp[0].name, EN: resp[0].name },
-          desc: { RU: resp[0].desc, EN: resp[0].desc },
-          image: `http://${resp[0].image[0].url}`,
+          eid: resp.eid,
+          name: { RU: resp.name, EN: resp.name },
+          desc: { RU: resp.desc, EN: resp.desc },
+          image: `http://${resp.image[0].url}`,
         },
       ].concat(data);
+      count += 1;
     } else {
       newData = data.map(element => {
-        if (element.eid === resp[0].eid) {
+        if (element.eid === resp.eid) {
           return {
-            eid: resp[0].eid,
-            name: { RU: resp[0].name, EN: resp[0].name },
-            desc: { RU: resp[0].desc, EN: resp[0].desc },
-            image: `http://${resp[0].image[0].url}`,
+            eid: resp.eid,
+            name: { RU: resp.name, EN: resp.name },
+            desc: { RU: resp.desc, EN: resp.desc },
+            image: `http://${resp.image[0].url}`,
           };
         }
         return element;
       }, resp);
     }
-    yield put(museumsLoaded(newData));
+    yield put(museumsLoaded(newData, count, page));
     yield put(dataSent());
   } catch (err) {
     yield put(dataSendingError(err));
@@ -188,7 +202,7 @@ export function* sendMuseum() {
 /**
  * Root saga manages watcher lifecycle
  */
-export default function* sendFeedData() {
+export default function* sendEditData() {
   yield takeLatest(SEND_FEED_DATA, sendFeed);
   yield takeLatest(SEND_MUSEUM_DATA, sendMuseum);
 }

@@ -7,7 +7,11 @@ import { makeSelectEid } from './selectors';
 
 import { loadMuseums } from '../MuseumsPage/saga';
 import { LOAD_MUSEUMS } from '../MuseumsPage/constants';
-import { makeSelectData } from '../MuseumsPage/selectors';
+import {
+  makeSelectData,
+  makeSelectPage,
+  makeSelectCount,
+} from '../MuseumsPage/selectors';
 import { museumsLoaded } from '../MuseumsPage/actions';
 
 /**
@@ -16,6 +20,8 @@ import { museumsLoaded } from '../MuseumsPage/actions';
 export function* deleteMuseum() {
   const eid = yield select(makeSelectEid());
   const requestURL = `http://each.itsociety.su:4201/each/museum/${eid}?hard=true`;
+  const page = yield select(makeSelectPage());
+  const count = yield select(makeSelectCount());
   const options = {
     method: 'DELETE',
   };
@@ -23,7 +29,13 @@ export function* deleteMuseum() {
     yield call(requestAuth, requestURL, options);
     yield put(dataDeleted());
     const data = yield select(makeSelectData());
-    yield put(museumsLoaded(data.filter(element => element.eid !== eid)));
+    yield put(
+      museumsLoaded(
+        data.filter(element => element.eid !== eid),
+        count - 1,
+        page,
+      ),
+    );
   } catch (err) {
     yield put(dataDeletingError(err));
   }

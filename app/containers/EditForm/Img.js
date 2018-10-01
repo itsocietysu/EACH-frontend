@@ -1,5 +1,5 @@
-import NormalImg from 'components/Img';
 import styled from 'styled-components';
+import NormalImg from '../../components/Img';
 
 const Img = styled(NormalImg)`
   max-width: 37em;

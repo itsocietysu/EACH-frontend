@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 /**
  *
  * Img.js
@@ -9,7 +10,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function Img(props) {
-  return <img className={props.className} src={props.src} alt={props.alt} />;
+  let element;
+  const changeSrc = () => {
+    element.src = '/Photo.png';
+  };
+  return (
+    <img
+      className={props.className}
+      src={props.src}
+      alt={props.alt}
+      onError={() => changeSrc()}
+      ref={el => (element = el)}
+    />
+  );
 }
 
 // We require the use of src and alt, only enforced by react in dev mode

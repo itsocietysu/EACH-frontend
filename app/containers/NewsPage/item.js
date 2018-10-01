@@ -26,13 +26,11 @@ class Item extends React.Component {
     const locale = getLocale() || DEFAULT_LOCALE;
     return (
       <div className="wrapper">
-        <div className="divUp">
-          <DivSep width="50%">
+        <div>
+          <DivSep width="50%" className="divSep">
             <Img src={item.image} alt={`Feed-${item.eid}`} />
           </DivSep>
-          <DivSep width="50%" className="divSep">
-            <H1>{item.title[locale]}</H1>
-          </DivSep>
+          <H1>{item.title[locale]}</H1>
         </div>
         <P className={`P-text-${item.eid}`} ref="text" />
       </div>

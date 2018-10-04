@@ -164,9 +164,7 @@ class EditForm extends React.Component {
                     close();
                   },
                   true,
-                  () => {
-                    this.props.onChangeOpenMsg();
-                  },
+                  this.props.onChangeOpenMsg,
                 )
               }
             />
@@ -214,9 +212,7 @@ class EditForm extends React.Component {
                       messages.empty,
                       () => {},
                       false,
-                      () => {
-                        this.props.onChangeOpenMsg();
-                      },
+                      this.props.onChangeOpenMsg,
                     );
                   else {
                     const base64 = getCroppedImg(
@@ -228,9 +224,7 @@ class EditForm extends React.Component {
                         messages.imageSize,
                         () => {},
                         false,
-                        () => {
-                          this.props.onChangeOpenMsg();
-                        },
+                        this.props.onChangeOpenMsg,
                       );
                     } else {
                       this.props.onSubmit(
@@ -252,9 +246,7 @@ class EditForm extends React.Component {
                       close();
                     },
                     true,
-                    () => {
-                      this.props.onChangeOpenMsg();
-                    },
+                    this.props.onChangeOpenMsg,
                   )
                 }
               />
@@ -305,7 +297,15 @@ export function mapDispatchToProps(dispatch) {
                   res.replace(/^data:image\/(png|jpg|jpeg);base64,/, ''),
                 ),
               ),
-            () => dispatch(changeOpenMsg(messages.imageSmall)),
+            () =>
+              dispatch(
+                changeOpenMsg(
+                  messages.imageSmall,
+                  false,
+                  () => {},
+                  this.onChangeOpenMsg,
+                ),
+              ),
           );
         });
     },

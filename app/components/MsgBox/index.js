@@ -60,7 +60,7 @@ export default function MsgBox({
     return (
       <Popup
         trigger={trigger}
-        closeOnDocumentClick
+        closeOnDocumentClick={false}
         modal
         contentStyle={contentStyle}
       >
@@ -75,7 +75,12 @@ export default function MsgBox({
       </Popup>
     );
   return (
-    <Popup open={open} closeOnDocumentClick modal contentStyle={contentStyle}>
+    <Popup
+      open={open}
+      modal
+      closeOnDocumentClick={false}
+      contentStyle={contentStyle}
+    >
       <Content
         close={onClose}
         onSubmit={onSubmit}

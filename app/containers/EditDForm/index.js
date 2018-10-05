@@ -189,7 +189,7 @@ class EditDForm extends React.Component {
         item[image.field] = '';
       });
     this.state = { item };
-    props.init(item, settings);
+    props.init(item, props.mod, settings);
   }
   render() {
     const { crops, message, settings } = this.props;
@@ -300,7 +300,7 @@ class EditDForm extends React.Component {
           lockScroll
           contentStyle={PopupStyle}
           onOpen={() => {
-            this.props.init(this.props.item, settings);
+            this.props.init(this.props.item, this.props.mod, settings);
           }}
           onClose={() => {
             this.props.onClose && this.props.onClose();
@@ -366,6 +366,7 @@ EditDForm.propTypes = {
   crops: PropTypes.object,
   item: PropTypes.object,
   settings: PropTypes.object,
+  mod: PropTypes.oneOf(['add', 'edit']),
   onChangeFile: PropTypes.func,
   onChangeText: PropTypes.func,
   onChangeTextLocale: PropTypes.func,
@@ -424,9 +425,9 @@ export function mapDispatchToProps(dispatch) {
     onChangeText: (evt, field) => dispatch(changeText(evt.target.value, field)),
     onChangeNumber: (evt, field, format) =>
       dispatch(changeNumber(evt.target.value, field, format)),
-    init: (item, settings) => {
+    init: (item, mod, settings) => {
       const keys = Object.keys(settings);
-      if (!keys.includes('images')) dispatch(changeData(item));
+      if (!keys.includes('images')) dispatch(changeData(item, mod));
       else {
         const i = Object.assign({}, item);
         settings.images.forEach(image => {
@@ -444,7 +445,7 @@ export function mapDispatchToProps(dispatch) {
               dispatch(changeCrop(base64, image.field));
             });
         });
-        dispatch(changeData(i));
+        dispatch(changeData(i, mod));
       }
     },
     onChangeOpenMsg: (message, onSubmit, cancel, onClose) =>

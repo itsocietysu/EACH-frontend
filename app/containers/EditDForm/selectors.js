@@ -22,9 +22,13 @@ const makeSelectCrop = () =>
     editFormState.get('crop').toJS(),
   );
 
+const makeSelectMod = () =>
+  createSelector(selectEditForm, editFormState => editFormState.get('mod'));
+
 export {
   selectEditForm,
   makeSelectFormData,
   makeSelectMsgData,
   makeSelectCrop,
+  makeSelectMod,
 };

@@ -107,13 +107,15 @@ export function changeNumber(number, field, format) {
  * Dispatched when popup modal opens
  *
  * @param  {object} data The new data of form
+ * @param  {string} mod The new mod of sending data
  *
  * @return {object}    An action object with a type of CHANGE_DATA passing the data and mod
  */
-export function changeData(data) {
+export function changeData(data, mod) {
   return {
     type: CHANGE_DATA,
     data,
+    mod,
   };
 }
 

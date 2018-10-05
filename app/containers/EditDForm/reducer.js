@@ -61,7 +61,7 @@ function editFormReducer(state = initialState, action) {
         return state;
       }
     case CHANGE_DATA:
-      return state.set('formData', fromJS(action.data));
+      return state.set('formData', fromJS(action.data)).set('mod', action.mod);
     case CHANGE_OPEN_MSG:
       return state
         .setIn(['msgData', 'isOpenMsg'], !state.getIn(['msgData', 'isOpenMsg']))

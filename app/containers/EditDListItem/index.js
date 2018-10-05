@@ -27,11 +27,11 @@ import messages from './messages';
 
 import { DEFAULT_LOCALE } from '../../i18n';
 
-const imgStyle = {
-  width: '3%',
+const iconStyle = {
   float: 'right',
   marginTop: '1em',
   cursor: 'pointer',
+  color: 'rgb(217, 146, 92)',
 };
 
 const arrowStyle = {
@@ -100,7 +100,7 @@ export class EditDListItem extends React.PureComponent {
     const content = (
       <Wrapper>
         <Popup
-          trigger={<img src="/feed_more.png" alt="props" style={imgStyle} />}
+          trigger={<i className="fas fa-bars" style={iconStyle} />}
           closeOnDocumentClick
           position="bottom right"
           arrowStyle={arrowStyle}

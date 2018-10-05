@@ -13,6 +13,9 @@ import {
   DELETE_DATA,
   DELETE_DATA_SUCCESS,
   DELETE_DATA_ERROR,
+  SEND_DATA,
+  SEND_DATA_SUCCESS,
+  SEND_DATA_ERROR,
 } from './constants';
 
 /**
@@ -50,6 +53,42 @@ export function dataDeleted() {
 export function dataDeletingError(error) {
   return {
     type: DELETE_DATA_ERROR,
+    error,
+  };
+}
+
+/**
+ * Send museum data, this action starts the request saga
+ *
+ * @return {object} An action object with a type of SEND_DATA
+ */
+export function sendData() {
+  return {
+    type: SEND_DATA,
+  };
+}
+
+/**
+ * Dispatched when data is sent by the request saga
+ *
+ * @return {object} An action object with a type of SEND_DATA_SUCCESS
+ */
+export function dataSent() {
+  return {
+    type: SEND_DATA_SUCCESS,
+  };
+}
+
+/**
+ * Dispatched when sending data fails
+ *
+ * @param  {object} error The error
+ *
+ * @return {object} An action object with a type of SEND_DATA_ERROR passing the error
+ */
+export function dataSendingError(error) {
+  return {
+    type: SEND_DATA_ERROR,
     error,
   };
 }

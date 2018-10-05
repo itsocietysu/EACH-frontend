@@ -27,13 +27,41 @@ import Button from '../../components/Button';
 import Nav from '../LinkList/Nav';
 import H1 from '../../components/H1';
 import DataList from '../../components/DataList';
-import Popup from '../EditForm';
+import Form from '../EditDForm';
 import { loadMuseums } from '../MuseumsPage/actions';
-import EditListItem from '../EditListItem';
+import EditDListItem from '../EditDListItem';
 import messages from './messages';
+import { deleteData, sendData } from './actions';
 import reducer from './reducer';
 import saga from './saga';
-import { emptyItem, rowStyle } from '../EditNewsPage';
+import { rowStyle } from '../EditNewsPage';
+
+export const emptyItem = {
+  eid: '0',
+  image: '',
+  name: { RU: '', EN: '' },
+  desc: { RU: '', EN: '' },
+};
+
+const settings = {
+  locales: [
+    {
+      field: 'name',
+      rows: '2',
+    },
+    {
+      field: 'desc',
+      rows: '2',
+    },
+  ],
+  images: [
+    {
+      field: 'image',
+    },
+  ],
+  museum: true,
+  title: 'name',
+};
 
 export class EditMuseumsPage extends React.Component {
   componentDidMount() {
@@ -55,7 +83,15 @@ export class EditMuseumsPage extends React.Component {
       loading,
       error,
       data,
-      component: item => <EditListItem item={item} Museum />,
+      component: item => (
+        <EditDListItem
+          item={item}
+          settings={settings}
+          onDelete={eid => this.props.delete(eid)}
+          onUpdate={this.props.send}
+          isUpdate
+        />
+      ),
       scroll: true,
     };
     return (
@@ -73,13 +109,17 @@ export class EditMuseumsPage extends React.Component {
         <PageList countElements={count} elementsPerPage={10} />
         <div style={rowStyle}>
           <Nav>
-            <Popup
+            <Form
               trigger={
-                <Button children={<FormattedMessage {...messages.add} />} />
+                <Button>
+                  <FormattedMessage {...messages.add} />
+                </Button>
               }
               item={emptyItem}
+              isPopup
               mod="add"
-              Museum
+              settings={settings}
+              onSubmit={this.props.send}
             />
           </Nav>
         </div>
@@ -96,12 +136,16 @@ EditMuseumsPage.propTypes = {
   count: PropTypes.number,
   page: PropTypes.number,
   init: PropTypes.func,
+  delete: PropTypes.func,
+  send: PropTypes.func,
   search: PropTypes.object,
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
     init: page => dispatch(loadMuseums(page)),
+    delete: eid => dispatch(deleteData(eid)),
+    send: () => dispatch(sendData()),
   };
 }
 
@@ -118,8 +162,8 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'deleteMuseumsData', reducer });
-const withSaga = injectSaga({ key: 'deleteMuseumsData', saga });
+const withReducer = injectReducer({ key: 'editMuseumsData', reducer });
+const withSaga = injectSaga({ key: 'editMuseumsData', saga });
 
 export default compose(
   withAuth,

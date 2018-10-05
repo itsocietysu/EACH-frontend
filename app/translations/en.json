@@ -35,6 +35,7 @@
   "each.containers.EditForm.descRU": "Description ru",
   "each.containers.EditForm.descEN": "Description en",
   "each.containers.EditForm.priority": "Priority",
+  "each.containers.EditForm.crop": "Crop",
   "each.containers.EditForm.close": "Close",
   "each.containers.EditForm.confirm": "Confirm",
   "each.containers.EditForm.imageSize":

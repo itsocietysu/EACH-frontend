@@ -35,6 +35,7 @@
   "each.containers.EditForm.descRU": "Описание рус",
   "each.containers.EditForm.descEN": "Описание анг",
   "each.containers.EditForm.priority": "Приоритет",
+  "each.containers.EditForm.crop": "Обрезать",
   "each.containers.EditForm.close": "Закрыть",
   "each.containers.EditForm.confirm": "Подтвердить",
   "each.containers.EditForm.imageSize":

@@ -4,7 +4,7 @@ import Popup from 'reactjs-popup';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import Button from 'containers/UserPanel/Button';
+import Button from '../../containers/UserPanel/Button';
 import messages from './messages';
 import CenteredDiv from './CenteredDiv';
 import Close from './Cross';

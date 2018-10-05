@@ -51,6 +51,8 @@
     "Вы уверены, что хотите удалить эту новость?",
   "each.containers.EditListItem.deleteMuseum":
     "Вы уверены, что хотите удалить этот музей?",
+  "each.containers.EditListItem.deleteLocation":
+    "Вы уверены, что хотите удалить эту локацию?",
   "each.containers.LoginButton.login": "Вход",
   "each.containers.LogoutButton.logout": "Выход",
   "each.containers.LocaleToggle.ru": "рус",

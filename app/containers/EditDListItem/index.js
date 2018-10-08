@@ -27,12 +27,12 @@ import messages from './messages';
 
 import { DEFAULT_LOCALE } from '../../i18n';
 
-const iconStyle = {
+const iconStyle = color => ({
   float: 'right',
   marginTop: '1em',
   cursor: 'pointer',
-  color: 'rgb(217, 146, 92)',
-};
+  color,
+});
 
 const arrowStyle = {
   border: '2px solid rgb(217, 146, 92)',
@@ -99,17 +99,22 @@ export class EditDListItem extends React.PureComponent {
     if (settings.location) Item = () => <LocationItem item={item} />;
     const content = (
       <Wrapper>
-        <Popup
-          trigger={<i className="fas fa-bars" style={iconStyle} />}
-          closeOnDocumentClick
-          position="bottom right"
-          arrowStyle={arrowStyle}
-          contentStyle={contentStyle}
-          lockScroll
-        >
-          {close => (
-            <Nav style={{ right: '0', position: 'absolute' }}>
-              {this.props.isUpdate && (
+        {this.props.isUpdate ? (
+          <Popup
+            trigger={
+              <i
+                className="fas fa-bars"
+                style={iconStyle('rgb(217, 146, 92)')}
+              />
+            }
+            closeOnDocumentClick
+            position="bottom right"
+            arrowStyle={arrowStyle}
+            contentStyle={contentStyle}
+            lockScroll
+          >
+            {close => (
+              <Nav style={{ right: '0', position: 'absolute' }}>
                 <PopupForm
                   trigger={
                     <Button>
@@ -123,20 +128,29 @@ export class EditDListItem extends React.PureComponent {
                   onSubmit={this.props.onUpdate}
                   onClose={() => close()}
                 />
-              )}
-              <MsgBox
-                trigger={
-                  <Button>
-                    <FormattedMessage {...messages.delete} />
-                  </Button>
-                }
-                onSubmit={() => this.props.onDelete(item.eid)}
-                message={this.state.delete}
-                cancel
-              />
-            </Nav>
-          )}
-        </Popup>
+                <MsgBox
+                  trigger={
+                    <Button>
+                      <FormattedMessage {...messages.delete} />
+                    </Button>
+                  }
+                  onSubmit={() => this.props.onDelete(item.eid)}
+                  message={this.state.delete}
+                  cancel
+                />
+              </Nav>
+            )}
+          </Popup>
+        ) : (
+          <MsgBox
+            trigger={
+              <i className="fa fa-trash-alt" style={iconStyle('#FF0000')} />
+            }
+            onSubmit={() => this.props.onDelete(item.eid)}
+            message={this.state.delete}
+            cancel
+          />
+        )}
         <Item />
       </Wrapper>
     );

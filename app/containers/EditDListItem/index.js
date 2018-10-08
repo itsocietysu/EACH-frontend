@@ -59,7 +59,7 @@ const NewsMuseumsItem = ({ item, settings, locale }) => (
     </div>
     <div>
       <H3>{item.desc[locale]}</H3>
-      <P>{settings.locales.text && item.text[locale]}</P>
+      <P>{settings.news && item.text[locale]}</P>
     </div>
   </div>
 );

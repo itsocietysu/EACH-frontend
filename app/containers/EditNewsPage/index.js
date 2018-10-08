@@ -1,4 +1,4 @@
-/* eslint-disable react/no-children-prop,jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions */
 /*
  * EditNewsPage
  *
@@ -27,20 +27,51 @@ import Button from '../../components/Button';
 import Nav from '../LinkList/Nav';
 import H1 from '../../components/H1';
 import DataList from '../../components/DataList';
-import Popup from '../EditForm';
+import Form from '../EditDForm';
 import { loadFeeds } from '../HomePage/actions';
-import EditListItem from '../EditListItem';
+import EditDListItem from '../EditDListItem';
 import messages from './messages';
 import reducer from './reducer';
 import saga from './saga';
+import { deleteData, sendData } from './actions';
 
-export const emptyItem = {
+const emptyItem = {
   eid: '0',
   image: '',
   title: { RU: '', EN: '' },
   text: { RU: '', EN: '' },
   desc: { RU: '', EN: '' },
   priority: '0',
+};
+
+const settings = {
+  locales: [
+    {
+      field: 'title',
+      rows: '2',
+    },
+    {
+      field: 'desc',
+      rows: '2',
+    },
+    {
+      field: 'text',
+      rows: '5',
+    },
+  ],
+  images: [
+    {
+      field: 'image',
+    },
+  ],
+  numbers: [
+    {
+      field: 'priority',
+      format: 'int',
+    },
+  ],
+  news: true,
+  title: 'title',
 };
 
 export const rowStyle = {
@@ -73,7 +104,15 @@ export class EditNewsPage extends React.Component {
       loading,
       error,
       data,
-      component: item => <EditListItem item={item} Feed />,
+      component: item => (
+        <EditDListItem
+          item={item}
+          settings={settings}
+          onDelete={eid => this.props.delete(eid)}
+          onUpdate={this.props.send}
+          isUpdate
+        />
+      ),
       scroll: true,
     };
     return (
@@ -91,13 +130,17 @@ export class EditNewsPage extends React.Component {
         <PageList countElements={count} elementsPerPage={10} />
         <div style={rowStyle}>
           <Nav>
-            <Popup
+            <Form
               trigger={
-                <Button children={<FormattedMessage {...messages.add} />} />
+                <Button>
+                  <FormattedMessage {...messages.add} />
+                </Button>
               }
               item={emptyItem}
+              isPopup
               mod="add"
-              Feed
+              settings={settings}
+              onSubmit={this.props.send}
             />
           </Nav>
           <Nav>
@@ -122,12 +165,16 @@ EditNewsPage.propTypes = {
   count: PropTypes.number,
   page: PropTypes.number,
   init: PropTypes.func,
+  delete: PropTypes.func,
+  send: PropTypes.func,
   search: PropTypes.object,
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
     init: page => dispatch(loadFeeds(page)),
+    delete: eid => dispatch(deleteData(eid)),
+    send: () => dispatch(sendData()),
   };
 }
 

@@ -191,6 +191,9 @@ class EditDForm extends React.Component {
     this.state = { item };
     props.init(item, props.mod, settings);
   }
+  componentWillUnmount() {
+    this.props.onUnmount();
+  }
   render() {
     const { crops, message, settings } = this.props;
     const data =
@@ -377,6 +380,7 @@ EditDForm.propTypes = {
   message: PropTypes.object,
   onChangeOpenMsg: PropTypes.func,
   onClose: PropTypes.func,
+  onUnmount: PropTypes.func,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -450,6 +454,7 @@ export function mapDispatchToProps(dispatch) {
     },
     onChangeOpenMsg: (message, onSubmit, cancel, onClose) =>
       dispatch(changeOpenMsg(message, cancel, onSubmit, onClose)),
+    onUnmount: () => dispatch(changeData({}, 'add')),
   };
 }
 

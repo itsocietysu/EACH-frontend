@@ -25,7 +25,7 @@ export const initialState = fromJS({
   error: false,
 });
 
-function deleteDataReducer(state = initialState, action) {
+function editDataReducer(state = initialState, action) {
   switch (action.type) {
     case DELETE_DATA:
       return state
@@ -55,4 +55,4 @@ function deleteDataReducer(state = initialState, action) {
   }
 }
 
-export default deleteDataReducer;
+export default editDataReducer;

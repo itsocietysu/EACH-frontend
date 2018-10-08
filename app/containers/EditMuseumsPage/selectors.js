@@ -5,11 +5,11 @@
 import { createSelector } from 'reselect';
 import { initialState } from './reducer';
 
-const selectDeleteMuseums = state => state.get('editMuseumsData', initialState);
+const selectEditMuseums = state => state.get('editMuseumsData', initialState);
 
 const makeSelectEid = () =>
-  createSelector(selectDeleteMuseums, editMuseumsState =>
+  createSelector(selectEditMuseums, editMuseumsState =>
     editMuseumsState.get('eid'),
   );
 
-export { selectDeleteMuseums, makeSelectEid };
+export { selectEditMuseums, makeSelectEid };

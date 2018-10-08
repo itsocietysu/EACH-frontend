@@ -19,7 +19,6 @@ import {
   makeSelectCount,
 } from '../HomePage/selectors';
 import { feedsLoaded } from '../HomePage/actions';
-import { appLocales } from '../../i18n';
 import { toDataURL } from '../../toBase64';
 import {
   makeSelectFormData,
@@ -27,26 +26,7 @@ import {
   makeSelectCrop,
 } from '../EditDForm/selectors';
 
-function isChange(body, fields, propFields, newData, oldData) {
-  let change = false;
-  fields.forEach(field => {
-    appLocales.forEach(locale => {
-      if (newData[field][locale] !== oldData[field][locale]) {
-        if (!body[field]) body[field] = {};
-        body[field][locale] = newData[field][locale];
-        change = true;
-      }
-    });
-  });
-  propFields.forEach(field => {
-    if (newData[field] !== oldData[field]) {
-      if (!body.prop) body.prop = {};
-      body.prop[field] = newData[field];
-      change = true;
-    }
-  });
-  return change ? body : false;
-}
+import { changedData } from '../../utils/utils';
 
 /**
  * Feed data send handler
@@ -86,9 +66,10 @@ export function* sendFeed() {
         );
       else oldDataWithBase64[k] = oldData[k];
     });
-    body = isChange(
+    body = changedData(
       body,
       ['title', 'text', 'desc'],
+      [],
       ['image', 'priority'],
       newsData,
       oldDataWithBase64,

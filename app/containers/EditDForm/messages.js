@@ -7,43 +7,51 @@ import { defineMessages } from 'react-intl';
 
 export default defineMessages({
   title: {
-    RU: {
-      id: 'each.containers.EditForm.titleRU',
-      defaultMessage: 'Title ru',
-    },
-    EN: {
-      id: 'each.containers.EditForm.titleEN',
-      defaultMessage: 'Title en',
+    locale: {
+      RU: {
+        id: 'each.containers.EditForm.titleRU',
+        defaultMessage: 'Title ru',
+      },
+      EN: {
+        id: 'each.containers.EditForm.titleEN',
+        defaultMessage: 'Title en',
+      },
     },
   },
   text: {
-    RU: {
-      id: 'each.containers.EditForm.textRU',
-      defaultMessage: 'Text ru',
-    },
-    EN: {
-      id: 'each.containers.EditForm.textEN',
-      defaultMessage: 'Text en',
+    locale: {
+      RU: {
+        id: 'each.containers.EditForm.textRU',
+        defaultMessage: 'Text ru',
+      },
+      EN: {
+        id: 'each.containers.EditForm.textEN',
+        defaultMessage: 'Text en',
+      },
     },
   },
   name: {
-    RU: {
-      id: 'each.containers.EditForm.nameRU',
-      defaultMessage: 'Name ru',
-    },
-    EN: {
-      id: 'each.containers.EditForm.nameEN',
-      defaultMessage: 'Name en',
+    locale: {
+      RU: {
+        id: 'each.containers.EditForm.nameRU',
+        defaultMessage: 'Name ru',
+      },
+      EN: {
+        id: 'each.containers.EditForm.nameEN',
+        defaultMessage: 'Name en',
+      },
     },
   },
   desc: {
-    RU: {
-      id: 'each.containers.EditForm.descRU',
-      defaultMessage: 'Description ru',
-    },
-    EN: {
-      id: 'each.containers.EditForm.descEN',
-      defaultMessage: 'Description en',
+    locale: {
+      RU: {
+        id: 'each.containers.EditForm.descRU',
+        defaultMessage: 'Description ru',
+      },
+      EN: {
+        id: 'each.containers.EditForm.descEN',
+        defaultMessage: 'Description en',
+      },
     },
   },
   priority: {

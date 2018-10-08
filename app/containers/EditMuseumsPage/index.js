@@ -36,7 +36,7 @@ import reducer from './reducer';
 import saga from './saga';
 import { rowStyle } from '../EditNewsPage';
 
-export const emptyItem = {
+const emptyItem = {
   eid: '0',
   image: '',
   name: { RU: '', EN: '' },

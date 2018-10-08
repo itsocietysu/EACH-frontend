@@ -213,7 +213,7 @@ class EditDForm extends React.Component {
               key={`${localeText.field}-${this.props.item.eid}-${locale}`}
               name={`${localeText.field}-${this.props.item.eid}-${locale}`}
               value={data[localeText.field][locale]}
-              message={messages[localeText.field][locale]}
+              message={messages[localeText.field].locale[locale]}
               rows={localeText.rows}
               change={evt =>
                 this.props.onChangeTextLocale(evt, locale, localeText.field)

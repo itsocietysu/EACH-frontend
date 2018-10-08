@@ -191,8 +191,8 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'deleteNewsData', reducer });
-const withSaga = injectSaga({ key: 'deleteNewsData', saga });
+const withReducer = injectReducer({ key: 'editNewsData', reducer });
+const withSaga = injectSaga({ key: 'editNewsData', saga });
 
 export default compose(
   withAuth,

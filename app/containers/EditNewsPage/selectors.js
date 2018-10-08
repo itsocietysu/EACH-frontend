@@ -5,9 +5,9 @@
 import { createSelector } from 'reselect';
 import { initialState } from './reducer';
 
-const selectDeleteNews = state => state.get('deleteNewsData', initialState);
+const selectEditNews = state => state.get('editNewsData', initialState);
 
 const makeSelectEid = () =>
-  createSelector(selectDeleteNews, editNewsState => editNewsState.get('eid'));
+  createSelector(selectEditNews, editNewsState => editNewsState.get('eid'));
 
-export { selectDeleteNews, makeSelectEid };
+export { selectEditNews, makeSelectEid };

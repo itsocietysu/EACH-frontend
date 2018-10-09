@@ -24,7 +24,7 @@ import {
   makeSelectFormData,
   makeSelectMod,
   makeSelectCrop,
-} from '../EditDForm/selectors';
+} from '../EditForm/selectors';
 
 import { changedData } from '../../utils/utils';
 

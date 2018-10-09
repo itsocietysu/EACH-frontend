@@ -103,7 +103,7 @@ const Form = ({
   settings,
   flexDirection,
 }) => (
-  <div className={`editDForm-${flexDirection}`}>
+  <div className={`editForm-${flexDirection}`}>
     <form>
       {images}
       {numbers}
@@ -165,7 +165,7 @@ Form.propTypes = {
   flexDirection: PropTypes.oneOf(['column', 'row']),
 };
 
-class EditDForm extends React.Component {
+class EditForm extends React.Component {
   constructor(props) {
     super(props);
     const { settings } = props;
@@ -315,7 +315,7 @@ class EditDForm extends React.Component {
           }}
         >
           {close => (
-            <div className={`editDForm-${this.props.flexDirection}`}>
+            <div className={`editForm-${this.props.flexDirection}`}>
               <BorderTopImage />
               <Close
                 onClick={() =>
@@ -371,7 +371,7 @@ class EditDForm extends React.Component {
   }
 }
 
-EditDForm.propTypes = {
+EditForm.propTypes = {
   isPopup: PropTypes.bool,
   isPlaceholder: PropTypes.bool,
   flexDirection: PropTypes.oneOf(['column', 'row']),
@@ -480,9 +480,9 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'editDForm', reducer });
+const withReducer = injectReducer({ key: 'editForm', reducer });
 
 export default compose(
   withReducer,
   withConnect,
-)(EditDForm);
+)(EditForm);

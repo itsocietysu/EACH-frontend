@@ -22,7 +22,7 @@ import {
   makeSelectFormData,
   makeSelectMod,
   makeSelectCrop,
-} from '../EditDForm/selectors';
+} from '../EditForm/selectors';
 
 /**
  * Museum data delete handler

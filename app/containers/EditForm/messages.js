@@ -41,6 +41,8 @@ export default defineMessages({
         defaultMessage: 'Name en',
       },
     },
+    id: 'each.containers.EditForm.name',
+    defaultMessage: 'Name',
   },
   desc: {
     locale: {
@@ -57,6 +59,14 @@ export default defineMessages({
   priority: {
     id: 'each.containers.EditForm.priority',
     defaultMessage: 'Priority',
+  },
+  latitude: {
+    id: 'each.containers.EditForm.latitude',
+    defaultMessage: 'Latitude',
+  },
+  longitude: {
+    id: 'each.containers.EditForm.longitude',
+    defaultMessage: 'Longitude',
   },
   crop: {
     id: 'each.containers.EditForm.crop',

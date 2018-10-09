@@ -5,7 +5,7 @@
 import { createSelector } from 'reselect';
 import { initialState } from './reducer';
 
-const selectEditForm = state => state.get('editDForm', initialState);
+const selectEditForm = state => state.get('editForm', initialState);
 
 const makeSelectFormData = () =>
   createSelector(selectEditForm, editFormState =>

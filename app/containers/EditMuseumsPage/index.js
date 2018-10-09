@@ -27,9 +27,9 @@ import Button from '../../components/Button';
 import Nav from '../LinkList/Nav';
 import H1 from '../../components/H1';
 import DataList from '../../components/DataList';
-import Form from '../EditDForm';
+import Form from '../EditForm';
 import { loadMuseums } from '../MuseumsPage/actions';
-import EditDListItem from '../EditDListItem';
+import EditListItem from '../EditListItem';
 import messages from './messages';
 import { deleteData, sendData } from './actions';
 import reducer from './reducer';
@@ -84,7 +84,7 @@ export class EditMuseumsPage extends React.Component {
       error,
       data,
       component: item => (
-        <EditDListItem
+        <EditListItem
           item={item}
           settings={settings}
           onDelete={eid => this.props.delete(eid)}

@@ -16,7 +16,7 @@ import ListItem from '../../components/ListItem';
 import H2 from '../../components/H2';
 import H3 from '../../components/H3';
 import P from '../../components/P';
-import PopupForm from '../EditDForm';
+import PopupForm from '../EditForm';
 import Button from '../../components/Button';
 import Img from '../FeedListItem/Img';
 import DivSep from '../FeedListItem/DivSep';
@@ -79,7 +79,7 @@ const LocationItem = ({ item }) => (
 
 LocationItem.propTypes = { item: PropTypes.object };
 
-export class EditDListItem extends React.PureComponent {
+export class EditListItem extends React.PureComponent {
   constructor(props) {
     super(props);
     if (props.settings.museum) this.state = { delete: messages.deleteMuseum };
@@ -161,7 +161,7 @@ export class EditDListItem extends React.PureComponent {
   }
 }
 
-EditDListItem.propTypes = {
+EditListItem.propTypes = {
   item: PropTypes.object,
   settings: PropTypes.object,
   isUpdate: PropTypes.bool,
@@ -169,4 +169,4 @@ EditDListItem.propTypes = {
   onUpdate: PropTypes.func,
 };
 
-export default EditDListItem;
+export default EditListItem;

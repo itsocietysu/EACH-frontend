@@ -141,6 +141,8 @@ export class EditNewsPage extends React.Component {
               mod="add"
               settings={settings}
               onSubmit={this.props.send}
+              isPlaceholder={false}
+              flexDirection="column"
             />
           </Nav>
           <Nav>

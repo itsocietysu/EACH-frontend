@@ -12,6 +12,9 @@ const TextArea = styled.textarea`
   @media screen and (max-width: 420px) {
     max-width: 20em;
   }
+  @media screen and (max-width: 340px) {
+    max-width: 15em;
+  }
 `;
 
 export default TextArea;

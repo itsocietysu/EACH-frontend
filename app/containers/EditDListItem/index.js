@@ -34,18 +34,18 @@ const iconStyle = color => ({
   color,
 });
 
-const arrowStyle = {
+export const arrowStyle = {
   border: '2px solid rgb(217, 146, 92)',
   borderLeft: 'none',
   borderTop: 'none',
 };
 
-const contentStyle = {
+export const contentStyle = maxWidth => ({
   boxShadow: 'none',
-  maxWidth: '100px',
+  maxWidth,
   padding: '0px',
   border: 'none',
-};
+});
 
 const NewsMuseumsItem = ({ item, settings, locale }) => (
   <div>
@@ -110,7 +110,7 @@ export class EditDListItem extends React.PureComponent {
             closeOnDocumentClick
             position="bottom right"
             arrowStyle={arrowStyle}
-            contentStyle={contentStyle}
+            contentStyle={contentStyle('100px')}
             lockScroll
           >
             {close => (
@@ -127,6 +127,8 @@ export class EditDListItem extends React.PureComponent {
                   settings={this.props.settings}
                   onSubmit={this.props.onUpdate}
                   onClose={() => close()}
+                  isPlaceholder={false}
+                  flexDirection="column"
                 />
                 <MsgBox
                   trigger={

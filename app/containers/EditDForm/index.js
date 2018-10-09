@@ -43,7 +43,7 @@ import reducer from './reducer';
 import { appLocales } from '../../i18n';
 import BorderTopImage from '../../components/MsgBox/Img';
 import Close from '../../components/MsgBox/Cross';
-import CenteredDiv from '../../components/MsgBox/CenteredDiv';
+import './index.css';
 
 const ImageCropStyle = {
   maxWidth: '256px',
@@ -101,8 +101,9 @@ const Form = ({
   data,
   crops,
   settings,
+  flexDirection,
 }) => (
-  <div>
+  <div className={`editDForm-${flexDirection}`}>
     <form>
       {images}
       {numbers}
@@ -161,6 +162,7 @@ Form.propTypes = {
   data: PropTypes.object,
   crops: PropTypes.object,
   settings: PropTypes.object,
+  flexDirection: PropTypes.oneOf(['column', 'row']),
 };
 
 class EditDForm extends React.Component {
@@ -182,7 +184,7 @@ class EditDForm extends React.Component {
       });
     if (keys.includes('numbers'))
       settings.numbers.forEach(number => {
-        item[number.field] = 0;
+        item[number.field] = '';
       });
     if (keys.includes('images'))
       settings.images.forEach(image => {
@@ -218,6 +220,7 @@ class EditDForm extends React.Component {
               change={evt =>
                 this.props.onChangeTextLocale(evt, locale, localeText.field)
               }
+              isPlaceholder={this.props.isPlaceholder}
             />,
           );
         });
@@ -233,6 +236,7 @@ class EditDForm extends React.Component {
             message={messages[text.field]}
             rows={text.rows}
             change={evt => this.props.onChangeText(evt, text.field)}
+            isPlaceholder={this.props.isPlaceholder}
           />,
         );
       });
@@ -249,6 +253,7 @@ class EditDForm extends React.Component {
               this.props.onChangeNumber(evt, number.field, number.format)
             }
             message={messages[number.field]}
+            isPlaceholder={this.props.isPlaceholder}
           />,
         );
       });
@@ -310,7 +315,7 @@ class EditDForm extends React.Component {
           }}
         >
           {close => (
-            <CenteredDiv>
+            <div className={`editDForm-${this.props.flexDirection}`}>
               <BorderTopImage />
               <Close
                 onClick={() =>
@@ -338,32 +343,38 @@ class EditDForm extends React.Component {
                 data={data}
                 crops={crops}
                 settings={settings}
+                flexDirection={this.props.flexDirection}
               />
-            </CenteredDiv>
+            </div>
           )}
         </Popup>
       );
     return (
-      <Form
-        images={images}
-        texts={texts}
-        localeTexts={localeTexts}
-        message={message}
-        numbers={numbers}
-        funcs={{
-          onChangeOpenMsg: this.props.onChangeOpenMsg,
-          onSubmit: this.props.onSubmit,
-        }}
-        data={data}
-        crops={crops}
-        settings={settings}
-      />
+      <div className={`editDForm-${this.props.flexDirection}`}>
+        <Form
+          images={images}
+          texts={texts}
+          localeTexts={localeTexts}
+          message={message}
+          numbers={numbers}
+          funcs={{
+            onChangeOpenMsg: this.props.onChangeOpenMsg,
+            onSubmit: this.props.onSubmit,
+          }}
+          data={data}
+          crops={crops}
+          settings={settings}
+          flexDirection={this.props.flexDirection}
+        />
+      </div>
     );
   }
 }
 
 EditDForm.propTypes = {
   isPopup: PropTypes.bool,
+  isPlaceholder: PropTypes.bool,
+  flexDirection: PropTypes.oneOf(['column', 'row']),
   trigger: PropTypes.object,
   data: PropTypes.object,
   crops: PropTypes.object,

@@ -70,7 +70,7 @@ export function* sendData() {
   let body = {};
   let method = 'POST';
   if (mod === 'add') body = getItemForPost(dataToPost, fields, props, crop);
-  if (mod === 'edit') {
+  else if (mod === 'edit') {
     method = 'PUT';
     requestURL = urls[content].update;
     body.id = dataToPost.eid;
@@ -96,7 +96,7 @@ export function* sendData() {
       yield put(dataSent());
       return;
     }
-  }
+  } else throw new Error('Incorrect mod supplied');
   const options = {
     method,
     headers: {
@@ -119,7 +119,6 @@ export function* sendData() {
         return element;
       }, resp);
     }
-    count += 1;
     yield put(dataLoaded(newData, count, page));
     yield put(dataSent());
   } catch (err) {

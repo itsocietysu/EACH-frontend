@@ -27,7 +27,7 @@ import {
  *
  * @param  {string} content The content of page
  *
- * @return {object} An action object with a type of DELETE_DATA passing the eid
+ * @return {object} An action object with a type of SET_CONTENT passing the content
  */
 export function setContent(content) {
   return {

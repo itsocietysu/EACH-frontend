@@ -26,6 +26,7 @@ import MsgBox from '../../components/MsgBox';
 import messages from './messages';
 
 import { DEFAULT_LOCALE } from '../../i18n';
+import { settings, emptyItems } from '../EditPage/configs';
 
 const iconStyle = color => ({
   float: 'right',
@@ -47,26 +48,26 @@ export const contentStyle = maxWidth => ({
   border: 'none',
 });
 
-const NewsMuseumsItem = ({ item, settings, locale }) => (
+const NewsMuseumsItem = ({ item, setting, locale }) => (
   <div>
     <div style={{ display: 'flex' }}>
       <DivSep width="30%">
-        <Img src={item[settings.images[0].field]} alt={`${item.eid}`} />
+        <Img src={item.image} alt={`${item.eid}`} />
       </DivSep>
       <DivSep width="70%" marginLeft="15px">
-        <H2>{item[settings.title][locale]}</H2>
+        <H2>{item[setting.title][locale]}</H2>
       </DivSep>
     </div>
     <div>
       <H3>{item.desc[locale]}</H3>
-      <P>{settings.news && item.text[locale]}</P>
+      <P>{setting.content === 'feed' && item.text[locale]}</P>
     </div>
   </div>
 );
 
 NewsMuseumsItem.propTypes = {
   item: PropTypes.object,
-  settings: PropTypes.object,
+  setting: PropTypes.object,
   locale: PropTypes.string,
 };
 
@@ -82,21 +83,24 @@ LocationItem.propTypes = { item: PropTypes.object };
 export class EditListItem extends React.PureComponent {
   constructor(props) {
     super(props);
-    if (props.settings.museum) this.state = { delete: messages.deleteMuseum };
-    if (props.settings.news) this.state = { delete: messages.deleteFeed };
-    if (props.settings.location)
+    if (props.content === 'museum')
+      this.state = { delete: messages.deleteMuseum };
+    if (props.content === 'feed') this.state = { delete: messages.deleteFeed };
+    if (props.content === 'location')
       this.state = { delete: messages.deleteLocation };
   }
   render() {
     const { item } = this.props.item;
-    const { settings } = this.props;
+    const type = this.props.content;
     const locale = getLocale() || DEFAULT_LOCALE;
-    let Item = <div />;
-    if (settings.museum || settings.news)
+    const setting = settings[type];
+    const emptyItem = emptyItems[type];
+    let Item = () => <div />;
+    if (type === 'museum' || type === 'feed')
       Item = () => (
-        <NewsMuseumsItem item={item} settings={settings} locale={locale} />
+        <NewsMuseumsItem item={item} setting={setting} locale={locale} />
       );
-    if (settings.location) Item = () => <LocationItem item={item} />;
+    if (type === 'location') Item = () => <LocationItem item={item} />;
     const content = (
       <Wrapper>
         {this.props.isUpdate ? (
@@ -122,9 +126,10 @@ export class EditListItem extends React.PureComponent {
                     </Button>
                   }
                   item={item}
+                  emptyItem={emptyItem}
                   isPopup
                   mod="edit"
-                  settings={this.props.settings}
+                  settings={setting}
                   onSubmit={this.props.onUpdate}
                   onClose={() => close()}
                   isPlaceholder={false}
@@ -163,7 +168,7 @@ export class EditListItem extends React.PureComponent {
 
 EditListItem.propTypes = {
   item: PropTypes.object,
-  settings: PropTypes.object,
+  content: PropTypes.oneOf(['museum', 'feed', 'location']),
   isUpdate: PropTypes.bool,
   onDelete: PropTypes.func,
   onUpdate: PropTypes.func,

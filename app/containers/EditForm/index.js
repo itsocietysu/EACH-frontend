@@ -78,13 +78,7 @@ const isEmpty = (data, crops, settings) => {
     });
     empty.push(res);
   }
-  if (keys.includes('images')) {
-    let res = true;
-    settings.images.forEach(image => {
-      res = res && !!crops[image.field];
-    });
-    empty.push(res);
-  }
+  if (settings.image) empty.push(!!crops.image);
   for (const key in empty) {
     if (!empty[key]) return true;
   }
@@ -168,40 +162,30 @@ Form.propTypes = {
 class EditForm extends React.Component {
   constructor(props) {
     super(props);
-    const { settings } = props;
-    const item = {};
-    const keys = Object.keys(settings);
-    if (keys.includes('locales'))
-      settings.locales.forEach(localeText => {
-        item[localeText.field] = {};
-        appLocales.forEach(locale => {
-          item[localeText.field][locale] = '';
-        });
-      });
-    if (keys.includes('texts'))
-      settings.texts.forEach(text => {
-        item[text.field] = '';
-      });
-    if (keys.includes('numbers'))
-      settings.numbers.forEach(number => {
-        item[number.field] = '';
-      });
-    if (keys.includes('images'))
-      settings.images.forEach(image => {
-        item[image.field] = '';
-      });
-    this.state = { item };
-    props.init(item, props.mod, settings);
+    const { emptyItem, settings, mod } = props;
+    props.init(emptyItem, mod, settings);
+    this.state = { content: props.settings.content };
   }
   componentWillUnmount() {
     this.props.onUnmount();
   }
+  componentDidUpdate(prevProps) {
+    if (prevProps.settings.content !== this.props.settings.content)
+      this.props.init(
+        this.props.emptyItem,
+        this.props.mod,
+        this.props.settings,
+      );
+  }
   render() {
     const { crops, message, settings } = this.props;
-    const data =
-      Object.keys(this.props.data).length === 0
-        ? this.state.item
-        : this.props.data;
+    const { content } = settings;
+    let { data } = this.props;
+    if (content !== this.state.content) {
+      this.state.content = content;
+      data = {};
+    }
+    if (Object.keys(data).length === 0) data = this.props.emptyItem;
     const images = [];
     const texts = [];
     const localeTexts = [];
@@ -258,46 +242,42 @@ class EditForm extends React.Component {
         );
       });
     }
-    if (keys.includes('images')) {
-      settings.images.forEach(image => {
-        images.push(
-          <div key={`${image.field}-${this.props.item.eid}`}>
-            <div style={{ marginBottom: '0.5em' }}>
-              {crops[image.field] ? (
-                <Img
-                  src={`data:image/jpeg;base64,${crops[image.field]}`}
-                  alt={`${this.props.item.eid}`}
-                />
-              ) : (
-                <Img src="/Photo.png" alt={`${this.props.item.eid}`} />
-              )}
-            </div>
-            <div style={{ marginBottom: '0.5em' }}>
-              <LabelFile
-                id={`file-${image.field}-${this.props.item.eid}`}
-                change={evt => this.props.onChangeFile(evt, image.field)}
-                accept="image/*"
+    if (settings.image) {
+      images.push(
+        <div key={`image-${this.props.item.eid}`}>
+          <div style={{ marginBottom: '0.5em' }}>
+            {crops.image ? (
+              <Img
+                src={`data:image/jpeg;base64,${crops.image}`}
+                alt={`${this.props.item.eid}`}
+              />
+            ) : (
+              <Img src="/Photo.png" alt={`${this.props.item.eid}`} />
+            )}
+          </div>
+          <div style={{ marginBottom: '0.5em' }}>
+            <LabelFile
+              id={`file-image-${this.props.item.eid}`}
+              change={evt => this.props.onChangeFile(evt, 'image')}
+              accept="image/*"
+            />
+          </div>
+          {crops.image && (
+            <div>
+              <PopupImageCrop
+                src={`data:image/jpeg;base64,${data.image}`}
+                styleCrop={ImageCropStyle}
+                onSubmit={base64 => this.props.onChangeCrop(base64, 'image')}
+                trigger={
+                  <Button type="button" style={{ margin: '0.5em' }}>
+                    <FormattedMessage {...messages.crop} />
+                  </Button>
+                }
               />
             </div>
-            {crops[image.field] && (
-              <div>
-                <PopupImageCrop
-                  src={`data:image/jpeg;base64,${data[image.field]}`}
-                  styleCrop={ImageCropStyle}
-                  onSubmit={base64 =>
-                    this.props.onChangeCrop(base64, image.field)
-                  }
-                  trigger={
-                    <Button type="button" style={{ margin: '0.5em' }}>
-                      <FormattedMessage {...messages.crop} />
-                    </Button>
-                  }
-                />
-              </div>
-            )}
-          </div>,
-        );
-      });
+          )}
+        </div>,
+      );
     }
     if (this.props.isPopup)
       return (
@@ -379,6 +359,7 @@ EditForm.propTypes = {
   data: PropTypes.object,
   crops: PropTypes.object,
   item: PropTypes.object,
+  emptyItem: PropTypes.object,
   settings: PropTypes.object,
   mod: PropTypes.oneOf(['add', 'edit']),
   onChangeFile: PropTypes.func,
@@ -441,25 +422,22 @@ export function mapDispatchToProps(dispatch) {
     onChangeNumber: (evt, field, format) =>
       dispatch(changeNumber(evt.target.value, field, format)),
     init: (item, mod, settings) => {
-      const keys = Object.keys(settings);
-      if (!keys.includes('images')) dispatch(changeData(item, mod));
+      if (!settings.image) dispatch(changeData(item, mod));
       else {
         const i = Object.assign({}, item);
-        settings.images.forEach(image => {
-          if (item[image.field] === '/Photo.png') {
-            i[image.field] = '';
-          } else if (item[image.field] === '') {
-            dispatch(changeCrop('', image.field));
-          } else
-            URL2Base64(item[image.field], res => {
-              const base64 = res.replace(
-                /^data:image\/(png|jpg|jpeg);base64,/,
-                '',
-              );
-              dispatch(changeImg(base64, image.field));
-              dispatch(changeCrop(base64, image.field));
-            });
-        });
+        if (item.image === '/Photo.png') {
+          i.image = '';
+        } else if (item.image === '') {
+          dispatch(changeCrop('', 'image'));
+        } else
+          URL2Base64(item.image, res => {
+            const base64 = res.replace(
+              /^data:image\/(png|jpg|jpeg);base64,/,
+              '',
+            );
+            dispatch(changeImg(base64, 'image'));
+            dispatch(changeCrop(base64, 'image'));
+          });
         dispatch(changeData(i, mod));
       }
     },

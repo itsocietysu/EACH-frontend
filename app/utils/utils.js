@@ -44,3 +44,34 @@ export function changedData(data, localeFields, fields, propFields, newData, old
   });
   return change ? data : false;
 }
+
+const getProps = {
+  image: i => `${i.image[0] ? `http://${i.image[0].url}` : '/Photo.png'}`,
+  priority: p => `${p.priority[0] ? p.priority[0] : 0}`,
+};
+
+export function getItemFromResp(item, fields, propFields) {
+  const data = { eid: item.eid };
+  fields.forEach(v => {
+    data[v] = item[v];
+  });
+  propFields.forEach(v => {data[v] = getProps[v](item)});
+  return data;
+}
+
+export function getItemForPost(item, fields, propFields, crop) {
+  const data = { id: item.eid };
+  fields.forEach(v => {
+    data[v] = item[v];
+  });
+  if (propFields.length) {
+    data.prop = {};
+    propFields.forEach(v => {
+      if (Object.keys(crop).includes(v))
+        data.prop[v] = crop[v];
+      else
+        data.prop[v] = item[v];
+    });
+  }
+  return data;
+}

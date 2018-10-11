@@ -23,6 +23,8 @@ import {
   makeSelectMod,
   makeSelectCrop,
 } from '../EditForm/selectors';
+import { toDataURL } from '../../toBase64';
+import { changedData } from '../../utils/utils';
 
 /**
  * Museum data delete handler
@@ -62,25 +64,54 @@ export function* sendMuseum() {
   const page = yield select(makeSelectPage());
   let count = yield select(makeSelectCount());
   let requestURL = `http://each.itsociety.su:4201/each/add`;
+  let body = {};
+  let method = 'POST';
+  if (mod === 'add')
+    body = {
+      id: museumData.eid,
+      name: museumData.name,
+      desc: museumData.desc,
+      prop: {
+        image: crop.image,
+      },
+    };
+  else {
+    method = 'PUT';
+    requestURL = `http://each.itsociety.su:4201/each/update`;
+    body.id = museumData.eid;
+    museumData.image = crop.image;
+    const oldData = data.filter(museum => museum.eid === museumData.eid)[0];
+    const oldImage = yield call(toDataURL, oldData.image);
+    const oldDataWithBase64 = {};
+    Object.keys(oldData).forEach(k => {
+      if (k === 'image')
+        oldDataWithBase64[k] = oldImage.replace(
+          /^data:image\/(png|jpg|jpeg);base64,/,
+          '',
+        );
+      else oldDataWithBase64[k] = oldData[k];
+    });
+    body = changedData(
+      body,
+      ['name', 'desc'],
+      [],
+      ['image'],
+      museumData,
+      oldDataWithBase64,
+    );
+    if (!body) {
+      yield put(dataSent());
+      return;
+    }
+  }
   const options = {
-    method: 'POST',
+    method,
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      id: museumData.eid,
-      name: museumData.name.RU,
-      desc: museumData.desc.RU,
-      prop: {
-        image: crop.image,
-      },
-    }),
+    body: JSON.stringify(body),
   };
-  if (mod === 'edit') {
-    options.method = 'PUT';
-    requestURL = `http://each.itsociety.su:4201/each/update`;
-  }
   try {
     const resp = (yield call(requestAuth, requestURL, options))[0];
     let newData = data;
@@ -88,8 +119,8 @@ export function* sendMuseum() {
       newData = [
         {
           eid: resp.eid,
-          name: { RU: resp.name, EN: resp.name },
-          desc: { RU: resp.desc, EN: resp.desc },
+          name: resp.name,
+          desc: resp.desc,
           image: `http://${resp.image[0].url}`,
         },
       ].concat(data);
@@ -99,8 +130,8 @@ export function* sendMuseum() {
         if (element.eid === resp.eid) {
           return {
             eid: resp.eid,
-            name: { RU: resp.name, EN: resp.name },
-            desc: { RU: resp.desc, EN: resp.desc },
+            name: resp.name,
+            desc: resp.desc,
             image: `http://${resp.image[0].url}`,
           };
         }

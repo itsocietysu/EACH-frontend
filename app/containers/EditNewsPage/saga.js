@@ -55,6 +55,7 @@ export function* sendFeed() {
   else {
     method = 'PUT';
     body.id = newsData.eid;
+    newsData.image = crop.image;
     const oldData = data.filter(feed => feed.eid === newsData.eid)[0];
     const oldImage = yield call(toDataURL, oldData.image);
     const oldDataWithBase64 = {};

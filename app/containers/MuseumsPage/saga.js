@@ -19,8 +19,8 @@ export function* loadMuseums() {
     if (museums.result.length) {
       data = museums.result.map(item => ({
         eid: item.eid,
-        name: { RU: item.name, EN: item.name },
-        desc: { RU: item.desc, EN: item.desc },
+        name: item.name,
+        desc: item.desc,
         image: `${
           item.image[0] ? `http://${item.image[0].url}` : '/Photo.png'
         }`,

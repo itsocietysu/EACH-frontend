@@ -18,4 +18,8 @@ export default defineMessages({
     id: 'each.containers.OptionsList.editMuseums',
     defaultMessage: 'Edit museums',
   },
+  editLocations: {
+    id: 'each.containers.OptionsList.editLocations',
+    defaultMessage: 'Edit Locations',
+  },
 });

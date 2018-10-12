@@ -26,10 +26,18 @@ const EditMuseumsLink = (() => {
   return l;
 })();
 
+const EditLocationsLink = (() => {
+  const l = new Link();
+  l.path = '/edit/locations?page=1';
+  l.message = messages.editLocations;
+  return l;
+})();
+
 export const userLinks: Array<Link> = [MuseumsLink];
 
 export const adminLinks: Array<Link> = [
   MuseumsLink,
   EditNewsLink,
   EditMuseumsLink,
+  EditLocationsLink,
 ];

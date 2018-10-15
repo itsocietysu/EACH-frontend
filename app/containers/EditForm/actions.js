@@ -10,19 +10,19 @@
  */
 
 import {
-  CHANGE_TEXT,
   CHANGE_TEXT_LOCALE,
   CHANGE_IMAGE,
   CHANGE_NUMBER,
   CHANGE_DATA,
   CHANGE_OPEN_MSG,
   CHANGE_CROP,
+  CHANGE_FIELD,
 } from './constants';
 
 /**
  * Changes the textarea field with locale of the form
  *
- * @param  {object} text The new text of the textarea field
+ * @param  {string} text The new text of the textarea field
  * @param  {string} locale The locale of the textarea field
  * @param  {string} field The name of the textarea field
  *
@@ -38,17 +38,17 @@ export function changeTextLocale(text, locale, field) {
 }
 
 /**
- * Changes the textarea field without locale of the form
+ * Changes the field of the form
  *
- * @param  {object} text The new text of the textarea field
- * @param  {string} field The name of the textarea field
+ * @param  {object} data The new data of the field
+ * @param  {string} field The name of the field
  *
- * @return {object}    An action object with a type of CHANGE_TEXT passing the text and field
+ * @return {object}    An action object with a type of CHANGE_FIELD passing the data and field
  */
-export function changeText(text, field) {
+export function changeField(data, field) {
   return {
-    type: CHANGE_TEXT,
-    text,
+    type: CHANGE_FIELD,
+    data,
     field,
   };
 }

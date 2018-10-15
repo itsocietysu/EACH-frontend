@@ -20,6 +20,7 @@ import MsgBox from '../../components/MsgBox';
 import TextArea from '../../components/TextArea';
 import LabelFile from '../../components/LabelFile';
 import LabelInput from '../../components/LabelInput';
+import SelectSearch from '../SelectSearch';
 import Button from '../UserPanel/Button';
 import injectReducer from '../../utils/injectReducer';
 import {
@@ -31,7 +32,7 @@ import messages from './messages';
 import Img from './Img';
 import {
   changeImg,
-  changeText,
+  changeField,
   changeNumber,
   changeData,
   changeOpenMsg,
@@ -44,6 +45,8 @@ import { appLocales } from '../../i18n';
 import BorderTopImage from '../../components/MsgBox/Img';
 import Close from '../../components/MsgBox/Cross';
 import './index.css';
+
+import { selectField, selectRequest } from './configs';
 
 const ImageCropStyle = {
   maxWidth: '256px',
@@ -78,6 +81,13 @@ const isEmpty = (data, crops, settings) => {
     });
     empty.push(res);
   }
+  if (keys.includes('selects')) {
+    let res = true;
+    settings.selects.forEach(select => {
+      res = res && !!data[select.field].length;
+    });
+    empty.push(res);
+  }
   if (settings.image) empty.push(!!crops.image);
   for (const key in empty) {
     if (!empty[key]) return true;
@@ -87,6 +97,7 @@ const isEmpty = (data, crops, settings) => {
 
 const Form = ({
   images,
+  selects,
   texts,
   localeTexts,
   numbers,
@@ -101,6 +112,7 @@ const Form = ({
     <form>
       {images}
       {numbers}
+      {selects}
       {localeTexts}
       {texts}
     </form>
@@ -148,6 +160,7 @@ const Form = ({
 
 Form.propTypes = {
   images: PropTypes.array,
+  selects: PropTypes.array,
   texts: PropTypes.array,
   localeTexts: PropTypes.array,
   numbers: PropTypes.array,
@@ -190,6 +203,7 @@ class EditForm extends React.Component {
     const texts = [];
     const localeTexts = [];
     const numbers = [];
+    const selects = [];
     const keys = Object.keys(settings);
     if (keys.includes('locales')) {
       settings.locales.forEach(localeText => {
@@ -219,7 +233,9 @@ class EditForm extends React.Component {
             value={data[text.field]}
             message={messages[text.field]}
             rows={text.rows}
-            change={evt => this.props.onChangeText(evt, text.field)}
+            change={evt =>
+              this.props.onChangeField(evt.target.value, text.field)
+            }
             isPlaceholder={this.props.isPlaceholder}
           />,
         );
@@ -238,6 +254,22 @@ class EditForm extends React.Component {
             }
             message={messages[number.field]}
             isPlaceholder={this.props.isPlaceholder}
+          />,
+        );
+      });
+    }
+    if (keys.includes('selects')) {
+      settings.selects.forEach(select => {
+        selects.push(
+          <SelectSearch
+            key={`select-${select.field}-${this.props.item.eid}`}
+            initValue={data[select.field].map(v => ({
+              key: v.eid,
+              field: v[selectField[select.field]],
+            }))}
+            renderField={selectField[select.field]}
+            requestFunc={value => selectRequest[select.field](value)}
+            onChange={value => this.props.onChangeField(value, select.field)}
           />,
         );
       });
@@ -311,6 +343,7 @@ class EditForm extends React.Component {
               />
               <Form
                 images={images}
+                selects={selects}
                 texts={texts}
                 localeTexts={localeTexts}
                 message={message}
@@ -333,6 +366,7 @@ class EditForm extends React.Component {
       <div className={`editDForm-${this.props.flexDirection}`}>
         <Form
           images={images}
+          selects={selects}
           texts={texts}
           localeTexts={localeTexts}
           message={message}
@@ -363,8 +397,8 @@ EditForm.propTypes = {
   settings: PropTypes.object,
   mod: PropTypes.oneOf(['add', 'edit']),
   onChangeFile: PropTypes.func,
-  onChangeText: PropTypes.func,
   onChangeTextLocale: PropTypes.func,
+  onChangeField: PropTypes.func,
   onChangeNumber: PropTypes.func,
   onChangeCrop: PropTypes.func,
   init: PropTypes.func,
@@ -418,7 +452,7 @@ export function mapDispatchToProps(dispatch) {
     },
     onChangeTextLocale: (evt, locale, field) =>
       dispatch(changeTextLocale(evt.target.value, locale, field)),
-    onChangeText: (evt, field) => dispatch(changeText(evt.target.value, field)),
+    onChangeField: (data, field) => dispatch(changeField(data, field)),
     onChangeNumber: (evt, field, format) =>
       dispatch(changeNumber(evt.target.value, field, format)),
     init: (item, mod, settings) => {

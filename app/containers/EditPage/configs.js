@@ -10,6 +10,11 @@ export const settings = {
         rows: '2',
       },
     ],
+    selects: [
+      {
+        field: 'location',
+      },
+    ],
     image: true,
     content: 'museum',
     title: 'name',
@@ -73,6 +78,7 @@ export const emptyItems = {
     image: '',
     name: { RU: '', EN: '' },
     desc: { RU: '', EN: '' },
+    location: [],
   },
   feed: {
     eid: '0',
@@ -90,7 +96,7 @@ export const emptyItems = {
   },
 };
 
-const startUrl = 'http://each.itsociety.su:4201/each/';
+export const startUrl = 'http://each.itsociety.su:4201/each/';
 
 export const urls = {
   museum: {
@@ -121,7 +127,7 @@ export const getValues = {
     fields: ['name', 'desc'],
     noLocales: [],
     locales: ['name', 'desc'],
-    props: ['image'],
+    props: ['image', 'location'],
   },
   feed: {
     fields: ['title', 'desc', 'text'],

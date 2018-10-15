@@ -22,6 +22,13 @@ export class MuseumListItem extends React.PureComponent {
     const locale = getLocale() || DEFAULT_LOCALE;
     const { item } = this.props;
 
+    const locations = item.location.map(location => (
+      <div key={`${item.eid}-${location.name}`} style={{ display: 'flex' }}>
+        <i className="fas fa-map-marker-alt" />
+        <P style={{ margin: '0 10px' }}>{location.name}</P>
+      </div>
+    ));
+
     // Put together the content of the museum
     const content = (
       <Wrapper>
@@ -35,6 +42,7 @@ export class MuseumListItem extends React.PureComponent {
         </div>
         <div>
           <P>{item.desc[locale]}</P>
+          {locations}
         </div>
       </Wrapper>
     );

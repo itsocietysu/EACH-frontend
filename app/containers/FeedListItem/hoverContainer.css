@@ -11,12 +11,6 @@
   cursor: pointer;
 }
 
-.container img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
 .overlay {
   position: absolute;
   bottom: 0;

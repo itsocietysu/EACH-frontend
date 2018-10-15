@@ -48,26 +48,52 @@ export const contentStyle = maxWidth => ({
   border: 'none',
 });
 
-const NewsMuseumsItem = ({ item, setting, locale }) => (
+const NewsItem = ({ item, locale }) => (
   <div>
     <div style={{ display: 'flex' }}>
       <DivSep width="30%">
         <Img src={item.image} alt={`${item.eid}`} />
       </DivSep>
       <DivSep width="70%" marginLeft="15px">
-        <H2>{item[setting.title][locale]}</H2>
+        <H2>{item.title[locale]}</H2>
       </DivSep>
     </div>
     <div>
       <H3>{item.desc[locale]}</H3>
-      <P>{setting.content === 'feed' && item.text[locale]}</P>
+      <P>{item.text[locale]}</P>
     </div>
   </div>
 );
 
-NewsMuseumsItem.propTypes = {
+NewsItem.propTypes = {
   item: PropTypes.object,
-  setting: PropTypes.object,
+  locale: PropTypes.string,
+};
+
+const MuseumsItem = ({ item, locale }) => (
+  <div>
+    <div style={{ display: 'flex' }}>
+      <DivSep width="30%">
+        <Img src={item.image} alt={`${item.eid}`} />
+      </DivSep>
+      <DivSep width="70%" marginLeft="15px">
+        <H2>{item.name[locale]}</H2>
+      </DivSep>
+    </div>
+    <div>
+      <H3>{item.desc[locale]}</H3>
+    </div>
+    {item.location.map(location => (
+      <div key={`${item.eid}-${location.name}`} style={{ display: 'flex' }}>
+        <i className="fas fa-map-marker-alt" />
+        <P style={{ margin: '0 10px' }}>{location.name}</P>
+      </div>
+    ))}
+  </div>
+);
+
+MuseumsItem.propTypes = {
+  item: PropTypes.object,
   locale: PropTypes.string,
 };
 
@@ -96,10 +122,9 @@ export class EditListItem extends React.PureComponent {
     const setting = settings[type];
     const emptyItem = emptyItems[type];
     let Item = () => <div />;
-    if (type === 'museum' || type === 'feed')
-      Item = () => (
-        <NewsMuseumsItem item={item} setting={setting} locale={locale} />
-      );
+    if (type === 'feed') Item = () => <NewsItem item={item} locale={locale} />;
+    if (type === 'museum')
+      Item = () => <MuseumsItem item={item} locale={locale} />;
     if (type === 'location') Item = () => <LocationItem item={item} />;
     const content = (
       <Wrapper>

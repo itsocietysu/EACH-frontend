@@ -4,27 +4,21 @@ import { museumsLoaded, museumsLoadingError } from './actions';
 
 import requestAuth from '../../utils/requestAuth';
 import { makeSelectPage } from './selectors';
+import { getValues, urls } from '../EditPage/configs';
+import { getItemFromResp } from '../../utils/utils';
 
 /**
  * Museums data load handler
  */
 export function* loadMuseums() {
   const page = yield select(makeSelectPage());
-  const requestURL = `http://each.itsociety.su:4201/each/museum/tape?FirstMuseum=${(page -
-    1) *
-    10}&LastMuseum=${page * 10 - 1}`;
+  const requestURL = urls.museum.tape((page - 1) * 10, page * 10 - 1);
   try {
     const museums = yield call(requestAuth, requestURL);
     let data = false;
+    const { fields, props } = getValues.museum;
     if (museums.result.length) {
-      data = museums.result.map(item => ({
-        eid: item.eid,
-        name: item.name,
-        desc: item.desc,
-        image: `${
-          item.image[0] ? `http://${item.image[0].url}` : '/Photo.png'
-        }`,
-      }));
+      data = museums.result.map(item => getItemFromResp(item, fields, props));
     }
     yield put(museumsLoaded(data, museums.count, museums.page));
   } catch (err) {

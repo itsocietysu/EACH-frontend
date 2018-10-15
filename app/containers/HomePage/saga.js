@@ -4,29 +4,21 @@ import { feedsLoaded, feedsLoadingError } from './actions';
 import { makeSelectPage } from './selectors';
 
 import request from '../../utils/request';
+import { getValues, urls } from '../EditPage/configs';
+import { getItemFromResp } from '../../utils/utils';
 
 /**
  * Feeds data load handler
  */
 export function* loadFeeds() {
   const page = yield select(makeSelectPage());
-  const requestURL = `http://each.itsociety.su:4201/each/feed/tape?FirstFeed=${(page -
-    1) *
-    10}&LastFeed=${page * 10 - 1}`;
+  const requestURL = urls.feed.tape((page - 1) * 10, page * 10 - 1);
   try {
     const feeds = yield call(request, requestURL);
     let data = false;
+    const { fields, props } = getValues.feed;
     if (feeds.result.length) {
-      data = feeds.result.map(item => ({
-        eid: item.eid,
-        title: item.title,
-        text: item.text,
-        desc: item.desc,
-        image: `${
-          item.image[0] ? `http://${item.image[0].url}` : '/Photo.png'
-        }`,
-        priority: `${item.priority[0] ? item.priority[0] : 0}`,
-      }));
+      data = feeds.result.map(item => getItemFromResp(item, fields, props));
     }
     yield put(feedsLoaded(data, feeds.count, feeds.page));
   } catch (err) {

@@ -10,11 +10,12 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 
-import { getLocale } from 'cookieManager';
+import { getLocale } from '../../cookieManager';
 
-import ListItem from 'components/ListItem';
-import H2 from 'components/H2';
-import H3 from 'components/H3';
+import ListItem from '../../components/ListItem';
+import H2 from '../../components/H2';
+import H3 from '../../components/H3';
+import Img from './Img';
 import Wrapper from './Wrapper';
 import messages from './messages';
 import './hoverContainer.css';
@@ -31,7 +32,7 @@ const ItemDiv = (item, history) => {
         history.push(`/news/${item.eid}`)
       }
     >
-      <img src={item.image} alt={`Feed-${item.eid}`} />
+      <Img src={item.image} alt={`Feed-${item.eid}`} />
       <div className="overlay">
         <H2>{item.title[locale]}</H2>
         <H3 className="desc">{item.desc[locale]}</H3>

@@ -1,7 +1,7 @@
 /*
  * EditPage Messages
  *
- * This contains all the text for the EditLocationsPage component.
+ * This contains all the text for the EditPage component.
  */
 import { defineMessages } from 'react-intl';
 

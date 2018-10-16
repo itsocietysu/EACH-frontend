@@ -28,7 +28,7 @@ class LinkList extends React.Component {
     }
     return (
       <Nav>
-        <Ul>
+        <Ul flexDirection="column">
           {content}
           <LogoutButton />
         </Ul>

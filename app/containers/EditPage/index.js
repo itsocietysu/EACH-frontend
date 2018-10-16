@@ -18,7 +18,7 @@ import { Redirect } from 'react-router-dom';
 
 import injectReducer from '../../utils/injectReducer';
 import injectSaga from '../../utils/injectSaga';
-import { withAuth } from '../../utils/auth';
+import { withAuthAdmin } from '../../utils/auth';
 import {
   makeSelectData,
   makeSelectError,
@@ -29,7 +29,6 @@ import {
 import { PageList } from '../PageList';
 import Button from '../../components/Button';
 import Nav from '../LinkList/Nav';
-import H1 from '../../components/H1';
 import DataList from '../../components/DataList';
 import Form from '../EditForm';
 import { loadData, deleteData, sendData, setContent } from './actions';
@@ -112,9 +111,6 @@ export class EditPage extends React.Component {
             content={`Edit ${content} page of EACH application`}
           />
         </Helmet>
-        <H1>
-          <FormattedMessage {...messages[content].header} />
-        </H1>
         <div style={rowStyle}>
           {setting.addModal ? (
             <Nav>
@@ -216,7 +212,7 @@ const withReducer = injectReducer({ key: 'editDataPage', reducer });
 const withSaga = injectSaga({ key: 'editDataPage', saga });
 
 export default compose(
-  withAuth,
+  withAuthAdmin,
   withReducer,
   withSaga,
   withConnect,

@@ -10,16 +10,20 @@ export default defineMessages({
     id: 'each.containers.OptionsList.museums',
     defaultMessage: 'Museums',
   },
+  adminEdit: {
+    id: 'each.containers.OptionsList.adminEdit',
+    defaultMessage: 'Admin',
+  },
   editNews: {
     id: 'each.containers.OptionsList.editNews',
-    defaultMessage: 'Edit news',
+    defaultMessage: 'News',
   },
   editMuseums: {
     id: 'each.containers.OptionsList.editMuseums',
-    defaultMessage: 'Edit museums',
+    defaultMessage: 'Museums',
   },
   editLocations: {
     id: 'each.containers.OptionsList.editLocations',
-    defaultMessage: 'Edit Locations',
+    defaultMessage: 'Locations',
   },
 });

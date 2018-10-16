@@ -11,7 +11,8 @@ import { Logout } from '../containers/LogoutButton/index';
 
 import config from '../containers/AuthPage/client_config.json';
 
-export const AUTH = 'authorizeComponent';
+export const AUTH_USER = 'authorizeUserComponent';
+export const AUTH_ADMIN = 'authorizeAdminComponent';
 export const REQUEST = 'requestComponent';
 
 /**
@@ -30,7 +31,7 @@ const Auth = ({ mode }) => WrappedComponent => {
       WrappedComponent.name ||
       'Component'})`;
 
-    state = { req: false, func: false };
+    state = { req: false, func: false, accessType: 'user' };
     componentWillMount() {
       if (getLogined() === 'true' && getSession() && getOAuth()) {
         const requestURL = `${
@@ -45,7 +46,7 @@ const Auth = ({ mode }) => WrappedComponent => {
             };
             setUser(user.name);
             this.context.store.dispatch(userDataGot(data));
-            this.setState({ req: false });
+            this.setState({ req: false, accessType: data.accessType });
           })
           .catch(err => {
             Logout();
@@ -61,9 +62,17 @@ const Auth = ({ mode }) => WrappedComponent => {
     }
 
     render() {
-      if (mode === AUTH && (getLogined() !== 'true' || !getSession()))
+      if (
+        (mode === AUTH_USER || mode === AUTH_ADMIN) &&
+        (getLogined() !== 'true' || !getSession())
+      )
         return <Redirect to="/" />;
-      if (!this.state.req || mode !== AUTH)
+      if (
+        (!this.state.req &&
+          ((mode === AUTH_ADMIN && this.state.accessType === 'admin') ||
+            mode === AUTH_USER)) ||
+        mode === REQUEST
+      )
         return <WrappedComponent {...this.props} />;
       return <LoadingIndicator />;
     }
@@ -72,6 +81,7 @@ const Auth = ({ mode }) => WrappedComponent => {
   return hoistNonReactStatics(AuthorizationInjector, WrappedComponent);
 };
 
-export const withAuth = Auth({ mode: AUTH });
+export const withAuth = Auth({ mode: AUTH_USER });
+export const withAuthAdmin = Auth({ mode: AUTH_ADMIN });
 export const withRequest = Auth({ mode: REQUEST });
 export default Auth;

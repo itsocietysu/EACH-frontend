@@ -63,8 +63,13 @@ const Auth = ({ mode }) => WrappedComponent => {
 
     render() {
       if (
-        (mode === AUTH_USER || mode === AUTH_ADMIN) &&
-        (getLogined() !== 'true' || !getSession())
+        mode !== REQUEST &&
+        (getLogined() !== 'true' ||
+          !getSession() ||
+          !getOAuth() ||
+          (!this.state.req &&
+            mode === AUTH_ADMIN &&
+            this.state.accessType !== 'admin'))
       )
         return <Redirect to="/" />;
       if (

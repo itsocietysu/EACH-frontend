@@ -28,7 +28,7 @@ class FunctionList extends React.Component {
     }
     return (
       <Nav>
-        <Ul>{content}</Ul>
+        <Ul flexDirection="column">{content}</Ul>
       </Nav>
     );
   }

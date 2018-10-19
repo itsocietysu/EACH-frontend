@@ -32,12 +32,16 @@ export const initialState = fromJS({
   count: 0,
   error: false,
   content: '',
+  reqProps: false,
 });
 
 function editDataReducer(state = initialState, action) {
   switch (action.type) {
     case SET_CONTENT:
-      return state.set('content', action.content).set('data', false);
+      return state
+        .set('content', action.content)
+        .set('data', false)
+        .set('reqProps', action.reqProps);
     case DELETE_DATA:
       return state
         .set('eid', action.eid)

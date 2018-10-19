@@ -18,6 +18,7 @@ import {
   makeSelectPage,
   makeSelectCount,
   makeSelectContent,
+  makeSelectRequestProps,
 } from './selectors';
 import {
   makeSelectCrop,
@@ -33,21 +34,53 @@ import {
 } from '../../utils/utils';
 import { toDataURL } from '../../toBase64';
 
+function getData(resp, content) {
+  const { fields, props } = getValues[content];
+  if (resp.length) {
+    return resp.map(item => getItemFromResp(item, fields, props));
+  }
+  return [];
+}
+
+const getDataFromLoad = {
+  museum: resp => ({
+    data: getData(resp.result, 'museum'),
+    count: resp.count,
+    page: resp.page,
+  }),
+  feed: resp => ({
+    data: getData(resp.result, 'feed'),
+    count: resp.count,
+    page: resp.page,
+  }),
+  location: resp => ({
+    data: getData(resp.result, 'location'),
+    count: resp.count,
+    page: resp.page,
+  }),
+  quest: resp => ({
+    data: getData(resp, 'quest'),
+    count: 1,
+    page: 1,
+  }),
+};
+
 /**
  * Data load handler
  */
 export function* loadData() {
   const content = yield select(makeSelectContent());
+  const reqProps = yield select(makeSelectRequestProps());
   const page = yield select(makeSelectPage());
-  const requestURL = urls[content].tape((page - 1) * 10, page * 10 - 1);
+  const requestURL = urls[content].tape(
+    reqProps,
+    (page - 1) * 10,
+    page * 10 - 1,
+  );
   try {
     const resp = yield call(requestAuth, requestURL);
-    let data = false;
-    const { fields, props } = getValues[content];
-    if (resp.result.length) {
-      data = resp.result.map(item => getItemFromResp(item, fields, props));
-    }
-    yield put(dataLoaded(data, resp.count, resp.page));
+    const data = getDataFromLoad[content](resp);
+    yield put(dataLoaded(data.data, data.count, data.page));
   } catch (err) {
     yield put(dataLoadingError(err));
   }
@@ -59,17 +92,20 @@ export function* loadData() {
 export function* sendData() {
   const content = yield select(makeSelectContent());
   const mod = yield select(makeSelectMod());
-  const dataToPost = yield select(makeSelectFormData());
+  const formData = yield select(makeSelectFormData());
+  const reqProps = yield select(makeSelectRequestProps());
   const crop = yield select(makeSelectCrop());
   const data = yield select(makeSelectData());
   const page = yield select(makeSelectPage());
   let count = yield select(makeSelectCount());
-  const { fields, props, locales, noLocales } = getValues[content];
+  const { fields, props, locales, noLocales, addProps } = getValues[content];
   const setting = settings[content];
   let requestURL = urls[content].add;
   let body = {};
   let method = 'POST';
-  if (mod === 'add') body = getItemForPost(dataToPost, fields, props, crop);
+  let dataToPost = formData;
+  if (reqProps) dataToPost = Object.assign(formData, reqProps);
+  if (mod === 'add') body = getItemForPost(dataToPost, fields, addProps, crop);
   else if (mod === 'edit') {
     method = 'PUT';
     requestURL = urls[content].update;
@@ -109,7 +145,7 @@ export function* sendData() {
     const resp = (yield call(requestAuth, requestURL, options))[0];
     let newData = data;
     if (mod === 'add') {
-      newData = [getItemFromResp(resp, fields, props)].concat(data);
+      newData = [getItemFromResp(resp, fields, props)].concat(data || []);
       count += 1;
     } else {
       newData = data.map(element => {

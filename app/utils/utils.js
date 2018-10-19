@@ -150,6 +150,9 @@ const setPropsToAdd = {
       data.prop.location.add.push(location.eid);
     });
   },
+  game: (data, item) => {
+    data.prop.game = item.museumId;
+  },
 };
 
 export function getItemForPost(item, fields, propFields, crop) {

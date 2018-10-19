@@ -27,12 +27,15 @@ import {
  *
  * @param  {string} content The content of page
  *
- * @return {object} An action object with a type of SET_CONTENT passing the content
+ * @param  {object} reqProps The props for load request
+ *
+ * @return {object} An action object with a type of SET_CONTENT passing the content and reqProps
  */
-export function setContent(content) {
+export function setContent(content, reqProps) {
   return {
     type: SET_CONTENT,
     content,
+    reqProps,
   };
 }
 

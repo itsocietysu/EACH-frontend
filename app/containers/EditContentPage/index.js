@@ -18,6 +18,7 @@ import NavLink from './NavLink';
 import Ul from '../LinkList/Ul';
 import messages from './messages';
 import H1 from '../../components/H1';
+import { withAuthAdmin } from '../../utils/auth';
 
 export class EditContentPage extends React.Component {
   render() {
@@ -59,4 +60,4 @@ EditContentPage.propTypes = {
   search: PropTypes.object,
 };
 
-export default EditContentPage;
+export default withAuthAdmin(EditContentPage);

@@ -1,7 +1,7 @@
 /*
  * NewsPage
  *
- * This is page of one news, at the '/news:/newsId' route
+ * This is page of one news, at the '/news/:newsId' route
  */
 import React from 'react';
 import PropTypes from 'prop-types';

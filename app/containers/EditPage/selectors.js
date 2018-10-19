@@ -28,6 +28,11 @@ const makeSelectPage = () =>
 const makeSelectContent = () =>
   createSelector(selectEditData, editDataState => editDataState.get('content'));
 
+const makeSelectRequestProps = () =>
+  createSelector(selectEditData, editDataState =>
+    editDataState.get('reqProps'),
+  );
+
 export {
   selectEditData,
   makeSelectEid,
@@ -37,4 +42,5 @@ export {
   makeSelectPage,
   makeSelectCount,
   makeSelectContent,
+  makeSelectRequestProps,
 };

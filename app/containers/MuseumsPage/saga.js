@@ -12,7 +12,7 @@ import { getItemFromResp } from '../../utils/utils';
  */
 export function* loadMuseums() {
   const page = yield select(makeSelectPage());
-  const requestURL = urls.museum.tape((page - 1) * 10, page * 10 - 1);
+  const requestURL = urls.museum.tape(false, (page - 1) * 10, page * 10 - 1);
   try {
     const museums = yield call(requestAuth, requestURL);
     let data = false;

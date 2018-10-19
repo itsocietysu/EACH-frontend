@@ -12,7 +12,7 @@ import { getItemFromResp } from '../../utils/utils';
  */
 export function* loadFeeds() {
   const page = yield select(makeSelectPage());
-  const requestURL = urls.feed.tape((page - 1) * 10, page * 10 - 1);
+  const requestURL = urls.feed.tape(false, (page - 1) * 10, page * 10 - 1);
   try {
     const feeds = yield call(request, requestURL);
     let data = false;

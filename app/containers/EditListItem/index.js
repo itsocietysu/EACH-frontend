@@ -1,4 +1,4 @@
-/* eslint-disable react/no-children-prop,no-param-reassign */
+/* eslint-disable react/no-children-prop,no-param-reassign,jsx-a11y/anchor-is-valid */
 /**
  * EditListItem
  *
@@ -9,6 +9,7 @@ import React from 'react';
 import Popup from 'reactjs-popup';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router-dom';
 
 import { getLocale } from '../../cookieManager';
 
@@ -70,18 +71,23 @@ NewsItem.propTypes = {
   locale: PropTypes.string,
 };
 
-const MuseumsItem = ({ item, locale }) => (
+const MuseumItem = ({ item, locale }) => (
   <div>
-    <div style={{ display: 'flex' }}>
-      <DivSep width="30%">
-        <Img src={item.image} alt={`${item.eid}`} />
-      </DivSep>
-      <DivSep width="70%" marginLeft="15px">
-        <H2>{item.name[locale]}</H2>
-      </DivSep>
-    </div>
+    <Link
+      to={`/museum/edit/${item.eid}`}
+      style={{ textDecoration: 'none', color: '#000' }}
+    >
+      <div style={{ display: 'flex' }}>
+        <DivSep width="30%">
+          <Img src={item.image} alt={`${item.eid}`} />
+        </DivSep>
+        <DivSep width="70%" marginLeft="15px">
+          <H2>{item.name[locale]}</H2>
+        </DivSep>
+      </div>
+    </Link>
     <div>
-      <H3>{item.desc[locale]}</H3>
+      <P>{item.desc[locale]}</P>
     </div>
     {item.location.map(location => (
       <div key={`${item.eid}-${location.name}`} style={{ display: 'flex' }}>
@@ -92,7 +98,7 @@ const MuseumsItem = ({ item, locale }) => (
   </div>
 );
 
-MuseumsItem.propTypes = {
+MuseumItem.propTypes = {
   item: PropTypes.object,
   locale: PropTypes.string,
 };
@@ -106,14 +112,45 @@ const LocationItem = ({ item }) => (
 
 LocationItem.propTypes = { item: PropTypes.object };
 
+const QuestItem = ({ item, locale }) => (
+  <div>
+    <div style={{ display: 'flex' }}>
+      <DivSep width="30%">
+        <Img src={item.image} alt={`${item.eid}`} />
+      </DivSep>
+      <DivSep width="70%" marginLeft="15px">
+        <H2>{item.name[locale]}</H2>
+      </DivSep>
+    </div>
+    <div>
+      <P>{item.desc[locale]}</P>
+    </div>
+  </div>
+);
+
+QuestItem.propTypes = {
+  item: PropTypes.object,
+  locale: PropTypes.string,
+};
+
+const getItem = {
+  museum: (item, locale) => () => <MuseumItem item={item} locale={locale} />,
+  feed: (item, locale) => () => <NewsItem item={item} locale={locale} />,
+  location: item => () => <LocationItem item={item} />,
+  quest: (item, locale) => () => <QuestItem item={item} locale={locale} />,
+};
+
+const deleteMessages = {
+  museum: messages.deleteMuseum,
+  feed: messages.deleteFeed,
+  location: messages.deleteLocation,
+  quest: messages.deleteQuest,
+};
+
 export class EditListItem extends React.PureComponent {
   constructor(props) {
     super(props);
-    if (props.content === 'museum')
-      this.state = { delete: messages.deleteMuseum };
-    if (props.content === 'feed') this.state = { delete: messages.deleteFeed };
-    if (props.content === 'location')
-      this.state = { delete: messages.deleteLocation };
+    this.state = { delete: deleteMessages[props.content] };
   }
   render() {
     const { item } = this.props.item;
@@ -121,11 +158,7 @@ export class EditListItem extends React.PureComponent {
     const locale = getLocale() || DEFAULT_LOCALE;
     const setting = settings[type];
     const emptyItem = emptyItems[type];
-    let Item = () => <div />;
-    if (type === 'feed') Item = () => <NewsItem item={item} locale={locale} />;
-    if (type === 'museum')
-      Item = () => <MuseumsItem item={item} locale={locale} />;
-    if (type === 'location') Item = () => <LocationItem item={item} />;
+    const Item = getItem[type](item, locale);
     const content = (
       <Wrapper>
         {this.props.isUpdate ? (
@@ -193,7 +226,7 @@ export class EditListItem extends React.PureComponent {
 
 EditListItem.propTypes = {
   item: PropTypes.object,
-  content: PropTypes.oneOf(['museum', 'feed', 'location']),
+  content: PropTypes.oneOf(['museum', 'feed', 'location', 'quest']),
   isUpdate: PropTypes.bool,
   onDelete: PropTypes.func,
   onUpdate: PropTypes.func,

@@ -26,4 +26,8 @@ export default defineMessages({
     id: 'each.containers.EditListItem.deleteLocation',
     defaultMessage: 'Are you sure that you want to delete this location?',
   },
+  deleteQuest: {
+    id: 'each.containers.EditListItem.deleteQuest',
+    defaultMessage: 'Are you sure that you want to delete this quest?',
+  },
 });

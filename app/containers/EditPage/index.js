@@ -18,7 +18,6 @@ import { Redirect } from 'react-router-dom';
 
 import injectReducer from '../../utils/injectReducer';
 import injectSaga from '../../utils/injectSaga';
-import { withAuthAdmin } from '../../utils/auth';
 import {
   makeSelectData,
   makeSelectError,
@@ -52,7 +51,7 @@ const refreshStyle = {
 export class EditPage extends React.Component {
   constructor(props) {
     super(props);
-    props.init(props.content);
+    props.init(props.content, props.reqProps ? props.reqProps : false);
     this.state = { content: props.content };
   }
   componentDidMount() {
@@ -66,13 +65,13 @@ export class EditPage extends React.Component {
   }
   static getDerivedStateFromProps(props, state) {
     if (props.content !== state.content) {
-      props.init(props.content);
+      props.init(props.content, props.reqProps ? props.reqProps : false);
       props.load(1);
     }
     return null;
   }
   componentWillUnmount() {
-    this.props.init(this.props.content);
+    this.props.init(this.props.content, false);
   }
   render() {
     let { data } = this.props;
@@ -165,7 +164,7 @@ export class EditPage extends React.Component {
             />
           </Nav>
         </div>
-        <PageList countElements={count} elementsPerPage={10} />
+        {maxPage > 1 && <PageList countElements={count} elementsPerPage={10} />}
         <DataList {...dataListProps} />
       </article>
     );
@@ -183,12 +182,13 @@ EditPage.propTypes = {
   delete: PropTypes.func,
   send: PropTypes.func,
   search: PropTypes.object,
-  content: PropTypes.oneOf(['museum', 'feed', 'location']),
+  content: PropTypes.oneOf(['museum', 'feed', 'location', 'quest']),
+  reqProps: PropTypes.object,
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
-    init: content => dispatch(setContent(content)),
+    init: (content, reqProps) => dispatch(setContent(content, reqProps)),
     load: page => dispatch(loadData(page)),
     delete: eid => dispatch(deleteData(eid)),
     send: () => dispatch(sendData()),
@@ -212,7 +212,6 @@ const withReducer = injectReducer({ key: 'editDataPage', reducer });
 const withSaga = injectSaga({ key: 'editDataPage', saga });
 
 export default compose(
-  withAuthAdmin,
   withReducer,
   withSaga,
   withConnect,

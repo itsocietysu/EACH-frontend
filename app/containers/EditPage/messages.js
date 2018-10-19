@@ -24,4 +24,10 @@ export default defineMessages({
       defaultMessage: 'Add location',
     },
   },
+  quest: {
+    add: {
+      id: 'each.containers.EditPage.addQuest',
+      defaultMessage: 'Add quest',
+    },
+  },
 });

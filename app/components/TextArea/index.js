@@ -10,6 +10,7 @@ export default function createTextArea({
   change,
   message,
   rows,
+  maxLength,
   isPlaceholder,
 }) {
   return (
@@ -29,6 +30,7 @@ export default function createTextArea({
                 value={value}
                 cols="50"
                 rows={rows}
+                maxLength={maxLength}
               />
             )}
           </FormattedMessage>
@@ -42,6 +44,7 @@ export default function createTextArea({
               value={value}
               cols="50"
               rows={rows}
+              maxLength={maxLength}
             />
           </div>
         )}

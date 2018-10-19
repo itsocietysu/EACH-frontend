@@ -215,6 +215,7 @@ class EditForm extends React.Component {
               value={data[localeText.field][locale]}
               message={messages[localeText.field].locale[locale]}
               rows={localeText.rows}
+              maxLength={localeText.maxLength}
               change={evt =>
                 this.props.onChangeTextLocale(evt, locale, localeText.field)
               }
@@ -233,6 +234,7 @@ class EditForm extends React.Component {
             value={data[text.field]}
             message={messages[text.field]}
             rows={text.rows}
+            maxLength={text.maxLength}
             change={evt =>
               this.props.onChangeField(evt.target.value, text.field)
             }

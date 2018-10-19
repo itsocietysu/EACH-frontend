@@ -14,4 +14,8 @@ export default defineMessages({
     id: 'each.components.Header.features',
     defaultMessage: 'Features',
   },
+  back: {
+    id: 'each.components.Header.back',
+    defaultMessage: 'Go back',
+  },
 });

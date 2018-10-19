@@ -4,6 +4,7 @@
     "Проект лицензирован в соответсвии с ...",
   "each.components.Header.features": "Особенности",
   "each.components.Header.home": "Домой",
+  "each.components.Header.back": "Назад",
   "each.components.MsgBox.yes": "Да",
   "each.components.MsgBox.no": "Нет",
   "each.components.LabelFile.selectFile": "Выберете файл",
@@ -28,6 +29,7 @@
   "each.containers.EditPage.addFeed": "Добавить новость",
   "each.containers.EditPage.addMuseum": "Добавить музей",
   "each.containers.EditPage.addLocation": "Добавить локацию",
+  "each.containers.EditPage.addQuest": "Добавить квест",
   "each.containers.EditForm.titleRU": "Заголовок рус",
   "each.containers.EditForm.titleEN": "Заголовок анг",
   "each.containers.EditForm.textRU": "Текст рус",
@@ -58,6 +60,8 @@
     "Вы уверены, что хотите удалить этот музей?",
   "each.containers.EditListItem.deleteLocation":
     "Вы уверены, что хотите удалить эту локацию?",
+  "each.containers.EditListItem.deleteQuest":
+    "Вы уверены, что хотите удалить этот квест?",
   "each.containers.LoginButton.login": "Вход",
   "each.containers.LogoutButton.logout": "Выход",
   "each.containers.LocaleToggle.ru": "рус",

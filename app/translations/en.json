@@ -4,6 +4,7 @@
     "This project is licensed under the ...",
   "each.components.Header.features": "Features",
   "each.components.Header.home": "Home",
+  "each.components.Header.back": "Go back",
   "each.components.MsgBox.yes": "Yes",
   "each.components.MsgBox.no": "No",
   "each.components.LabelFile.selectFile": "Select File",
@@ -28,6 +29,7 @@
   "each.containers.EditPage.addFeed": "Add news",
   "each.containers.EditPage.addMuseum": "Add museum",
   "each.containers.EditPage.addLocation": "Add location",
+  "each.containers.EditPage.addQuest": "Add quest",
   "each.containers.EditForm.titleRU": "Title ru",
   "each.containers.EditForm.titleEN": "Title en",
   "each.containers.EditForm.textRU": "Text ru",
@@ -58,6 +60,8 @@
     "Are you sure that you want to delete this museum?",
   "each.containers.EditListItem.deleteLocation":
     "Are you sure that you want to delete this location?",
+  "each.containers.EditListItem.deleteQuest":
+    "Are you sure that you want to delete this quest?",
   "each.containers.LoginButton.login": "Login",
   "each.containers.LogoutButton.logout": "Logout",
   "each.containers.LocaleToggle.ru": "ru",

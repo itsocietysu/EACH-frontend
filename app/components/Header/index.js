@@ -10,9 +10,13 @@ import messages from './messages';
 import Logo from './logo.png';
 import LocaleToggle from '../../containers/LocaleToggle';
 import UserButton from '../../components/UserButton';
+import Button from '../../containers/UserPanel/Button';
 import './index.css';
 
 class Header extends React.Component {
+  static contextTypes = {
+    router: () => null,
+  };
   render() {
     return (
       <div>
@@ -31,6 +35,11 @@ class Header extends React.Component {
             <HeaderLink to="/">
               <FormattedMessage {...messages.home} />
             </HeaderLink>
+            {this.props.back && (
+              <Button onClick={this.context.router.history.goBack}>
+                <FormattedMessage {...messages.back} />
+              </Button>
+            )}
           </div>
           {this.props.user ? (
             <UserButton />
@@ -48,6 +57,7 @@ class Header extends React.Component {
 Header.propTypes = {
   user: PropTypes.bool,
   simple: PropTypes.bool,
+  back: PropTypes.bool,
 };
 
 export default Header;

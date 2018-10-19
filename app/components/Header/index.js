@@ -1,7 +1,8 @@
-/* eslint-disable react/prefer-stateless-function */
+/* eslint-disable react/prefer-stateless-function,react/prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { withRouter } from 'react-router-dom';
 
 import A from './A';
 import Img from './Img';
@@ -14,9 +15,6 @@ import Button from '../../containers/UserPanel/Button';
 import './index.css';
 
 class Header extends React.Component {
-  static contextTypes = {
-    router: () => null,
-  };
   render() {
     return (
       <div>
@@ -36,7 +34,7 @@ class Header extends React.Component {
               <FormattedMessage {...messages.home} />
             </HeaderLink>
             {this.props.back && (
-              <Button onClick={this.context.router.history.goBack}>
+              <Button onClick={this.props.history.goBack}>
                 <FormattedMessage {...messages.back} />
               </Button>
             )}
@@ -60,4 +58,4 @@ Header.propTypes = {
   back: PropTypes.bool,
 };
 
-export default Header;
+export default withRouter(Header);

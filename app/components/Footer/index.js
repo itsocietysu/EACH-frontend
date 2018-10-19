@@ -8,7 +8,7 @@ import messages from './messages';
 function Footer() {
   return (
     <Wrapper>
-      <section style={{textAlign: 'right'}}>
+      <section style={{ textAlign: 'right' }}>
         <FormattedMessage
           {...messages.authorMessage}
           values={{

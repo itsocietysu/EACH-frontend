@@ -12,6 +12,9 @@
     max-width: 15em;
   }
 }
+.rc-select-disabled {
+  cursor: default;
+}
 .rc-select-dropdown {
   z-index: 9999;
 }

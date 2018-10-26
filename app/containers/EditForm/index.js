@@ -1,4 +1,4 @@
-/* eslint-disable react/prefer-stateless-function,no-restricted-syntax,no-unused-expressions,react/no-children-prop */
+/* eslint-disable react/prefer-stateless-function,no-restricted-syntax,no-unused-expressions,react/no-children-prop,no-underscore-dangle */
 /*
  *
  * Component with form for editing
@@ -8,9 +8,6 @@ import React from 'react';
 import Popup from 'reactjs-popup';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
 
 import { URL2Base64, File2Base64 } from '../../toBase64';
 
@@ -22,24 +19,8 @@ import LabelFile from '../../components/LabelFile';
 import LabelInput from '../../components/LabelInput';
 import SelectSearch from '../SelectSearch';
 import Button from '../UserPanel/Button';
-import injectReducer from '../../utils/injectReducer';
-import {
-  makeSelectFormData,
-  makeSelectMsgData,
-  makeSelectCrop,
-} from './selectors';
 import messages from './messages';
 import Img from './Img';
-import {
-  changeImg,
-  changeField,
-  changeNumber,
-  changeData,
-  changeOpenMsg,
-  changeTextLocale,
-  changeCrop,
-} from './actions';
-import reducer from './reducer';
 
 import { appLocales } from '../../i18n';
 import BorderTopImage from '../../components/MsgBox/Img';
@@ -54,7 +35,7 @@ const ImageCropStyle = {
   margin: 'auto',
 };
 
-const isEmpty = (data, crops, settings) => {
+const isEmpty = (data, settings) => {
   let empty = [];
   const keys = Object.keys(settings);
   if (keys.includes('locales'))
@@ -88,7 +69,7 @@ const isEmpty = (data, crops, settings) => {
     });
     empty.push(res);
   }
-  if (settings.image) empty.push(!!crops.image);
+  if (settings.image) empty.push(!!data.image);
   for (const key in empty) {
     if (!empty[key]) return true;
   }
@@ -119,12 +100,14 @@ const Form = ({
     <div>
       <Button
         onClick={() => {
-          if (isEmpty(data, crops, settings))
+          const dataToPost = JSON.parse(JSON.stringify(data));
+          if (settings.image) dataToPost.image = crops.image;
+          if (isEmpty(dataToPost, settings))
             funcs.onChangeOpenMsg(messages.empty, () => {}, false, () => {
               funcs.onChangeOpenMsg();
             });
           else {
-            funcs.onSubmit();
+            funcs.onSubmit(dataToPost);
             funcs.close && funcs.close();
           }
         }}
@@ -175,49 +158,164 @@ Form.propTypes = {
 class EditForm extends React.Component {
   constructor(props) {
     super(props);
-    const { emptyItem, settings, mod } = props;
-    props.init(emptyItem, mod, settings);
-    this.state = { content: props.settings.content };
+    const { item } = props;
+    this.state = {
+      content: props.settings.content,
+      formData: JSON.parse(JSON.stringify(item)),
+      crops: {},
+      msgData: {
+        isOpenMsg: false,
+        message: {},
+        isCancelMsg: false,
+        onSubmit: () => {},
+        onClose: () => {},
+      },
+    };
+
+    this._init = this._init.bind(this);
+    this._onChangeData = this._onChangeData.bind(this);
+    this._onChangeField = this._onChangeField.bind(this);
+    this._onChangeTextLocale = this._onChangeTextLocale.bind(this);
+    this._onChangeFile = this._onChangeFile.bind(this);
+    this._onChangeCrop = this._onChangeCrop.bind(this);
+    this._onChangeNumber = this._onChangeNumber.bind(this);
+    this._onChangeOpenMsg = this._onChangeOpenMsg.bind(this);
   }
-  componentWillUnmount() {
-    this.props.onUnmount();
+
+  _onChangeData(item) {
+    this.setState({ formData: item });
   }
+
+  _init(item, settings) {
+    if (!settings.image) this._onChangeData(JSON.parse(JSON.stringify(item)));
+    else {
+      const i = JSON.parse(JSON.stringify(item));
+      if (item.image === '/Photo.png') {
+        i.image = '';
+      } else if (item.image === '') {
+        this._onChangeCrop('', 'image');
+      } else
+        URL2Base64(item.image, res => {
+          const base64 = res.replace(/^data:image\/(png|jpg|jpeg);base64,/, '');
+          this._onChangeField(base64, 'image');
+          this._onChangeCrop(base64, 'image');
+        });
+      this._onChangeData(i);
+    }
+  }
+
+  _onChangeTextLocale(evt, locale, field) {
+    this.state.formData[field][locale] = evt.target.value;
+    this.setState(this.state);
+  }
+
+  _onChangeField(data, field) {
+    this.state.formData[field] = data;
+    this.setState(this.state);
+  }
+
+  _onChangeFile(evt, field) {
+    if (evt.target.files[0])
+      File2Base64(evt.target.files[0], res => {
+        bigImage(
+          res,
+          img => {
+            const crop = getCroppedMaxImg(img);
+            this._onChangeField(
+              res.replace(/^data:image\/(png|jpg|jpeg);base64,/, ''),
+              field,
+            );
+            this._onChangeCrop(crop, field);
+          },
+          () =>
+            this._onChangeOpenMsg(
+              messages.imageSmall,
+              false,
+              () => {},
+              this.onChangeOpenMsg(),
+            ),
+        );
+      });
+  }
+
+  _onChangeCrop(base64, field) {
+    if (base64 === null)
+      this._onChangeOpenMsg(
+        messages.imageSmall,
+        false,
+        () => {},
+        this.onChangeOpenMsg(),
+      );
+    else {
+      this.state.crops[field] = base64;
+      this.setState(this.state);
+    }
+  }
+
+  _onChangeNumber(evt, field, format) {
+    switch (format) {
+      case 'int':
+        this.state.formData[field] = parseInt(evt.target.value, 10).toString(
+          10,
+        );
+        this.setState(this.state);
+        break;
+      case 'double':
+        this.state.formData[field] = evt.target.value;
+        this.setState(this.state);
+        break;
+      default:
+        break;
+    }
+  }
+
+  _onChangeOpenMsg(message, onSubmit, cancel, onClose) {
+    this.state.msgData = {
+      isOpenMsg: !this.state.msgData.isOpenMsg,
+      message,
+      isCancelMsg: cancel,
+      onSubmit,
+      onClose,
+    };
+    this.setState(this.state);
+  }
+
   componentDidUpdate(prevProps) {
     if (prevProps.settings.content !== this.props.settings.content)
-      this.props.init(
-        this.props.emptyItem,
-        this.props.mod,
-        this.props.settings,
-      );
+      this._init(this.props.item, this.props.settings);
   }
+
   render() {
-    const { crops, message, settings } = this.props;
+    const { settings } = this.props;
     const { content } = settings;
-    let { data } = this.props;
+    const message = this.state.msgData;
+    const { crops } = this.state;
+    let data = this.state.formData;
     if (content !== this.state.content) {
       this.state.content = content;
       data = {};
     }
-    if (Object.keys(data).length === 0) data = this.props.emptyItem;
+    if (Object.keys(data).length === 0) data = this.props.item;
     const images = [];
     const texts = [];
     const localeTexts = [];
     const numbers = [];
     const selects = [];
     const keys = Object.keys(settings);
+    const { eid } = this.props.item;
     if (keys.includes('locales')) {
       settings.locales.forEach(localeText => {
         appLocales.forEach(locale => {
           localeTexts.push(
             <TextArea
-              key={`${localeText.field}-${this.props.item.eid}-${locale}`}
-              name={`${localeText.field}-${this.props.item.eid}-${locale}`}
+              key={`${localeText.field}-${eid}-${locale}`}
+              name={`${localeText.field}-${eid}-${locale}`}
               value={data[localeText.field][locale]}
               message={messages[localeText.field].locale[locale]}
               rows={localeText.rows}
               maxLength={localeText.maxLength}
               change={evt =>
-                this.props.onChangeTextLocale(evt, locale, localeText.field)
+                this._onChangeTextLocale(evt, locale, localeText.field)
               }
               isPlaceholder={this.props.isPlaceholder}
             />,
@@ -229,15 +327,13 @@ class EditForm extends React.Component {
       settings.texts.forEach(text => {
         texts.push(
           <TextArea
-            key={`${text.field}-${this.props.item.eid}`}
-            name={`${text.field}-${this.props.item.eid}`}
+            key={`${text.field}-${eid}`}
+            name={`${text.field}-${eid}`}
             value={data[text.field]}
             message={messages[text.field]}
             rows={text.rows}
             maxLength={text.maxLength}
-            change={evt =>
-              this.props.onChangeField(evt.target.value, text.field)
-            }
+            change={evt => this._onChangeField(evt.target.value, text.field)}
             isPlaceholder={this.props.isPlaceholder}
           />,
         );
@@ -247,12 +343,12 @@ class EditForm extends React.Component {
       settings.numbers.forEach(number => {
         numbers.push(
           <LabelInput
-            key={`${number.field}-${this.props.item.eid}`}
-            id={`${number.field}-${this.props.item.eid}`}
+            key={`${number.field}-${eid}`}
+            id={`${number.field}-${eid}`}
             type="number"
             value={data[number.field]}
             change={evt =>
-              this.props.onChangeNumber(evt, number.field, number.format)
+              this._onChangeNumber(evt, number.field, number.format)
             }
             message={messages[number.field]}
             isPlaceholder={this.props.isPlaceholder}
@@ -264,35 +360,35 @@ class EditForm extends React.Component {
       settings.selects.forEach(select => {
         selects.push(
           <SelectSearch
-            key={`select-${select.field}-${this.props.item.eid}`}
+            key={`select-${select.field}-${eid}`}
             initValue={data[select.field].map(v => ({
               key: v.eid,
               field: v[selectField[select.field]],
             }))}
             renderField={selectField[select.field]}
             requestFunc={value => selectRequest[select.field](value)}
-            onChange={value => this.props.onChangeField(value, select.field)}
+            onChange={value => this._onChangeField(value, select.field)}
           />,
         );
       });
     }
     if (settings.image) {
       images.push(
-        <div key={`image-${this.props.item.eid}`}>
+        <div key={`image-${eid}`}>
           <div style={{ marginBottom: '0.5em' }}>
             {crops.image ? (
               <Img
                 src={`data:image/jpeg;base64,${crops.image}`}
-                alt={`${this.props.item.eid}`}
+                alt={`${eid}`}
               />
             ) : (
-              <Img src="/Photo.png" alt={`${this.props.item.eid}`} />
+              <Img src="/Photo.png" alt={`${eid}`} />
             )}
           </div>
           <div style={{ marginBottom: '0.5em' }}>
             <LabelFile
-              id={`file-image-${this.props.item.eid}`}
-              change={evt => this.props.onChangeFile(evt, 'image')}
+              id={`file-image-${eid}`}
+              change={evt => this._onChangeFile(evt, 'image')}
               accept="image/*"
             />
           </div>
@@ -301,7 +397,7 @@ class EditForm extends React.Component {
               <PopupImageCrop
                 src={`data:image/jpeg;base64,${data.image}`}
                 styleCrop={ImageCropStyle}
-                onSubmit={base64 => this.props.onChangeCrop(base64, 'image')}
+                onSubmit={base64 => this._onChangeCrop(base64, 'image')}
                 trigger={
                   <Button type="button" style={{ margin: '0.5em' }}>
                     <FormattedMessage {...messages.crop} />
@@ -322,7 +418,7 @@ class EditForm extends React.Component {
           lockScroll
           contentStyle={PopupStyle}
           onOpen={() => {
-            this.props.init(this.props.item, this.props.mod, settings);
+            this._init(this.props.item, settings);
           }}
           onClose={() => {
             this.props.onClose && this.props.onClose();
@@ -333,13 +429,13 @@ class EditForm extends React.Component {
               <BorderTopImage />
               <Close
                 onClick={() =>
-                  this.props.onChangeOpenMsg(
+                  this._onChangeOpenMsg(
                     messages.sure,
                     () => {
                       close();
                     },
                     true,
-                    this.props.onChangeOpenMsg,
+                    this._onChangeOpenMsg,
                   )
                 }
               />
@@ -352,7 +448,7 @@ class EditForm extends React.Component {
                 numbers={numbers}
                 funcs={{
                   close,
-                  onChangeOpenMsg: this.props.onChangeOpenMsg,
+                  onChangeOpenMsg: this._onChangeOpenMsg,
                   onSubmit: this.props.onSubmit,
                 }}
                 data={data}
@@ -374,7 +470,7 @@ class EditForm extends React.Component {
           message={message}
           numbers={numbers}
           funcs={{
-            onChangeOpenMsg: this.props.onChangeOpenMsg,
+            onChangeOpenMsg: this._onChangeOpenMsg,
             onSubmit: this.props.onSubmit,
           }}
           data={data}
@@ -392,111 +488,10 @@ EditForm.propTypes = {
   isPlaceholder: PropTypes.bool,
   flexDirection: PropTypes.oneOf(['column', 'row']),
   trigger: PropTypes.object,
-  data: PropTypes.object,
-  crops: PropTypes.object,
   item: PropTypes.object,
-  emptyItem: PropTypes.object,
   settings: PropTypes.object,
-  mod: PropTypes.oneOf(['add', 'edit']),
-  onChangeFile: PropTypes.func,
-  onChangeTextLocale: PropTypes.func,
-  onChangeField: PropTypes.func,
-  onChangeNumber: PropTypes.func,
-  onChangeCrop: PropTypes.func,
-  init: PropTypes.func,
   onSubmit: PropTypes.func,
-  message: PropTypes.object,
-  onChangeOpenMsg: PropTypes.func,
   onClose: PropTypes.func,
-  onUnmount: PropTypes.func,
 };
 
-export function mapDispatchToProps(dispatch) {
-  return {
-    onChangeFile: (evt, field) => {
-      if (evt.target.files[0])
-        File2Base64(evt.target.files[0], res => {
-          bigImage(
-            res,
-            img => {
-              const crop = getCroppedMaxImg(img);
-              dispatch(
-                changeImg(
-                  res.replace(/^data:image\/(png|jpg|jpeg);base64,/, ''),
-                  field,
-                ),
-              );
-              dispatch(changeCrop(crop, field));
-            },
-            () =>
-              dispatch(
-                changeOpenMsg(
-                  messages.imageSmall,
-                  false,
-                  () => {},
-                  this.onChangeOpenMsg(),
-                ),
-              ),
-          );
-        });
-    },
-    onChangeCrop: (base64, field) => {
-      if (base64 === null)
-        dispatch(
-          changeOpenMsg(
-            messages.imageSmall,
-            false,
-            () => {},
-            this.onChangeOpenMsg(),
-          ),
-        );
-      else dispatch(changeCrop(base64, field));
-    },
-    onChangeTextLocale: (evt, locale, field) =>
-      dispatch(changeTextLocale(evt.target.value, locale, field)),
-    onChangeField: (data, field) => dispatch(changeField(data, field)),
-    onChangeNumber: (evt, field, format) =>
-      dispatch(changeNumber(evt.target.value, field, format)),
-    init: (item, mod, settings) => {
-      if (!settings.image) dispatch(changeData(item, mod));
-      else {
-        const i = Object.assign({}, item);
-        if (item.image === '/Photo.png') {
-          i.image = '';
-        } else if (item.image === '') {
-          dispatch(changeCrop('', 'image'));
-        } else
-          URL2Base64(item.image, res => {
-            const base64 = res.replace(
-              /^data:image\/(png|jpg|jpeg);base64,/,
-              '',
-            );
-            dispatch(changeImg(base64, 'image'));
-            dispatch(changeCrop(base64, 'image'));
-          });
-        dispatch(changeData(i, mod));
-      }
-    },
-    onChangeOpenMsg: (message, onSubmit, cancel, onClose) =>
-      dispatch(changeOpenMsg(message, cancel, onSubmit, onClose)),
-    onUnmount: () => dispatch(changeData({}, 'add')),
-  };
-}
-
-const mapStateToProps = createStructuredSelector({
-  data: makeSelectFormData(),
-  message: makeSelectMsgData(),
-  crops: makeSelectCrop(),
-});
-
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
-
-const withReducer = injectReducer({ key: 'editForm', reducer });
-
-export default compose(
-  withReducer,
-  withConnect,
-)(EditForm);
+export default EditForm;

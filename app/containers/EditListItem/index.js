@@ -27,7 +27,7 @@ import MsgBox from '../../components/MsgBox';
 import messages from './messages';
 
 import { DEFAULT_LOCALE } from '../../i18n';
-import { settings, emptyItems } from '../EditPage/configs';
+import { settings } from '../EditPage/configs';
 
 const iconStyle = color => ({
   float: 'right',
@@ -157,7 +157,6 @@ export class EditListItem extends React.PureComponent {
     const type = this.props.content;
     const locale = getLocale() || DEFAULT_LOCALE;
     const setting = settings[type];
-    const emptyItem = emptyItems[type];
     const Item = getItem[type](item, locale);
     const content = (
       <Wrapper>
@@ -184,11 +183,9 @@ export class EditListItem extends React.PureComponent {
                     </Button>
                   }
                   item={item}
-                  emptyItem={emptyItem}
                   isPopup
-                  mod="edit"
                   settings={setting}
-                  onSubmit={this.props.onUpdate}
+                  onSubmit={form => this.props.onUpdate(form)}
                   onClose={() => close()}
                   isPlaceholder={false}
                   flexDirection="column"

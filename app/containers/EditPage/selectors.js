@@ -33,6 +33,14 @@ const makeSelectRequestProps = () =>
     editDataState.get('reqProps'),
   );
 
+const makeSelectDataToPost = () =>
+  createSelector(selectEditData, editDataState =>
+    editDataState.get('dataToPost').toJS(),
+  );
+
+const makeSelectPostMod = () =>
+  createSelector(selectEditData, editDataState => editDataState.get('postMod'));
+
 export {
   selectEditData,
   makeSelectEid,
@@ -43,4 +51,6 @@ export {
   makeSelectCount,
   makeSelectContent,
   makeSelectRequestProps,
+  makeSelectDataToPost,
+  makeSelectPostMod,
 };

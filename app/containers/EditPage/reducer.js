@@ -28,6 +28,8 @@ export const initialState = fromJS({
   sending: false,
   loading: false,
   data: false,
+  dataToPost: false,
+  postMod: 'add',
   page: 1,
   count: 0,
   error: false,
@@ -57,6 +59,8 @@ function editDataReducer(state = initialState, action) {
         .set('error', action.error);
     case SEND_DATA:
       return state
+        .set('dataToPost', fromJS(action.data))
+        .set('postMod', action.mod)
         .set('sending', true)
         .set('error', false);
     case SEND_DATA_SUCCESS:

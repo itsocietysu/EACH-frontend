@@ -19,12 +19,9 @@ import {
   makeSelectCount,
   makeSelectContent,
   makeSelectRequestProps,
+  makeSelectDataToPost,
+  makeSelectPostMod,
 } from './selectors';
-import {
-  makeSelectCrop,
-  makeSelectFormData,
-  makeSelectMod,
-} from '../EditForm/selectors';
 
 import { urls, getValues, settings } from './configs';
 import {
@@ -91,10 +88,9 @@ export function* loadData() {
  */
 export function* sendData() {
   const content = yield select(makeSelectContent());
-  const mod = yield select(makeSelectMod());
-  const formData = yield select(makeSelectFormData());
+  const mod = yield select(makeSelectPostMod());
+  const formData = yield select(makeSelectDataToPost());
   const reqProps = yield select(makeSelectRequestProps());
-  const crop = yield select(makeSelectCrop());
   const data = yield select(makeSelectData());
   const page = yield select(makeSelectPage());
   let count = yield select(makeSelectCount());
@@ -105,7 +101,7 @@ export function* sendData() {
   let method = 'POST';
   let dataToPost = formData;
   if (reqProps) dataToPost = Object.assign(formData, reqProps);
-  if (mod === 'add') body = getItemForPost(dataToPost, fields, addProps, crop);
+  if (mod === 'add') body = getItemForPost(dataToPost, fields, addProps);
   else if (mod === 'edit') {
     method = 'PUT';
     requestURL = urls[content].update;
@@ -114,7 +110,6 @@ export function* sendData() {
     const oldDataWithBase64 = Object.assign({}, oldData);
     if (setting.image) {
       const oldImage = yield call(toDataURL, oldData.image);
-      dataToPost.image = crop.image;
       oldDataWithBase64.image = oldImage.replace(
         /^data:image\/(png|jpg|jpeg);base64,/,
         '',

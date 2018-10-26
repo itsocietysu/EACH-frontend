@@ -81,11 +81,17 @@ export function dataDeletingError(error) {
 /**
  * Send item's data, this action starts the request saga
  *
+ * @param  {object} data The data for send
+ *
+ * @param  {string} mod The mod of sending data
+ *
  * @return {object} An action object with a type of SEND_DATA
  */
-export function sendData() {
+export function sendData(data, mod) {
   return {
     type: SEND_DATA,
+    data,
+    mod,
   };
 }
 

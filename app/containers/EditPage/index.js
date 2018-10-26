@@ -51,7 +51,7 @@ const refreshStyle = {
 export class EditPage extends React.Component {
   constructor(props) {
     super(props);
-    props.init(props.content, props.reqProps ? props.reqProps : false);
+    props.init(props.content, props.reqProps || false);
     this.state = { content: props.content };
   }
   componentDidMount() {
@@ -65,7 +65,7 @@ export class EditPage extends React.Component {
   }
   static getDerivedStateFromProps(props, state) {
     if (props.content !== state.content) {
-      props.init(props.content, props.reqProps ? props.reqProps : false);
+      props.init(props.content, props.reqProps || false);
       props.load(1);
     }
     return null;
@@ -95,7 +95,7 @@ export class EditPage extends React.Component {
           item={item}
           content={content}
           onDelete={eid => this.props.delete(eid)}
-          onUpdate={this.props.send}
+          onUpdate={form => this.props.send(form, 'edit')}
           isUpdate={setting.isUpdate}
         />
       ),
@@ -120,11 +120,9 @@ export class EditPage extends React.Component {
                   </Button>
                 }
                 item={emptyItem}
-                emptyItem={emptyItem}
                 isPopup
-                mod="add"
                 settings={setting}
-                onSubmit={this.props.send}
+                onSubmit={form => this.props.send(form, 'add')}
                 isPlaceholder={false}
                 flexDirection="column"
               />
@@ -145,10 +143,8 @@ export class EditPage extends React.Component {
               <Nav style={{ left: '0', position: 'absolute' }}>
                 <Form
                   item={emptyItem}
-                  emptyItem={emptyItem}
-                  mod="add"
                   settings={setting}
-                  onSubmit={this.props.send}
+                  onSubmit={form => this.props.send(form, 'add')}
                   isPlaceholder
                   flexDirection="row"
                 />
@@ -191,7 +187,7 @@ export function mapDispatchToProps(dispatch) {
     init: (content, reqProps) => dispatch(setContent(content, reqProps)),
     load: page => dispatch(loadData(page)),
     delete: eid => dispatch(deleteData(eid)),
-    send: () => dispatch(sendData()),
+    send: (data, mod) => dispatch(sendData(data, mod)),
   };
 }
 

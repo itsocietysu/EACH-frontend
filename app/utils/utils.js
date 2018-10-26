@@ -138,8 +138,8 @@ export function getItemFromResp(item, fields, propFields) {
 }
 
 const setPropsToAdd = {
-  image: (data, item, crop) => {
-    data.prop.image = crop.image;
+  image: (data, item) => {
+    data.prop.image = item.image;
   },
   priority: (data, item) => {
     data.prop.priority = item.priority;
@@ -155,7 +155,7 @@ const setPropsToAdd = {
   },
 };
 
-export function getItemForPost(item, fields, propFields, crop) {
+export function getItemForPost(item, fields, propFields) {
   const data = { id: item.eid };
   fields.forEach(v => {
     data[v] = item[v];
@@ -163,7 +163,7 @@ export function getItemForPost(item, fields, propFields, crop) {
   if (propFields.length) {
     data.prop = {};
     propFields.forEach(v => {
-      setPropsToAdd[v](data, item, crop);
+      setPropsToAdd[v](data, item);
     });
   }
   return data;

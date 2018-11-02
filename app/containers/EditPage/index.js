@@ -29,15 +29,15 @@ import { PageList } from '../PageList';
 import Button from '../../components/Button';
 import Nav from '../LinkList/Nav';
 import DataList from '../../components/DataList';
-import Form from '../EditFormD';
+import Form from '../EditForm';
 import { loadData, deleteData, sendData, setContent } from './actions';
 import EditListItem, { arrowStyle, contentStyle } from '../EditListItem';
 import messages from './messages';
 import reducer from './reducer';
 import saga from './saga';
 
-import { configs, listConfigs } from '../EditFormD/configs';
-import { translateFromForm, translateToForm } from '../EditFormD/create-form';
+import { configs, listConfigs } from '../EditForm/configs';
+import { translateFromForm, translateToForm } from '../EditForm/create-form';
 
 const rowStyle = {
   display: 'flex',

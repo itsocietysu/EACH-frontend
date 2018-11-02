@@ -17,7 +17,7 @@ import ListItem from '../../components/ListItem';
 import H2 from '../../components/H2';
 import H3 from '../../components/H3';
 import P from '../../components/P';
-import PopupForm from '../EditFormD';
+import PopupForm from '../EditForm';
 import Button from '../../components/Button';
 import Img from '../FeedListItem/Img';
 import DivSep from '../FeedListItem/DivSep';
@@ -27,8 +27,8 @@ import MsgBox from '../../components/MsgBox';
 import messages from './messages';
 
 import { DEFAULT_LOCALE } from '../../i18n';
-import { configs } from '../EditFormD/configs';
-import { translateFromForm, translateToForm } from '../EditFormD/create-form';
+import { configs } from '../EditForm/configs';
+import { translateFromForm, translateToForm } from '../EditForm/create-form';
 
 const iconStyle = color => ({
   float: 'right',

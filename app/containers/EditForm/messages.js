@@ -6,6 +6,18 @@
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
+  image: {
+    id: 'each.containers.EditForm.image',
+    defaultMessage: 'Image',
+  },
+  avatar: {
+    id: 'each.containers.EditForm.avatar',
+    defaultMessage: 'Avatar',
+  },
+  target: {
+    id: 'each.containers.EditForm.target',
+    defaultMessage: 'Target',
+  },
   title: {
     locale: {
       RU: {
@@ -29,6 +41,8 @@ export default defineMessages({
         defaultMessage: 'Text en',
       },
     },
+    id: 'each.containers.EditForm.text',
+    defaultMessage: 'Text',
   },
   name: {
     locale: {
@@ -56,9 +70,29 @@ export default defineMessages({
       },
     },
   },
+  location: {
+    id: 'each.containers.EditForm.location',
+    defaultMessage: 'Location',
+  },
+  choices: {
+    id: 'each.containers.EditForm.choices',
+    defaultMessage: 'Choices',
+  },
+  correct: {
+    id: 'each.containers.EditForm.correct',
+    defaultMessage: 'Correct',
+  },
+  question: {
+    id: 'each.containers.EditForm.question',
+    defaultMessage: 'Question',
+  },
   priority: {
     id: 'each.containers.EditForm.priority',
     defaultMessage: 'Priority',
+  },
+  difficulty_bounty: {
+    id: 'each.containers.EditForm.difficulty_bounty',
+    defaultMessage: 'Difficulty bounty',
   },
   latitude: {
     id: 'each.containers.EditForm.latitude',
@@ -68,9 +102,17 @@ export default defineMessages({
     id: 'each.containers.EditForm.longitude',
     defaultMessage: 'Longitude',
   },
+  range: {
+    id: 'each.containers.EditForm.range',
+    defaultMessage: 'Range',
+  },
   crop: {
     id: 'each.containers.EditForm.crop',
     defaultMessage: 'Crop',
+  },
+  url: {
+    id: 'each.containers.EditForm.url',
+    defaultMessage: 'URL',
   },
   close: {
     id: 'each.containers.EditForm.close',

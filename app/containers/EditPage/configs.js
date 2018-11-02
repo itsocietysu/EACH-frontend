@@ -1,4 +1,4 @@
-import { configs, startUrl } from '../EditFormD/configs';
+import { configs, startUrl } from '../EditForm/configs';
 
 export const settings = {
   museum: configs.museum.description,

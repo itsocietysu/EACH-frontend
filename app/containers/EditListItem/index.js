@@ -17,7 +17,7 @@ import ListItem from '../../components/ListItem';
 import H2 from '../../components/H2';
 import H3 from '../../components/H3';
 import P from '../../components/P';
-import PopupForm from '../EditForm';
+import PopupForm from '../EditFormD';
 import Button from '../../components/Button';
 import Img from '../FeedListItem/Img';
 import DivSep from '../FeedListItem/DivSep';
@@ -27,7 +27,8 @@ import MsgBox from '../../components/MsgBox';
 import messages from './messages';
 
 import { DEFAULT_LOCALE } from '../../i18n';
-import { settings } from '../EditPage/configs';
+import { configs } from '../EditFormD/configs';
+import { translateFromForm, translateToForm } from '../EditFormD/create-form';
 
 const iconStyle = color => ({
   float: 'right',
@@ -114,14 +115,19 @@ LocationItem.propTypes = { item: PropTypes.object };
 
 const QuestItem = ({ item, locale }) => (
   <div>
-    <div style={{ display: 'flex' }}>
-      <DivSep width="30%">
-        <Img src={item.image} alt={`${item.eid}`} />
-      </DivSep>
-      <DivSep width="70%" marginLeft="15px">
-        <H2>{item.name[locale]}</H2>
-      </DivSep>
-    </div>
+    <Link
+      to={`/scenario/edit/${item.scenario}`}
+      style={{ textDecoration: 'none', color: '#000' }}
+    >
+      <div style={{ display: 'flex' }}>
+        <DivSep width="30%">
+          <Img src={item.image} alt={`${item.eid}`} />
+        </DivSep>
+        <DivSep width="70%" marginLeft="15px">
+          <H2>{item.name[locale]}</H2>
+        </DivSep>
+      </div>
+    </Link>
     <div>
       <P>{item.desc[locale]}</P>
     </div>
@@ -156,7 +162,7 @@ export class EditListItem extends React.PureComponent {
     const { item } = this.props.item;
     const type = this.props.content;
     const locale = getLocale() || DEFAULT_LOCALE;
-    const setting = settings[type];
+    const setting = configs[type];
     const Item = getItem[type](item, locale);
     const content = (
       <Wrapper>
@@ -182,10 +188,12 @@ export class EditListItem extends React.PureComponent {
                       <FormattedMessage {...messages.edit} />
                     </Button>
                   }
-                  item={item}
+                  item={translateToForm[type](item)}
                   isPopup
                   settings={setting}
-                  onSubmit={form => this.props.onUpdate(form)}
+                  onSubmit={form =>
+                    this.props.onUpdate(translateFromForm[type](form))
+                  }
                   onClose={() => close()}
                   isPlaceholder={false}
                   flexDirection="column"

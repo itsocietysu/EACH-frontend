@@ -14,7 +14,7 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 
 import ImageCrop, { getCroppedImg } from '../ImageCrop';
-import messages from '../EditForm/messages';
+import messages from '../EditFormD/messages';
 import Button from '../UserPanel/Button';
 
 import {

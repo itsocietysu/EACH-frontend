@@ -29,14 +29,15 @@ import { PageList } from '../PageList';
 import Button from '../../components/Button';
 import Nav from '../LinkList/Nav';
 import DataList from '../../components/DataList';
-import Form from '../EditForm';
+import Form from '../EditFormD';
 import { loadData, deleteData, sendData, setContent } from './actions';
 import EditListItem, { arrowStyle, contentStyle } from '../EditListItem';
 import messages from './messages';
 import reducer from './reducer';
 import saga from './saga';
 
-import { settings, emptyItems } from './configs';
+import { configs, listConfigs } from '../EditFormD/configs';
+import { translateFromForm, translateToForm } from '../EditFormD/create-form';
 
 const rowStyle = {
   display: 'flex',
@@ -80,8 +81,9 @@ export class EditPage extends React.Component {
     const maxPage = Math.ceil(count / 10.0);
     if (data && pageUrl !== page && (pageUrl <= 0 || pageUrl > maxPage))
       return <Redirect to={`?page=${page}`} />;
-    const setting = settings[content];
-    const emptyItem = emptyItems[content];
+    const setting = configs[content];
+    const emptyItem = configs[content].empty;
+    const listSet = listConfigs[content];
     if (content !== this.state.content) {
       this.state.content = content;
       data = false;
@@ -96,7 +98,7 @@ export class EditPage extends React.Component {
           content={content}
           onDelete={eid => this.props.delete(eid)}
           onUpdate={form => this.props.send(form, 'edit')}
-          isUpdate={setting.isUpdate}
+          isUpdate={listSet.isUpdate}
         />
       ),
       scroll: true,
@@ -111,7 +113,7 @@ export class EditPage extends React.Component {
           />
         </Helmet>
         <div style={rowStyle}>
-          {setting.addModal ? (
+          {listSet.addModal ? (
             <Nav>
               <Form
                 trigger={
@@ -119,10 +121,12 @@ export class EditPage extends React.Component {
                     <FormattedMessage {...messages[content].add} />
                   </Button>
                 }
-                item={emptyItem}
+                item={translateToForm[content](emptyItem)}
                 isPopup
                 settings={setting}
-                onSubmit={form => this.props.send(form, 'add')}
+                onSubmit={form =>
+                  this.props.send(translateFromForm[content](form), 'add')
+                }
                 isPlaceholder={false}
                 flexDirection="column"
               />
@@ -142,9 +146,11 @@ export class EditPage extends React.Component {
             >
               <Nav style={{ left: '0', position: 'absolute' }}>
                 <Form
-                  item={emptyItem}
+                  item={translateToForm[content](emptyItem)}
                   settings={setting}
-                  onSubmit={form => this.props.send(form, 'add')}
+                  onSubmit={form =>
+                    this.props.send(translateFromForm[content](form), 'add')
+                  }
                   isPlaceholder
                   flexDirection="row"
                 />

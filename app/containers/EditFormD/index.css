@@ -1,0 +1,18 @@
+.editForm-column {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.editForm-row {
+  display: flex;
+  flex-direction: row;
+}
+
+@media screen and (max-width: 610px) {
+  .editForm-row {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+  }
+}

@@ -14,8 +14,6 @@ import './index.css';
 class SelectSearch extends React.Component {
   state = {
     dataFromServer: [],
-    currentValue: [],
-    fUpd: false,
   };
 
   constructor(props) {
@@ -33,9 +31,6 @@ class SelectSearch extends React.Component {
       return o;
     });
     this.props.onChange(arr);
-    this.setState({
-      currentValue,
-    });
   };
 
   fetchData = value => {
@@ -55,24 +50,18 @@ class SelectSearch extends React.Component {
     }
   };
 
-  componentDidUpdate() {
-    if (!this.state.fUpd) {
-      this.state.currentValue = this.props.initValue.map(value => ({
-        key: value.key,
-        label: <i>{value.field}</i>,
-      }));
-      this.state.fUpd = true;
-    }
-  }
-
   render() {
-    const { dataFromServer, currentValue } = this.state;
-    const { renderField } = this.props;
+    const { dataFromServer } = this.state;
+    const { renderField, values } = this.props;
     const options = dataFromServer.map(d => (
       <Option key={d.eid}>
         <i>{d[renderField]}</i>
       </Option>
     ));
+    const currentValue = values.map(value => ({
+      key: value.eid,
+      label: <i>{value[renderField]}</i>,
+    }));
     return (
       <Select
         value={currentValue}
@@ -95,7 +84,7 @@ class SelectSearch extends React.Component {
 SelectSearch.propTypes = {
   requestFunc: PropTypes.func,
   renderField: PropTypes.string,
-  initValue: PropTypes.array,
+  values: PropTypes.array,
   onChange: PropTypes.func,
 };
 

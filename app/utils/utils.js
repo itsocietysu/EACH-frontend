@@ -60,7 +60,10 @@ const setPropsToUpdate = {
   image: (data, oldData, newData) => {
     if (newData.image !== oldData.image) {
       if (!data.prop) data.prop = {};
-      data.prop.image = newData.image;
+      data.prop.image = newData.image.replace(
+        /^data:image\/(png|jpg|jpeg);base64,/,
+        '',
+      );
       return true;
     }
     return false;
@@ -124,6 +127,7 @@ const getProps = {
   image: i => `${i.image[0] ? `http://${i.image[0].url}` : '/Photo.png'}`,
   priority: p => `${p.priority[0] ? p.priority[0] : 0}`,
   location: l => l.location ? l.location : [],
+  scenario: s => `${s.scenario[0] ? s.scenario[0].eid : 0}`,
 };
 
 export function getItemFromResp(item, fields, propFields) {
@@ -139,7 +143,10 @@ export function getItemFromResp(item, fields, propFields) {
 
 const setPropsToAdd = {
   image: (data, item) => {
-    data.prop.image = item.image;
+    data.prop.image = item.image.replace(
+      /^data:image\/(png|jpg|jpeg);base64,/,
+      '',
+    );
   },
   priority: (data, item) => {
     data.prop.priority = item.priority;

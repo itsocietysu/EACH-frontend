@@ -1,33 +1,33 @@
 /* eslint-disable no-param-reassign,guard-for-in,no-restricted-syntax */
-import { select, call, put, takeLatest } from 'redux-saga/effects';
-import { DELETE_DATA, SEND_DATA, LOAD_DATA } from './constants';
+import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { DELETE_DATA, LOAD_DATA, SEND_DATA } from './constants';
 import {
   dataDeleted,
   dataDeletingError,
-  dataSendingError,
-  dataSent,
   dataLoaded,
   dataLoadingError,
+  dataSendingError,
+  dataSent,
 } from './actions';
 
 import requestAuth from '../../utils/requestAuth';
 
 import {
-  makeSelectEid,
-  makeSelectData,
-  makeSelectPage,
-  makeSelectCount,
   makeSelectContent,
-  makeSelectRequestProps,
+  makeSelectCount,
+  makeSelectData,
   makeSelectDataToPost,
+  makeSelectEid,
+  makeSelectPage,
   makeSelectPostMod,
+  makeSelectRequestProps,
 } from './selectors';
 
-import { urls, getValues, settings } from './configs';
+import { getValues, settings, urls } from './configs';
 import {
   changedData,
-  getItemFromResp,
   getItemForPost,
+  getItemFromResp,
 } from '../../utils/utils';
 import { toDataURL } from '../../toBase64';
 
@@ -84,7 +84,7 @@ export function* loadData() {
 }
 
 /**
- * Locations data send handler
+ * Data send handler
  */
 export function* sendData() {
   const content = yield select(makeSelectContent());
@@ -108,12 +108,8 @@ export function* sendData() {
     body.id = dataToPost.eid;
     const oldData = data.filter(item => item.eid === dataToPost.eid)[0];
     const oldDataWithBase64 = Object.assign({}, oldData);
-    if (setting.image) {
-      const oldImage = yield call(toDataURL, oldData.image);
-      oldDataWithBase64.image = oldImage.replace(
-        /^data:image\/(png|jpg|jpeg);base64,/,
-        '',
-      );
+    if (Object.keys(setting).includes('images')) {
+      oldDataWithBase64.image = yield call(toDataURL, oldData.image);
     }
     body = changedData(
       body,
@@ -158,7 +154,7 @@ export function* sendData() {
 }
 
 /**
- * Locations data delete handler
+ * Data delete handler
  */
 export function* deleteData() {
   const content = yield select(makeSelectContent());

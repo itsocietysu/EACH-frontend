@@ -7,7 +7,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactCrop, { makeAspectCrop, getPixelCrop } from 'react-image-crop';
+import ReactCrop, { getPixelCrop, makeAspectCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 
 import { createStructuredSelector } from 'reselect';
@@ -36,24 +36,17 @@ export const bigImage = (base64, callback, callbackSmall) => {
 };
 
 export function getCroppedImg(image, pixelCrop) {
-  if (
-    pixelCrop.width !== pixelCrop.height &&
-    Math.abs(pixelCrop.width - pixelCrop.height) === 1
-  ) {
+  if (pixelCrop.width !== pixelCrop.height) {
     pixelCrop.width = Math.min(pixelCrop.width, pixelCrop.height);
     pixelCrop.height = Math.min(pixelCrop.width, pixelCrop.height);
   }
-  if (
-    pixelCrop.height < MIN_IMAGE_SIDE ||
-    pixelCrop.width < MIN_IMAGE_SIDE ||
-    pixelCrop.width !== pixelCrop.height
-  )
+  if (pixelCrop.height < MIN_IMAGE_SIDE || pixelCrop.width < MIN_IMAGE_SIDE)
     return null;
   if (
     pixelCrop.width === image.naturalWidth &&
     pixelCrop.height === image.naturalHeight
   )
-    return image.src.replace(/^data:image\/jpeg;base64,/, '');
+    return image.src;
   const canvas = document.createElement('canvas');
   canvas.width = pixelCrop.width;
   canvas.height = pixelCrop.height;
@@ -71,8 +64,7 @@ export function getCroppedImg(image, pixelCrop) {
     pixelCrop.height,
   );
 
-  const base64 = canvas.toDataURL('image/jpeg');
-  return base64.replace(/^data:image\/jpeg;base64,/, '');
+  return canvas.toDataURL('image/jpeg');
 }
 
 export function getCroppedMaxImg(image) {
@@ -80,7 +72,7 @@ export function getCroppedMaxImg(image) {
     image.naturalWidth === MAX_IMAGE_SIDE &&
     image.naturalHeight === MAX_IMAGE_SIDE
   )
-    return image.src.replace(/^data:image\/jpeg;base64,/, '');
+    return image.src;
   let width = Math.min(100, (MAX_IMAGE_SIDE * 100) / image.naturalWidth);
   let height = Math.min(100, (MAX_IMAGE_SIDE * 100) / image.naturalHeight);
   if (height === 100 && width !== 100)
@@ -114,8 +106,7 @@ export function getCroppedMaxImg(image) {
     pixelCrop.height,
   );
 
-  const base64 = canvas.toDataURL('image/jpeg');
-  return base64.replace(/^data:image\/jpeg;base64,/, '');
+  return canvas.toDataURL('image/jpeg');
 }
 
 export class ImageCrop extends React.Component {

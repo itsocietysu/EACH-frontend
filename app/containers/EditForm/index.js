@@ -37,6 +37,7 @@ class EditForm extends React.Component {
 
     this._init = this._init.bind(this);
     this._onChangeOpenMsg = this._onChangeOpenMsg.bind(this);
+    this._onClose = this._onClose.bind(this);
   }
 
   _init() {
@@ -66,6 +67,17 @@ class EditForm extends React.Component {
     if (!this.props.isPopup) this._init();
   }
 
+  _onClose(close) {
+    this._onChangeOpenMsg(
+      messages.sure,
+      () => {
+        close();
+      },
+      true,
+      this._onChangeOpenMsg,
+    );
+  }
+
   render() {
     const { settings } = this.props;
     const { name } = settings;
@@ -77,87 +89,30 @@ class EditForm extends React.Component {
       form = false;
     }
     const Form = form ? () => form : () => <div />;
+    const ButtonConfirm = ({ close }) => (
+      <Button
+        onClick={() => {
+          const dataToPost = form ? refForm.current._onSubmit() : null;
+          if (!dataToPost)
+            this._onChangeOpenMsg(
+              messages.empty,
+              () => {},
+              false,
+              this._onChangeOpenMsg,
+            );
+          else {
+            this.props.onSubmit(dataToPost);
+            close && close();
+          }
+        }}
+      >
+        <FormattedMessage {...messages.confirm} />
+      </Button>
+    );
     if (this.props.isPopup) {
-      if (this.props.trigger)
-        return (
-          <Popup
-            trigger={this.props.trigger}
-            modal
-            closeOnDocumentClick
-            lockScroll
-            contentStyle={PopupStyle}
-            onOpen={() => {
-              this._init();
-            }}
-            onClose={() => {
-              this.props.onClose && this.props.onClose();
-            }}
-          >
-            {close => (
-              <div className={`editForm-${this.props.flexDirection}`}>
-                <BorderTopImage />
-                <Close
-                  onClick={() =>
-                    this._onChangeOpenMsg(
-                      messages.sure,
-                      () => {
-                        close();
-                      },
-                      true,
-                      this._onChangeOpenMsg,
-                    )
-                  }
-                />
-                <Form />
-                <div>
-                  <Button
-                    onClick={() => {
-                      const dataToPost = form
-                        ? refForm.current._onSubmit()
-                        : null;
-                      if (!dataToPost)
-                        this._onChangeOpenMsg(
-                          messages.empty,
-                          () => {},
-                          false,
-                          this._onChangeOpenMsg,
-                        );
-                      else {
-                        this.props.onSubmit(dataToPost);
-                        close();
-                      }
-                    }}
-                  >
-                    <FormattedMessage {...messages.confirm} />
-                  </Button>
-                  <Button
-                    onClick={() =>
-                      this._onChangeOpenMsg(
-                        messages.sure,
-                        () => {
-                          close();
-                        },
-                        true,
-                        this._onChangeOpenMsg,
-                      )
-                    }
-                  >
-                    <FormattedMessage {...messages.close} />
-                  </Button>
-                </div>
-                <MsgBox
-                  message={message.message}
-                  open={message.isOpenMsg}
-                  onSubmit={message.onSubmit}
-                  cancel={message.isCancelMsg}
-                  onClose={message.onClose}
-                />
-              </div>
-            )}
-          </Popup>
-        );
       return (
         <Popup
+          trigger={this.props.trigger}
           open={this.props.open}
           modal
           closeOnDocumentClick
@@ -173,52 +128,11 @@ class EditForm extends React.Component {
           {close => (
             <div className={`editForm-${this.props.flexDirection}`}>
               <BorderTopImage />
-              <Close
-                onClick={() =>
-                  this._onChangeOpenMsg(
-                    messages.sure,
-                    () => {
-                      close();
-                    },
-                    true,
-                    this._onChangeOpenMsg,
-                  )
-                }
-              />
+              <Close onClick={() => this._onClose(close)} />
               <Form />
               <div>
-                <Button
-                  onClick={() => {
-                    const dataToPost = form
-                      ? refForm.current._onSubmit()
-                      : null;
-                    if (!dataToPost)
-                      this._onChangeOpenMsg(
-                        messages.empty,
-                        () => {},
-                        false,
-                        this._onChangeOpenMsg,
-                      );
-                    else {
-                      this.props.onSubmit(dataToPost);
-                      close();
-                    }
-                  }}
-                >
-                  <FormattedMessage {...messages.confirm} />
-                </Button>
-                <Button
-                  onClick={() =>
-                    this._onChangeOpenMsg(
-                      messages.sure,
-                      () => {
-                        close();
-                      },
-                      true,
-                      this._onChangeOpenMsg,
-                    )
-                  }
-                >
+                <ButtonConfirm close={close} />
+                <Button onClick={() => this._onClose(close)}>
                   <FormattedMessage {...messages.close} />
                 </Button>
               </div>
@@ -238,20 +152,7 @@ class EditForm extends React.Component {
       <div className={`editForm-${this.props.flexDirection}`}>
         <Form />
         <div>
-          <Button
-            onClick={() => {
-              const dataToPost = form ? refForm.current._onSubmit() : null;
-              if (!dataToPost)
-                this._onChangeOpenMsg(messages.empty, () => {}, false, () => {
-                  this._onChangeOpenMsg();
-                });
-              else {
-                this.props.onSubmit(dataToPost);
-              }
-            }}
-          >
-            <FormattedMessage {...messages.confirm} />
-          </Button>
+          <ButtonConfirm />
         </div>
         <MsgBox
           message={message.message}

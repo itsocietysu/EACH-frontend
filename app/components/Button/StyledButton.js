@@ -15,6 +15,12 @@ const StyledButton = styled.button`
     background: rgb(217, 146, 92);
     color: #fff;
   }
+
+  &:disabled {
+    background: #ccc;
+    color: #fff;
+    cursor: not-allowed;
+  }
 `;
 
 export default StyledButton;

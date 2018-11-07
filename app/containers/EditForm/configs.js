@@ -107,6 +107,8 @@ const ar_paint_question = {
   },
 };
 
+export const PHOTO_BONUS = 'photo';
+
 export const configs = {
   scenario_step: {
     name: 'scenario_step',
@@ -159,7 +161,7 @@ export const configs = {
           },
         },
         {
-          name: 'photo',
+          name: PHOTO_BONUS,
           type: 'depend-form',
           description: {
             selects: [

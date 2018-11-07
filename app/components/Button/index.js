@@ -11,7 +11,11 @@ import StyledButton from './StyledButton';
 
 function Button(props) {
   return (
-    <StyledButton type="button" onClick={props.onClick}>
+    <StyledButton
+      type="button"
+      onClick={props.onClick}
+      disabled={props.disabled}
+    >
       {props.children}
     </StyledButton>
   );
@@ -20,6 +24,7 @@ function Button(props) {
 Button.propTypes = {
   onClick: PropTypes.func,
   children: PropTypes.object,
+  disabled: PropTypes.bool,
 };
 
 export default Button;

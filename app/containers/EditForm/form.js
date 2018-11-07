@@ -25,6 +25,7 @@ import Img from './Img';
 import { appLocales } from '../../i18n';
 import './index.css';
 import SelectSimple from '../SelectSimple';
+import { BASE64_RE } from '../../utils/utils';
 
 const ImageCropStyle = {
   maxWidth: '256px',
@@ -134,7 +135,7 @@ class Form extends React.Component {
           i[image.field] = '';
         } else if (item[image.field] === '') {
           this._onChangeCrop('', image.field);
-        } else if (item[image.field].includes('data:image/jpeg;base64,')) {
+        } else if (BASE64_RE.test(item[image.field])) {
           this._onChangeCrop(item[image.field], image.field);
         } else
           URL2Base64(item[image.field], res => {

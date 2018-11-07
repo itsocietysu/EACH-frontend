@@ -31,6 +31,7 @@
   "each.containers.EditPage.addLocation": "Добавить локацию",
   "each.containers.EditPage.addQuest": "Добавить квест",
   "each.containers.EditPage.addScenarioStep": "Добавить шаг",
+  "each.containers.EditPage.save": "Сохранить",
   "each.containers.EditForm.image": "Картинка",
   "each.containers.EditForm.avatar": "Аватар",
   "each.containers.EditForm.target": "Якорь",

@@ -139,7 +139,8 @@
     "testRegex": "tests/.*\\.test\\.js$",
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
-    ]
+    ],
+    "testURL": "http://localhost"
   },
   "dependencies": {
     "babel-polyfill": "6.26.0",
@@ -157,6 +158,7 @@
     "minimist": "1.2.0",
     "prop-types": "15.6.1",
     "react": "16.4.1",
+    "react-contextmenu": "2.9.4",
     "react-dom": "16.4.1",
     "react-helmet": "5.2.0",
     "react-intl": "2.4.0",
@@ -226,6 +228,7 @@
     "node-plop": "0.15.0",
     "null-loader": "0.1.1",
     "offline-plugin": "5.0.5",
+    "pipeline-builder": "0.3.10-dev.298",
     "plop": "2.0.0",
     "pre-commit": "1.2.2",
     "prettier": "1.13.5",

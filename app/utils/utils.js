@@ -2,6 +2,8 @@
 
 import { appLocales } from '../i18n';
 
+export const BASE64_RE = /^data:image\/(png|jpg|jpeg);base64,/;
+
 export const parseQueryString = str => {
   if (!str) return {};
   const arr = str.split('&');
@@ -60,10 +62,7 @@ const setPropsToUpdate = {
   image: (data, oldData, newData) => {
     if (newData.image !== oldData.image) {
       if (!data.prop) data.prop = {};
-      data.prop.image = newData.image.replace(
-        /^data:image\/(png|jpg|jpeg);base64,/,
-        '',
-      );
+      data.prop.image = newData.image.replace(BASE64_RE, '');
       return true;
     }
     return false;
@@ -143,10 +142,7 @@ export function getItemFromResp(item, fields, propFields) {
 
 const setPropsToAdd = {
   image: (data, item) => {
-    data.prop.image = item.image.replace(
-      /^data:image\/(png|jpg|jpeg);base64,/,
-      '',
-    );
+    data.prop.image = item.image.replace(BASE64_RE, '');
   },
   priority: (data, item) => {
     data.prop.priority = item.priority;

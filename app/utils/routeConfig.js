@@ -11,6 +11,7 @@ import AuthPage from '../containers/AuthPage/Loadable';
 import EditContentPage from '../containers/EditContentPage';
 import NewsPage from '../containers/NewsPage/Loadable';
 import MuseumsEditPage from '../containers/MuseumsEditPage/Loadable';
+import ScenarioEditPage from '../containers/ScenarioEditPage/Loadable';
 import NotFoundPage from '../containers/NotFoundPage/Loadable';
 
 import { parseQueryString } from './utils';
@@ -107,6 +108,21 @@ const MuseumsEditRoute = (() => {
   return r;
 })();
 
+const ScenarioEditRoute = (() => {
+  const r = new Route();
+  r.path = '/scenario/edit/:scenarioId';
+  r.exact = false;
+  r.component = ({ match }) =>
+    Page(
+      Header,
+      ScenarioEditPage,
+      Footer,
+      { simple: true, back: true },
+      match.params,
+    );
+  return r;
+})();
+
 const AuthRoute = (() => {
   const r = new Route();
   r.path = '/auth';
@@ -131,6 +147,7 @@ const routes: Array<Route> = [
   EditRoute,
   NewsRoute,
   MuseumsEditRoute,
+  ScenarioEditRoute,
   AuthRoute,
   NotFoundRoute,
 ];

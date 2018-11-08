@@ -27,6 +27,8 @@ import './index.css';
 import SelectSimple from '../SelectSimple';
 import { BASE64_RE } from '../../utils/utils';
 
+import { onCloseForm, onEmptyForm } from './create-form';
+
 const ImageCropStyle = {
   maxWidth: '256px',
   maxHeight: '256px',
@@ -116,6 +118,7 @@ class Form extends React.Component {
     this._onChangeNumber = this._onChangeNumber.bind(this);
     this._onChangeOpenMsg = this._onChangeOpenMsg.bind(this);
     this._onSubmit = this._onSubmit.bind(this);
+    this._onClose = this._onClose.bind(this);
   }
 
   _onChangeData(item) {
@@ -146,6 +149,10 @@ class Form extends React.Component {
       });
       this._onChangeData(i);
     }
+  }
+
+  _onClose(close) {
+    onCloseForm(close, this);
   }
 
   _onChangeTextLocale(evt, locale, field) {
@@ -232,7 +239,10 @@ class Form extends React.Component {
       description.images.forEach(image => {
         dataToPost[name][image.field] = crops[image.field];
       });
-    if (isEmpty(dataToPost[name], description)) return null;
+    if (isEmpty(dataToPost[name], description)) {
+      onEmptyForm(this);
+      return null;
+    }
     return dataToPost;
   }
 

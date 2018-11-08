@@ -8,6 +8,7 @@ import React from 'react';
 import Popup from 'reactjs-popup';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import lodash from 'lodash';
 
 import { PopupStyle } from '../PopupImageCrop';
 import MsgBox from '../../components/MsgBox';
@@ -68,14 +69,7 @@ class EditForm extends React.Component {
   }
 
   _onClose(close) {
-    this._onChangeOpenMsg(
-      messages.sure,
-      () => {
-        close();
-      },
-      true,
-      this._onChangeOpenMsg,
-    );
+    this.state.refForm.current._onClose(close);
   }
 
   render() {
@@ -93,16 +87,9 @@ class EditForm extends React.Component {
       <Button
         onClick={() => {
           const dataToPost = form ? refForm.current._onSubmit() : null;
-          if (!dataToPost)
-            this._onChangeOpenMsg(
-              messages.empty,
-              () => {},
-              false,
-              this._onChangeOpenMsg,
-            );
-          else {
+          if (dataToPost) {
             this.props.onSubmit(dataToPost);
-            close && close();
+            if (lodash.isFunction(close)) close();
           }
         }}
       >
@@ -122,7 +109,7 @@ class EditForm extends React.Component {
             this._init();
           }}
           onClose={() => {
-            this.props.onClose && this.props.onClose();
+            if (lodash.isFunction(this.props.onClose)) this.props.onClose();
           }}
         >
           {close => (

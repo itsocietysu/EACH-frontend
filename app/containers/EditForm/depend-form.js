@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import './index.css';
 
 import SelectSimple from '../SelectSimple';
-import { createForm } from './create-form';
+import { createForm, onCloseForm, onEmptyForm } from './create-form';
 
 class DependForm extends React.Component {
   constructor(props) {
@@ -24,11 +24,20 @@ class DependForm extends React.Component {
       children: {},
       refChildren: {},
       values: [],
+      msgData: {
+        isOpenMsg: false,
+        message: {},
+        isCancelMsg: false,
+        onSubmit: () => {},
+        onClose: () => {},
+      },
     };
 
     this._init = this._init.bind(this);
     this._onChangeSelect = this._onChangeSelect.bind(this);
     this._onSubmit = this._onSubmit.bind(this);
+    this._onChangeOpenMsg = this._onChangeOpenMsg.bind(this);
+    this._onClose = this._onClose.bind(this);
 
     this._init();
   }
@@ -57,7 +66,10 @@ class DependForm extends React.Component {
     const { formData, refChildren } = this.state;
     const { settings } = this.props;
     const dataToPost = {};
-    if (!formData.select) return null;
+    if (!formData.select) {
+      onEmptyForm(this);
+      return null;
+    }
     const child = refChildren[formData.select].current._onSubmit();
     if (child === null) return null;
     dataToPost[settings.name] = Object.assign(
@@ -65,6 +77,23 @@ class DependForm extends React.Component {
       child,
     );
     return dataToPost;
+  }
+
+  _onChangeOpenMsg(message, cancel, onSubmit, onClose) {
+    this.state.msgData = {
+      isOpenMsg: !this.state.msgData.isOpenMsg,
+      message,
+      isCancelMsg: cancel,
+      onSubmit,
+      onClose,
+    };
+    this.setState(this.state);
+  }
+
+  _onClose(close) {
+    const { formData, refChildren } = this.state;
+    if (formData.select) refChildren[formData.select].current._onClose(close);
+    else onCloseForm(close, this);
   }
 
   componentDidUpdate(prevProps) {

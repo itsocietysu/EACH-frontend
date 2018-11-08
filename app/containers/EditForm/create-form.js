@@ -1,7 +1,10 @@
-/* eslint-disable camelcase */
+/* eslint-disable camelcase,no-underscore-dangle */
 import React from 'react';
+import lodash from 'lodash';
+
 import Form from './form';
 import DependForm from './depend-form';
+import messages from './messages';
 
 export const translateToForm = {
   museum: item => ({ museum: item }),
@@ -161,4 +164,19 @@ export function createForm(item, settings, ref) {
       />
     );
   return null;
+}
+
+export function onCloseForm(close, form) {
+  form._onChangeOpenMsg(
+    messages.sure,
+    true,
+    () => {
+      if (lodash.isFunction(close)) close();
+    },
+    form._onChangeOpenMsg,
+  );
+}
+
+export function onEmptyForm(form) {
+  form._onChangeOpenMsg(messages.empty, false, () => {}, form._onChangeOpenMsg);
 }

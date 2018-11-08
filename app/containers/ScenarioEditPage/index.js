@@ -96,12 +96,9 @@ function findChain(workflow) {
     contain[child] = false;
   });
   const conn = start.outputs[0];
-  let t = conn.to;
-  while (t.step.name !== finish.step.name) {
-    contain[t.step.name] = true;
-    if (t.step.o.out.outputs.length > 0) t = t.step.o.out.outputs[0].to;
-    else break;
-  }
+  const t = walkForward(conn, finish, inPort => {
+    contain[inPort.step.name] = true;
+  });
   for (const child in contain) {
     if (!contain[child]) return false;
   }
@@ -109,7 +106,7 @@ function findChain(workflow) {
 }
 
 function findLoopForward(conn, finish) {
-  const t = walkForward(conn, finish, false);
+  const t = walkForward(conn, finish);
   if (t.step.name === finish.step.name) return false;
   return t.step.name === conn.from.step.name;
 }
@@ -404,20 +401,12 @@ export class ScenarioEditPage extends React.Component {
   _onUpdateBonus(name, form) {
     const step = this.state.workflow.actions[name];
     const { data } = step;
-    let bonus;
-    if (isScenario(name)) {
-      bonus = data.final_bonus;
-    } else {
-      bonus = data.desc.bonus;
-    }
+    let bonus = getBonus(step);
+    if (bonus.type === PHOTO_BONUS && bonus.desc.image.eid !== 0)
+      this.state.toDelete.push(bonus.desc.image.eid);
     if (form.type !== PHOTO_BONUS) {
-      if (bonus.type === PHOTO_BONUS && bonus.desc.image.eid !== 0)
-        this.state.toDelete.push(bonus.desc.image.eid);
       bonus = JSON.parse(JSON.stringify(form));
     } else {
-      if (bonus.type === PHOTO_BONUS && bonus.desc.image.eid !== 0) {
-        this.state.toDelete.push(bonus.desc.image.eid);
-      }
       bonus = {
         type: PHOTO_BONUS,
         desc: { image: { eid: 0, uri: form.desc.uri } },
@@ -432,7 +421,7 @@ export class ScenarioEditPage extends React.Component {
 
   _onContextMenu(evt, data) {
     const { workflow, diagram, loading, error, select } = this.state;
-    if (workflow && diagram.selection.length > 0 && !loading && !error) {
+    if (workflow && diagram.selection.length === 1 && !loading && !error) {
       if (data.action === 'Change') {
         this.setState({
           openChange: true,
@@ -441,7 +430,7 @@ export class ScenarioEditPage extends React.Component {
         this.setState({
           openBonus: true,
         });
-      } else if (data.action === 'Delete') {
+      } else if (data.action === 'Delete' && !isScenario(select.name)) {
         this._onDelete(select.name);
       }
     }

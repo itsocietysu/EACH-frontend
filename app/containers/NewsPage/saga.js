@@ -4,6 +4,8 @@ import { feedLoaded, feedLoadingError } from './actions';
 import { makeSelectEid } from './selectors';
 
 import requestAuth from '../../utils/requestAuth';
+import { FEED_CFG } from '../EditPage/configs';
+import { getDataFromResp } from '../../utils/utils';
 
 /**
  * Feed data load handler
@@ -11,17 +13,11 @@ import requestAuth from '../../utils/requestAuth';
 export function* loadFeed() {
   const eid = yield select(makeSelectEid());
   const requestURL = `http://each.itsociety.su:4201/each/feed/${eid}`;
-  let data;
   try {
-    const feed = (yield call(requestAuth, requestURL))[0];
-    data = {
-      eid: feed.eid,
-      title: feed.title,
-      text: feed.text,
-      desc: feed.desc,
-      image: `${feed.image[0] ? `http://${feed.image[0].url}` : '/Photo.png'}`,
-    };
-    yield put(feedLoaded(data));
+    const feed = yield call(requestAuth, requestURL);
+    const data = getDataFromResp(feed, FEED_CFG);
+    if (data.length) yield put(feedLoaded(data[0]));
+    else yield put(feedLoaded(false));
   } catch (err) {
     yield put(feedLoadingError(err));
   }

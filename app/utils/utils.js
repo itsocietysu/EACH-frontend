@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign,prettier/prettier */
 
 import { appLocales } from '../i18n';
+import { getValues } from '../containers/EditPage/configs';
 
 export const BASE64_RE = /^data:image\/(png|jpg|jpeg);base64,/;
 
@@ -138,6 +139,15 @@ export function getItemFromResp(item, fields, propFields) {
     data[v] = getProps[v](item);
   });
   return data;
+}
+
+export function getDataFromResp(resp, content) {
+  const { fields } = getValues[content];
+  const props = getValues[content].getProps;
+  if (resp.length) {
+    return resp.map(item => getItemFromResp(item, fields, props));
+  }
+  return [];
 }
 
 const setPropsToAdd = {

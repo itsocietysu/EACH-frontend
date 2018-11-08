@@ -23,40 +23,41 @@ import {
   makeSelectRequestProps,
 } from './selectors';
 
-import { getValues, settings, urls } from './configs';
+import {
+  FEED_CFG,
+  getValues,
+  LOCATION_CFG,
+  MUSEUM_CFG,
+  QUEST_CFG,
+  settings,
+  urls,
+} from './configs';
 import {
   changedData,
   getItemForPost,
   getItemFromResp,
+  getDataFromResp,
 } from '../../utils/utils';
 import { toDataURL } from '../../toBase64';
 
-function getData(resp, content) {
-  const { fields, props } = getValues[content];
-  if (resp.length) {
-    return resp.map(item => getItemFromResp(item, fields, props));
-  }
-  return [];
-}
-
 const getDataFromLoad = {
   museum: resp => ({
-    data: getData(resp.result, 'museum'),
+    data: getDataFromResp(resp.result, MUSEUM_CFG),
     count: resp.count,
     page: resp.page,
   }),
   feed: resp => ({
-    data: getData(resp.result, 'feed'),
+    data: getDataFromResp(resp.result, FEED_CFG),
     count: resp.count,
     page: resp.page,
   }),
   location: resp => ({
-    data: getData(resp.result, 'location'),
+    data: getDataFromResp(resp.result, LOCATION_CFG),
     count: resp.count,
     page: resp.page,
   }),
   quest: resp => ({
-    data: getData(resp, 'quest'),
+    data: getDataFromResp(resp, QUEST_CFG),
     count: 1,
     page: 1,
   }),
@@ -94,7 +95,14 @@ export function* sendData() {
   const data = yield select(makeSelectData());
   const page = yield select(makeSelectPage());
   let count = yield select(makeSelectCount());
-  const { fields, props, locales, noLocales, addProps } = getValues[content];
+  const {
+    fields,
+    updProps,
+    getProps,
+    locales,
+    noLocales,
+    addProps,
+  } = getValues[content];
   const setting = settings[content];
   let requestURL = urls[content].add;
   let body = {};
@@ -115,7 +123,7 @@ export function* sendData() {
       body,
       locales,
       noLocales,
-      props,
+      updProps,
       dataToPost,
       oldDataWithBase64,
     );
@@ -136,12 +144,12 @@ export function* sendData() {
     const resp = (yield call(requestAuth, requestURL, options))[0];
     let newData = data;
     if (mod === 'add') {
-      newData = [getItemFromResp(resp, fields, props)].concat(data || []);
+      newData = [getItemFromResp(resp, fields, getProps)].concat(data || []);
       count += 1;
     } else {
       newData = data.map(element => {
         if (element.eid === resp.eid) {
-          return getItemFromResp(resp, fields, props);
+          return getItemFromResp(resp, fields, getProps);
         }
         return element;
       }, resp);

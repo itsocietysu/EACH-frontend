@@ -1,5 +1,10 @@
 import { configs, startUrl } from '../EditForm/configs';
 
+export const MUSEUM_CFG = 'museum';
+export const FEED_CFG = 'feed';
+export const LOCATION_CFG = 'location';
+export const QUEST_CFG = 'quest';
+
 export const settings = {
   museum: configs.museum.description,
   feed: configs.feed.description,
@@ -42,28 +47,32 @@ export const getValues = {
     fields: ['name', 'desc'],
     noLocales: [],
     locales: ['name', 'desc'],
-    props: ['image', 'location'],
+    getProps: ['image', 'location'],
+    updProps: ['image', 'location'],
     addProps: ['image', 'location'],
   },
   feed: {
     fields: ['title', 'desc', 'text'],
     noLocales: [],
     locales: ['title', 'desc', 'text'],
-    props: ['image', 'priority'],
+    getProps: ['image', 'priority'],
+    updProps: ['image', 'priority'],
     addProps: ['image', 'priority'],
   },
   location: {
     fields: ['name', 'latitude', 'longitude'],
     noLocales: ['name', 'latitude', 'longitude'],
     locales: [],
-    props: [],
+    getProps: [],
+    updProps: [],
     addProps: [],
   },
   quest: {
     fields: ['name', 'desc'],
     noLocales: [],
     locales: ['name', 'desc'],
-    props: ['image', 'scenario'],
+    getProps: ['image', 'scenario'],
+    updProps: ['image'],
     addProps: ['image', 'game'],
   },
 };

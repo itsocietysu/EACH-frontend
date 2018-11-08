@@ -38,6 +38,7 @@ import saga from './saga';
 
 import { configs, listConfigs } from '../EditForm/configs';
 import { translateFromForm, translateToForm } from '../EditForm/create-form';
+import { FEED_CFG, LOCATION_CFG, MUSEUM_CFG, QUEST_CFG } from './configs';
 
 const rowStyle = {
   display: 'flex',
@@ -184,7 +185,7 @@ EditPage.propTypes = {
   delete: PropTypes.func,
   send: PropTypes.func,
   search: PropTypes.object,
-  content: PropTypes.oneOf(['museum', 'feed', 'location', 'quest']),
+  content: PropTypes.oneOf([MUSEUM_CFG, FEED_CFG, LOCATION_CFG, QUEST_CFG]),
   reqProps: PropTypes.object,
 };
 

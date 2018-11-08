@@ -4,23 +4,20 @@ import { feedsLoaded, feedsLoadingError } from './actions';
 import { makeSelectPage } from './selectors';
 
 import request from '../../utils/request';
-import { getValues, urls } from '../EditPage/configs';
-import { getItemFromResp } from '../../utils/utils';
+import { urls, FEED_CFG } from '../EditPage/configs';
+import { getDataFromResp } from '../../utils/utils';
 
 /**
  * Feeds data load handler
  */
 export function* loadFeeds() {
   const page = yield select(makeSelectPage());
-  const requestURL = urls.feed.tape(false, (page - 1) * 10, page * 10 - 1);
+  const requestURL = urls[FEED_CFG].tape(false, (page - 1) * 10, page * 10 - 1);
   try {
     const feeds = yield call(request, requestURL);
-    let data = false;
-    const { fields, props } = getValues.feed;
-    if (feeds.result.length) {
-      data = feeds.result.map(item => getItemFromResp(item, fields, props));
-    }
-    yield put(feedsLoaded(data, feeds.count, feeds.page));
+    const data = getDataFromResp(feeds.result, FEED_CFG);
+    if (data.length) yield put(feedsLoaded(data, feeds.count, feeds.page));
+    else yield put(feedsLoaded(false, feeds.count, feeds.page));
   } catch (err) {
     yield put(feedsLoadingError(err));
   }

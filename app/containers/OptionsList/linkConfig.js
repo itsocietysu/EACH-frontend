@@ -1,4 +1,5 @@
 import messages from './messages';
+import { FEED_CFG, LOCATION_CFG, MUSEUM_CFG } from '../EditPage/configs';
 
 class Link {
   path: string;
@@ -57,7 +58,7 @@ export const editLinks: Array<Link> = [
 ];
 
 export const matchEditContent = {
-  museums: 'museum',
-  news: 'feed',
-  locations: 'location',
+  museums: MUSEUM_CFG,
+  news: FEED_CFG,
+  locations: LOCATION_CFG,
 };

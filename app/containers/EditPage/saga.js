@@ -117,7 +117,12 @@ export function* sendData() {
     const oldData = data.filter(item => item.eid === dataToPost.eid)[0];
     const oldDataWithBase64 = Object.assign({}, oldData);
     if (Object.keys(setting).includes('images')) {
-      oldDataWithBase64.image = yield call(toDataURL, oldData.image);
+      const { images } = setting;
+      for (let i = 0; i < images.length; i += 1)
+        oldDataWithBase64[images[i].field] = yield call(
+          toDataURL,
+          oldData[images[i].field],
+        );
     }
     body = changedData(
       body,

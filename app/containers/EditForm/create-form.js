@@ -6,6 +6,16 @@ import Form from './form';
 import DependForm from './depend-form';
 import messages from './messages';
 
+export const emptyFunc = () => {};
+
+export const emptyMessage = {
+  isOpenMsg: false,
+  message: {},
+  isCancelMsg: false,
+  onSubmit: emptyFunc,
+  onClose: emptyFunc,
+};
+
 export const translateToForm = {
   museum: item => ({ museum: item }),
   feed: item => ({ feed: item }),
@@ -166,6 +176,18 @@ export function createForm(item, settings, ref) {
   return null;
 }
 
+export function onChangeOpenMessage(message, cancel, onSubmit, onClose, form) {
+  const { state } = form;
+  state.msgData = {
+    isOpenMsg: !state.msgData.isOpenMsg,
+    message,
+    isCancelMsg: cancel,
+    onSubmit,
+    onClose,
+  };
+  form.setState(state);
+}
+
 export function onCloseForm(close, form) {
   form._onChangeOpenMsg(
     messages.sure,
@@ -178,5 +200,10 @@ export function onCloseForm(close, form) {
 }
 
 export function onEmptyForm(form) {
-  form._onChangeOpenMsg(messages.empty, false, () => {}, form._onChangeOpenMsg);
+  form._onChangeOpenMsg(
+    messages.empty,
+    false,
+    emptyFunc,
+    form._onChangeOpenMsg,
+  );
 }

@@ -9,7 +9,14 @@ import PropTypes from 'prop-types';
 import './index.css';
 
 import SelectSimple from '../SelectSimple';
-import { createForm, onCloseForm, onEmptyForm } from './create-form';
+import {
+  createForm,
+  onChangeOpenMessage,
+  onCloseForm,
+  onEmptyForm,
+  emptyMessage,
+} from './create-form';
+import MsgBox from '../../components/MsgBox';
 
 class DependForm extends React.Component {
   constructor(props) {
@@ -24,13 +31,7 @@ class DependForm extends React.Component {
       children: {},
       refChildren: {},
       values: [],
-      msgData: {
-        isOpenMsg: false,
-        message: {},
-        isCancelMsg: false,
-        onSubmit: () => {},
-        onClose: () => {},
-      },
+      msgData: emptyMessage,
     };
 
     this._init = this._init.bind(this);
@@ -80,14 +81,7 @@ class DependForm extends React.Component {
   }
 
   _onChangeOpenMsg(message, cancel, onSubmit, onClose) {
-    this.state.msgData = {
-      isOpenMsg: !this.state.msgData.isOpenMsg,
-      message,
-      isCancelMsg: cancel,
-      onSubmit,
-      onClose,
-    };
-    this.setState(this.state);
+    onChangeOpenMessage(message, cancel, onSubmit, onClose, this);
   }
 
   _onClose(close) {
@@ -103,7 +97,7 @@ class DependForm extends React.Component {
   render() {
     const { settings } = this.props;
     const { name } = settings;
-    const { values, children } = this.state;
+    const { values, children, msgData } = this.state;
     let data = this.state.formData;
     if (name !== this.state.name) {
       this.state.name = name;
@@ -119,6 +113,13 @@ class DependForm extends React.Component {
           onChange={value => this.setState({ formData: { select: value } })}
         />
         <Content />
+        <MsgBox
+          message={msgData.message}
+          open={msgData.isOpenMsg}
+          onSubmit={msgData.onSubmit}
+          cancel={msgData.isCancelMsg}
+          onClose={msgData.onClose}
+        />
       </div>
     );
   }

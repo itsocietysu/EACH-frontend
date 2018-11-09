@@ -27,7 +27,13 @@ import './index.css';
 import SelectSimple from '../SelectSimple';
 import { BASE64_RE } from '../../utils/utils';
 
-import { onCloseForm, onEmptyForm } from './create-form';
+import {
+  onCloseForm,
+  onEmptyForm,
+  onChangeOpenMessage,
+  emptyFunc,
+  emptyMessage,
+} from './create-form';
 
 const ImageCropStyle = {
   maxWidth: '256px',
@@ -100,13 +106,7 @@ class Form extends React.Component {
       name: props.settings.name,
       formData,
       crops: {},
-      msgData: {
-        isOpenMsg: false,
-        message: {},
-        isCancelMsg: false,
-        onSubmit: () => {},
-        onClose: () => {},
-      },
+      msgData: emptyMessage,
     };
 
     this._init = this._init.bind(this);
@@ -179,7 +179,7 @@ class Form extends React.Component {
             this._onChangeOpenMsg(
               messages.imageSmall,
               false,
-              () => {},
+              emptyFunc,
               this._onChangeOpenMsg,
             ),
         );
@@ -191,7 +191,7 @@ class Form extends React.Component {
       this._onChangeOpenMsg(
         messages.imageSmall,
         false,
-        () => {},
+        emptyFunc,
         this._onChangeOpenMsg,
       );
     else {
@@ -218,14 +218,7 @@ class Form extends React.Component {
   }
 
   _onChangeOpenMsg(message, cancel, onSubmit, onClose) {
-    this.state.msgData = {
-      isOpenMsg: !this.state.msgData.isOpenMsg,
-      message,
-      isCancelMsg: cancel,
-      onSubmit,
-      onClose,
-    };
-    this.setState(this.state);
+    onChangeOpenMessage(message, cancel, onSubmit, onClose, this);
   }
 
   _onSubmit() {

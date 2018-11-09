@@ -11,7 +11,6 @@ import { FormattedMessage } from 'react-intl';
 import lodash from 'lodash';
 
 import { PopupStyle } from '../PopupImageCrop';
-import MsgBox from '../../components/MsgBox';
 import Button from '../UserPanel/Button';
 import messages from './messages';
 import BorderTopImage from '../../components/MsgBox/Img';
@@ -27,17 +26,9 @@ class EditForm extends React.Component {
       name: props.settings.name,
       form: false,
       refForm: false,
-      msgData: {
-        isOpenMsg: false,
-        message: {},
-        isCancelMsg: false,
-        onSubmit: () => {},
-        onClose: () => {},
-      },
     };
 
     this._init = this._init.bind(this);
-    this._onChangeOpenMsg = this._onChangeOpenMsg.bind(this);
     this._onClose = this._onClose.bind(this);
   }
 
@@ -47,17 +38,6 @@ class EditForm extends React.Component {
     state.refForm = React.createRef();
     state.form = createForm(item, settings, state.refForm);
     this.setState(state);
-  }
-
-  _onChangeOpenMsg(message, onSubmit, cancel, onClose) {
-    this.state.msgData = {
-      isOpenMsg: !this.state.msgData.isOpenMsg,
-      message,
-      isCancelMsg: cancel,
-      onSubmit,
-      onClose,
-    };
-    this.setState(this.state);
   }
 
   componentDidUpdate(prevProps) {
@@ -75,7 +55,6 @@ class EditForm extends React.Component {
   render() {
     const { settings } = this.props;
     const { name } = settings;
-    const message = this.state.msgData;
     let { form } = this.state;
     const { refForm } = this.state;
     if (name !== this.state.name) {
@@ -123,13 +102,6 @@ class EditForm extends React.Component {
                   <FormattedMessage {...messages.close} />
                 </Button>
               </div>
-              <MsgBox
-                message={message.message}
-                open={message.isOpenMsg}
-                onSubmit={message.onSubmit}
-                cancel={message.isCancelMsg}
-                onClose={message.onClose}
-              />
             </div>
           )}
         </Popup>
@@ -141,13 +113,6 @@ class EditForm extends React.Component {
         <div>
           <ButtonConfirm />
         </div>
-        <MsgBox
-          message={message.message}
-          open={message.isOpenMsg}
-          onSubmit={message.onSubmit}
-          cancel={message.isCancelMsg}
-          onClose={message.onClose}
-        />
       </div>
     );
   }

@@ -47,9 +47,9 @@ export const getValues = {
     fields: ['name', 'desc'],
     noLocales: [],
     locales: ['name', 'desc'],
-    getProps: ['image', 'location'],
-    updProps: ['image', 'location'],
-    addProps: ['image', 'location'],
+    getProps: ['image', 'logo', 'location'],
+    updProps: ['image', 'logo', 'location'],
+    addProps: ['image', 'logo', 'location'],
   },
   feed: {
     fields: ['title', 'desc', 'text'],

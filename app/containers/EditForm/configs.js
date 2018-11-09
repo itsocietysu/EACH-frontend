@@ -259,6 +259,9 @@ export const configs = {
         {
           field: 'image',
         },
+        {
+          field: 'logo',
+        },
       ],
     },
     empty: {

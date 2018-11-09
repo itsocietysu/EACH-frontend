@@ -10,6 +10,10 @@ export default defineMessages({
     id: 'each.containers.EditForm.image',
     defaultMessage: 'Image',
   },
+  logo: {
+    id: 'each.containers.EditForm.logo',
+    defaultMessage: 'Logo',
+  },
   avatar: {
     id: 'each.containers.EditForm.avatar',
     defaultMessage: 'Avatar',

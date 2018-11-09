@@ -59,15 +59,18 @@ function differenceOfArrays(oldArray, newArray, propField) {
   return diffArray;
 }
 
+const setImageToUpdate = (data, oldData, newData, field) => {
+  if (newData[field] !== oldData[field]) {
+    if (!data.prop) data.prop = {};
+    data.prop[field] = newData[field].replace(BASE64_RE, '');
+    return true;
+  }
+  return false;
+};
+
 const setPropsToUpdate = {
-  image: (data, oldData, newData) => {
-    if (newData.image !== oldData.image) {
-      if (!data.prop) data.prop = {};
-      data.prop.image = newData.image.replace(BASE64_RE, '');
-      return true;
-    }
-    return false;
-  },
+  image: (data, oldData, newData) => setImageToUpdate(data, oldData, newData, 'image'),
+  logo: (data, oldData, newData) => setImageToUpdate(data, oldData, newData, 'logo'),
   priority: (data, oldData, newData) => {
     if (newData.priority !== oldData.priority) {
       if (!data.prop) data.prop = {};
@@ -123,8 +126,11 @@ export function changedData(
   return change ? data : false;
 }
 
+const getImage = (data, field) => `${data[field][0] ? `http://${data[field][0].url}` : '/Photo.png'}`;
+
 const getProps = {
-  image: i => `${i.image[0] ? `http://${i.image[0].url}` : '/Photo.png'}`,
+  image: i => getImage(i, 'image'),
+  logo: l => getImage(l, 'logo'),
   priority: p => `${p.priority[0] ? p.priority[0] : 0}`,
   location: l => l.location ? l.location : [],
   scenario: s => `${s.scenario[0] ? s.scenario[0].eid : 0}`,
@@ -150,10 +156,13 @@ export function getDataFromResp(resp, content) {
   return [];
 }
 
+const setImageToAdd = (data, item, field) => {
+  data.prop[field] = item[field].replace(BASE64_RE, '');
+};
+
 const setPropsToAdd = {
-  image: (data, item) => {
-    data.prop.image = item.image.replace(BASE64_RE, '');
-  },
+  image: (data, item) => setImageToAdd(data, item, 'image'),
+  logo: (data, item) => setImageToAdd(data, item, 'logo'),
   priority: (data, item) => {
     data.prop.priority = item.priority;
   },

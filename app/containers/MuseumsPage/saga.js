@@ -4,8 +4,8 @@ import { museumsLoaded, museumsLoadingError } from './actions';
 
 import requestAuth from '../../utils/requestAuth';
 import { makeSelectPage } from './selectors';
-import { getValues, urls } from '../EditPage/configs';
-import { getItemFromResp } from '../../utils/utils';
+import { MUSEUM_CFG, urls } from '../EditPage/configs';
+import { getDataFromResp } from '../../utils/utils';
 
 /**
  * Museums data load handler
@@ -15,11 +15,7 @@ export function* loadMuseums() {
   const requestURL = urls.museum.tape(false, (page - 1) * 10, page * 10 - 1);
   try {
     const museums = yield call(requestAuth, requestURL);
-    let data = false;
-    const { fields, props } = getValues.museum;
-    if (museums.result.length) {
-      data = museums.result.map(item => getItemFromResp(item, fields, props));
-    }
+    const data = getDataFromResp(museums.result, MUSEUM_CFG);
     yield put(museumsLoaded(data, museums.count, museums.page));
   } catch (err) {
     yield put(museumsLoadingError(err));

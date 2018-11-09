@@ -29,6 +29,7 @@ import messages from './messages';
 import { DEFAULT_LOCALE } from '../../i18n';
 import { configs } from '../EditForm/configs';
 import { translateFromForm, translateToForm } from '../EditForm/create-form';
+import { getLocations } from '../MuseumListItem';
 
 const iconStyle = color => ({
   float: 'right',
@@ -79,23 +80,21 @@ const MuseumItem = ({ item, locale }) => (
       style={{ textDecoration: 'none', color: '#000' }}
     >
       <div style={{ display: 'flex' }}>
-        <DivSep width="30%">
+        <DivSep width="10%">
+          <Img src={item.logo} alt={`${item.eid}`} />
+        </DivSep>
+        <DivSep width="30%" marginLeft="15px">
           <Img src={item.image} alt={`${item.eid}`} />
         </DivSep>
-        <DivSep width="70%" marginLeft="15px">
+        <DivSep width="60%" marginLeft="15px">
           <H2>{item.name[locale]}</H2>
         </DivSep>
       </div>
     </Link>
     <div>
       <P>{item.desc[locale]}</P>
+      {getLocations(item.eid, item.location)}
     </div>
-    {item.location.map(location => (
-      <div key={`${item.eid}-${location.name}`} style={{ display: 'flex' }}>
-        <i className="fas fa-map-marker-alt" />
-        <P style={{ margin: '0 10px' }}>{location.name}</P>
-      </div>
-    ))}
   </div>
 );
 

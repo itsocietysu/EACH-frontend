@@ -36,6 +36,9 @@ class Item extends React.Component {
       <div>
         <div className="wrapper">
           <div>
+            <DivSep width="10%" className="divSep">
+              <Img src={item.logo} alt={`Museum-${item.eid}`} />
+            </DivSep>
             <DivSep width="50%" className="divSep">
               <Img src={item.image} alt={`Museum-${item.eid}`} />
             </DivSep>

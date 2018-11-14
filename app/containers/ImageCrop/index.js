@@ -1,4 +1,4 @@
-/* eslint-disable react/prefer-stateless-function,no-param-reassign */
+/* eslint-disable react/prefer-stateless-function,no-param-reassign,no-underscore-dangle */
 /*
  *
  * Component for cropping image
@@ -9,15 +9,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactCrop, { getPixelCrop, makeAspectCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
-
-import { createStructuredSelector } from 'reselect';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-
-import injectReducer from '../../utils/injectReducer';
-import { changeCrop, imageLoaded } from './actions';
-import { makeSelectCrop, makeSelectSizes } from './selectors';
-import reducer from './reducer';
 
 const MIN_IMAGE_SIDE = 256;
 const MAX_IMAGE_SIDE = 1024;
@@ -110,21 +101,94 @@ export function getCroppedMaxImg(image) {
 }
 
 export class ImageCrop extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      crop: {
+        x: 10,
+        y: 10,
+        width: 80,
+        height: 80,
+        aspect: 1,
+      },
+      pixelCrop: {
+        x: 0,
+        y: 0,
+        width: 0,
+        height: 0,
+      },
+      sizes: {
+        maxWidth: 100,
+        maxHeight: 100,
+        minWidth: 0,
+        minHeight: 0,
+      },
+      image: null,
+    };
+
+    this._onImageLoaded = this._onImageLoaded.bind(this);
+    this._onCropChange = this._onCropChange.bind(this);
+    this._getResult = this._getResult.bind(this);
+  }
+
+  _getResult() {
+    return getCroppedImg(this.state.image, this.state.pixelCrop);
+  }
+
+  _onImageLoaded(image) {
+    const minWidth = (MIN_IMAGE_SIDE * 100) / image.naturalWidth;
+    const minHeight = (MIN_IMAGE_SIDE * 100) / image.naturalHeight;
+    const maxWidth = (MAX_IMAGE_SIDE * 100) / image.naturalWidth;
+    const maxHeight = (MAX_IMAGE_SIDE * 100) / image.naturalHeight;
+    let width = Math.min(100, maxWidth);
+    let height = Math.min(100, maxHeight);
+    if (height === 100 && width !== 100)
+      width = (image.naturalHeight * 100) / image.naturalWidth;
+    if (width === 100 && height !== 100)
+      height = (image.naturalWidth * 100) / image.naturalHeight;
+    const crop = makeAspectCrop(
+      {
+        x: (100 - width) / 2,
+        y: (100 - height) / 2,
+        aspect: 1,
+        width,
+      },
+      image.naturalWidth / image.naturalHeight,
+    );
+    const pixelCrop = getPixelCrop(image, crop);
+    this.setState({
+      crop,
+      pixelCrop,
+      sizes: {
+        maxWidth,
+        maxHeight,
+        minWidth,
+        minHeight,
+      },
+      image,
+    });
+  }
+
+  _onCropChange(crop, pixelCrop) {
+    const { state } = this;
+    state.crop = crop;
+    state.pixelCrop = pixelCrop;
+    this.setState(state);
+  }
+
   render() {
     return (
       <div>
         {this.props.image && (
           <ReactCrop
             src={this.props.image}
-            crop={this.props.crop}
-            onImageLoaded={image => this.props.onImageLoaded(image)}
-            onChange={(crop, pixelCrop) =>
-              this.props.onCropChange(crop, pixelCrop)
-            }
-            maxWidth={this.props.sizes.maxWidth}
-            minWidth={this.props.sizes.minWidth}
-            maxHeight={this.props.sizes.maxHeight}
-            minHeight={this.props.sizes.minHeight}
+            crop={this.state.crop}
+            onImageLoaded={image => this._onImageLoaded(image)}
+            onChange={(crop, pixelCrop) => this._onCropChange(crop, pixelCrop)}
+            maxWidth={this.state.sizes.maxWidth}
+            minWidth={this.state.sizes.minWidth}
+            maxHeight={this.state.sizes.maxHeight}
+            minHeight={this.state.sizes.minHeight}
             style={this.props.style}
           />
         )}
@@ -136,61 +200,6 @@ export class ImageCrop extends React.Component {
 ImageCrop.propTypes = {
   image: PropTypes.string,
   style: PropTypes.object,
-  onImageLoaded: PropTypes.func,
-  onCropChange: PropTypes.func,
-  crop: PropTypes.object,
-  sizes: PropTypes.object,
 };
 
-export function mapDispatchToProps(dispatch) {
-  return {
-    onImageLoaded: image => {
-      const minWidth = (MIN_IMAGE_SIDE * 100) / image.naturalWidth;
-      const minHeight = (MIN_IMAGE_SIDE * 100) / image.naturalHeight;
-      const maxWidth = (MAX_IMAGE_SIDE * 100) / image.naturalWidth;
-      const maxHeight = (MAX_IMAGE_SIDE * 100) / image.naturalHeight;
-      let width = Math.min(100, maxWidth);
-      let height = Math.min(100, maxHeight);
-      if (height === 100 && width !== 100)
-        width = (image.naturalHeight * 100) / image.naturalWidth;
-      if (width === 100 && height !== 100)
-        height = (image.naturalWidth * 100) / image.naturalHeight;
-      const crop = makeAspectCrop(
-        {
-          x: (100 - width) / 2,
-          y: (100 - height) / 2,
-          aspect: 1,
-          width,
-        },
-        image.naturalWidth / image.naturalHeight,
-      );
-      const pixelCrop = getPixelCrop(image, crop);
-      dispatch(
-        imageLoaded(image, crop, pixelCrop, {
-          maxWidth,
-          maxHeight,
-          minWidth,
-          minHeight,
-        }),
-      );
-    },
-    onCropChange: (crop, pixelCrop) => dispatch(changeCrop(crop, pixelCrop)),
-  };
-}
-
-const mapStateToProps = createStructuredSelector({
-  crop: makeSelectCrop(),
-  sizes: makeSelectSizes(),
-});
-
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
-
-const withReducer = injectReducer({ key: 'imageCrop', reducer });
-
-export default compose(
-  withReducer,
-  withConnect,
-)(ImageCrop);
+export default ImageCrop;

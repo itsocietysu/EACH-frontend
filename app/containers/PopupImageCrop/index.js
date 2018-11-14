@@ -1,4 +1,4 @@
-/* eslint-disable react/no-children-prop,react/prefer-stateless-function */
+/* eslint-disable react/no-children-prop,react/prefer-stateless-function,no-underscore-dangle */
 /*
  *
  * Popup component for cropping image
@@ -10,17 +10,10 @@ import PropTypes from 'prop-types';
 import Popup from 'reactjs-popup';
 import { FormattedMessage } from 'react-intl';
 
-import { createStructuredSelector } from 'reselect';
-import { connect } from 'react-redux';
-
-import ImageCrop, { getCroppedImg } from '../ImageCrop';
+import ImageCrop from '../ImageCrop';
 import messages from '../EditForm/messages';
 import Button from '../UserPanel/Button';
 
-import {
-  makeSelectPixelCrop,
-  makeSelectImageElement,
-} from '../ImageCrop/selectors';
 import BorderTopImage from '../../components/MsgBox/Img';
 import Close from '../../components/MsgBox/Cross';
 import CenteredDiv from '../../components/MsgBox/CenteredDiv';
@@ -35,8 +28,13 @@ export const PopupStyle = {
 };
 
 export class PopupImageCrop extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { cropRef: React.createRef() };
+  }
+
   render() {
-    const { src, trigger, styleCrop, image, pixelCrop, onSubmit } = this.props;
+    const { src, trigger, styleCrop, onSubmit } = this.props;
     return (
       <Popup
         modal
@@ -49,11 +47,11 @@ export class PopupImageCrop extends React.Component {
           <CenteredDiv>
             <BorderTopImage />
             <Close onClick={close} />
-            <ImageCrop image={src} style={styleCrop} />
+            <ImageCrop image={src} style={styleCrop} ref={this.state.cropRef} />
             <div>
               <Button
                 onClick={() => {
-                  onSubmit(getCroppedImg(image, pixelCrop));
+                  onSubmit(this.state.cropRef.current._getResult());
                   close();
                 }}
               >
@@ -75,16 +73,6 @@ PopupImageCrop.propTypes = {
   onSubmit: PropTypes.func,
   styleCrop: PropTypes.object,
   trigger: PropTypes.node,
-  pixelCrop: PropTypes.object,
-  image: PropTypes.object,
 };
 
-const mapStateToProps = createStructuredSelector({
-  pixelCrop: makeSelectPixelCrop(),
-  image: makeSelectImageElement(),
-});
-
-export default connect(
-  mapStateToProps,
-  null,
-)(PopupImageCrop);
+export default PopupImageCrop;

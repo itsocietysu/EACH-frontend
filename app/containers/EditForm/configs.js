@@ -25,6 +25,7 @@ const text_question = {
     images: [
       {
         field: 'avatar',
+        aspect: 1,
       },
     ],
   },
@@ -66,6 +67,7 @@ const location_question = {
     images: [
       {
         field: 'avatar',
+        aspect: 1,
       },
     ],
   },
@@ -94,9 +96,11 @@ const ar_paint_question = {
     images: [
       {
         field: 'avatar',
+        aspect: 1,
       },
       {
         field: 'target',
+        aspect: 1,
       },
     ],
   },
@@ -192,6 +196,7 @@ export const configs = {
                   images: [
                     {
                       field: 'image',
+                      aspect: 1,
                     },
                   ],
                 },
@@ -258,15 +263,18 @@ export const configs = {
       images: [
         {
           field: 'image',
+          aspect: 1,
         },
         {
           field: 'logo',
+          aspect: 1.2,
         },
       ],
     },
     empty: {
       eid: '0',
       image: '',
+      logo: '',
       name: { RU: '', EN: '' },
       desc: { RU: '', EN: '' },
       location: [],
@@ -298,6 +306,7 @@ export const configs = {
       images: [
         {
           field: 'image',
+          aspect: 1,
         },
       ],
       numbers: [
@@ -368,6 +377,7 @@ export const configs = {
       images: [
         {
           field: 'image',
+          aspect: 1,
         },
       ],
     },

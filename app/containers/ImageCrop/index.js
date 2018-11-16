@@ -13,23 +13,22 @@ import 'react-image-crop/dist/ReactCrop.css';
 const MIN_IMAGE_SIDE = 256;
 const MAX_IMAGE_SIDE = 1024;
 
-export const bigImage = (base64, callback, callbackSmall) => {
+export const bigImage = (base64, aspect, callback, callbackSmall) => {
   const img = new Image();
   img.src = base64;
   img.onload = () => {
     if (
       img.naturalHeight >= MIN_IMAGE_SIDE &&
-      img.naturalWidth >= MIN_IMAGE_SIDE
+      img.naturalWidth >= aspect * MIN_IMAGE_SIDE
     )
       callback(img);
     else callbackSmall();
   };
 };
 
-export function getCroppedImg(image, pixelCrop) {
-  if (pixelCrop.width !== pixelCrop.height) {
-    pixelCrop.width = Math.min(pixelCrop.width, pixelCrop.height);
-    pixelCrop.height = Math.min(pixelCrop.width, pixelCrop.height);
+export function getCroppedImg(image, pixelCrop, aspect) {
+  if (pixelCrop.width !== aspect * pixelCrop.height) {
+    pixelCrop.width = Math.min(pixelCrop.width, aspect * pixelCrop.height);
   }
   if (pixelCrop.height < MIN_IMAGE_SIDE || pixelCrop.width < MIN_IMAGE_SIDE)
     return null;
@@ -58,10 +57,10 @@ export function getCroppedImg(image, pixelCrop) {
   return canvas.toDataURL('image/jpeg');
 }
 
-export function getCroppedMaxImg(image) {
+export function getCroppedMaxImg(image, aspect) {
   if (
     image.naturalWidth === MAX_IMAGE_SIDE &&
-    image.naturalHeight === MAX_IMAGE_SIDE
+    image.naturalWidth === aspect * image.naturalHeight
   )
     return image.src;
   let width = Math.min(100, (MAX_IMAGE_SIDE * 100) / image.naturalWidth);
@@ -74,7 +73,7 @@ export function getCroppedMaxImg(image) {
     {
       x: (100 - width) / 2,
       y: (100 - height) / 2,
-      aspect: 1,
+      aspect,
       width,
     },
     image.naturalWidth / image.naturalHeight,
@@ -132,7 +131,11 @@ export class ImageCrop extends React.Component {
   }
 
   _getResult() {
-    return getCroppedImg(this.state.image, this.state.pixelCrop);
+    return getCroppedImg(
+      this.state.image,
+      this.state.pixelCrop,
+      this.props.aspect,
+    );
   }
 
   _onImageLoaded(image) {
@@ -150,7 +153,7 @@ export class ImageCrop extends React.Component {
       {
         x: (100 - width) / 2,
         y: (100 - height) / 2,
-        aspect: 1,
+        aspect: this.props.aspect,
         width,
       },
       image.naturalWidth / image.naturalHeight,
@@ -199,6 +202,7 @@ export class ImageCrop extends React.Component {
 
 ImageCrop.propTypes = {
   image: PropTypes.string,
+  aspect: PropTypes.number,
   style: PropTypes.object,
 };
 

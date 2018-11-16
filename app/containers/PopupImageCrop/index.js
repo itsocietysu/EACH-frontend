@@ -34,7 +34,7 @@ export class PopupImageCrop extends React.Component {
   }
 
   render() {
-    const { src, trigger, styleCrop, onSubmit } = this.props;
+    const { src, aspect, trigger, styleCrop, onSubmit } = this.props;
     return (
       <Popup
         modal
@@ -47,7 +47,12 @@ export class PopupImageCrop extends React.Component {
           <CenteredDiv>
             <BorderTopImage />
             <Close onClick={close} />
-            <ImageCrop image={src} style={styleCrop} ref={this.state.cropRef} />
+            <ImageCrop
+              image={src}
+              aspect={aspect}
+              style={styleCrop}
+              ref={this.state.cropRef}
+            />
             <div>
               <Button
                 onClick={() => {
@@ -70,6 +75,7 @@ export class PopupImageCrop extends React.Component {
 
 PopupImageCrop.propTypes = {
   src: PropTypes.string,
+  aspect: PropTypes.number,
   onSubmit: PropTypes.func,
   styleCrop: PropTypes.object,
   trigger: PropTypes.node,

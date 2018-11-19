@@ -267,7 +267,7 @@ export const configs = {
         },
         {
           field: 'logo',
-          aspect: 1.2,
+          aspect: 1,
         },
       ],
     },

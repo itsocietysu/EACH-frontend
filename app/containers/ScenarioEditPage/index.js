@@ -20,7 +20,13 @@ import Button from '../../components/Button';
 import Nav from '../LinkList/Nav';
 
 import { configs, PHOTO_BONUS } from '../EditForm/configs';
-import { translateFromForm, translateToForm } from '../EditForm/create-form';
+import {
+  emptyMessage,
+  translateFromForm,
+  translateToForm,
+  onChangeOpenMessage,
+  emptyFunc,
+} from '../EditForm/create-form';
 import requestAuth from '../../utils/requestAuth';
 
 import messages from './messages';
@@ -30,6 +36,7 @@ import { BASE64_RE } from '../../utils/utils';
 
 import './react-contextmenu.css';
 import { withAuthAdmin } from '../../utils/auth';
+import MsgBox from '../../components/MsgBox';
 
 const SCENARIO_NAME = 'Scenario';
 const MENU_ID = 'scenario_menu';
@@ -157,6 +164,7 @@ export class ScenarioEditPage extends React.Component {
       openBonus: false,
       toDelete: [],
       enableSave: false,
+      msgData: emptyMessage,
     };
 
     this._onContextMenu = this._onContextMenu.bind(this);
@@ -167,6 +175,7 @@ export class ScenarioEditPage extends React.Component {
     this._onUpdateBonus = this._onUpdateBonus.bind(this);
     this._onSave = this._onSave.bind(this);
     this._endSave = this._endSave.bind(this);
+    this._onChangeOpenMsg = this._onChangeOpenMsg.bind(this);
   }
 
   _onAdd(data) {
@@ -285,7 +294,23 @@ export class ScenarioEditPage extends React.Component {
       body: JSON.stringify(body),
     };
     this.setState({ toDelete: [] });
-    requestAuth(urls.update, options);
+    requestAuth(urls.update, options)
+      .then(() =>
+        this._onChangeOpenMsg(
+          messages.success,
+          false,
+          this._onChangeOpenMsg,
+          emptyFunc,
+        ),
+      )
+      .catch(() =>
+        this._onChangeOpenMsg(
+          messages.failure,
+          false,
+          this._onChangeOpenMsg,
+          emptyFunc,
+        ),
+      );
   }
 
   _onSave() {
@@ -335,30 +360,40 @@ export class ScenarioEditPage extends React.Component {
         },
         body: JSON.stringify(body),
       };
-      requestAuth(urls.update, options).then(res => {
-        const images = res[0].image;
-        let i = 0;
-        if (isScenario(toAdd[0].name)) {
-          scenario.final_bonus.desc.image = getImageFieldFromResp(images, 0);
-          i = 1;
-        }
-        let k = 0;
-        const changeImage = (image, name) => {
-          while (k < newSteps.length && newSteps[k].desc.question !== name)
-            k += 1;
-          if (image.field === 'bonus')
-            newSteps[k].desc.bonus.desc.image = getImageFieldFromResp(
-              images,
-              i,
-            );
-          else newSteps[k].desc[image.field] = getImageFieldFromResp(images, i);
-          i += 1;
-        };
-        for (let j = i; j < toAdd.length; j += 1) {
-          toAdd[j].base64.forEach(im => changeImage(im, toAdd[j].name));
-        }
-        this._endSave(newSteps);
-      });
+      requestAuth(urls.update, options)
+        .then(res => {
+          const images = res[0].image;
+          let i = 0;
+          if (isScenario(toAdd[0].name)) {
+            scenario.final_bonus.desc.image = getImageFieldFromResp(images, 0);
+            i = 1;
+          }
+          let k = 0;
+          const changeImage = (image, name) => {
+            while (k < newSteps.length && newSteps[k].desc.question !== name)
+              k += 1;
+            if (image.field === 'bonus')
+              newSteps[k].desc.bonus.desc.image = getImageFieldFromResp(
+                images,
+                i,
+              );
+            else
+              newSteps[k].desc[image.field] = getImageFieldFromResp(images, i);
+            i += 1;
+          };
+          for (let j = i; j < toAdd.length; j += 1) {
+            toAdd[j].base64.forEach(im => changeImage(im, toAdd[j].name));
+          }
+          this._endSave(newSteps);
+        })
+        .catch(() =>
+          this._onChangeOpenMsg(
+            messages.failure,
+            false,
+            this._onChangeOpenMsg,
+            emptyFunc,
+          ),
+        );
     }
   }
 
@@ -436,6 +471,10 @@ export class ScenarioEditPage extends React.Component {
     }
   }
 
+  _onChangeOpenMsg(message, cancel, onSubmit, onClose) {
+    onChangeOpenMessage(message, cancel, onSubmit, onClose, this);
+  }
+
   render() {
     const { scenario_step } = configs;
     const {
@@ -446,6 +485,7 @@ export class ScenarioEditPage extends React.Component {
       openChange,
       openBonus,
       enableSave,
+      msgData,
     } = this.state;
     if (error) return <div>Something went wrong</div>;
     return (
@@ -541,6 +581,13 @@ export class ScenarioEditPage extends React.Component {
             )}
           </ContextMenu>
         )}
+        <MsgBox
+          message={msgData.message}
+          open={msgData.isOpenMsg}
+          onSubmit={msgData.onSubmit}
+          cancel={msgData.isCancelMsg}
+          onClose={msgData.onClose}
+        />
       </div>
     );
   }

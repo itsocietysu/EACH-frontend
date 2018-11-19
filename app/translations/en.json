@@ -32,6 +32,8 @@
   "each.containers.EditPage.addQuest": "Add quest",
   "each.containers.EditPage.addScenarioStep": "Add step",
   "each.containers.EditPage.save": "Save",
+  "each.containers.EditPage.success": "Success",
+  "each.containers.EditPage.failure": "Failure",
   "each.containers.EditForm.image": "Image",
   "each.containers.EditForm.logo": "Logo",
   "each.containers.EditForm.avatar": "Avatar",

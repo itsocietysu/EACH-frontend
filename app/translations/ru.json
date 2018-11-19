@@ -34,6 +34,8 @@
   "each.containers.EditPage.save": "Сохранить",
   "each.containers.EditForm.image": "Картинка",
   "each.containers.EditForm.logo": "Лого",
+  "each.containers.EditPage.success": "Успех",
+  "each.containers.EditPage.failure": "Провал",
   "each.containers.EditForm.avatar": "Аватар",
   "each.containers.EditForm.target": "Якорь",
   "each.containers.EditForm.titleRU": "Заголовок рус",

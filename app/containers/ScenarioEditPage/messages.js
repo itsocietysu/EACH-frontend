@@ -16,4 +16,12 @@ export default defineMessages({
     id: 'each.containers.EditPage.save',
     defaultMessage: 'Save',
   },
+  success: {
+    id: 'each.containers.EditPage.success',
+    defaultMessage: 'Success',
+  },
+  failure: {
+    id: 'each.containers.EditPage.failure',
+    defaultMessage: 'Failure',
+  },
 });

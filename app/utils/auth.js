@@ -31,7 +31,7 @@ const Auth = ({ mode }) => WrappedComponent => {
       WrappedComponent.name ||
       'Component'})`;
 
-    state = { req: false, func: false, accessType: 'user' };
+    state = { req: false, func: false, accessType: 'user', error: false };
     componentWillMount() {
       if (getLogined() === 'true' && getSession() && getOAuth()) {
         const requestURL = `${
@@ -49,7 +49,7 @@ const Auth = ({ mode }) => WrappedComponent => {
             this.setState({ req: false, accessType: data.accessType });
           })
           .catch(err => {
-            Logout();
+            if (err.message !== 'Failed to fetch') Logout();
             this.context.store.dispatch(
               newError({
                 source: 'user',
@@ -57,6 +57,7 @@ const Auth = ({ mode }) => WrappedComponent => {
                 message: err.message,
               }),
             );
+            this.setState({ req: false, accessType: 'user', error: true });
           });
       }
     }
@@ -68,8 +69,8 @@ const Auth = ({ mode }) => WrappedComponent => {
           !getSession() ||
           !getOAuth() ||
           (!this.state.req &&
-            mode === AUTH_ADMIN &&
-            this.state.accessType !== 'admin'))
+            ((mode === AUTH_ADMIN && this.state.accessType !== 'admin') ||
+              this.state.error)))
       )
         return <Redirect to="/" />;
       if (

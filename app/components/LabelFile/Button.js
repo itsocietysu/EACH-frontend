@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { colors } from '../../utils/constants';
+
 const Button = styled.div`
   line-height: 24px;
   display: inline-block;
@@ -13,11 +15,11 @@ const Button = styled.div`
   font-family: 'Book Antiqua', Palatino, 'Palatino Linotype', serif;
   font-weight: bold;
   font-size: 16px;
-  border: 2px solid rgb(217, 146, 92);
+  border: 2px solid ${colors.base};
   color: rgb(66, 31, 25);
 
   &:hover {
-    background: rgb(217, 146, 92);
+    background: ${colors.base};
     color: #fff;
   }
 `;

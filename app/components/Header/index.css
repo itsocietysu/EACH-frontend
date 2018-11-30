@@ -3,8 +3,12 @@
   text-align: left;
 }
 
-.navBar div {
+.navBar .divNavBar {
   float: left;
+}
+
+.navBar div H1 {
+  margin: 0 0.2em;
 }
 
 .toggle {

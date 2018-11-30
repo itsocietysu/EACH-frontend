@@ -4,13 +4,12 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 
-import A from './A';
 import Img from './Img';
 import HeaderLink from './HeaderLink';
 import messages from './messages';
-import Logo from './logo.png';
 import LocaleToggle from '../../containers/LocaleToggle';
 import UserButton from '../../components/UserButton';
+import H1 from '../../components/H1';
 import Button from '../../containers/UserPanel/Button';
 import './index.css';
 
@@ -23,15 +22,11 @@ class Header extends React.Component {
             <LocaleToggle />
           </section>
         )}
-        {this.props.simple || (
-          <A>
-            <Img src={Logo} alt="MUSEEACH - Logo" />
-          </A>
-        )}
         <div className="navBar">
-          <div>
+          <div className="divNavBar">
             <HeaderLink to="/">
-              <FormattedMessage {...messages.home} />
+              <Img src="/images/logo.svg" alt="MUSEEACH - Logo" />
+              <H1>МУЗЕИЧ</H1>
             </HeaderLink>
             {this.props.back && (
               <Button onClick={this.props.history.goBack}>

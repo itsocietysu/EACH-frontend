@@ -134,7 +134,7 @@ class Form extends React.Component {
     else {
       const i = JSON.parse(JSON.stringify(item));
       description.images.forEach(image => {
-        if (item[image.field] === '/Photo.png') {
+        if (item[image.field] === '/images/Photo.png') {
           i[image.field] = '';
         } else if (item[image.field] === '') {
           this._onChangeCrop('', image.field);
@@ -367,7 +367,7 @@ class Form extends React.Component {
               {crops[image.field] ? (
                 <Img src={crops[image.field]} alt={`${name}`} />
               ) : (
-                <Img src="/Photo.png" alt={`${name}`} />
+                <Img src="/images/Photo.png" alt={`${name}`} />
               )}
             </div>
             <div style={{ marginBottom: '0.5em' }}>

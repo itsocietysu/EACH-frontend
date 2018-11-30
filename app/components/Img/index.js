@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 function Img(props) {
   let element;
   const changeSrc = () => {
-    element.src = '/Photo.png';
+    element.src = '/images/Photo.png';
   };
   return (
     <img

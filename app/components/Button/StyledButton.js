@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { colors } from '../../utils/constants';
+
 const StyledButton = styled.button`
   padding: 0.25em 0.5em;
   margin: 0;
@@ -12,7 +14,7 @@ const StyledButton = styled.button`
   color: rgb(66, 31, 25);
 
   &:hover {
-    background: rgb(217, 146, 92);
+    background: ${colors.base};
     color: #fff;
   }
 

@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions */
 /*
  *
  * EditPage
@@ -39,16 +38,18 @@ import saga from './saga';
 import { configs, listConfigs } from '../EditForm/configs';
 import { translateFromForm, translateToForm } from '../EditForm/create-form';
 import { FEED_CFG, LOCATION_CFG, MUSEUM_CFG, QUEST_CFG } from './configs';
+import { colors } from '../../utils/constants';
 
 const rowStyle = {
   display: 'flex',
   flexDirection: 'row',
 };
 
-const refreshStyle = {
-  maxWidth: '27px',
+const iconStyle = color => ({
   cursor: 'pointer',
-};
+  color,
+  margin: 'auto',
+});
 
 export class EditPage extends React.Component {
   constructor(props) {
@@ -159,12 +160,15 @@ export class EditPage extends React.Component {
             </Popup>
           )}
           <Nav>
-            <img
-              style={refreshStyle}
-              src="/Refresh.png"
-              alt="Refresh"
+            <button
               onClick={() => this.props.load(page)}
-            />
+              style={{ margin: 'auto' }}
+            >
+              <i
+                className="fa fa-redo fa-fw"
+                style={iconStyle(`${colors.base}`)}
+              />
+            </button>
           </Nav>
         </div>
         {maxPage > 1 && <PageList countElements={count} elementsPerPage={10} />}

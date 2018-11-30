@@ -20,6 +20,8 @@ import messages from './messages';
 import H1 from '../../components/H1';
 import { withAuthAdmin } from '../../utils/auth';
 
+import { colors } from '../../utils/constants';
+
 export class EditContentPage extends React.Component {
   render() {
     const { content, search } = this.props;
@@ -30,7 +32,7 @@ export class EditContentPage extends React.Component {
           key={value.path}
           to={value.path}
           activeStyle={{
-            background: '#d9925c',
+            background: `${colors.base}`,
             color: '#fff',
           }}
           isActive={() => content === value.match.content}

@@ -1,6 +1,8 @@
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { colors } from '../../utils/constants';
+
 export default styled(NavLink)`
   padding: 1.5px 0.5em;
   margin: 0;
@@ -13,7 +15,7 @@ export default styled(NavLink)`
   color: rgb(66, 31, 25);
 
   &:hover {
-    background: #d9925c;
+    background: ${colors.base};
     color: #fff;
   }
 `;

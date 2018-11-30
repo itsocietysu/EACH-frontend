@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 255 255" style="enable-background:new 0 0 595.3 841.9;" xml:space="preserve" width="822px" height="705px" preserveAspectRatio="xMidYMid meet" ><rect id="svgEditorBackground" x="0" y="0" width="255" height="255" style="fill:none;stroke:none;"/>
+<style type="text/css">
+	.st0{fill:#FFFFFF;}
+	.st1{display:none;fill:#FFFFFF;stroke:#5B7BBB;stroke-width:3;stroke-miterlimit:10;}
+	.st2{display:none;}
+	.st3{display:inline;}
+	.st4{fill:#FFFFFF;stroke:#5B7BBB;stroke-width:3;stroke-miterlimit:10;}
+	.st5{fill:#5B7BBB;}
+	.st6{fill:#5B7BBB;stroke:#5B7BBB;stroke-width:3;stroke-miterlimit:10;}
+	.st7{display:inline;fill:none;}
+	.st8{font-family:'NoContinueRUSbyDaymarius';}
+	.st9{font-size:36px;}
+	.st10{letter-spacing:24;}
+	.st11{display:inline;fill:#FFFFFF;stroke:#5B7BBB;stroke-width:3;stroke-miterlimit:10;}
+	.st12{display:inline;fill:#5B7BBB;}
+	.st13{display:inline;fill:#5B7BBB;stroke:#5B7BBB;stroke-width:3;stroke-miterlimit:10;}
+	.st14{display:inline;fill:#F4EE76;}
+	.st15{display:inline;fill:#D57662;}
+</style>
+<g id="Слой_1" transform="matrix(1 0 0 1 -176.488 -271.047)">
+	<path class="st0" d="M304.1,310.8"/>
+</g>
+<g id="Слой_5" transform="matrix(1 0 0 1 -176.488 -271.047)">
+	<line class="st1" x1="330.3" y1="495" x2="-31" y2="661.7"/>
+	<circle class="st1" cx="259" cy="533.4" r="59.9"/>
+	<g class="st2">
+		<path class="st3" d="M185.4,535.2v-25.8h9.2l2.6,13.1l2.6-13.1h9.2v25.8h-6.2v-15.3l-3.2,15.3h-4.8l-3.2-15.3v15.3H185.4z"/>
+		<path class="st3" d="M245.5,524.8h-3.7l-5.6-6v-9.4h6.2v8.5l1.8,1.8h1.3v-10.3h6.2v20.3l-5.6,5.6h-9.8v-8.9h6.2v3.8h1l2-2V524.8z"/>
+		<path class="st3" d="M294.4,535.2H279v-5.1h9.2V526l-1.1-1.1h-6.5v-5.1h6.5l1.1-1.1v-4.1H279v-5.1h15.4v9.4l-3.3,3.5l3.3,3.6    V535.2z"/>
+		<path class="st3" d="M321.7,535.2v-25.8h15.4v5.1h-9.2v5.3h7.7v5.1h-7.7v5.3h9.2v5.1H321.7z"/>
+		<path class="st3" d="M373.6,535.2v-10l-3.2,10h-6v-25.8h6.2v10l3-10h6.2v25.8H373.6z"/>
+		<path class="st3" d="M416.3,509.4h6.2v25.8h-6.2v-10.4h-3.7l-5.6-6v-9.4h6.2v8.5l1.8,1.8h1.3V509.4z"/>
+	</g>
+	<rect x="186.9" y="298.9" class="st4" width="50.7" height="200.8"/>
+	<polygon class="st4" points="237.1,382.4 304.1,499.8 420.4,298.9 188,298.9  "/>
+	<polygon class="st5" points="188,297.6 237.1,382.4 422.7,297.6  "/>
+	<rect x="372.7" y="298.9" class="st6" width="48.7" height="200.8"/>
+	<polygon class="st5" points="304.1,502.6 237.6,436.1 237.1,384.4  "/>
+</g>
+<g id="Слой_6">
+	<line class="st1" x1="330.4" y1="233.9" x2="-30.9" y2="400.6"/>
+	<circle class="st1" cx="259.1" cy="272.3" r="59.9"/>
+</g>
+<g id="Слой_4" class="st2">
+	<line class="st4" x1="285.8" y1="490.9" x2="-75.5" y2="657.6"/>
+	<circle class="st4" cx="214.5" cy="529.3" r="59.9"/>
+	<rect x="131.5" y="736.3" class="st7" width="313" height="127"/>
+	<text transform="matrix(1 0 0 1 131.4711 762.0554)" class="st3 st8 st9 st10">МУЗЕИЧ</text>
+	<rect x="134.4" y="525.8" class="st11" width="50.7" height="200.8"/>
+	<polygon class="st11" points="184.6,609.2 251.6,726.6 367.9,525.8 135.5,525.8  "/>
+	<polygon class="st12" points="135.5,524.4 184.6,609.2 370.2,524.4  "/>
+	<rect x="320.2" y="525.8" class="st13" width="48.7" height="200.8"/>
+</g>
+<g id="Слой_3" class="st2">
+	<polygon class="st14" points="576.6,148.7 541,155.1 517.6,127.4 529.9,93.4 565.5,87 588.9,114.7  "/>
+	<polygon class="st15" points="587.9,105.2 547.1,115.9 517.4,85.9 528.6,45.2 569.4,34.5 599.1,64.5  "/>
+</g>
+</svg>

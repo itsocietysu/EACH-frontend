@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { colors } from '../../utils/constants';
+
 export default styled.div`
   display: inline-flex;
   flex-direction: column;
@@ -9,9 +11,9 @@ export default styled.div`
   -webkit-touch-callout: none;
   user-select: none;
   outline: 0;
-  border: 2px solid rgb(217, 146, 92);
+  border: 2px solid ${colors.base};
   color: rgb(66, 31, 25);
-  box-shadow: 0 0 10px rgb(217, 146, 92);
+  box-shadow: 0 0 10px ${colors.base};
   text-align: center;
   background: white;
 `;

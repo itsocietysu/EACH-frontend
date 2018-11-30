@@ -9,7 +9,6 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import Button from '../../components/Button';
-import Nav from '../LinkList/Nav';
 import Ul from '../LinkList/Ul';
 
 class FunctionList extends React.Component {
@@ -18,19 +17,25 @@ class FunctionList extends React.Component {
 
     // If we have items, render them
     if (this.props.values) {
-      content = this.props.values.map(value => (
-        <Button
-          key={value.name}
-          children={<FormattedMessage {...value.message} />}
-          onClick={value.func}
-        />
-      ));
+      content = this.props.values.map(value => {
+        if (this.props.component) {
+          const data = {
+            onClick: value.func,
+            key: value.name,
+          };
+          data[this.props.field] = value[this.props.field];
+          return this.props.component(data);
+        }
+        return (
+          <Button
+            key={value.name}
+            children={<FormattedMessage {...value.message} />}
+            onClick={value.func}
+          />
+        );
+      });
     }
-    return (
-      <Nav>
-        <Ul flexDirection="column">{content}</Ul>
-      </Nav>
-    );
+    return <Ul flexDirection={this.props.flexDirection}>{content}</Ul>;
   }
 }
 

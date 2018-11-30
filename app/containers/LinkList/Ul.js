@@ -8,5 +8,5 @@ export default styled.ul`
   padding: 0;
   text-align: center;
   position: relative;
-  width: 150px;
+  width: ${props => props.width};
 `;

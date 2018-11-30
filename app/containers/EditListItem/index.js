@@ -30,6 +30,7 @@ import { DEFAULT_LOCALE } from '../../i18n';
 import { configs } from '../EditForm/configs';
 import { translateFromForm, translateToForm } from '../EditForm/create-form';
 import { getLocations } from '../MuseumListItem';
+import { colors } from '../../utils/constants';
 
 const iconStyle = color => ({
   float: 'right',
@@ -39,7 +40,7 @@ const iconStyle = color => ({
 });
 
 export const arrowStyle = {
-  border: '2px solid rgb(217, 146, 92)',
+  border: `2px solid ${colors.base}`,
   borderLeft: 'none',
   borderTop: 'none',
 };
@@ -168,10 +169,7 @@ export class EditListItem extends React.PureComponent {
         {this.props.isUpdate ? (
           <Popup
             trigger={
-              <i
-                className="fas fa-bars"
-                style={iconStyle('rgb(217, 146, 92)')}
-              />
+              <i className="fas fa-bars" style={iconStyle(`${colors.base}`)} />
             }
             closeOnDocumentClick
             position="bottom right"

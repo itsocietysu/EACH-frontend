@@ -10,6 +10,8 @@ import CenteredDiv from './CenteredDiv';
 import Close from './Cross';
 import Img from './Img';
 
+import { colors } from '../../utils/constants';
+
 function Content({ onSubmit, message, cancel, close }) {
   return (
     <CenteredDiv>
@@ -53,7 +55,7 @@ export default function MsgBox({
   const contentStyle = {
     maxWidth: '30em',
     padding: '0',
-    border: '1px solid rgb(217, 146, 92)',
+    border: `1px solid ${colors.base}`,
     borderRadius: '5px',
   };
   if (trigger)

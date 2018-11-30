@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 
+import { colors } from '../../utils/constants';
+
 const TextArea = styled.textarea`
   outline: initial;
-  border: 1px solid rgb(217, 146, 92);
+  border: 1px solid ${colors.base};
   text-align: left;
   font-family: 'Book Antiqua', Palatino, 'Palatino Linotype', serif;
   max-height: 6em;

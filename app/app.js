@@ -22,14 +22,29 @@ import App from 'containers/App';
 // Import Language Provider
 import LanguageProvider from 'containers/LanguageProvider';
 
-// Load the favicon and the .htaccess file
-import '!file-loader?name=[name].[ext]!./images/favicon.ico';
+// Load the .htaccess file
 import 'file-loader?name=[name].[ext]!./.htaccess'; // eslint-disable-line import/extensions
 
-import '!file-loader?name=[name].[ext]!./images/feed_more.png';
-import '!file-loader?name=[name].[ext]!./images/border_top.PNG';
-import '!file-loader?name=[name].[ext]!./images/Photo.png';
-import '!file-loader?name=[name].[ext]!./images/Refresh.png';
+// Load the images
+import '!file-loader?name=[name].[ext]&outputPath=images/!./images/favicon.ico';
+import '!file-loader?name=[name].[ext]&outputPath=images/!./images/logo.svg';
+import '!file-loader?name=[name].[ext]&outputPath=images/!./images/logo-vk.png';
+import '!file-loader?name=[name].[ext]&outputPath=images/!./images/logo-google.png';
+import '!file-loader?name=[name].[ext]&outputPath=images/!./images/border_top.PNG';
+import '!file-loader?name=[name].[ext]&outputPath=images/!./images/Photo.png';
+
+// Load the fonts
+import '!file-loader?name=[name].[ext]&outputPath=fonts/header/!./fonts/header/font.ttf';
+import '!file-loader?name=[name].[ext]&outputPath=fonts/header/!./fonts/header/font.woff';
+import '!file-loader?name=[name].[ext]&outputPath=fonts/header/!./fonts/header/font.woff2';
+
+import '!file-loader?name=[name].[ext]&outputPath=fonts/title/!./fonts/title/font.ttf';
+import '!file-loader?name=[name].[ext]&outputPath=fonts/title/!./fonts/title/font.woff';
+import '!file-loader?name=[name].[ext]&outputPath=fonts/title/!./fonts/title/font.woff2';
+
+import '!file-loader?name=[name].[ext]&outputPath=fonts/text/!./fonts/text/font.ttf';
+import '!file-loader?name=[name].[ext]&outputPath=fonts/text/!./fonts/text/font.woff';
+import '!file-loader?name=[name].[ext]&outputPath=fonts/text/!./fonts/text/font.woff2';
 
 import configureStore from './configureStore';
 

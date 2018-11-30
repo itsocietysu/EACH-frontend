@@ -1,4 +1,4 @@
-/* eslint-disable react/prefer-stateless-function */
+/* eslint-disable react/prefer-stateless-function,react/prop-types */
 /*
  *
  * AuthList
@@ -8,21 +8,33 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import FunctionList from '../FunctionList';
-import Wrapper from '../OptionsList/Wrapper';
 import configs from './configs';
+
+function IconButton({ onClick, key, path }) {
+  return (
+    <button key={key} onClick={onClick}>
+      <img
+        src={path}
+        alt={`icon-auth-${key}`}
+        style={{ width: '3em', height: '3em', cursor: 'pointer' }}
+      />
+    </button>
+  );
+}
 
 class AuthList extends React.PureComponent {
   render() {
     return (
-      <Wrapper>
-        <FunctionList
-          values={configs.map(config =>
-            Object.assign(config, {
-              func: () => this.props.authFunc(config.app),
-            }),
-          )}
-        />
-      </Wrapper>
+      <FunctionList
+        values={configs.map(config =>
+          Object.assign(config, {
+            func: () => this.props.authFunc(config.app),
+          }),
+        )}
+        component={IconButton}
+        field="path"
+        flexDirection="row"
+      />
     );
   }
 }

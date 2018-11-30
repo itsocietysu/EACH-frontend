@@ -18,10 +18,12 @@ import BorderTopImage from '../../components/MsgBox/Img';
 import Close from '../../components/MsgBox/Cross';
 import CenteredDiv from '../../components/MsgBox/CenteredDiv';
 
+import { colors } from '../../utils/constants';
+
 export const PopupStyle = {
   width: '40em',
   padding: '0',
-  border: '1px solid rgb(217, 146, 92)',
+  border: `1px solid ${colors.base}`,
   borderRadius: '5px',
   maxHeight: '100%',
   overflow: 'auto',

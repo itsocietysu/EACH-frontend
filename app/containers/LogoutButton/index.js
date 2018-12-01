@@ -6,7 +6,6 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 
@@ -22,7 +21,6 @@ import {
 
 import Button from '../../components/Button';
 import { userDataGot } from '../../containers/App/actions';
-import messages from './messages';
 import requestAuth from '../../utils/requestAuth';
 import config from '../AuthPage/client_config.json';
 
@@ -41,7 +39,7 @@ class LogoutButton extends React.Component {
           this.props.onLogout();
           this.props.history.push(`/`);
         }}
-        children={<FormattedMessage {...messages.logout} />}
+        children={<i className="fas fa-sign-out-alt fa-2x fa-fw" />}
       />
     );
   }

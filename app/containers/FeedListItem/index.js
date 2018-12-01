@@ -29,24 +29,27 @@ const ItemDiv = (item, history) => {
       className="container"
       onClick={() =>
         !document.documentElement.classList.contains('can-touch') &&
+        item.title &&
         history.push(`/news/${item.eid}`)
       }
     >
       <Img src={item.image} alt={`Feed-${item.eid}`} />
       <div className="overlay">
-        <H2>{item.title[locale]}</H2>
+        <H2>{item.title ? item.title[locale] : item.name[locale]}</H2>
         <H3 className="desc">{item.desc[locale]}</H3>
-        <div
-          onClick={() =>
-            document.documentElement.classList.contains('can-touch') &&
-            history.push(`/news/${item.eid}`)
-          }
-        >
-          <H3>
-            <FormattedMessage {...messages.Goto} />
-            <i className="fas fa-chevron-right" />
-          </H3>
-        </div>
+        {item.title && (
+          <div
+            onClick={() =>
+              document.documentElement.classList.contains('can-touch') &&
+              history.push(`/news/${item.eid}`)
+            }
+          >
+            <H3>
+              <FormattedMessage {...messages.Goto} />
+              <i className="fas fa-chevron-right" />
+            </H3>
+          </div>
+        )}
       </div>
     </div>
   );

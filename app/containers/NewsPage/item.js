@@ -2,13 +2,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import DivSep from 'containers/FeedListItem/DivSep';
-import Img from 'containers/FeedListItem/Img';
+import Img from '../FeedListItem/Img';
 
-import H1 from 'components/H1';
-import P from 'components/P';
-import { getLocale } from 'cookieManager';
+import H2 from '../../components/H2';
+import H3 from '../../components/H3';
+import P from '../../components/P';
+import { getLocale } from '../../cookieManager';
 import { DEFAULT_LOCALE } from '../../i18n';
+import { colors } from '../../utils/constants';
 
 import './item.css';
 
@@ -26,11 +27,12 @@ class Item extends React.Component {
     const locale = getLocale() || DEFAULT_LOCALE;
     return (
       <div className="wrapper">
-        <div>
-          <DivSep width="50%" className="divSep">
+        <div style={{ borderBottom: '2px solid #000', paddingBottom: '0.2em' }}>
+          <div className="divSep">
             <Img src={item.image} alt={`Feed-${item.eid}`} />
-          </DivSep>
-          <H1>{item.title[locale]}</H1>
+          </div>
+          <H2>{item.title[locale]}</H2>
+          <H3 style={{ color: `${colors.base}` }}>{item.desc[locale]}</H3>
         </div>
         <P className={`P-text-${item.eid}`} ref="text" />
       </div>

@@ -1,31 +1,31 @@
 import { call, select, put, takeLatest } from 'redux-saga/effects';
-import { LOAD_FEEDS } from './constants';
-import { feedsLoaded, feedsLoadingError } from './actions';
-import { makeSelectPage } from './selectors';
+import { LOAD_DATA } from './constants';
+import { dataLoaded, dataLoadingError } from './actions';
+import { makeSelectContent } from './selectors';
 
 import request from '../../utils/request';
-import { urls, FEED_CFG } from '../EditPage/configs';
+import { urls } from '../EditPage/configs';
 import { getDataFromResp } from '../../utils/utils';
 
 /**
- * Feeds data load handler
+ * Home data load handler
  */
 export function* loadFeeds() {
-  const page = yield select(makeSelectPage());
-  const requestURL = urls[FEED_CFG].tape(false, (page - 1) * 10, page * 10 - 1);
+  const content = yield select(makeSelectContent());
+  const requestURL = urls[content].tape(false, 0, 9);
   try {
-    const feeds = yield call(request, requestURL);
-    const data = getDataFromResp(feeds.result, FEED_CFG);
-    if (data.length) yield put(feedsLoaded(data, feeds.count, feeds.page));
-    else yield put(feedsLoaded(false, feeds.count, feeds.page));
+    const resp = yield call(request, requestURL);
+    const data = getDataFromResp(resp.result, content);
+    if (data.length) yield put(dataLoaded(data));
+    else yield put(dataLoaded(false));
   } catch (err) {
-    yield put(feedsLoadingError(err));
+    yield put(dataLoadingError(err));
   }
 }
 
 /**
  * Root saga manages watcher lifecycle
  */
-export default function* loadFeedsData() {
-  yield takeLatest(LOAD_FEEDS, loadFeeds);
+export default function* loadHomeData() {
+  yield takeLatest(LOAD_DATA, loadFeeds);
 }

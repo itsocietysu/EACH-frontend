@@ -8,7 +8,7 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
   header: {
     id: 'each.containers.MuseumsPage.header',
-    defaultMessage: 'Features',
+    defaultMessage: 'Museums',
   },
   textHeader: {
     id: 'each.containers.MuseumsPage.text.header',

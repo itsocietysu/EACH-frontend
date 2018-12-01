@@ -8,35 +8,37 @@
 
 import { fromJS } from 'immutable';
 
-import { LOAD_FEEDS, LOAD_FEEDS_SUCCESS, LOAD_FEEDS_ERROR } from './constants';
+import {
+  LOAD_DATA,
+  LOAD_DATA_SUCCESS,
+  LOAD_DATA_ERROR,
+  CHANGE_HOME_CONTENT,
+} from './constants';
+import { FEED_CFG } from '../EditPage/configs';
 
 export const initialState = fromJS({
   loading: false,
   error: false,
   data: false,
-  page: 1,
-  count: 0,
+  homeContent: FEED_CFG,
 });
 
-function feedsReducer(state = initialState, action) {
+function homeReducer(state = initialState, action) {
   switch (action.type) {
-    case LOAD_FEEDS:
+    case LOAD_DATA:
       return state
         .set('loading', true)
         .set('error', false)
-        .set('data', false)
-        .set('page', action.page);
-    case LOAD_FEEDS_SUCCESS:
-      return state
-        .set('loading', false)
-        .set('data', action.feeds)
-        .set('count', action.count)
-        .set('page', action.page);
-    case LOAD_FEEDS_ERROR:
+        .set('data', false);
+    case LOAD_DATA_SUCCESS:
+      return state.set('loading', false).set('data', action.data);
+    case LOAD_DATA_ERROR:
       return state.set('error', action.error).set('loading', false);
+    case CHANGE_HOME_CONTENT:
+      return state.set('homeContent', action.content);
     default:
       return state;
   }
 }
 
-export default feedsReducer;
+export default homeReducer;

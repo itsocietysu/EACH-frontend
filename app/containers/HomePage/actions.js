@@ -9,52 +9,62 @@
  *    }
  */
 
-import { LOAD_FEEDS, LOAD_FEEDS_SUCCESS, LOAD_FEEDS_ERROR } from './constants';
+import {
+  LOAD_DATA,
+  LOAD_DATA_SUCCESS,
+  LOAD_DATA_ERROR,
+  CHANGE_HOME_CONTENT,
+} from './constants';
 
 /**
- * Load feeds data, this action starts the request saga
+ * Load content data, this action starts the request saga
  *
- * @param  {number} page The number of new current page
- *
- * @return {object} An action object with a type of LOAD_FEEDS passing the page number
+ * @return {object} An action object with a type of LOAD_DATA
  */
-export function loadFeeds(page) {
+export function loadData() {
   return {
-    type: LOAD_FEEDS,
-    page,
+    type: LOAD_DATA,
   };
 }
 
 /**
- * Dispatched when feeds data is loaded by the request saga
+ * Dispatched when content data is loaded by the request saga
  *
- * @param  {array} feeds The current feeds
+ * @param  {array} data The current data
  *
- * @param  {number} count The count of all feeds
- *
- * @param  {number} page The number page from response
- *
- * @return {object} An action object with a type of LOAD_FEEDS_SUCCESS passing feeds data, count of all feeds and number of page
+ * @return {object} An action object with a type of LOAD_DATA_SUCCESS passing the data
  */
-export function feedsLoaded(feeds, count, page) {
+export function dataLoaded(data) {
   return {
-    type: LOAD_FEEDS_SUCCESS,
-    feeds,
-    count,
-    page,
+    type: LOAD_DATA_SUCCESS,
+    data,
   };
 }
 
 /**
- * Dispatched when loading feeds data fails
+ * Dispatched when loading content data fails
  *
  * @param  {object} error The error
  *
- * @return {object} An action object with a type of LOAD_FEEDS_ERROR passing the error
+ * @return {object} An action object with a type of LOAD_DATA_ERROR passing the error
  */
-export function feedsLoadingError(error) {
+export function dataLoadingError(error) {
   return {
-    type: LOAD_FEEDS_ERROR,
+    type: LOAD_DATA_ERROR,
     error,
+  };
+}
+
+/**
+ * Dispatched when content data is changed by user
+ *
+ * @param  {object} content The current content
+ *
+ * @return {object} An action object with a type of CHANGE_HOME_CONTENT passing the content
+ */
+export function contentChanged(content) {
+  return {
+    type: CHANGE_HOME_CONTENT,
+    content,
   };
 }

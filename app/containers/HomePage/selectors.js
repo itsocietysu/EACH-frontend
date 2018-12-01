@@ -5,28 +5,24 @@
 import { createSelector } from 'reselect';
 import { initialState } from './reducer';
 
-const selectFeeds = state => state.get('feeds', initialState);
+const selectHome = state => state.get('home', initialState);
 
 const makeSelectLoading = () =>
-  createSelector(selectFeeds, feedsState => feedsState.get('loading'));
+  createSelector(selectHome, homeState => homeState.get('loading'));
 
 const makeSelectError = () =>
-  createSelector(selectFeeds, feedsState => feedsState.get('error'));
+  createSelector(selectHome, homeState => homeState.get('error'));
 
 const makeSelectData = () =>
-  createSelector(selectFeeds, feedsState => feedsState.get('data'));
+  createSelector(selectHome, homeState => homeState.get('data'));
 
-const makeSelectCount = () =>
-  createSelector(selectFeeds, feedsState => feedsState.get('count'));
-
-const makeSelectPage = () =>
-  createSelector(selectFeeds, feedsState => feedsState.get('page'));
+const makeSelectContent = () =>
+  createSelector(selectHome, homeState => homeState.get('homeContent'));
 
 export {
-  selectFeeds,
+  selectHome,
   makeSelectLoading,
   makeSelectError,
   makeSelectData,
-  makeSelectCount,
-  makeSelectPage,
+  makeSelectContent,
 };

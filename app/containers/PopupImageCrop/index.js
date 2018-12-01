@@ -57,6 +57,8 @@ export class PopupImageCrop extends React.Component {
             />
             <div>
               <Button
+                borderRadius="4px"
+                borderWidth="2px"
                 onClick={() => {
                   onSubmit(this.state.cropRef.current._getResult());
                   close();
@@ -64,7 +66,7 @@ export class PopupImageCrop extends React.Component {
               >
                 <FormattedMessage {...messages.confirm} />
               </Button>
-              <Button onClick={close}>
+              <Button borderRadius="4px" borderWidth="2px" onClick={close}>
                 <FormattedMessage {...messages.close} />
               </Button>
             </div>

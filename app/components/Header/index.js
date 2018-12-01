@@ -17,11 +17,9 @@ class Header extends React.Component {
   render() {
     return (
       <div>
-        {this.props.user && (
-          <section className="toggle">
-            <LocaleToggle />
-          </section>
-        )}
+        <section className="toggle">
+          <LocaleToggle />
+        </section>
         <div className="navBar">
           <div className="divNavBar">
             <HeaderLink to="/">
@@ -29,18 +27,16 @@ class Header extends React.Component {
               <H1>МУЗЕИЧ</H1>
             </HeaderLink>
             {this.props.back && (
-              <Button onClick={this.props.history.goBack}>
+              <Button
+                borderRadius="4px"
+                borderWidth="2px"
+                onClick={this.props.history.goBack}
+              >
                 <FormattedMessage {...messages.back} />
               </Button>
             )}
           </div>
-          {this.props.user ? (
-            <UserButton />
-          ) : (
-            <section className="toggleSimple">
-              <LocaleToggle />
-            </section>
-          )}
+          <UserButton />
         </div>
       </div>
     );
@@ -48,7 +44,6 @@ class Header extends React.Component {
 }
 
 Header.propTypes = {
-  user: PropTypes.bool,
   simple: PropTypes.bool,
   back: PropTypes.bool,
 };

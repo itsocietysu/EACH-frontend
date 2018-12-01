@@ -17,13 +17,13 @@ const configs = [
     name: 'VKontakte',
     message: messages.vkontakte,
     app: appEnum.VK,
-    path: './images/logo-vk.png',
+    path: './images/logo-vk.svg',
   },
   {
     name: 'Google+',
     message: messages.google,
     app: appEnum.Google,
-    path: './images/logo-google.png',
+    path: './images/logo-google.svg',
   },
 ];
 

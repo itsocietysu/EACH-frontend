@@ -5,6 +5,7 @@ class Link {
   path: string;
   match: any;
   message: any;
+  icon: string;
 }
 
 const MuseumsLink = (() => {
@@ -12,6 +13,7 @@ const MuseumsLink = (() => {
   l.path = '/museums?page=1';
   l.match = null;
   l.message = messages.museums;
+  l.icon = 'fa-university';
   return l;
 })();
 
@@ -20,6 +22,7 @@ const AdminEditLink = (() => {
   l.path = '/edit/news?page=1';
   l.match = { content: 'news' };
   l.message = messages.adminEdit;
+  l.icon = 'fa-edit';
   return l;
 })();
 
@@ -28,6 +31,7 @@ const EditNewsLink = (() => {
   l.path = '/edit/news?page=1';
   l.match = { content: 'news' };
   l.message = messages.editNews;
+  l.icon = '';
   return l;
 })();
 
@@ -36,6 +40,7 @@ const EditMuseumsLink = (() => {
   l.path = '/edit/museums?page=1';
   l.match = { content: 'museums' };
   l.message = messages.editMuseums;
+  l.icon = '';
   return l;
 })();
 
@@ -44,6 +49,7 @@ const EditLocationsLink = (() => {
   l.path = '/edit/locations?page=1';
   l.match = { content: 'locations' };
   l.message = messages.editLocations;
+  l.icon = '';
   return l;
 })();
 

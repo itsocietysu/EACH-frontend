@@ -8,5 +8,5 @@ const Img = styled.img`
 `;
 
 export default function() {
-  return <Img src="/border_top.PNG" />;
+  return <Img src="/images/border_top.PNG" />;
 }

@@ -20,6 +20,8 @@ function Content({ onSubmit, message, cancel, close }) {
       <FormattedMessage {...message} />
       <div>
         <Button
+          borderRadius="4px"
+          borderWidth="2px"
           onClick={() => {
             onSubmit();
             close();
@@ -28,6 +30,8 @@ function Content({ onSubmit, message, cancel, close }) {
         />
         {cancel && (
           <Button
+            borderRadius="4px"
+            borderWidth="2px"
             onClick={close}
             children={<FormattedMessage {...messages.no} />}
           />

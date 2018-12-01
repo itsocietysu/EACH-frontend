@@ -34,6 +34,11 @@
   width: 100%;
   text-align: center;
   transition: .5s ease;
+  font-family: 'Book Antiqua', Palatino, 'Palatino Linotype', serif;
+}
+
+.overlay H2 {
+  font-family: 'Book Antiqua', Palatino, 'Palatino Linotype', serif;
 }
 
 .overlay div {

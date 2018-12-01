@@ -6,13 +6,13 @@ export default styled.div`
   display: inline-flex;
   flex-direction: column;
   margin: 0;
-  border-radius: 4px;
+  border-radius: 5px;
   -webkit-font-smoothing: antialiased;
   -webkit-touch-callout: none;
   user-select: none;
   outline: 0;
-  border: 2px solid ${colors.base};
-  color: rgb(66, 31, 25);
+  border: 1px solid ${colors.base};
+  color: ${colors.base};
   box-shadow: 0 0 10px ${colors.base};
   text-align: center;
   background: white;

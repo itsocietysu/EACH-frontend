@@ -16,7 +16,7 @@ function IconButton({ onClick, key, path }) {
       <img
         src={path}
         alt={`icon-auth-${key}`}
-        style={{ width: '3em', height: '3em', cursor: 'pointer' }}
+        style={{ width: '2.5em', height: '2.5em', cursor: 'pointer' }}
       />
     </button>
   );

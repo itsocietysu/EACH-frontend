@@ -25,6 +25,7 @@
 .login-overlay .login-icons {
   position: relative;
   right: 0;
+  margin: auto;
 }
 
 .login-container:hover .login-overlay {

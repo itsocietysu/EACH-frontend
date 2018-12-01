@@ -6,7 +6,6 @@
  */
 
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
 import LogoutButton from '../LogoutButton';
 
@@ -22,13 +21,13 @@ class LinkList extends React.Component {
     if (this.props.values) {
       content = this.props.values.map(value => (
         <Link key={value.path} to={value.path}>
-          <FormattedMessage {...value.message} />
+          <i className={`fa ${value.icon} fa-2x fa-fw`} />
         </Link>
       ));
     }
     return (
       <Nav>
-        <Ul flexDirection="column" width="150px">
+        <Ul flexDirection="column" width="3.2em">
           {content}
           <LogoutButton />
         </Ul>

@@ -11,7 +11,7 @@ const StyledButton = styled.button`
   font-family: 'Book Antiqua', Palatino, 'Palatino Linotype', serif;
   font-weight: bold;
   font-size: 16px;
-  color: rgb(66, 31, 25);
+  color: ${colors.base};
 
   &:hover {
     background: ${colors.base};

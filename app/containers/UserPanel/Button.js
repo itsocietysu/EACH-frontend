@@ -3,21 +3,18 @@ import styled from 'styled-components';
 import { colors } from '../../utils/constants';
 
 export default styled.button`
-  line-height: 24px;
   display: inline-flex;
-  padding: 0.25em 2em;
-  margin: 1em;
-  border-radius: 4px;
+  border-radius: ${props => props.borderRadius};
+  padding: 0 0.1em;
   -webkit-font-smoothing: antialiased;
   -webkit-touch-callout: none;
   user-select: none;
   cursor: pointer;
   outline: 0;
-  font-family: 'Book Antiqua', Palatino, 'Palatino Linotype', serif;
   font-weight: bold;
   font-size: 16px;
-  border: 2px solid ${colors.base};
-  color: rgb(66, 31, 25);
+  border: ${props => props.borderWidth} solid ${colors.base};
+  color: ${colors.base};
 
   &:hover {
     background: ${colors.base};

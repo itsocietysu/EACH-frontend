@@ -1,6 +1,9 @@
 .navBar {
   overflow: hidden;
   text-align: left;
+  border-bottom: 2px solid black;
+  padding-bottom: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 .navBar .divNavBar {
@@ -13,8 +16,4 @@
 
 .toggle {
   text-align: right;
-}
-
-.toggleSimple {
-  float: right;
 }

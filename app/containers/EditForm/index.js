@@ -64,6 +64,8 @@ class EditForm extends React.Component {
     const Form = form ? () => form : () => <div />;
     const ButtonConfirm = ({ close }) => (
       <Button
+        borderRadius="4px"
+        borderWidth="2px"
         onClick={() => {
           const dataToPost = form ? refForm.current._onSubmit() : null;
           if (dataToPost) {
@@ -98,7 +100,11 @@ class EditForm extends React.Component {
               <Form />
               <div>
                 <ButtonConfirm close={close} />
-                <Button onClick={() => this._onClose(close)}>
+                <Button
+                  borderRadius="4px"
+                  borderWidth="2px"
+                  onClick={() => this._onClose(close)}
+                >
                   <FormattedMessage {...messages.close} />
                 </Button>
               </div>

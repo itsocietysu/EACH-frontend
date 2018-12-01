@@ -28,8 +28,8 @@ import 'file-loader?name=[name].[ext]!./.htaccess'; // eslint-disable-line impor
 // Load the images
 import '!file-loader?name=[name].[ext]&outputPath=images/!./images/favicon.ico';
 import '!file-loader?name=[name].[ext]&outputPath=images/!./images/logo.svg';
-import '!file-loader?name=[name].[ext]&outputPath=images/!./images/logo-vk.png';
-import '!file-loader?name=[name].[ext]&outputPath=images/!./images/logo-google.png';
+import '!file-loader?name=[name].[ext]&outputPath=images/!./images/logo-vk.svg';
+import '!file-loader?name=[name].[ext]&outputPath=images/!./images/logo-google.svg';
 import '!file-loader?name=[name].[ext]&outputPath=images/!./images/border_top.PNG';
 import '!file-loader?name=[name].[ext]&outputPath=images/!./images/Photo.png';
 

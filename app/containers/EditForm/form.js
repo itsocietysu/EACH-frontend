@@ -387,7 +387,12 @@ class Form extends React.Component {
                   styleCrop={ImageCropStyle}
                   onSubmit={base64 => this._onChangeCrop(base64, image.field)}
                   trigger={
-                    <Button type="button" style={{ margin: '0.5em' }}>
+                    <Button
+                      borderRadius="4px"
+                      borderWidth="2px"
+                      type="button"
+                      style={{ margin: '0.5em' }}
+                    >
                       <FormattedMessage {...messages.crop} />
                     </Button>
                   }

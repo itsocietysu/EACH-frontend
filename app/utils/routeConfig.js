@@ -38,7 +38,7 @@ const HomeRoute = (() => {
   const r = new Route();
   r.path = '/';
   r.exact = true;
-  r.component = () => Page(Header, HomePage, Footer, { user: true });
+  r.component = () => Page(Header, HomePage, Footer);
   return r;
 })();
 
@@ -46,8 +46,7 @@ const FeatureRoute = (() => {
   const r = new Route();
   r.path = '/features';
   r.exact = false;
-  r.component = () =>
-    Page(Header, FeaturePage, Footer, { user: true, simple: true });
+  r.component = () => Page(Header, FeaturePage, Footer, { simple: true });
   return r;
 })();
 
@@ -60,7 +59,7 @@ const MuseumsRoute = (() => {
       Header,
       MuseumsPage,
       Footer,
-      { user: true, simple: true },
+      { simple: true },
       { search: parseQueryString(location.search.substring(1)) },
     );
   return r;
@@ -75,7 +74,7 @@ const EditRoute = (() => {
       Header,
       EditContentPage,
       Footer,
-      { user: true, simple: true },
+      { simple: true },
       {
         search: parseQueryString(location.search.substring(1)),
         content: match.params.content,
@@ -135,8 +134,7 @@ const NotFoundRoute = (() => {
   const r = new Route();
   r.path = '';
   r.exact = false;
-  r.component = () =>
-    Page(Header, NotFoundPage, Footer, { user: true, simple: true });
+  r.component = () => Page(Header, NotFoundPage, Footer, { simple: true });
   return r;
 })();
 

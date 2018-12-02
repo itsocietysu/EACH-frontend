@@ -9,11 +9,13 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 
 import LoadingIndicator from '../../components/LoadingIndicator';
-import P from '../../components/P';
+import H1 from '../../components/H1';
 import { getToken } from './oauth2-authorize';
+import { colors } from '../../utils/constants';
 
 const PStyle = {
   textAlign: 'center',
+  color: colors.base,
 };
 
 export default class AuthPage extends React.Component {
@@ -27,7 +29,7 @@ export default class AuthPage extends React.Component {
           <title>Auth Page</title>
           <meta name="description" content="An EACH application auth page" />
         </Helmet>
-        <P style={PStyle}>Authorization</P>
+        <H1 style={PStyle}>Authorization</H1>
         <LoadingIndicator />
       </article>
     );

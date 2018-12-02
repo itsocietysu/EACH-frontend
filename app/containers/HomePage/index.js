@@ -99,7 +99,7 @@ export class HomePage extends React.PureComponent {
           <title>Home Page</title>
           <meta name="description" content="An EACH application homepage" />
         </Helmet>
-        <div style={{ height: '3em' }}>
+        <div style={{ height: '3em', textAlign: 'center' }}>
           <button
             style={styleButtonFeed(colorFeed)}
             onClick={() => this.props.change(FEED_CFG)}
@@ -116,6 +116,11 @@ export class HomePage extends React.PureComponent {
               <FormattedMessage {...mMessages.header} />
             </H1>
           </button>
+          <img
+            src="/images/separator.PNG"
+            alt=""
+            style={{ height: 'inherit' }}
+          />
         </div>
         <DataList {...dataListProps} />
       </article>

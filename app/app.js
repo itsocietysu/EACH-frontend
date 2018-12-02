@@ -31,7 +31,8 @@ import '!file-loader?name=[name].[ext]&outputPath=images/!./images/logo.svg';
 import '!file-loader?name=[name].[ext]&outputPath=images/!./images/logo-vk.svg';
 import '!file-loader?name=[name].[ext]&outputPath=images/!./images/logo-google.svg';
 import '!file-loader?name=[name].[ext]&outputPath=images/!./images/border_top.PNG';
-import '!file-loader?name=[name].[ext]&outputPath=images/!./images/Photo.png';
+import '!file-loader?name=[name].[ext]&outputPath=images/!./images/photo.png';
+import '!file-loader?name=[name].[ext]&outputPath=images/!./images/separator.PNG';
 
 // Load the fonts
 import '!file-loader?name=[name].[ext]&outputPath=fonts/header/!./fonts/header/font.ttf';

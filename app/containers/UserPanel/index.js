@@ -31,8 +31,12 @@ class UserPanel extends React.Component {
     return (
       <div className="user-panel">
         <div className="user-points">
-          <H3 color="#000">НОВИЧОК</H3>
-          <H3 color={`${colors.base}`}>Баллы:0</H3>
+          <H3 color="#000">
+            <FormattedMessage {...messages.beginner} />
+          </H3>
+          <H3 color={`${colors.base}`}>
+            <FormattedMessage {...messages.points} values={{ points: 0 }} />
+          </H3>
         </div>
         <H1>
           <FormattedMessage

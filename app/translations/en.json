@@ -9,6 +9,8 @@
   "each.components.MsgBox.no": "No",
   "each.components.LabelFile.selectFile": "Select File",
   "each.containers.UserPanel.user": "{user}",
+  "each.containers.UserPanel.points": "Points:{points}",
+  "each.containers.UserPanel.beginner": "Beginner",
   "each.containers.OptionsList.museums": "Museums",
   "each.containers.OptionsList.adminEdit": "Admin",
   "each.containers.OptionsList.editNews": "News",

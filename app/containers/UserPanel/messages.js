@@ -10,4 +10,12 @@ export default defineMessages({
     id: 'each.containers.UserPanel.user',
     defaultMessage: '{user}',
   },
+  beginner: {
+    id: 'each.containers.UserPanel.beginner',
+    defaultMessage: 'Beginner',
+  },
+  points: {
+    id: 'each.containers.UserPanel.points',
+    defaultMessage: 'Points:{points}',
+  },
 });

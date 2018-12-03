@@ -9,7 +9,7 @@ const A = styled.a`
   text-decoration: none;
 
   &:hover {
-    color: rgb(66, 31, 25);
+    color: #000;
   }
 `;
 

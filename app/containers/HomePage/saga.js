@@ -1,10 +1,11 @@
+/* eslint-disable prefer-const */
 import { call, select, put, takeLatest } from 'redux-saga/effects';
 import { LOAD_DATA } from './constants';
 import { dataLoaded, dataLoadingError } from './actions';
 import { makeSelectContent } from './selectors';
 
 import request from '../../utils/request';
-import { urls } from '../EditPage/configs';
+import { MUSEUM_CFG, urls } from '../EditPage/configs';
 import { getDataFromResp } from '../../utils/utils';
 
 /**
@@ -15,9 +16,18 @@ export function* loadFeeds() {
   const requestURL = urls[content].tape(false, 0, 9);
   try {
     const resp = yield call(request, requestURL);
-    const data = getDataFromResp(resp.result, content);
-    if (data.length) yield put(dataLoaded(data));
-    else yield put(dataLoaded(false));
+    let data = getDataFromResp(resp.result, content);
+    if (data.length) {
+      if (content === MUSEUM_CFG) {
+        data = data.map(v => {
+          let val = v;
+          val.desc.RU = 'Установите приложение';
+          val.desc.EN = 'Setup app';
+          return val;
+        });
+      }
+      yield put(dataLoaded(data));
+    } else yield put(dataLoaded(false));
   } catch (err) {
     yield put(dataLoadingError(err));
   }

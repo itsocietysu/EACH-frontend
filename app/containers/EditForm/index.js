@@ -11,9 +11,9 @@ import { FormattedMessage } from 'react-intl';
 import lodash from 'lodash';
 
 import { PopupStyle } from '../PopupImageCrop';
-import Button from '../UserPanel/Button';
+import Button from '../../components/MsgBox/Button';
 import messages from './messages';
-import BorderTopImage from '../../components/MsgBox/Img';
+import BorderTopImage from '../../components/MsgBox/Header';
 import Close from '../../components/MsgBox/Cross';
 import './index.css';
 
@@ -64,8 +64,6 @@ class EditForm extends React.Component {
     const Form = form ? () => form : () => <div />;
     const ButtonConfirm = ({ close }) => (
       <Button
-        borderRadius="4px"
-        borderWidth="2px"
         onClick={() => {
           const dataToPost = form ? refForm.current._onSubmit() : null;
           if (dataToPost) {
@@ -100,11 +98,7 @@ class EditForm extends React.Component {
               <Form />
               <div>
                 <ButtonConfirm close={close} />
-                <Button
-                  borderRadius="4px"
-                  borderWidth="2px"
-                  onClick={() => this._onClose(close)}
-                >
+                <Button onClick={() => this._onClose(close)}>
                   <FormattedMessage {...messages.close} />
                 </Button>
               </div>

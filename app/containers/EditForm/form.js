@@ -18,7 +18,7 @@ import LabelFile from '../../components/LabelFile';
 import LabelInput from '../../components/LabelInput';
 import SelectSearch from '../SelectSearch';
 import SelectTag from '../SelectTag';
-import Button from '../UserPanel/Button';
+import Button from '../../components/MsgBox/Button';
 import messages from './messages';
 import Img from './Img';
 
@@ -361,7 +361,10 @@ class Form extends React.Component {
     if (keys.includes('images')) {
       description.images.forEach(image => {
         images.push(
-          <div key={`${image.field}-${name}`}>
+          <div
+            key={`${image.field}-${name}`}
+            style={{ fontFamily: 'MurraySlab' }}
+          >
             <FormattedMessage {...messages[image.field]} />
             <div style={{ marginBottom: '0.5em' }}>
               {crops[image.field] ? (
@@ -387,12 +390,7 @@ class Form extends React.Component {
                   styleCrop={ImageCropStyle}
                   onSubmit={base64 => this._onChangeCrop(base64, image.field)}
                   trigger={
-                    <Button
-                      borderRadius="4px"
-                      borderWidth="2px"
-                      type="button"
-                      style={{ margin: '0.5em' }}
-                    >
+                    <Button style={{ margin: '0.5em' }}>
                       <FormattedMessage {...messages.crop} />
                     </Button>
                   }

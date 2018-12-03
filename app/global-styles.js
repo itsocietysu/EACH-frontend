@@ -16,7 +16,7 @@ injectGlobal`
 
   p,
   label {
-    font-family: 'Book Antiqua', Palatino, 'Palatino Linotype', serif;
+    font-family: 'MurraySlab';
     line-height: 1.5em;
   }
 `;

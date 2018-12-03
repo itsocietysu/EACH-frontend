@@ -12,7 +12,7 @@ const ToggleOption = ({ value, message, intl }) => (
   <option
     value={value}
     style={{
-      color: 'rgb(66, 31, 25)',
+      color: '#000',
       fontFamily: "'Book Antiqua', Palatino, 'Palatino Linotype', serif",
     }}
   >

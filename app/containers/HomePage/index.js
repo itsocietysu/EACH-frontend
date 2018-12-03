@@ -31,6 +31,7 @@ import reducer from './reducer';
 import saga from './saga';
 import { FEED_CFG, MUSEUM_CFG } from '../EditPage/configs';
 import { colors } from '../../utils/constants';
+import Title from './title';
 
 const styleButton = {
   position: 'absolute',
@@ -99,7 +100,7 @@ export class HomePage extends React.PureComponent {
           <title>Home Page</title>
           <meta name="description" content="An EACH application homepage" />
         </Helmet>
-        <div style={{ height: '3em', textAlign: 'center' }}>
+        <Title>
           <button
             style={styleButtonFeed(colorFeed)}
             onClick={() => this.props.change(FEED_CFG)}
@@ -121,7 +122,7 @@ export class HomePage extends React.PureComponent {
             alt=""
             style={{ height: 'inherit' }}
           />
-        </div>
+        </Title>
         <DataList {...dataListProps} />
       </article>
     );

@@ -14,7 +14,7 @@ import { clearError, newError, userDataGot } from '../App/actions';
 import messages from './messages';
 import AuthList from '../AuthList';
 import H1 from '../../components/H1';
-import './hoverContainer.css';
+import './index.css';
 
 export class LoginButton extends React.Component {
   authorize = app => {

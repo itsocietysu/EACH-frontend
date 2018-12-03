@@ -12,11 +12,11 @@ const Button = styled.div`
   user-select: none;
   cursor: pointer;
   outline: 0;
-  font-family: 'Book Antiqua', Palatino, 'Palatino Linotype', serif;
+  font-family: 'MurraySlab';
   font-weight: bold;
   font-size: 16px;
   border: 2px solid ${colors.base};
-  color: rgb(66, 31, 25);
+  color: #000;
 
   &:hover {
     background: ${colors.base};

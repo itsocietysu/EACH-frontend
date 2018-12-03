@@ -12,7 +12,7 @@ export default styled(NavLink)`
   font-family: 'Book Antiqua', Palatino, 'Palatino Linotype', serif;
   font-weight: bold;
   font-size: 16px;
-  color: rgb(66, 31, 25);
+  color: #000;
 
   &:hover {
     background: ${colors.base};

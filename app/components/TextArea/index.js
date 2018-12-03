@@ -16,7 +16,7 @@ export default function createTextArea({
   return (
     <div
       style={{
-        fontFamily: '"Book Antiqua", Palatino, "Palatino Linotype", serif',
+        fontFamily: 'MurraySlab',
       }}
     >
       <label htmlFor={name}>

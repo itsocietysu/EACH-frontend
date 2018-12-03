@@ -8,8 +8,9 @@ import Button from './Button';
 import messages from './messages';
 import OptionsList from '../OptionsList';
 import { colors } from '../../utils/constants';
-import H1 from '../../components/H1';
-import H3 from '../../components/H3';
+import H1 from './H1';
+import H3 from './H3';
+import './index.css';
 
 const PopupContentStyle = {
   boxShadow: 'none',
@@ -25,27 +26,15 @@ const PopupArrowStyle = {
   borderTop: 'none',
 };
 
-const panelStyle = {
-  float: 'right',
-  display: 'flex',
-  flexDirection: 'row',
-};
-
 class UserPanel extends React.Component {
   render() {
     return (
-      <div style={panelStyle}>
-        <div>
-          <H3 style={{ margin: '0', float: 'right' }}>МАСТЕР</H3>
-          <H3 style={{ color: `${colors.base}`, margin: '0' }}>Баллы:12345</H3>
+      <div className="user-panel">
+        <div className="user-points">
+          <H3 color="#000">НОВИЧОК</H3>
+          <H3 color={`${colors.base}`}>Баллы:0</H3>
         </div>
-        <H1
-          style={{
-            color: `${colors.base}`,
-            borderLeft: `2px solid ${colors.base}`,
-            paddingLeft: '0.2em',
-          }}
-        >
+        <H1>
           <FormattedMessage
             {...messages.user}
             values={{ user: this.props.username }}
@@ -53,7 +42,12 @@ class UserPanel extends React.Component {
         </H1>
         <Popup
           trigger={
-            <Button borderRadius="10px" borderWidth="1px" type="button">
+            <Button
+              borderRadius="10px"
+              borderWidth="1px"
+              type="button"
+              className="user-button"
+            >
               <i className="fas fa-chevron-down fa-3x" />
             </Button>
           }

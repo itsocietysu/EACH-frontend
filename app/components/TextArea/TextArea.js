@@ -8,6 +8,7 @@ const TextArea = styled.textarea`
   text-align: left;
   font-family: 'Book Antiqua', Palatino, 'Palatino Linotype', serif;
   max-height: 6em;
+  color: #000;
   @media screen and (max-width: 1280px) {
     max-width: 50em;
   }

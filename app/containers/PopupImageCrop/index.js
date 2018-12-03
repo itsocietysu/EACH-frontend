@@ -12,9 +12,9 @@ import { FormattedMessage } from 'react-intl';
 
 import ImageCrop from '../ImageCrop';
 import messages from '../EditForm/messages';
-import Button from '../UserPanel/Button';
 
-import BorderTopImage from '../../components/MsgBox/Img';
+import Button from '../../components/MsgBox/Button';
+import BorderTopImage from '../../components/MsgBox/Header';
 import Close from '../../components/MsgBox/Cross';
 import CenteredDiv from '../../components/MsgBox/CenteredDiv';
 
@@ -57,8 +57,6 @@ export class PopupImageCrop extends React.Component {
             />
             <div>
               <Button
-                borderRadius="4px"
-                borderWidth="2px"
                 onClick={() => {
                   onSubmit(this.state.cropRef.current._getResult());
                   close();
@@ -66,7 +64,7 @@ export class PopupImageCrop extends React.Component {
               >
                 <FormattedMessage {...messages.confirm} />
               </Button>
-              <Button borderRadius="4px" borderWidth="2px" onClick={close}>
+              <Button onClick={close}>
                 <FormattedMessage {...messages.close} />
               </Button>
             </div>

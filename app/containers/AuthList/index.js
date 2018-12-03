@@ -13,11 +13,7 @@ import configs from './configs';
 function IconButton({ onClick, key, path }) {
   return (
     <button key={key} onClick={onClick}>
-      <img
-        src={path}
-        alt={`icon-auth-${key}`}
-        style={{ width: '2.5em', height: '2.5em', cursor: 'pointer' }}
-      />
+      <img src={path} alt={`icon-auth-${key}`} />
     </button>
   );
 }

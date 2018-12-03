@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const Select = styled.select`
   line-height: 1em;
   height: 20px;
-  color: rgb(66, 31, 25);
+  color: #000;
   font-family: 'Book Antiqua', Palatino, 'Palatino Linotype', serif;
 `;
 

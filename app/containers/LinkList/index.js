@@ -27,7 +27,7 @@ class LinkList extends React.Component {
     }
     return (
       <Nav>
-        <Ul flexDirection="column" width="3.2em">
+        <Ul flexDirection="column" width="3.2em" className="options-link-list">
           {content}
           <LogoutButton />
         </Ul>

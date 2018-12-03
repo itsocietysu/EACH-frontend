@@ -28,7 +28,28 @@
   margin: auto;
 }
 
+.login-overlay .login-icons img {
+  width: 2.5em;
+  height: 2.5em;
+  cursor: pointer;
+}
+
 .login-container:hover .login-overlay {
   width: 100%;
 }
 
+@media screen and (max-width: 530px) {
+  .login-container {
+    height: calc(10.362vw - 0.5186px);
+    width: calc(51.8095vw - 2.59035px);
+  }
+
+  .login-overlay .login-icons img {
+    width: calc(7.619vw - 0.3807px);
+    height: calc(7.619vw - 0.3807px);
+  }
+
+  .login-overlay {
+    width: calc(15.238vw - 0.7614px);
+  }
+}

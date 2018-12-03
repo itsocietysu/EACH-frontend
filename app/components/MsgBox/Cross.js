@@ -14,7 +14,7 @@ const Cross = styled.a`
   font-weight: 1000;
   background: none;
   border: 1px solid transparent;
-  font-family: 'Book Antiqua', Palatino, 'Palatino Linotype', serif;
+  color: #fff;
 `;
 
 export default function Close({ onClick }) {

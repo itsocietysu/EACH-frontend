@@ -4,18 +4,18 @@ import Popup from 'reactjs-popup';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import Button from '../../containers/UserPanel/Button';
+import Button from './Button';
 import messages from './messages';
 import CenteredDiv from './CenteredDiv';
 import Close from './Cross';
-import Img from './Img';
+import Header from './Header';
 
 import { colors } from '../../utils/constants';
 
 function Content({ onSubmit, message, cancel, close }) {
   return (
     <CenteredDiv>
-      <Img />
+      <Header />
       <Close onClick={close} />
       <FormattedMessage {...message} />
       <div>

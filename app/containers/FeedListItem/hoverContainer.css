@@ -59,49 +59,42 @@ html.can-touch .container:hover .overlay div {
   bottom: 0;
 }
 
+@media screen and (max-width: 800px) {
+  .overlay {
+    height: calc(20vw);
+  }
+
+  .overlay .desc {
+    top: calc(20vw);
+  }
+
+  .overlay H3 {
+    font-size: calc(2.6vw - 2.08px);
+  }
+
+  .overlay H2 {
+    font-size: calc(3.3vw - 2.4px);
+  }
+}
+
 @media screen and (max-width: 640px) {
   .flex {
     flex-direction: column;
   }
 
   .overlay {
-    height: 6em;
+    height: calc(8.889vw + 39.1104px);
   }
 
-  .overlay H3 {
-    font-size: 0.91em;
+  .overlay .desc {
     top: 6em;
   }
 
-  .overlay H2 {
-    font-size: 1.17em;
-  }
-}
-
-@media screen and (max-width: 420px) {
-  .overlay {
-    height: 5em;
-  }
-
   .overlay H3 {
-    font-size: 0.77em;
+    font-size: calc(1.6vw + 4.32px);
   }
 
   .overlay H2 {
-    font-size: 1em;
-  }
-}
-
-@media screen and (max-width: 280px) {
-  .overlay {
-    height: 4em;
-  }
-
-  .overlay H3 {
-    font-size: 0.55em;
-  }
-
-  .overlay H2 {
-    font-size: 0.7em;
+    font-size: calc(2.089vw + 5.3504px);
   }
 }

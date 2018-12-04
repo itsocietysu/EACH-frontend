@@ -37,10 +37,6 @@
   font-family: 'Book Antiqua', Palatino, 'Palatino Linotype', serif;
 }
 
-.overlay H2 {
-  font-family: 'Book Antiqua', Palatino, 'Palatino Linotype', serif;
-}
-
 .overlay div {
   position: absolute;
   bottom: -100%;

@@ -21,13 +21,13 @@ class LinkList extends React.Component {
     if (this.props.values) {
       content = this.props.values.map(value => (
         <Link key={value.path} to={value.path}>
-          <i className={`fa ${value.icon} fa-2x fa-fw`} />
+          <i className={`fa ${value.icon} fa-2x`} />
         </Link>
       ));
     }
     return (
       <Nav>
-        <Ul flexDirection="column" width="3.2em" className="options-link-list">
+        <Ul flexDirection="column" width="46px" className="options-link-list">
           {content}
           <LogoutButton />
         </Ul>

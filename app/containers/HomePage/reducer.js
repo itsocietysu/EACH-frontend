@@ -21,6 +21,7 @@ export const initialState = fromJS({
   error: false,
   data: false,
   homeContent: FEED_CFG,
+  header: false,
 });
 
 function homeReducer(state = initialState, action) {
@@ -31,7 +32,10 @@ function homeReducer(state = initialState, action) {
         .set('error', false)
         .set('data', false);
     case LOAD_DATA_SUCCESS:
-      return state.set('loading', false).set('data', action.data);
+      return state
+        .set('loading', false)
+        .set('data', action.data)
+        .set('header', action.header);
     case LOAD_DATA_ERROR:
       return state.set('error', action.error).set('loading', false);
     case CHANGE_HOME_CONTENT:

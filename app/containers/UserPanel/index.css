@@ -9,16 +9,21 @@
 }
 
 .user-button {
-  width: 3em;
+  width: 48px;
+  padding: 0;
 }
 
 .user-button i {
   margin: auto;
 }
 
+.options-link-list {
+  width: 46px;
+}
+
 @media screen and (max-width: 530px) {
   .options-link-list {
-    width: calc(9.752vw - 0.4856px);
+    width: calc(9.238vw - 2.9614px);
   }
 
   .user-button {

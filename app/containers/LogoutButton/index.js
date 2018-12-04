@@ -19,7 +19,7 @@ import {
   getOAuth,
 } from '../../cookieManager';
 
-import Button from '../../components/Button';
+import Button from './Button';
 import { userDataGot } from '../../containers/App/actions';
 import requestAuth from '../../utils/requestAuth';
 import config from '../AuthPage/client_config.json';

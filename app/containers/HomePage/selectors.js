@@ -16,6 +16,9 @@ const makeSelectError = () =>
 const makeSelectData = () =>
   createSelector(selectHome, homeState => homeState.get('data'));
 
+const makeSelectHeader = () =>
+  createSelector(selectHome, homeState => homeState.get('header'));
+
 const makeSelectContent = () =>
   createSelector(selectHome, homeState => homeState.get('homeContent'));
 
@@ -24,5 +27,6 @@ export {
   makeSelectLoading,
   makeSelectError,
   makeSelectData,
+  makeSelectHeader,
   makeSelectContent,
 };

@@ -46,7 +46,7 @@ const FeatureRoute = (() => {
   const r = new Route();
   r.path = '/features';
   r.exact = false;
-  r.component = () => Page(Header, FeaturePage, Footer, { simple: true });
+  r.component = () => Page(Header, FeaturePage, Footer);
   return r;
 })();
 
@@ -59,7 +59,7 @@ const MuseumsRoute = (() => {
       Header,
       MuseumsPage,
       Footer,
-      { simple: true },
+      {},
       { search: parseQueryString(location.search.substring(1)) },
     );
   return r;
@@ -74,7 +74,7 @@ const EditRoute = (() => {
       Header,
       EditContentPage,
       Footer,
-      { simple: true },
+      {},
       {
         search: parseQueryString(location.search.substring(1)),
         content: match.params.content,
@@ -87,8 +87,7 @@ const NewsRoute = (() => {
   const r = new Route();
   r.path = '/news/:newsId';
   r.exact = false;
-  r.component = ({ match }) =>
-    Page(Header, NewsPage, Footer, { simple: true }, match.params);
+  r.component = ({ match }) => Page(Header, NewsPage, Footer, {}, match.params);
   return r;
 })();
 
@@ -97,13 +96,7 @@ const MuseumsEditRoute = (() => {
   r.path = '/museum/edit/:museumId';
   r.exact = false;
   r.component = ({ match }) =>
-    Page(
-      Header,
-      MuseumsEditPage,
-      Footer,
-      { simple: true, back: true },
-      match.params,
-    );
+    Page(Header, MuseumsEditPage, Footer, { back: true }, match.params);
   return r;
 })();
 
@@ -112,13 +105,7 @@ const ScenarioEditRoute = (() => {
   r.path = '/scenario/edit/:scenarioId';
   r.exact = false;
   r.component = ({ match }) =>
-    Page(
-      Header,
-      ScenarioEditPage,
-      Footer,
-      { simple: true, back: true },
-      match.params,
-    );
+    Page(Header, ScenarioEditPage, Footer, { back: true }, match.params);
   return r;
 })();
 
@@ -134,7 +121,7 @@ const NotFoundRoute = (() => {
   const r = new Route();
   r.path = '';
   r.exact = false;
-  r.component = () => Page(Header, NotFoundPage, Footer, { simple: true });
+  r.component = () => Page(Header, NotFoundPage, Footer);
   return r;
 })();
 

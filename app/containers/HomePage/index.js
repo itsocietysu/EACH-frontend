@@ -19,6 +19,7 @@ import {
   makeSelectContent,
   makeSelectData,
   makeSelectError,
+  makeSelectHeader,
   makeSelectLoading,
 } from './selectors';
 import H1 from '../../components/H1';
@@ -32,6 +33,7 @@ import saga from './saga';
 import { FEED_CFG, MUSEUM_CFG } from '../EditPage/configs';
 import { colors } from '../../utils/constants';
 import Title from './title';
+import Header from './header';
 
 const styleButton = {
   position: 'absolute',
@@ -73,16 +75,23 @@ function separateData(data) {
 
 /* eslint-disable react/prefer-stateless-function */
 export class HomePage extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = { header: React.createRef() };
+  }
+
   componentDidMount() {
     this.props.init();
   }
 
   componentDidUpdate(prevProps) {
+    if (this.props.header && prevProps.loading)
+      this.state.header.current.update();
     if (prevProps.homeContent !== this.props.homeContent) this.props.init();
   }
 
   render() {
-    const { loading, error, data, homeContent } = this.props;
+    const { loading, error, data, homeContent, header } = this.props;
     const setData = data ? separateData(data) : false;
     const dataListProps = {
       loading,
@@ -100,6 +109,7 @@ export class HomePage extends React.PureComponent {
           <title>Home Page</title>
           <meta name="description" content="An EACH application homepage" />
         </Helmet>
+        <Header item={header} ref={this.state.header} />
         <Title>
           <button
             style={styleButtonFeed(colorFeed)}
@@ -133,6 +143,7 @@ HomePage.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   data: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  header: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   init: PropTypes.func,
   change: PropTypes.func,
   homeContent: PropTypes.string,
@@ -152,6 +163,7 @@ export function mapDispatchToProps(dispatch) {
 
 const mapStateToProps = createStructuredSelector({
   data: makeSelectData(),
+  header: makeSelectHeader(),
   loading: makeSelectLoading(),
   error: makeSelectError(),
   homeContent: makeSelectContent(),

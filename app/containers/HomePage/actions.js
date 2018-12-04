@@ -32,12 +32,15 @@ export function loadData() {
  *
  * @param  {array} data The current data
  *
- * @return {object} An action object with a type of LOAD_DATA_SUCCESS passing the data
+ * @param  {object} header The current header
+ *
+ * @return {object} An action object with a type of LOAD_DATA_SUCCESS passing the data and the header
  */
-export function dataLoaded(data) {
+export function dataLoaded(data, header) {
   return {
     type: LOAD_DATA_SUCCESS,
     data,
+    header,
   };
 }
 

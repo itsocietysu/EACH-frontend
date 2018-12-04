@@ -2,10 +2,10 @@
 import { call, select, put, takeLatest } from 'redux-saga/effects';
 import { LOAD_DATA } from './constants';
 import { dataLoaded, dataLoadingError } from './actions';
-import { makeSelectContent } from './selectors';
+import { makeSelectContent, makeSelectHeader } from './selectors';
 
 import request from '../../utils/request';
-import { MUSEUM_CFG, urls } from '../EditPage/configs';
+import { FEED_CFG, MUSEUM_CFG, urls } from '../EditPage/configs';
 import { getDataFromResp } from '../../utils/utils';
 
 /**
@@ -13,6 +13,7 @@ import { getDataFromResp } from '../../utils/utils';
  */
 export function* loadFeeds() {
   const content = yield select(makeSelectContent());
+  let header = yield select(makeSelectHeader());
   const requestURL = urls[content].tape(false, 0, 9);
   try {
     const resp = yield call(request, requestURL);
@@ -25,9 +26,20 @@ export function* loadFeeds() {
           val.desc.EN = 'Setup app';
           return val;
         });
+      } else if (content === FEED_CFG) {
+        const requestHeader = urls[FEED_CFG].tape(
+          false,
+          resp.count - 1,
+          resp.count - 1,
+        );
+        const respHeader = yield call(request, requestHeader);
+        const headerArr = getDataFromResp(respHeader.result, content);
+        if (headerArr.length === 1 && headerArr[0].priority === '-1')
+          [header] = headerArr;
+        else header = false;
       }
-      yield put(dataLoaded(data));
-    } else yield put(dataLoaded(false));
+      yield put(dataLoaded(data, header));
+    } else yield put(dataLoaded(false, false));
   } catch (err) {
     yield put(dataLoadingError(err));
   }

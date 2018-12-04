@@ -7,6 +7,10 @@ injectGlobal`
     height: 100%;
     width: 100%;
   }
+  
+  body {
+    overflow-y: scroll;
+  }
 
   #app {
     background-color: #fafafa;

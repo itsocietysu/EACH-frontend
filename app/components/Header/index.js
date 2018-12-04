@@ -44,7 +44,6 @@ class Header extends React.Component {
 }
 
 Header.propTypes = {
-  simple: PropTypes.bool,
   back: PropTypes.bool,
 };
 

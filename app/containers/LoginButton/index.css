@@ -34,6 +34,10 @@
   cursor: pointer;
 }
 
+.login-overlay .login-icons button {
+  outline: none;
+}
+
 .login-container:hover .login-overlay {
   width: 100%;
 }

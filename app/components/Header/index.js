@@ -23,7 +23,7 @@ class Header extends React.Component {
         <div className="navBar">
           <div className="divNavBar">
             <HeaderLink to="/">
-              <Img src="/images/logo.svg" alt="MUSEEACH - Logo" />
+              <Img src="/logo.svg" alt="MUSEEACH - Logo" />
               <H1>МУЗЕИЧ</H1>
             </HeaderLink>
             {this.props.back && (

@@ -126,7 +126,7 @@ export function changedData(
   return change ? data : false;
 }
 
-const getImage = (data, field) => `${data[field][0] ? `http://${data[field][0].url}` : '/images/photo.png'}`;
+const getImage = (data, field) => `${data[field][0] ? `http://${data[field][0].url}` : '/photo.png'}`;
 
 const getProps = {
   image: i => getImage(i, 'image'),

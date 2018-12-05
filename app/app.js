@@ -26,25 +26,25 @@ import LanguageProvider from 'containers/LanguageProvider';
 import 'file-loader?name=[name].[ext]!./.htaccess'; // eslint-disable-line import/extensions
 
 // Load the images
-import '!file-loader?name=[name].[ext]&outputPath=images/!./images/favicon.ico';
-import '!file-loader?name=[name].[ext]&outputPath=images/!./images/logo.svg';
-import '!file-loader?name=[name].[ext]&outputPath=images/!./images/logo-vk.svg';
-import '!file-loader?name=[name].[ext]&outputPath=images/!./images/logo-google.svg';
-import '!file-loader?name=[name].[ext]&outputPath=images/!./images/photo.png';
-import '!file-loader?name=[name].[ext]&outputPath=images/!./images/separator.PNG';
+import '!file-loader?name=[name].[ext]!./images/favicon.ico';
+import '!file-loader?name=[name].[ext]!./images/logo.svg';
+import '!file-loader?name=[name].[ext]!./images/logo-vk.svg';
+import '!file-loader?name=[name].[ext]!./images/logo-google.svg';
+import '!file-loader?name=[name].[ext]!./images/photo.png';
+import '!file-loader?name=[name].[ext]!./images/separator.PNG';
 
 // Load the fonts
-import '!file-loader?name=[name].[ext]&outputPath=fonts/header/!./fonts/header/font.ttf';
-import '!file-loader?name=[name].[ext]&outputPath=fonts/header/!./fonts/header/font.woff';
-import '!file-loader?name=[name].[ext]&outputPath=fonts/header/!./fonts/header/font.woff2';
+import '!file-loader?name=[name].[ext]!./fonts/header/header.ttf';
+import '!file-loader?name=[name].[ext]!./fonts/header/header.woff';
+import '!file-loader?name=[name].[ext]!./fonts/header/header.woff2';
 
-import '!file-loader?name=[name].[ext]&outputPath=fonts/title/!./fonts/title/font.ttf';
-import '!file-loader?name=[name].[ext]&outputPath=fonts/title/!./fonts/title/font.woff';
-import '!file-loader?name=[name].[ext]&outputPath=fonts/title/!./fonts/title/font.woff2';
+import '!file-loader?name=[name].[ext]!./fonts/title/title.ttf';
+import '!file-loader?name=[name].[ext]!./fonts/title/title.woff';
+import '!file-loader?name=[name].[ext]!./fonts/title/title.woff2';
 
-import '!file-loader?name=[name].[ext]&outputPath=fonts/text/!./fonts/text/font.ttf';
-import '!file-loader?name=[name].[ext]&outputPath=fonts/text/!./fonts/text/font.woff';
-import '!file-loader?name=[name].[ext]&outputPath=fonts/text/!./fonts/text/font.woff2';
+import '!file-loader?name=[name].[ext]!./fonts/text/text.ttf';
+import '!file-loader?name=[name].[ext]!./fonts/text/text.woff';
+import '!file-loader?name=[name].[ext]!./fonts/text/text.woff2';
 
 import configureStore from './configureStore';
 

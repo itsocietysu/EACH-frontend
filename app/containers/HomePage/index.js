@@ -127,11 +127,7 @@ export class HomePage extends React.PureComponent {
               <FormattedMessage {...mMessages.header} />
             </H1>
           </button>
-          <img
-            src="/images/separator.PNG"
-            alt=""
-            style={{ height: 'inherit' }}
-          />
+          <img src="/separator.PNG" alt="" style={{ height: 'inherit' }} />
         </Title>
         <DataList {...dataListProps} />
       </article>

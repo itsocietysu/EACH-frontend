@@ -11,19 +11,19 @@ const configs = [
     name: 'EACH',
     message: messages.each,
     app: appEnum.EACH,
-    path: '/images/logo.svg',
+    path: '/logo.svg',
   },
   {
     name: 'VKontakte',
     message: messages.vkontakte,
     app: appEnum.VK,
-    path: '/images/logo-vk.svg',
+    path: '/logo-vk.svg',
   },
   {
     name: 'Google+',
     message: messages.google,
     app: appEnum.Google,
-    path: '/images/logo-google.svg',
+    path: '/logo-google.svg',
   },
 ];
 

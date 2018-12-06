@@ -20,10 +20,8 @@ import Wrapper from './Wrapper';
 import messages from './messages';
 import './hoverContainer.css';
 
-import { DEFAULT_LOCALE } from '../../i18n';
-
 const ItemDiv = (item, history) => {
-  const locale = getLocale() || DEFAULT_LOCALE;
+  const locale = getLocale();
   return (
     <div
       className="container"

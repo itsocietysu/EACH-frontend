@@ -1,4 +1,5 @@
 import Cookies from 'universal-cookie';
+import { DEFAULT_LOCALE } from './i18n';
 
 const cookies = new Cookies();
 
@@ -27,7 +28,7 @@ export function setLocale(locale) {
 }
 
 export function getLocale() {
-  return cookies.get('locale');
+  return cookies.get('locale') || DEFAULT_LOCALE;
 }
 
 export function setUser(user) {

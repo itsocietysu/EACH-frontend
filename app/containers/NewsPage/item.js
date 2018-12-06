@@ -8,14 +8,13 @@ import H2 from '../../components/H2';
 import H3 from '../../components/H3';
 import P from '../../components/P';
 import { getLocale } from '../../cookieManager';
-import { DEFAULT_LOCALE } from '../../i18n';
 import { colors } from '../../utils/constants';
 
 import './item.css';
 
 class Item extends React.Component {
   componentDidMount() {
-    const locale = getLocale() || DEFAULT_LOCALE;
+    const locale = getLocale();
     const { item } = this.props;
     document.querySelector(
       `.P-text-${item.eid}.${this.refs.text.state.generatedClassName}`,
@@ -24,7 +23,7 @@ class Item extends React.Component {
   }
   render() {
     const { item } = this.props;
-    const locale = getLocale() || DEFAULT_LOCALE;
+    const locale = getLocale();
     return (
       <div className="wrapper">
         <div style={{ borderBottom: '2px solid #000', paddingBottom: '0.2em' }}>

@@ -13,6 +13,7 @@ import styled from 'styled-components';
 import { Switch, Route } from 'react-router-dom';
 
 import routes from '../../utils/routeConfig';
+import CookieBanner from '../CookieBanner';
 
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
@@ -26,20 +27,23 @@ const AppWrapper = styled.div`
 
 export default function App() {
   return (
-    <AppWrapper>
-      <Helmet titleTemplate="%s - EACH" defaultTitle="EACH">
-        <meta name="description" content="An EACH application" />
-      </Helmet>
-      <Switch>
-        {routes.map((route, i) => (
-          <Route
-            key={i}
-            path={route.path}
-            exact={route.exact}
-            component={route.component}
-          />
-        ))}
-      </Switch>
-    </AppWrapper>
+    <div>
+      <CookieBanner />
+      <AppWrapper>
+        <Helmet titleTemplate="%s - EACH" defaultTitle="EACH">
+          <meta name="description" content="An EACH application" />
+        </Helmet>
+        <Switch>
+          {routes.map((route, i) => (
+            <Route
+              key={i}
+              path={route.path}
+              exact={route.exact}
+              component={route.component}
+            />
+          ))}
+        </Switch>
+      </AppWrapper>
+    </div>
   );
 }

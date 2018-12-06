@@ -9,10 +9,9 @@ import { fromJS } from 'immutable';
 import { setLocale, getLocale } from 'cookieManager';
 
 import { CHANGE_LOCALE } from './constants';
-import { DEFAULT_LOCALE } from '../../i18n';
 
 export const initialState = fromJS({
-  locale: getLocale() || DEFAULT_LOCALE,
+  locale: getLocale(),
 });
 
 function languageProviderReducer(state = initialState, action) {

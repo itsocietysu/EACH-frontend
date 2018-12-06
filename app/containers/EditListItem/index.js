@@ -26,7 +26,6 @@ import Nav from '../LinkList/Nav';
 import MsgBox from '../../components/MsgBox';
 import messages from './messages';
 
-import { DEFAULT_LOCALE } from '../../i18n';
 import { configs } from '../EditForm/configs';
 import { translateFromForm, translateToForm } from '../EditForm/create-form';
 import { getLocations } from '../MuseumListItem';
@@ -161,7 +160,7 @@ export class EditListItem extends React.PureComponent {
   render() {
     const { item } = this.props.item;
     const type = this.props.content;
-    const locale = getLocale() || DEFAULT_LOCALE;
+    const locale = getLocale();
     const setting = configs[type];
     const Item = getItem[type](item, locale);
     const content = (

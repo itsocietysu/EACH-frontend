@@ -16,7 +16,6 @@ import P from '../../components/P';
 import Img from '../FeedListItem/Img';
 import DivSep from '../FeedListItem/DivSep';
 import Wrapper from './Wrapper';
-import { DEFAULT_LOCALE } from '../../i18n';
 
 export const getLocations = (eid, locations) =>
   locations.map(location => (
@@ -28,7 +27,7 @@ export const getLocations = (eid, locations) =>
 
 export class MuseumListItem extends React.PureComponent {
   componentDidMount() {
-    const locale = getLocale() || DEFAULT_LOCALE;
+    const locale = getLocale();
     const { item } = this.props;
     document.querySelector(
       `.P-desc-${item.eid}.${this.refs.desc.state.generatedClassName}`,
@@ -36,7 +35,7 @@ export class MuseumListItem extends React.PureComponent {
       item.desc[locale];
   }
   render() {
-    const locale = getLocale() || DEFAULT_LOCALE;
+    const locale = getLocale();
     const { item } = this.props;
 
     // Put together the content of the museum

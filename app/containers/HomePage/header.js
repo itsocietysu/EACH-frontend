@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 import H2 from '../../components/H2';
 import { getLocale } from '../../cookieManager';
-import { DEFAULT_LOCALE } from '../../i18n';
 
 class Item extends React.Component {
   constructor(props) {
@@ -14,7 +13,7 @@ class Item extends React.Component {
   }
 
   update() {
-    const locale = getLocale() || DEFAULT_LOCALE;
+    const locale = getLocale();
     const { item } = this.props;
     if (item) {
       document.querySelector(

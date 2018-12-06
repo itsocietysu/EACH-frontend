@@ -11,14 +11,12 @@ import EditPage from '../EditPage';
 import H1 from '../../components/H1';
 import P from '../../components/P';
 
-import { DEFAULT_LOCALE } from '../../i18n';
-
 import '../NewsPage/item.css';
 import '../SelectSearch/index.css';
 
 class Item extends React.Component {
   componentDidMount() {
-    const locale = getLocale() || DEFAULT_LOCALE;
+    const locale = getLocale();
     const { item } = this.props;
     document.querySelector(
       `.P-desc-${item.eid}.${this.refs.desc.state.generatedClassName}`,
@@ -27,7 +25,7 @@ class Item extends React.Component {
   }
   render() {
     const { item } = this.props;
-    const locale = getLocale() || DEFAULT_LOCALE;
+    const locale = getLocale();
     const value = item.location.map(location => ({
       key: location.name,
       label: <i>{location.name}</i>,

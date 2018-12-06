@@ -1,0 +1,103 @@
+.cookie-banner {
+  position: absolute;
+  max-width: 800px;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  background-color: whitesmoke;
+  z-index: 99999;
+  border: 2px solid #5b7bbb;
+  border-radius: 4px;
+}
+
+.cookie-banner.open {
+  -webkit-animation: cookie_banner_open 1s normal forwards ease-out;
+  -moz-animation: cookie_banner_open 1s normal forwards ease-out;
+  animation: cookie_banner_open 1s normal forwards ease-out;
+  -webkit-transform-origin: 50% 0%;
+  -moz-transform-origin: 50% 0%;
+  transform-origin: 50% 0%;
+}
+
+.cookie-banner.close {
+  -webkit-animation: cookie_banner_close 1s normal forwards ease-out;
+  -moz-animation: cookie_banner_close 1s normal forwards ease-out;
+  animation: cookie_banner_close 1s normal forwards ease-out;
+  -webkit-transform-origin: 50% 0%;
+  -moz-transform-origin: 50% 0%;
+  transform-origin: 50% 0%;
+}
+
+.cookie-banner .notification {
+  float: left;
+  margin-left: 1em;
+}
+
+.cookie-banner .notification a {
+  text-decoration: underline;
+}
+
+.cookie-banner .agree {
+  float: right;
+  display: flex;
+}
+
+.cookie-banner .agree i {
+  line-height: 2;
+  font-size: 2em;
+  color: #5b7bbb;
+}
+
+.cookie-banner .agree button {
+  display: inline-block;
+  padding: 0.25em 2em;
+  margin: 1em;
+  border-radius: 4px;
+  -webkit-font-smoothing: antialiased;
+  -webkit-touch-callout: none;
+  user-select: none;
+  cursor: pointer;
+  outline: 0;
+  border: 2px solid #5b7bbb;
+  color: #000;
+  background-color: white;
+}
+
+.cookie-banner button h3 {
+  margin: 0;
+}
+
+.cookie-banner button:hover {
+  background: #5b7bbb;
+  color: #fff;
+}
+
+@-webkit-keyframes cookie_banner_open {
+  from { top: -200px }
+  to { top: 0 }
+}
+
+@-moz-keyframes cookie_banner_open {
+  from { top: -200px }
+  to { top: 0 }
+}
+
+@keyframes cookie_banner_open {
+  from { top: -200px }
+  to { top: 0 }
+}
+
+@-webkit-keyframes cookie_banner_close {
+  from { top: 0 }
+  to { top: -200px }
+}
+
+@-moz-keyframes cookie_banner_close {
+  from { top: 0 }
+  to { top: -200px }
+}
+
+@keyframes cookie_banner_close {
+  from { top: 0 }
+  to { top: -200px }
+}

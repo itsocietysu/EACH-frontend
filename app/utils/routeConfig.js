@@ -12,6 +12,7 @@ import EditContentPage from '../containers/EditContentPage';
 import NewsPage from '../containers/NewsPage/Loadable';
 import MuseumsEditPage from '../containers/MuseumsEditPage/Loadable';
 import ScenarioEditPage from '../containers/ScenarioEditPage/Loadable';
+import AgreementPage from '../containers/AgreementPage/Loadable';
 import NotFoundPage from '../containers/NotFoundPage/Loadable';
 
 import { parseQueryString } from './utils';
@@ -109,6 +110,14 @@ const ScenarioEditRoute = (() => {
   return r;
 })();
 
+const AgreementRoute = (() => {
+  const r = new Route();
+  r.path = '/user_agreement';
+  r.exact = false;
+  r.component = () => Page(Header, AgreementPage, Footer);
+  return r;
+})();
+
 const AuthRoute = (() => {
   const r = new Route();
   r.path = '/auth';
@@ -134,6 +143,7 @@ const routes: Array<Route> = [
   MuseumsEditRoute,
   ScenarioEditRoute,
   AuthRoute,
+  AgreementRoute,
   NotFoundRoute,
 ];
 

@@ -165,14 +165,13 @@ class Form extends React.Component {
     this.setState(this.state);
   }
 
-  _onChangeFile(evt, field, aspect) {
+  _onChangeFile(evt, field, ratio) {
     if (evt.target.files[0])
       File2Base64(evt.target.files[0], res => {
         bigImage(
           res,
-          aspect,
           img => {
-            const crop = getCroppedMaxImg(img, aspect);
+            const crop = getCroppedMaxImg(img, ratio);
             this._onChangeField(res, field);
             this._onChangeCrop(crop, field);
           },
@@ -377,7 +376,7 @@ class Form extends React.Component {
               <LabelFile
                 id={`file-${image.field}-${name}`}
                 change={evt =>
-                  this._onChangeFile(evt, image.field, image.aspect)
+                  this._onChangeFile(evt, image.field, image.ratio)
                 }
                 accept="image/*"
               />
@@ -386,7 +385,7 @@ class Form extends React.Component {
               <div>
                 <PopupImageCrop
                   src={data[image.field]}
-                  aspect={image.aspect}
+                  ratio={image.ratio}
                   styleCrop={ImageCropStyle}
                   onSubmit={base64 => this._onChangeCrop(base64, image.field)}
                   trigger={

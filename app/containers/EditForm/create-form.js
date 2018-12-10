@@ -56,6 +56,13 @@ export const translateToForm = {
     res.correct = item.desc.choices[item.desc.correct];
     return { text_question: res };
   },
+  free_question: item => {
+    const res = {};
+    res.avatar = item.desc.avatar.uri;
+    res.question = item.desc.question;
+    res.choices = item.desc.choices;
+    return { free_question: res };
+  },
   location_question: item => {
     const res = {};
     res.avatar = item.desc.avatar.uri;
@@ -83,6 +90,8 @@ const from_text_question = item => {
   res.correct = item.text_question.choices.indexOf(item.text_question.correct);
   return res;
 };
+
+const from_free_question = item => item.free_question;
 
 const from_location_question = item => {
   const keys = Object.keys(item.location_question);
@@ -134,6 +143,7 @@ export const translateFromForm = {
     return res;
   },
   text_question: from_text_question,
+  free_question: from_free_question,
   location_question: from_location_question,
   ar_paint_question: item => item.ar_paint_question,
   scenario_step: item => {
@@ -141,6 +151,9 @@ export const translateFromForm = {
     switch (item.scenario_step.select) {
       case 'text_question':
         res.desc = from_text_question(item.scenario_step);
+        break;
+      case 'free_question':
+        res.desc = from_free_question(item.scenario_step);
         break;
       case 'location_question':
         res.desc = from_location_question(item.scenario_step);

@@ -13,6 +13,7 @@ const text_question = {
       {
         field_from: 'choices',
         field_to: 'correct',
+        max_tags: 4,
       },
     ],
     texts: [
@@ -33,6 +34,39 @@ const text_question = {
     avatar: '',
     choices: [],
     correct: '',
+    question: '',
+  },
+};
+
+const free_question = {
+  name: 'free_question',
+  type: 'form',
+  flexDirection: 'column',
+  isPlaceholder: false,
+  description: {
+    tags: [
+      {
+        field: 'choices',
+        max_tags: 50,
+      },
+    ],
+    texts: [
+      {
+        field: 'question',
+        maxLength: '256',
+        rows: '1',
+      },
+    ],
+    images: [
+      {
+        field: 'avatar',
+        aspect: 1,
+      },
+    ],
+  },
+  empty: {
+    avatar: '',
+    choices: [],
     question: '',
   },
 };
@@ -118,7 +152,12 @@ export const configs = {
     name: 'scenario_step',
     type: 'depend-form',
     description: {
-      selects: [text_question, location_question, ar_paint_question],
+      selects: [
+        text_question,
+        location_question,
+        ar_paint_question,
+        free_question,
+      ],
     },
     empty: {
       select: '',
@@ -391,6 +430,7 @@ export const configs = {
   text_question,
   location_question,
   ar_paint_question,
+  free_question,
 };
 
 export const listConfigs = {

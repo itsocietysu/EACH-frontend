@@ -82,6 +82,13 @@ const isEmpty = (data, description) => {
     });
     empty.push(res);
   }
+  if (keys.includes('tags')) {
+    let res = true;
+    description.tags.forEach(select => {
+      res = res && !!data[select.field].length;
+    });
+    empty.push(res);
+  }
   if (keys.includes('images')) {
     let res = true;
     description.images.forEach(image => {
@@ -94,6 +101,8 @@ const isEmpty = (data, description) => {
   }
   return false;
 };
+
+const fontStyle = { fontFamily: 'MurraySlab' };
 
 class Form extends React.Component {
   constructor(props) {
@@ -320,7 +329,7 @@ class Form extends React.Component {
     if (keys.includes('req_selects')) {
       description.req_selects.forEach(select => {
         selects.push(
-          <div key={`req_select-${select.field}-${name}`}>
+          <div key={`req_select-${select.field}-${name}`} style={fontStyle}>
             <div>
               <FormattedMessage {...messages[select.field]} />
             </div>
@@ -337,13 +346,21 @@ class Form extends React.Component {
     if (keys.includes('tag_selects')) {
       description.tag_selects.forEach(select => {
         selects.push(
-          <div key={`tag_select-${select.field_from}-${name}`}>
+          <div
+            key={`tag_select-${select.field_from}-${name}`}
+            style={fontStyle}
+          >
             <div>
               <FormattedMessage {...messages[select.field_from]} />
             </div>
             <SelectTag
               value={data[select.field_from]}
               onChange={value => this._onChangeField(value, select.field_from)}
+              max_tags={select.max_tags}
+              onDeselect={value => {
+                if (data[select.field_to] === value)
+                  this._onChangeField('', select.field_to);
+              }}
             />
             <div>
               <FormattedMessage {...messages[select.field_to]} />
@@ -357,13 +374,26 @@ class Form extends React.Component {
         );
       });
     }
+    if (keys.includes('tags')) {
+      description.tags.forEach(select => {
+        selects.push(
+          <div key={`tags-${select.field}-${name}`} style={fontStyle}>
+            <div>
+              <FormattedMessage {...messages[select.field]} />
+            </div>
+            <SelectTag
+              value={data[select.field]}
+              onChange={value => this._onChangeField(value, select.field)}
+              max_tags={select.max_tags}
+            />
+          </div>,
+        );
+      });
+    }
     if (keys.includes('images')) {
       description.images.forEach(image => {
         images.push(
-          <div
-            key={`${image.field}-${name}`}
-            style={{ fontFamily: 'MurraySlab' }}
-          >
+          <div key={`${image.field}-${name}`} style={fontStyle}>
             <FormattedMessage {...messages[image.field]} />
             <div style={{ marginBottom: '0.5em' }}>
               {crops[image.field] ? (

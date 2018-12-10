@@ -75,6 +75,7 @@ async function compareImages(fields, newImages, oldImages) {
 const stepFields = {
   scenario: ['difficulty_bounty'],
   text_question: ['choices', 'correct', 'question'],
+  free_question: ['choices', 'question'],
   location_question: ['location', 'question', 'range'],
   ar_paint_question: ['question'],
   video: ['uri'],

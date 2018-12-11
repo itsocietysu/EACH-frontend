@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import Pipeline from 'pipeline-builder';
 import 'pipeline-builder/dist/pipeline.css';
 import { FormattedMessage } from 'react-intl';
-import lodash from 'lodash';
+import _ from 'lodash';
 
 import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu';
 
@@ -74,10 +74,10 @@ async function compareImages(fields, newImages, oldImages) {
 
 const stepFields = {
   scenario: ['difficulty_bounty'],
-  text_question: ['choices', 'correct', 'question'],
-  free_question: ['choices', 'question'],
-  location_question: ['location', 'question', 'range'],
-  ar_paint_question: ['question'],
+  text_question: ['choices', 'correct', 'question', 'hint'],
+  free_question: ['choices', 'question', 'hint'],
+  location_question: ['location', 'question', 'range', 'hint'],
+  ar_paint_question: ['question', 'hint'],
   video: ['uri'],
   text: ['text'],
 };
@@ -88,7 +88,7 @@ function walkForward(conn, finish, callback) {
     t.step.name !== finish.step.name &&
     t.step.name !== conn.from.step.name
   ) {
-    if (lodash.isFunction(callback)) callback(t);
+    if (_.isFunction(callback)) callback(t);
     if (t.step.o.out.outputs.length > 0) t = t.step.o.out.outputs[0].to;
     else break;
   }

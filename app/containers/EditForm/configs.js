@@ -3,6 +3,32 @@ import requestAuth from '../../utils/requestAuth';
 
 export const startUrl = 'http://each.itsociety.su:4201/each/';
 
+const getImage = (field, ratio) => ({
+  field,
+  ratio,
+});
+
+const avatar = getImage('avatar', 1);
+const image = getImage('image', 1);
+
+const getText = (field, maxLength, rows) => ({
+  field,
+  maxLength,
+  rows,
+});
+
+const question = getText('question', '256', '2');
+const hint = getText('hint', '256', '2');
+const url = getText('url', '256', '2');
+
+const getNumber = (field, format) => ({
+  field,
+  format,
+});
+
+const latitude = getNumber('latitude', 'double');
+const longitude = getNumber('longitude', 'double');
+
 const text_question = {
   name: 'text_question',
   type: 'form',
@@ -16,19 +42,8 @@ const text_question = {
         max_tags: 4,
       },
     ],
-    texts: [
-      {
-        field: 'question',
-        maxLength: '256',
-        rows: '1',
-      },
-    ],
-    images: [
-      {
-        field: 'avatar',
-        ratio: 1,
-      },
-    ],
+    texts: [question, hint],
+    images: [avatar],
   },
   empty: {
     avatar: '',
@@ -50,19 +65,8 @@ const free_question = {
         max_tags: 50,
       },
     ],
-    texts: [
-      {
-        field: 'question',
-        maxLength: '256',
-        rows: '1',
-      },
-    ],
-    images: [
-      {
-        field: 'avatar',
-        aspect: 1,
-      },
-    ],
+    texts: [question, hint],
+    images: [avatar],
   },
   empty: {
     avatar: '',
@@ -77,33 +81,9 @@ const location_question = {
   flexDirection: 'column',
   isPlaceholder: false,
   description: {
-    numbers: [
-      {
-        field: 'latitude',
-        format: 'double',
-      },
-      {
-        field: 'longitude',
-        format: 'double',
-      },
-      {
-        field: 'range',
-        format: 'double',
-      },
-    ],
-    texts: [
-      {
-        field: 'question',
-        maxLength: '256',
-        rows: '1',
-      },
-    ],
-    images: [
-      {
-        field: 'avatar',
-        ratio: 1,
-      },
-    ],
+    numbers: [latitude, longitude, getNumber('range', 'double')],
+    texts: [question, hint],
+    images: [avatar],
   },
   empty: {
     avatar: '',
@@ -120,23 +100,8 @@ const ar_paint_question = {
   flexDirection: 'column',
   isPlaceholder: false,
   description: {
-    texts: [
-      {
-        field: 'question',
-        maxLength: '256',
-        rows: '1',
-      },
-    ],
-    images: [
-      {
-        field: 'avatar',
-        ratio: 1,
-      },
-      {
-        field: 'target',
-        ratio: 1.7,
-      },
-    ],
+    texts: [question, hint],
+    images: [avatar, getImage('target', 1.7)],
   },
   empty: {
     avatar: '',
@@ -169,12 +134,7 @@ export const configs = {
     flexDirection: 'column',
     isPlaceholder: false,
     description: {
-      numbers: [
-        {
-          field: 'difficulty_bounty',
-          format: 'int',
-        },
-      ],
+      numbers: [getNumber('difficulty_bounty', 'int')],
     },
     empty: {
       difficulty_bounty: '',
@@ -191,13 +151,7 @@ export const configs = {
           flexDirection: 'column',
           isPlaceholder: false,
           description: {
-            texts: [
-              {
-                field: 'url',
-                maxLength: '256',
-                rows: '1',
-              },
-            ],
+            texts: [url],
           },
           empty: {
             url: '',
@@ -214,13 +168,7 @@ export const configs = {
                 flexDirection: 'column',
                 isPlaceholder: false,
                 description: {
-                  texts: [
-                    {
-                      field: 'url',
-                      maxLength: '256',
-                      rows: '1',
-                    },
-                  ],
+                  texts: [url],
                 },
                 empty: {
                   url: '',
@@ -232,12 +180,7 @@ export const configs = {
                 flexDirection: 'column',
                 isPlaceholder: false,
                 description: {
-                  images: [
-                    {
-                      field: 'image',
-                      ratio: 1,
-                    },
-                  ],
+                  images: [image],
                 },
                 empty: {
                   image: '',
@@ -255,13 +198,7 @@ export const configs = {
           flexDirection: 'column',
           isPlaceholder: false,
           description: {
-            texts: [
-              {
-                field: 'text',
-                maxLength: '256',
-                rows: '1',
-              },
-            ],
+            texts: [getText('text', '256', '2')],
           },
           empty: {
             text: '',
@@ -279,18 +216,7 @@ export const configs = {
     flexDirection: 'column',
     isPlaceholder: false,
     description: {
-      locales: [
-        {
-          field: 'name',
-          maxLength: '256',
-          rows: '2',
-        },
-        {
-          field: 'desc',
-          maxLength: '4000',
-          rows: '2',
-        },
-      ],
+      locales: [getText('name', '256', '2'), getText('desc', '4000', '3')],
       req_selects: [
         {
           field: 'location',
@@ -299,16 +225,7 @@ export const configs = {
             requestAuth(`${startUrl}location?startswith=${value}`),
         },
       ],
-      images: [
-        {
-          field: 'image',
-          ratio: 1,
-        },
-        {
-          field: 'logo',
-          ratio: 1,
-        },
-      ],
+      images: [image, getImage('logo', 1)],
     },
     empty: {
       eid: '0',
@@ -326,34 +243,12 @@ export const configs = {
     isPlaceholder: false,
     description: {
       locales: [
-        {
-          field: 'title',
-          maxLength: '256',
-          rows: '2',
-        },
-        {
-          field: 'desc',
-          maxLength: '256',
-          rows: '2',
-        },
-        {
-          field: 'text',
-          maxLength: '4000',
-          rows: '5',
-        },
+        getText('title', '256', '2'),
+        getText('desc', '256', '2'),
+        getText('text', '4000', '5'),
       ],
-      images: [
-        {
-          field: 'image',
-          ratio: 1,
-        },
-      ],
-      numbers: [
-        {
-          field: 'priority',
-          format: 'int',
-        },
-      ],
+      images: [image],
+      numbers: [getNumber('priority', 'int')],
     },
     empty: {
       eid: '0',
@@ -370,23 +265,8 @@ export const configs = {
     flexDirection: 'row',
     isPlaceholder: true,
     description: {
-      texts: [
-        {
-          field: 'name',
-          maxLength: '256',
-          rows: '1',
-        },
-      ],
-      numbers: [
-        {
-          field: 'latitude',
-          format: 'double',
-        },
-        {
-          field: 'longitude',
-          format: 'double',
-        },
-      ],
+      texts: [getText('name', '256', '1')],
+      numbers: [latitude, longitude],
     },
     empty: {
       eid: '0',
@@ -401,24 +281,8 @@ export const configs = {
     flexDirection: 'column',
     isPlaceholder: false,
     description: {
-      locales: [
-        {
-          field: 'name',
-          maxLength: '256',
-          rows: '2',
-        },
-        {
-          field: 'desc',
-          maxLength: '60',
-          rows: '2',
-        },
-      ],
-      images: [
-        {
-          field: 'image',
-          ratio: 1,
-        },
-      ],
+      locales: [getText('name', '256', '2'), getText('desc', '60', '2')],
+      images: [image],
     },
     empty: {
       eid: '0',

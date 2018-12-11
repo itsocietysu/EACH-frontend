@@ -57,6 +57,7 @@
   "each.containers.EditForm.choices": "Choices",
   "each.containers.EditForm.correct": "Correct",
   "each.containers.EditForm.question": "Question",
+  "each.containers.EditForm.hint": "Hint",
   "each.containers.EditForm.url": "URL",
   "each.containers.EditForm.priority": "Priority",
   "each.containers.EditForm.difficulty_bounty": "Difficulty bounty",

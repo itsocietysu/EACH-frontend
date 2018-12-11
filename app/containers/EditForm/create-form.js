@@ -54,6 +54,7 @@ export const translateToForm = {
     res.question = item.desc.question;
     res.choices = item.desc.choices;
     res.correct = item.desc.choices[item.desc.correct];
+    res.hint = item.desc.hint;
     return { text_question: res };
   },
   free_question: item => {
@@ -61,6 +62,7 @@ export const translateToForm = {
     res.avatar = item.desc.avatar.uri;
     res.question = item.desc.question;
     res.choices = item.desc.choices;
+    res.hint = item.desc.hint;
     return { free_question: res };
   },
   location_question: item => {
@@ -70,6 +72,7 @@ export const translateToForm = {
     res.latitude = item.desc.location.lat;
     res.longitude = item.desc.location.lon;
     res.range = item.desc.range;
+    res.hint = item.desc.hint;
     return { location_question: res };
   },
   ar_paint_question: item => {
@@ -77,6 +80,7 @@ export const translateToForm = {
     res.avatar = item.desc.avatar.uri;
     res.target = item.desc.target.uri;
     res.question = item.desc.question;
+    res.hint = item.desc.hint;
     return { ar_paint_question: res };
   },
   scenario_step: item => ({ scenario_step: { select: item.select } }),
@@ -106,6 +110,8 @@ const from_location_question = item => {
   };
   return res;
 };
+
+const from_ar_paint_question = item => item.ar_paint_question;
 
 export const translateFromForm = {
   museum: item => item.museum,
@@ -145,7 +151,7 @@ export const translateFromForm = {
   text_question: from_text_question,
   free_question: from_free_question,
   location_question: from_location_question,
-  ar_paint_question: item => item.ar_paint_question,
+  ar_paint_question: from_ar_paint_question,
   scenario_step: item => {
     const res = { type: item.scenario_step.select, desc: {} };
     switch (item.scenario_step.select) {

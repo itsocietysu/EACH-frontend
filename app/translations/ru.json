@@ -57,6 +57,7 @@
   "each.containers.EditForm.choices": "Варианты",
   "each.containers.EditForm.correct": "Правильный",
   "each.containers.EditForm.question": "Вопрос",
+  "each.containers.EditForm.hint": "Подсказка",
   "each.containers.EditForm.url": "URL",
   "each.containers.EditForm.priority": "Приоритет",
   "each.containers.EditForm.difficulty_bounty": "Очки за сложность",

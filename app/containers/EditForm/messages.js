@@ -90,6 +90,10 @@ export default defineMessages({
     id: 'each.containers.EditForm.question',
     defaultMessage: 'Question',
   },
+  hint: {
+    id: 'each.containers.EditForm.hint',
+    defaultMessage: 'Hint',
+  },
   priority: {
     id: 'each.containers.EditForm.priority',
     defaultMessage: 'Priority',

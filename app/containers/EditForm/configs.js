@@ -198,7 +198,7 @@ export const configs = {
           flexDirection: 'column',
           isPlaceholder: false,
           description: {
-            texts: [getText('text', '256', '2')],
+            texts: [getText('text', '512', '2')],
           },
           empty: {
             text: '',

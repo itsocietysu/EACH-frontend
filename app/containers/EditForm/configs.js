@@ -281,7 +281,7 @@ export const configs = {
     flexDirection: 'column',
     isPlaceholder: false,
     description: {
-      locales: [getText('name', '256', '2'), getText('desc', '60', '2')],
+      locales: [getText('name', '256', '2'), getText('desc', '4000', '3')],
       images: [image],
     },
     empty: {

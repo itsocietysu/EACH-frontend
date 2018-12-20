@@ -4,7 +4,7 @@ import { feedLoaded, feedLoadingError } from './actions';
 import { makeSelectEid } from './selectors';
 
 import requestAuth from '../../utils/requestAuth';
-import { FEED_CFG } from '../EditPage/configs';
+import { FEED_CFG, urls } from '../../utils/constants';
 import { getDataFromResp } from '../../utils/utils';
 
 /**
@@ -12,7 +12,7 @@ import { getDataFromResp } from '../../utils/utils';
  */
 export function* loadFeed() {
   const eid = yield select(makeSelectEid());
-  const requestURL = `http://each.itsociety.su:4201/each/feed/${eid}`;
+  const requestURL = urls.feed.get_by_id(eid);
   try {
     const feed = yield call(requestAuth, requestURL);
     const data = getDataFromResp(feed, FEED_CFG);

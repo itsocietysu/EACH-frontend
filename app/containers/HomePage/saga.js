@@ -5,7 +5,7 @@ import { dataLoaded, dataLoadingError } from './actions';
 import { makeSelectContent, makeSelectHeader } from './selectors';
 
 import request from '../../utils/request';
-import { FEED_CFG, MUSEUM_CFG, urls } from '../EditPage/configs';
+import { FEED_CFG, MUSEUM_CFG, urls } from '../../utils/constants';
 import { getDataFromResp } from '../../utils/utils';
 
 /**

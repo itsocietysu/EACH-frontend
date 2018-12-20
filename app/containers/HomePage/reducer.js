@@ -14,7 +14,7 @@ import {
   LOAD_DATA_ERROR,
   CHANGE_HOME_CONTENT,
 } from './constants';
-import { FEED_CFG } from '../EditPage/configs';
+import { FEED_CFG } from '../../utils/constants';
 
 export const initialState = fromJS({
   loading: false,

@@ -1,5 +1,5 @@
 import messages from './messages';
-import { FEED_CFG, LOCATION_CFG, MUSEUM_CFG } from '../EditPage/configs';
+import { FEED_CFG, LOCATION_CFG, MUSEUM_CFG } from '../../utils/constants';
 
 class Link {
   path: string;

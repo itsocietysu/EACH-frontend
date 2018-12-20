@@ -38,14 +38,11 @@ import './react-contextmenu.css';
 import { withAuthAdmin } from '../../utils/auth';
 import MsgBox from '../../components/MsgBox';
 
+import { urls } from '../../utils/constants';
+
 const SCENARIO_NAME = 'Scenario';
 const MENU_ID = 'scenario_menu';
 const PIPELINE_ID = 'scenario_pipeline';
-
-const urls = {
-  get: id => `http://each.itsociety.su:4201/each/scenario/${id}`,
-  update: 'http://each.itsociety.su:4201/each/scenario',
-};
 
 function addInWorkflow(workflow, data, input, output) {
   const inBind = input ? { bind: input } : {};
@@ -252,7 +249,7 @@ export class ScenarioEditPage extends React.Component {
   }
 
   componentDidMount() {
-    requestAuth(urls.get(this.props.scenarioId))
+    requestAuth(urls.scenario.get(this.props.scenarioId))
       .then(data => this._init(data))
       .catch(err => this.setState({ error: err }));
   }
@@ -295,7 +292,7 @@ export class ScenarioEditPage extends React.Component {
       body: JSON.stringify(body),
     };
     this.setState({ toDelete: [] });
-    requestAuth(urls.update, options)
+    requestAuth(urls.scenario.update, options)
       .then(() =>
         this._onChangeOpenMsg(
           messages.success,
@@ -361,7 +358,7 @@ export class ScenarioEditPage extends React.Component {
         },
         body: JSON.stringify(body),
       };
-      requestAuth(urls.update, options)
+      requestAuth(urls.scenario.update, options)
         .then(res => {
           const images = res[0].image;
           let i = 0;

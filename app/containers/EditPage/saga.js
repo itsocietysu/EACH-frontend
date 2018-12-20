@@ -23,15 +23,14 @@ import {
   makeSelectRequestProps,
 } from './selectors';
 
+import { getValues, settings } from './configs';
 import {
   FEED_CFG,
-  getValues,
-  LOCATION_CFG,
   MUSEUM_CFG,
+  LOCATION_CFG,
   QUEST_CFG,
-  settings,
   urls,
-} from './configs';
+} from '../../utils/constants';
 import {
   changedData,
   getItemForPost,

@@ -37,7 +37,12 @@ import saga from './saga';
 
 import { configs, listConfigs } from '../EditForm/configs';
 import { translateFromForm, translateToForm } from '../EditForm/create-form';
-import { FEED_CFG, LOCATION_CFG, MUSEUM_CFG, QUEST_CFG } from './configs';
+import {
+  FEED_CFG,
+  LOCATION_CFG,
+  MUSEUM_CFG,
+  QUEST_CFG,
+} from '../../utils/constants';
 
 const rowStyle = {
   display: 'flex',

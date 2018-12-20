@@ -4,7 +4,7 @@ import { museumLoaded, museumLoadingError } from './actions';
 import { makeSelectEid } from './selectors';
 
 import requestAuth from '../../utils/requestAuth';
-import { MUSEUM_CFG } from '../EditPage/configs';
+import { MUSEUM_CFG, urls } from '../../utils/constants';
 import { getDataFromResp } from '../../utils/utils';
 
 /**
@@ -12,7 +12,7 @@ import { getDataFromResp } from '../../utils/utils';
  */
 export function* loadMuseum() {
   const eid = yield select(makeSelectEid());
-  const requestURL = `http://each.itsociety.su:4201/each/museum/${eid}`;
+  const requestURL = urls.museum.get_by_id(eid);
   try {
     const museum = yield call(requestAuth, requestURL);
     const data = getDataFromResp(museum, MUSEUM_CFG);

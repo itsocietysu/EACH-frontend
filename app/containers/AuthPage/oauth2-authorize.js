@@ -1,9 +1,10 @@
 /* eslint-disable no-buffer-constructor,guard-for-in,no-restricted-syntax,prettier/prettier,no-param-reassign */
 import request from '../../utils/request';
-import { setSession, setLogined, setOAuth, setUser } from '../../cookieManager';
+import { setLogined, setOAuth, setSession, setUser } from '../../cookieManager';
 import { appEnum } from '../AuthList/configs';
 import { parseQueryString } from '../../utils/utils';
 import config from './client_config.json';
+import { urls } from '../../utils/constants';
 
 const btoa = str => {
   let buffer;
@@ -67,8 +68,8 @@ export function getToken() {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
     };
-    const url = [config.access_token_url, buildFormData(form)].join(
-      config.access_token_url.indexOf('?') === -1 ? '?' : '&',
+    const url = [urls.auth.access_token_url, buildFormData(form)].join(
+      urls.auth.access_token_url.indexOf('?') === -1 ? '?' : '&',
     );
     getTokenRequest(url, options, oauth2.cb, oauth2.errCb, window, app);
   } else {
@@ -125,7 +126,7 @@ export default function authorize(app, errCb, cb) {
     query.push(`client_id=${encodeURIComponent(configs.client_id)}`);
   }
 
-  const redirectUrl = window.location.origin + config.oauth2RedirectUrl;
+  const redirectUrl = window.location.origin + urls.auth.oauth2RedirectUrl;
 
   if (typeof redirectUrl === 'undefined') {
     errCb({
@@ -169,10 +170,9 @@ export default function authorize(app, errCb, cb) {
   const left = window.screen.width / 2 - (width / 2 + 10);
   const top = window.screen.height / 2 - (height / 2 + 50);
 
-  const authWindow = window.open(
+  return window.open(
     url,
     'Auth_Window',
     `status=no,height=${height},width=${width},resizable=yes,left=${left},top=${top},screenX=${left},screenY=${top},toolbar=no,menubar=no,scrollbars=no,location=no,directories=no`,
   );
-  return authWindow;
 }

@@ -1,7 +1,6 @@
 /* eslint-disable camelcase */
 import requestAuth from '../../utils/requestAuth';
-
-export const startUrl = 'http://each.itsociety.su:4201/each/';
+import { urls } from '../../utils/constants';
 
 const getImage = (field, ratio) => ({
   field,
@@ -221,8 +220,7 @@ export const configs = {
         {
           field: 'location',
           select_field: 'name',
-          req_uri: value =>
-            requestAuth(`${startUrl}location?startswith=${value}`),
+          req_uri: value => requestAuth(urls.location.startswith(value)),
         },
       ],
       images: [image, getImage('logo', 1)],

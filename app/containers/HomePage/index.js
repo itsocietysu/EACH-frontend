@@ -30,8 +30,7 @@ import FeedsListItem from '../../containers/FeedListItem';
 import { contentChanged, loadData } from './actions';
 import reducer from './reducer';
 import saga from './saga';
-import { FEED_CFG, MUSEUM_CFG } from '../EditPage/configs';
-import { colors } from '../../utils/constants';
+import { FEED_CFG, MUSEUM_CFG, colors } from '../../utils/constants';
 import Title from './title';
 import Header from './header';
 

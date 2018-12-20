@@ -4,7 +4,7 @@ import { museumsLoaded, museumsLoadingError } from './actions';
 
 import requestAuth from '../../utils/requestAuth';
 import { makeSelectPage } from './selectors';
-import { MUSEUM_CFG, urls } from '../EditPage/configs';
+import { MUSEUM_CFG, urls } from '../../utils/constants';
 import { getDataFromResp } from '../../utils/utils';
 
 /**

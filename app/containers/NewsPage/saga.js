@@ -12,7 +12,7 @@ import { getDataFromResp } from '../../utils/utils';
  */
 export function* loadFeed() {
   const eid = yield select(makeSelectEid());
-  const requestURL = urls.feed.get_by_id(eid);
+  const requestURL = urls[FEED_CFG].get_by_id(eid);
   try {
     const feed = yield call(requestAuth, requestURL);
     const data = getDataFromResp(feed, FEED_CFG);

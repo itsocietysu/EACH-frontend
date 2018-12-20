@@ -12,7 +12,7 @@ import { getDataFromResp } from '../../utils/utils';
  */
 export function* loadMuseum() {
   const eid = yield select(makeSelectEid());
-  const requestURL = urls.museum.get_by_id(eid);
+  const requestURL = urls[MUSEUM_CFG].get_by_id(eid);
   try {
     const museum = yield call(requestAuth, requestURL);
     const data = getDataFromResp(museum, MUSEUM_CFG);

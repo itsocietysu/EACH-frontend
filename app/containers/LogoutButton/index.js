@@ -23,6 +23,7 @@ import Button from './Button';
 import { userDataGot } from '../../containers/App/actions';
 import requestAuth from '../../utils/requestAuth';
 import config from '../AuthPage/client_config.json';
+import { urls } from '../../utils/constants';
 
 export function Logout() {
   setLogined(false);
@@ -59,7 +60,7 @@ export function mapDispatchToProps(dispatch) {
           type: config.clients_arr[getOAuth()],
         }),
       };
-      requestAuth(config.revoke_token_url, options);
+      requestAuth(urls.auth.revoke_token_url, options);
       Logout();
       dispatch(userDataGot({ name: '', accessType: 'user' }));
     },

@@ -15,10 +15,7 @@ class UserButton extends React.Component {
   render() {
     if (getLogined() === 'true' && getUser())
       return (
-        <UserPanel
-          username={getUser()}
-          accessType={this.props.user.accessType}
-        />
+        <UserPanel user={getUser()} accessTupe={this.props.user.access_type} />
       );
     return <LoginButton />;
   }

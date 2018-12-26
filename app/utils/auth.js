@@ -34,17 +34,13 @@ const Auth = ({ mode }) => WrappedComponent => {
     state = { req: false, func: false, accessType: 'user', error: false };
     componentWillMount() {
       if (getLogined() === 'true' && getSession() && getOAuth()) {
-        const requestURL = urls.auth.token_info_url;
+        const requestURL = urls.auth.token_info_url(true);
         this.state.req = true;
         this.state.func = requestAuth(requestURL)
           .then(user => {
-            const data = {
-              name: user.name,
-              accessType: user.access_type,
-            };
-            setUser(user.name);
-            this.context.store.dispatch(userDataGot(data));
-            this.setState({ req: false, accessType: data.accessType });
+            setUser(user.name, user.run.bonus);
+            this.context.store.dispatch(userDataGot(user));
+            this.setState({ req: false, accessType: user.access_type });
           })
           .catch(err => {
             if (err.message !== 'Failed to fetch') Logout();

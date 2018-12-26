@@ -31,12 +31,15 @@ export function getLocale() {
   return cookies.get('locale') || DEFAULT_LOCALE;
 }
 
-export function setUser(user) {
+export function setUser(username, bonus) {
+  const user = JSON.stringify({ username, bonus });
   cookies.set('cur_user', user, { path: '/' });
 }
 
 export function getUser() {
-  return cookies.get('cur_user');
+  const user = cookies.get('cur_user');
+  if (user instanceof Object) return user;
+  return { username: 'user', bonus: 0 };
 }
 
 export function rmUser() {

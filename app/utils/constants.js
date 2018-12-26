@@ -49,9 +49,10 @@ export const urls = {
   },
   auth: {
     access_token_url: `${startUrl}token/get`,
-    token_info_url: `${startUrl}token/info?access_token=${getSession()}&type=${
-      config.clients_arr[getOAuth()]
-    }`,
+    token_info_url: expansion =>
+      `${startUrl}token/info?access_token=${getSession()}&type=${
+        config.clients_arr[getOAuth()]
+      }&expansion=${expansion}`,
     revoke_token_url: `${startUrl}token/revoke`,
     oauth2RedirectUrl: '/auth',
   },

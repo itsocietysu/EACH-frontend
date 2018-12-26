@@ -6,7 +6,7 @@
 
 import { fromJS } from 'immutable';
 
-import { setLocale, getLocale } from 'cookieManager';
+import { setLocale, getLocale } from '../../cookieManager';
 
 import { CHANGE_LOCALE } from './constants';
 

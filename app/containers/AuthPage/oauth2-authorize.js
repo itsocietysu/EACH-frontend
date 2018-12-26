@@ -98,12 +98,9 @@ function getTokenRequest(tokenUrl, options, cb, errCb, window, app) {
     .then(resp => {
       setSession(resp.access_token);
       setLogined(true);
-      setUser(resp.name);
+      setUser(resp.name, resp.run.bonus);
       setOAuth(app);
-      cb({
-        name: resp.name,
-        accessType: resp.access_type,
-      });
+      cb(resp);
       window.close();
     })
     .catch(err => {

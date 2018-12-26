@@ -23,7 +23,10 @@ import {
 export const initialState = fromJS({
   userData: {
     name: '',
-    accessType: 'user',
+    access_type: 'user',
+    run: {
+      bonus: 0,
+    },
   },
   loading: false,
   errors: [],
@@ -35,8 +38,7 @@ function appReducer(state = initialState, action) {
       return state.set('errors', fromJS([]));
     case GET_USER_DATA_SUCCESS:
       return state
-        .setIn(['userData', 'name'], action.data.name)
-        .setIn(['userData', 'accessType'], action.data.accessType)
+        .set('userData', fromJS(action.data))
         .set('loading', false);
     case NEW_ERROR:
       return state.set('errors', state.get('errors').concat(action.error));

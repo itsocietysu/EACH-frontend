@@ -1,4 +1,4 @@
-/* eslint-disable react/prefer-stateless-function,jsx-a11y/no-static-element-interactions,jsx-a11y/click-events-have-key-events */
+/* eslint-disable react/prefer-stateless-function,jsx-a11y/no-static-element-interactions,jsx-a11y/click-events-have-key-events,camelcase */
 import React from 'react';
 import PropTypes from 'prop-types';
 import Popup from 'reactjs-popup';
@@ -26,23 +26,30 @@ const PopupArrowStyle = {
   borderTop: 'none',
 };
 
+const get_rang = points => {
+  if (points < 1000) return 'beginner';
+  else if (points < 2000) return 'student';
+  else if (points < 3000) return 'expert';
+  else if (points < 4000) return 'profi';
+  return 'master';
+};
+
 class UserPanel extends React.Component {
   render() {
+    const { user, accessType } = this.props;
+    const { username, bonus } = user;
     return (
       <div className="user-panel">
         <div className="user-points">
           <H3 color="#000">
-            <FormattedMessage {...messages.beginner} />
+            <FormattedMessage {...messages[get_rang(bonus)]} />
           </H3>
           <H3 color={`${colors.base}`}>
-            <FormattedMessage {...messages.points} values={{ points: 0 }} />
+            <FormattedMessage {...messages.points} values={{ points: bonus }} />
           </H3>
         </div>
         <H1>
-          <FormattedMessage
-            {...messages.user}
-            values={{ user: this.props.username }}
-          />
+          <FormattedMessage {...messages.user} values={{ user: username }} />
         </H1>
         <Popup
           trigger={
@@ -61,7 +68,7 @@ class UserPanel extends React.Component {
         >
           {close => (
             <div onClick={close}>
-              <OptionsList accessType={this.props.accessType} />
+              <OptionsList accessType={accessType} />
             </div>
           )}
         </Popup>
@@ -71,8 +78,8 @@ class UserPanel extends React.Component {
 }
 
 UserPanel.propTypes = {
-  username: PropTypes.string,
   accessType: PropTypes.string,
+  user: PropTypes.object,
 };
 
 export default UserPanel;

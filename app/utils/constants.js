@@ -48,7 +48,7 @@ export const urls = {
     tape: reqProps => `${startUrl}game/all/museum/${reqProps.museumId}`,
   },
   auth: {
-    access_token_url: `${startUrl}token/get`,
+    access_token_url: `${startUrl}token/get?expansion=true`,
     token_info_url: expansion =>
       `${startUrl}token/info?access_token=${getSession()}&type=${
         config.clients_arr[getOAuth()]

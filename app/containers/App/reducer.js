@@ -38,7 +38,7 @@ function appReducer(state = initialState, action) {
       return state.set('errors', fromJS([]));
     case GET_USER_DATA_SUCCESS:
       return state
-        .set('userData', fromJS(action.data))
+        .set('userData', action.data)
         .set('loading', false);
     case NEW_ERROR:
       return state.set('errors', state.get('errors').concat(action.error));

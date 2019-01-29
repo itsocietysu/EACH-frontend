@@ -1,9 +1,5 @@
 /* eslint-disable camelcase,no-underscore-dangle */
-import React from 'react';
 import lodash from 'lodash';
-
-import Form from './form';
-import DependForm from './depend-form';
 import messages from './messages';
 
 export const emptyFunc = () => {};
@@ -174,26 +170,6 @@ export const translateFromForm = {
   },
   scenario: item => item.scenario,
 };
-
-export function createForm(item, settings, ref) {
-  if (settings.type === 'form')
-    return (
-      <Form
-        item={item[settings.name] || settings.empty}
-        settings={settings}
-        ref={ref}
-      />
-    );
-  else if (settings.type === 'depend-form')
-    return (
-      <DependForm
-        item={item[settings.name] || settings.empty}
-        settings={settings}
-        ref={ref}
-      />
-    );
-  return null;
-}
 
 export function onChangeOpenMessage(message, cancel, onSubmit, onClose, form) {
   const { state } = form;

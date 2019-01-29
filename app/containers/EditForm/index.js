@@ -17,7 +17,7 @@ import BorderTopImage from '../../components/MsgBox/Header';
 import Close from '../../components/MsgBox/Cross';
 import './index.css';
 
-import { createForm } from './create-form';
+import { createForm } from './depend-form';
 
 class EditForm extends React.Component {
   constructor(props) {

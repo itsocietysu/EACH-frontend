@@ -26,7 +26,7 @@ import {
   translateToForm,
   onChangeOpenMessage,
   emptyFunc,
-} from '../EditForm/create-form';
+} from '../EditForm/config-form';
 import requestAuth from '../../utils/requestAuth';
 
 import messages from './messages';

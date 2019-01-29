@@ -27,7 +27,7 @@ import MsgBox from '../../components/MsgBox';
 import messages from './messages';
 
 import { configs } from '../EditForm/configs';
-import { translateFromForm, translateToForm } from '../EditForm/create-form';
+import { translateFromForm, translateToForm } from '../EditForm/config-form';
 import { getLocations } from '../MuseumListItem';
 import { colors } from '../../utils/constants';
 

@@ -36,7 +36,7 @@ import reducer from './reducer';
 import saga from './saga';
 
 import { configs, listConfigs } from '../EditForm/configs';
-import { translateFromForm, translateToForm } from '../EditForm/create-form';
+import { translateFromForm, translateToForm } from '../EditForm/config-form';
 import {
   FEED_CFG,
   LOCATION_CFG,

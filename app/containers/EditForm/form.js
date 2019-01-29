@@ -33,7 +33,7 @@ import {
   onChangeOpenMessage,
   emptyFunc,
   emptyMessage,
-} from './create-form';
+} from './config-form';
 
 const ImageCropStyle = {
   maxWidth: '256px',
@@ -41,67 +41,72 @@ const ImageCropStyle = {
   margin: 'auto',
 };
 
-const isEmpty = (data, description) => {
-  let empty = [];
-  const keys = Object.keys(description);
-  if (keys.includes('locales'))
-    empty = empty.concat(
-      appLocales.map(locale => {
-        let res = true;
-        description.locales.forEach(localeText => {
-          res = res && !!data[localeText.field][locale];
-        });
-        return res;
-      }),
-    );
-  if (keys.includes('texts')) {
+function _isEmptyLocaleField(data, description, keys) {
+  if (keys.includes('locales')) {
     let res = true;
-    description.texts.forEach(text => {
-      res = res && !!data[text.field];
+    appLocales.forEach(locale => {
+      let resLoc = true;
+      description.locales.forEach(localeText => {
+        resLoc = resLoc && !!data[localeText.field][locale];
+      });
+      res = res && resLoc;
     });
-    empty.push(res);
+    return !res;
   }
-  if (keys.includes('numbers')) {
+  return false;
+}
+
+function _isEmptySimpleField(data, description, keys, name) {
+  if (keys.includes(name)) {
     let res = true;
-    description.numbers.forEach(number => {
-      res = res && !!data[number.field];
+    description[name].forEach(e => {
+      res = res && !!data[e.field];
     });
-    empty.push(res);
+    return !res;
   }
-  if (keys.includes('req_selects')) {
+  return false;
+}
+
+function _isEmptyLengthField(data, description, keys, name) {
+  if (keys.includes(name)) {
     let res = true;
-    description.req_selects.forEach(select => {
-      res = res && !!data[select.field].length;
+    description[name].forEach(e => {
+      res = res && !!data[e.field].length;
     });
-    empty.push(res);
+    return !res;
   }
+  return false;
+}
+
+function _isEmptyTagSelectField(data, description, keys) {
   if (keys.includes('tag_selects')) {
     let res = true;
     description.tag_selects.forEach(select => {
       res = res && !!data[select.field_from].length && !!data[select.field_to];
     });
-    empty.push(res);
-  }
-  if (keys.includes('tags')) {
-    let res = true;
-    description.tags.forEach(select => {
-      res = res && !!data[select.field].length;
-    });
-    empty.push(res);
-  }
-  if (keys.includes('images')) {
-    let res = true;
-    description.images.forEach(image => {
-      res = res && !!data[image.field];
-    });
-    empty.push(res);
-  }
-  for (const key in empty) {
-    if (!empty[key]) return true;
+    return !res;
   }
   return false;
-};
+}
 
+function _isEmptyForm(data, description) {
+  const empty = [];
+  const keys = Object.keys(description);
+  const simple = ['texts', 'numbers', 'images'];
+  const length = ['req_selects', 'tags'];
+  empty.push(_isEmptyLocaleField(data, description, keys));
+  simple.forEach(name =>
+    empty.push(_isEmptySimpleField(data, description, keys, name)),
+  );
+  length.forEach(name =>
+    empty.push(_isEmptyLengthField(data, description, keys, name)),
+  );
+  empty.push(_isEmptyTagSelectField(data, description, keys));
+  for (const key in empty) {
+    if (empty[key]) return true;
+  }
+  return false;
+}
 const fontStyle = { fontFamily: 'MurraySlab' };
 
 class Form extends React.Component {
@@ -128,6 +133,14 @@ class Form extends React.Component {
     this._onChangeOpenMsg = this._onChangeOpenMsg.bind(this);
     this._onSubmit = this._onSubmit.bind(this);
     this._onClose = this._onClose.bind(this);
+    this._getImageField = this._getImageField.bind(this);
+    this._getNumberField = this._getNumberField.bind(this);
+    this._getReqSelectField = this._getReqSelectField.bind(this);
+    this._getTagSelectField = this._getTagSelectField.bind(this);
+    this._getTagField = this._getTagField.bind(this);
+    this._getLocaleField = this._getLocaleField.bind(this);
+    this._getTextField = this._getTextField.bind(this);
+    this._getFields = this._getFields.bind(this);
   }
 
   _onChangeData(item) {
@@ -241,7 +254,7 @@ class Form extends React.Component {
       description.images.forEach(image => {
         dataToPost[name][image.field] = crops[image.field];
       });
-    if (isEmpty(dataToPost[name], description)) {
+    if (_isEmptyForm(dataToPost[name], description)) {
       onEmptyForm(this);
       return null;
     }
@@ -256,23 +269,8 @@ class Form extends React.Component {
     this._init();
   }
 
-  render() {
-    const { settings } = this.props;
-    const { name, description } = settings;
-    const message = this.state.msgData;
-    const { crops } = this.state;
-    let data = this.state.formData;
-    if (name !== this.state.name) {
-      this.state.name = name;
-      data = {};
-    }
-    if (Object.keys(data).length === 0) data = this.props.item;
-    const images = [];
-    const texts = [];
+  _getLocaleField(data, keys, name, description, isPlaceholder) {
     const localeTexts = [];
-    const numbers = [];
-    const selects = [];
-    const keys = Object.keys(description);
     if (keys.includes('locales')) {
       description.locales.forEach(localeText => {
         appLocales.forEach(locale => {
@@ -287,12 +285,17 @@ class Form extends React.Component {
               change={evt =>
                 this._onChangeTextLocale(evt, locale, localeText.field)
               }
-              isPlaceholder={settings.isPlaceholder}
+              isPlaceholder={isPlaceholder}
             />,
           );
         });
       });
     }
+    return localeTexts;
+  }
+
+  _getTextField(data, keys, name, description, isPlaceholder) {
+    const texts = [];
     if (keys.includes('texts')) {
       description.texts.forEach(text => {
         texts.push(
@@ -304,11 +307,16 @@ class Form extends React.Component {
             rows={text.rows}
             maxLength={text.maxLength}
             change={evt => this._onChangeField(evt.target.value, text.field)}
-            isPlaceholder={settings.isPlaceholder}
+            isPlaceholder={isPlaceholder}
           />,
         );
       });
     }
+    return texts;
+  }
+
+  _getNumberField(data, keys, name, description, isPlaceholder) {
+    const numbers = [];
     if (keys.includes('numbers')) {
       description.numbers.forEach(number => {
         numbers.push(
@@ -321,11 +329,16 @@ class Form extends React.Component {
               this._onChangeNumber(evt, number.field, number.format)
             }
             message={messages[number.field]}
-            isPlaceholder={settings.isPlaceholder}
+            isPlaceholder={isPlaceholder}
           />,
         );
       });
     }
+    return numbers;
+  }
+
+  _getReqSelectField(data, keys, name, description) {
+    const selects = [];
     if (keys.includes('req_selects')) {
       description.req_selects.forEach(select => {
         selects.push(
@@ -343,6 +356,11 @@ class Form extends React.Component {
         );
       });
     }
+    return selects;
+  }
+
+  _getTagSelectField(data, keys, name, description) {
+    const selects = [];
     if (keys.includes('tag_selects')) {
       description.tag_selects.forEach(select => {
         selects.push(
@@ -374,6 +392,11 @@ class Form extends React.Component {
         );
       });
     }
+    return selects;
+  }
+
+  _getTagField(data, keys, name, description) {
+    const selects = [];
     if (keys.includes('tags')) {
       description.tags.forEach(select => {
         selects.push(
@@ -390,6 +413,12 @@ class Form extends React.Component {
         );
       });
     }
+    return selects;
+  }
+
+  _getImageField(data, keys, name, description) {
+    const images = [];
+    const { crops } = this.state;
     if (keys.includes('images')) {
       description.images.forEach(image => {
         images.push(
@@ -430,14 +459,43 @@ class Form extends React.Component {
         );
       });
     }
+    return images;
+  }
+
+  _getFields(data, keys, name, description, isPlaceholder) {
+    const getters = [
+      this._getImageField,
+      this._getNumberField,
+      this._getReqSelectField,
+      this._getTagSelectField,
+      this._getTagField,
+      this._getLocaleField,
+      this._getTextField,
+    ];
+    let fields = [];
+    getters.forEach(getter => {
+      fields = fields.concat(
+        getter(data, keys, name, description, isPlaceholder),
+      );
+    });
+    return fields;
+  }
+
+  render() {
+    const { settings } = this.props;
+    const { name, description, isPlaceholder } = settings;
+    const message = this.state.msgData;
+    let data = this.state.formData;
+    if (name !== this.state.name) {
+      this.state.name = name;
+      data = {};
+    }
+    if (Object.keys(data).length === 0) data = this.props.item;
+    const keys = Object.keys(description);
     return (
       <div className={`editForm-${settings.flexDirection}`}>
         <form>
-          {images}
-          {numbers}
-          {selects}
-          {localeTexts}
-          {texts}
+          {this._getFields(data, keys, name, description, isPlaceholder)}
         </form>
         <MsgBox
           message={message.message}

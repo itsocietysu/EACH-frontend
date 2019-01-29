@@ -10,13 +10,33 @@ import './index.css';
 
 import SelectSimple from '../SelectSimple';
 import {
-  createForm,
   onChangeOpenMessage,
   onCloseForm,
   onEmptyForm,
   emptyMessage,
-} from './create-form';
+} from './config-form';
 import MsgBox from '../../components/MsgBox';
+import Form from './form';
+
+export function createForm(item, settings, ref) {
+  if (settings.type === 'form')
+    return (
+      <Form
+        item={item[settings.name] || settings.empty}
+        settings={settings}
+        ref={ref}
+      />
+    );
+  else if (settings.type === 'depend-form')
+    return (
+      <DependForm
+        item={item[settings.name] || settings.empty}
+        settings={settings}
+        ref={ref}
+      />
+    );
+  return null;
+}
 
 class DependForm extends React.Component {
   constructor(props) {

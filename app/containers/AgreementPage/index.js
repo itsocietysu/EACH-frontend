@@ -31,9 +31,7 @@ export class AgreementPage extends React.Component {
         <H1>
           <FormattedMessage {...messages.header} />
         </H1>
-        <p>
-          <FormattedMessage {...messages.agreement} />
-        </p>
+        <p>Нужно чуть-чуть подождать</p>
       </div>
     );
   }

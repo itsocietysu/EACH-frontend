@@ -5,7 +5,6 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 import HomePage from '../containers/HomePage/Loadable';
-import FeaturePage from '../containers/FeaturePage/Loadable';
 import MuseumsPage from '../containers/MuseumsPage/Loadable';
 import AuthPage from '../containers/AuthPage/Loadable';
 import EditContentPage from '../containers/EditContentPage';
@@ -40,14 +39,6 @@ const HomeRoute = (() => {
   r.path = '/';
   r.exact = true;
   r.component = () => Page(Header, HomePage, Footer);
-  return r;
-})();
-
-const FeatureRoute = (() => {
-  const r = new Route();
-  r.path = '/features';
-  r.exact = false;
-  r.component = () => Page(Header, FeaturePage, Footer);
   return r;
 })();
 
@@ -136,7 +127,6 @@ const NotFoundRoute = (() => {
 
 const routes: Array<Route> = [
   HomeRoute,
-  FeatureRoute,
   MuseumsRoute,
   EditRoute,
   NewsRoute,

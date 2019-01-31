@@ -27,11 +27,6 @@
   "each.containers.AuthList.vkontakte": "ВКонтакте",
   "each.containers.AuthList.google": "Google+",
   "each.containers.AgreementPage.header": "Пользовательское соглашение",
-  "each.containers.AgreementPage.agreement":
-    "Здесь будет пользовательское соглашение",
-  "each.containers.FeaturePage.header": "Особенности",
-  "each.containers.FeaturePage.text.header": "Заголовок",
-  "each.containers.FeaturePage.text.message": "Текст.",
   "each.containers.MuseumsPage.header": "Музеи",
   "each.containers.MuseumsPage.text.header": "Заголовок",
   "each.containers.MuseumsPage.text.message": "Текст.",

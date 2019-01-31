@@ -27,11 +27,6 @@
   "each.containers.AuthList.vkontakte": "VKontakte",
   "each.containers.AuthList.google": "Google+",
   "each.containers.AgreementPage.header": "User agreement",
-  "each.containers.AgreementPage.agreement":
-    "There will be user agreement here",
-  "each.containers.FeaturePage.header": "Features",
-  "each.containers.FeaturePage.text.header": "Title",
-  "each.containers.FeaturePage.text.message": "Text.",
   "each.containers.MuseumsPage.header": "Museums",
   "each.containers.MuseumsPage.text.header": "Title",
   "each.containers.MuseumsPage.text.message": "Text.",

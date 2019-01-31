@@ -10,8 +10,4 @@ export default defineMessages({
     id: 'each.containers.AgreementPage.header',
     defaultMessage: 'User agreement',
   },
-  agreement: {
-    id: 'each.containers.AgreementPage.agreement',
-    defaultMessage: 'There will be user agreement here',
-  },
 });

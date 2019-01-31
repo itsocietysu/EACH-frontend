@@ -36,7 +36,7 @@ export const getValues = {
     fields: ['name', 'desc'],
     noLocales: [],
     locales: ['name', 'desc'],
-    getProps: ['image', 'scenario'],
+    getProps: ['image', 'scenario', 'rating', 'comment'],
     updProps: ['image'],
     addProps: ['image', 'game'],
   },

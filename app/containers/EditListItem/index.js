@@ -1,4 +1,4 @@
-/* eslint-disable react/no-children-prop,no-param-reassign,jsx-a11y/anchor-is-valid */
+/* eslint-disable react/no-children-prop,no-param-reassign,jsx-a11y/anchor-is-valid,no-underscore-dangle */
 /**
  * EditListItem
  *
@@ -10,6 +10,7 @@ import Popup from 'reactjs-popup';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
+import StarRatings from 'react-star-ratings';
 
 import { getLocale } from '../../cookieManager';
 
@@ -26,10 +27,20 @@ import Nav from '../LinkList/Nav';
 import MsgBox from '../../components/MsgBox';
 import messages from './messages';
 
-import { configs } from '../EditForm/configs';
-import { translateFromForm, translateToForm } from '../EditForm/config-form';
+import {
+  configs,
+  OPTION_DELETE,
+  OPTION_UPDATE,
+  OPTION_VIEW_COMMENTS,
+} from '../EditForm/configs';
+import {
+  emptyFunc,
+  translateFromForm,
+  translateToForm,
+} from '../EditForm/config-form';
 import { getLocations } from '../MuseumListItem';
 import { colors } from '../../utils/constants';
+import CommentList from '../../components/CommentList';
 
 const iconStyle = color => ({
   float: 'right',
@@ -124,6 +135,12 @@ const QuestItem = ({ item, locale }) => (
         </DivSep>
         <DivSep width="70%" marginLeft="15px">
           <H2>{item.name[locale]}</H2>
+          <StarRatings
+            rating={item.rating}
+            starDimension="3vw"
+            starSpacing="0.2vw"
+            starRatedColor={colors.base}
+          />
         </DivSep>
       </div>
     </Link>
@@ -155,17 +172,106 @@ const deleteMessages = {
 export class EditListItem extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.state = { delete: deleteMessages[props.content] };
+
+    this._getDeleteOption = this._getDeleteOption.bind(this);
+    this._getUpdateOption = this._getUpdateOption.bind(this);
+    this._getViewCommentsOption = this._getViewCommentsOption.bind(this);
+
+    this.state = {
+      delete: deleteMessages[props.content],
+      getOption: {},
+      getOptionTrigger: {},
+      getOptionTriggerNav: {},
+    };
+    this.state.getOption[OPTION_UPDATE] = (trigger, close) =>
+      this._getUpdateOption(trigger, close);
+    this.state.getOption[OPTION_DELETE] = trigger =>
+      this._getDeleteOption(trigger);
+    this.state.getOption[OPTION_VIEW_COMMENTS] = (trigger, close) =>
+      this._getViewCommentsOption(trigger, close);
+    this.state.getOptionTriggerNav[OPTION_UPDATE] = (
+      <Button>
+        <FormattedMessage {...messages.edit} />
+      </Button>
+    );
+    this.state.getOptionTriggerNav[OPTION_VIEW_COMMENTS] = (
+      <Button>
+        <FormattedMessage {...messages.view_comments} />
+      </Button>
+    );
+    this.state.getOptionTriggerNav[OPTION_DELETE] = (
+      <Button>
+        <FormattedMessage {...messages.delete} />
+      </Button>
+    );
+    this.state.getOptionTrigger[OPTION_DELETE] = (
+      <i className="fa fa-trash-alt" style={iconStyle('#FF0000')} />
+    );
   }
+
+  _getDeleteOption(trigger) {
+    const { item } = this.props.item;
+    return (
+      <MsgBox
+        key={`delete-${item.eid}`}
+        trigger={trigger}
+        onSubmit={() => this.props.onDelete(item.eid)}
+        message={this.state.delete}
+        cancel
+      />
+    );
+  }
+
+  _getViewCommentsOption(trigger, close) {
+    const { item } = this.props.item;
+    return (
+      <CommentList
+        key={`view_comments-${item.eid}`}
+        trigger={trigger}
+        comments={item.comment}
+        onClose={close}
+      />
+    );
+  }
+
+  _getUpdateOption(trigger, close) {
+    const { item } = this.props.item;
+    const type = this.props.content;
+    const setting = configs[type];
+    return (
+      <PopupForm
+        key={`update-${item.eid}`}
+        trigger={trigger}
+        item={translateToForm[type](item)}
+        isPopup
+        settings={setting}
+        onSubmit={form => this.props.onUpdate(translateFromForm[type](form))}
+        onClose={() => close()}
+        isPlaceholder={false}
+        flexDirection="column"
+      />
+    );
+  }
+
+  _getNavElement(close) {
+    const { options } = this.props;
+    const { getOption, getOptionTriggerNav } = this.state;
+    const elements = [];
+    options.forEach(option =>
+      elements.push(getOption[option](getOptionTriggerNav[option], close)),
+    );
+    return elements;
+  }
+
   render() {
     const { item } = this.props.item;
     const type = this.props.content;
+    const { getOption, getOptionTrigger } = this.state;
     const locale = getLocale();
-    const setting = configs[type];
     const Item = getItem[type](item, locale);
     const content = (
       <Wrapper>
-        {this.props.isUpdate ? (
+        {this.props.options.length > 1 ? (
           <Popup
             trigger={
               <i className="fas fa-bars" style={iconStyle(`${colors.base}`)} />
@@ -178,44 +284,15 @@ export class EditListItem extends React.PureComponent {
           >
             {close => (
               <Nav style={{ right: '0', position: 'absolute' }}>
-                <PopupForm
-                  trigger={
-                    <Button>
-                      <FormattedMessage {...messages.edit} />
-                    </Button>
-                  }
-                  item={translateToForm[type](item)}
-                  isPopup
-                  settings={setting}
-                  onSubmit={form =>
-                    this.props.onUpdate(translateFromForm[type](form))
-                  }
-                  onClose={() => close()}
-                  isPlaceholder={false}
-                  flexDirection="column"
-                />
-                <MsgBox
-                  trigger={
-                    <Button>
-                      <FormattedMessage {...messages.delete} />
-                    </Button>
-                  }
-                  onSubmit={() => this.props.onDelete(item.eid)}
-                  message={this.state.delete}
-                  cancel
-                />
+                {this._getNavElement(close)}
               </Nav>
             )}
           </Popup>
         ) : (
-          <MsgBox
-            trigger={
-              <i className="fa fa-trash-alt" style={iconStyle('#FF0000')} />
-            }
-            onSubmit={() => this.props.onDelete(item.eid)}
-            message={this.state.delete}
-            cancel
-          />
+          getOption[this.props.options[0]](
+            getOptionTrigger[this.props.options[0]],
+            emptyFunc,
+          )
         )}
         <Item />
       </Wrapper>
@@ -228,7 +305,7 @@ export class EditListItem extends React.PureComponent {
 EditListItem.propTypes = {
   item: PropTypes.object,
   content: PropTypes.oneOf(['museum', 'feed', 'location', 'quest']),
-  isUpdate: PropTypes.bool,
+  options: PropTypes.array,
   onDelete: PropTypes.func,
   onUpdate: PropTypes.func,
 };

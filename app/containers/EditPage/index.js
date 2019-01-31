@@ -98,7 +98,7 @@ export class EditPage extends React.Component {
           content={content}
           onDelete={eid => this.props.delete(eid)}
           onUpdate={form => this.props.send(form, 'edit')}
-          isUpdate={listSet.isUpdate}
+          options={listSet.options}
         />
       ),
       scroll: true,

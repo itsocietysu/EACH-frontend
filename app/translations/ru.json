@@ -80,6 +80,7 @@
     "Вы действительно хотите закрыть? Все несохранённые изменения будут утеряны.",
   "each.containers.EditListItem.edit": "Изменить",
   "each.containers.EditListItem.delete": "Удалить",
+  "each.containers.EditListItem.view_comments": "Посмотреть комментарии",
   "each.containers.EditListItem.deleteFeed":
     "Вы уверены, что хотите удалить эту новость?",
   "each.containers.EditListItem.deleteMuseum":

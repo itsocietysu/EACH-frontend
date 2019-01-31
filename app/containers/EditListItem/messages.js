@@ -14,6 +14,10 @@ export default defineMessages({
     id: 'each.containers.EditListItem.delete',
     defaultMessage: 'Delete',
   },
+  view_comments: {
+    id: 'each.containers.EditListItem.view_comments',
+    defaultMessage: 'View comments',
+  },
   deleteFeed: {
     id: 'each.containers.EditListItem.deleteFeed',
     defaultMessage: 'Are you sure that you want to delete this news?',

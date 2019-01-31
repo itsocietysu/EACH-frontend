@@ -134,6 +134,8 @@ const getProps = {
   priority: p => `${p.priority[0] ? p.priority[0] : 0}`,
   location: l => l.location ? l.location : [],
   scenario: s => `${s.scenario[0] ? s.scenario[0].eid : 0}`,
+  rating: r => r.rating ? r.rating : 0,
+  comment: c => c.comment ? c.comment : [],
 };
 
 export function getItemFromResp(item, fields, propFields) {

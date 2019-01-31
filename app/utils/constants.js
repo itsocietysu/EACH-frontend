@@ -43,9 +43,10 @@ export const urls = {
   },
   quest: {
     add: `${startUrl}game`,
-    update: `${startUrl}game`,
+    update: `${startUrl}game?feedback=true`,
     delete: eid => `${startUrl}game/${eid}?hard=true`,
-    tape: reqProps => `${startUrl}game/all/museum/${reqProps.museumId}`,
+    tape: reqProps =>
+      `${startUrl}game/all/museum/${reqProps.museumId}?feedback=true`,
   },
   auth: {
     access_token_url: `${startUrl}token/get?expansion=true`,

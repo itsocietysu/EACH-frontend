@@ -166,6 +166,7 @@
     "react-redux": "5.0.7",
     "react-router-dom": "4.3.1",
     "react-router-redux": "5.0.0-alpha.9",
+    "react-star-ratings": "2.3.0",
     "react-image-crop": "^4.0.3",
     "reactjs-popup": "1.1.1",
     "redux": "4.0.0",

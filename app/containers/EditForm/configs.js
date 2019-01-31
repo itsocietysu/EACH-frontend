@@ -295,21 +295,25 @@ export const configs = {
   free_question,
 };
 
+export const OPTION_UPDATE = 'update';
+export const OPTION_DELETE = 'delete';
+export const OPTION_VIEW_COMMENTS = 'view_comments';
+
 export const listConfigs = {
   museum: {
-    isUpdate: true,
+    options: [OPTION_UPDATE, OPTION_DELETE],
     addModal: true,
   },
   feed: {
-    isUpdate: true,
+    options: [OPTION_UPDATE, OPTION_DELETE],
     addModal: true,
   },
   location: {
-    isUpdate: false,
+    options: [OPTION_DELETE],
     addModal: false,
   },
   quest: {
-    isUpdate: true,
+    options: [OPTION_UPDATE, OPTION_VIEW_COMMENTS, OPTION_DELETE],
     addModal: true,
   },
 };

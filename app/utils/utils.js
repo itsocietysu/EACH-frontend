@@ -136,6 +136,7 @@ const getProps = {
   scenario: s => `${s.scenario[0] ? s.scenario[0].eid : 0}`,
   rating: r => r.rating ? r.rating : 0,
   comment: c => c.comment ? c.comment : [],
+  active: a => a.active ? (a.active.toLowerCase() === 'true') : false,
 };
 
 export function getItemFromResp(item, fields, propFields) {

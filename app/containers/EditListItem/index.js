@@ -123,6 +123,29 @@ const LocationItem = ({ item }) => (
 
 LocationItem.propTypes = { item: PropTypes.object };
 
+const Active = ({ active }) => (
+  <div style={{ display: 'flex' }}>
+    <div
+      style={{
+        borderRadius: 20,
+        backgroundColor: `${active ? 'green' : 'red'}`,
+        width: 10,
+        height: 10,
+        margin: 'auto 10px',
+      }}
+    />
+    <P>
+      {active ? (
+        <FormattedMessage {...messages.active} />
+      ) : (
+        <FormattedMessage {...messages.nonactive} />
+      )}
+    </P>
+  </div>
+);
+
+Active.propTypes = { active: PropTypes.bool };
+
 const QuestItem = ({ item, locale }) => (
   <div>
     <Link
@@ -141,6 +164,7 @@ const QuestItem = ({ item, locale }) => (
             starSpacing="0.2vw"
             starRatedColor={colors.base}
           />
+          <Active active={item.active} />
         </DivSep>
       </div>
     </Link>

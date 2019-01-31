@@ -34,6 +34,7 @@ import {
   emptyFunc,
   emptyMessage,
 } from './config-form';
+import LabelCheckbox from '../../components/LabelCheckbox';
 
 const ImageCropStyle = {
   maxWidth: '256px',
@@ -134,6 +135,7 @@ class Form extends React.Component {
     this._onSubmit = this._onSubmit.bind(this);
     this._onClose = this._onClose.bind(this);
     this._getImageField = this._getImageField.bind(this);
+    this._getCheckboxField = this._getCheckboxField.bind(this);
     this._getNumberField = this._getNumberField.bind(this);
     this._getReqSelectField = this._getReqSelectField.bind(this);
     this._getTagSelectField = this._getTagSelectField.bind(this);
@@ -337,6 +339,24 @@ class Form extends React.Component {
     return numbers;
   }
 
+  _getCheckboxField(data, keys, name, description) {
+    const checkboxes = [];
+    if (keys.includes('checkboxes')) {
+      description.checkboxes.forEach(check => {
+        checkboxes.push(
+          <LabelCheckbox
+            key={`${check.field}-${name}`}
+            id={`${check.field}-${name}`}
+            checked={data[check.field]}
+            change={evt => this._onChangeField(evt.target.checked, check.field)}
+            message={messages[check.field]}
+          />,
+        );
+      });
+    }
+    return checkboxes;
+  }
+
   _getReqSelectField(data, keys, name, description) {
     const selects = [];
     if (keys.includes('req_selects')) {
@@ -465,6 +485,7 @@ class Form extends React.Component {
   _getFields(data, keys, name, description, isPlaceholder) {
     const getters = [
       this._getImageField,
+      this._getCheckboxField,
       this._getNumberField,
       this._getReqSelectField,
       this._getTagSelectField,

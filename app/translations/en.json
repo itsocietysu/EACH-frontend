@@ -57,6 +57,7 @@
   "each.containers.EditForm.name": "Name",
   "each.containers.EditForm.descRU": "Description ru",
   "each.containers.EditForm.descEN": "Description en",
+  "each.containers.EditForm.active": "Active",
   "each.containers.EditForm.location": "Locations",
   "each.containers.EditForm.choices": "Choices",
   "each.containers.EditForm.correct": "Correct",
@@ -81,6 +82,8 @@
   "each.containers.EditListItem.edit": "Edit",
   "each.containers.EditListItem.delete": "Delete",
   "each.containers.EditListItem.view_comments": "View comments",
+  "each.containers.EditListItem.active": "Active",
+  "each.containers.EditListItem.nonactive": "Nonactive",
   "each.containers.EditListItem.deleteFeed":
     "Are you sure that you want to delete this news?",
   "each.containers.EditListItem.deleteMuseum":

@@ -57,6 +57,7 @@
   "each.containers.EditForm.name": "Название",
   "each.containers.EditForm.descRU": "Описание рус",
   "each.containers.EditForm.descEN": "Описание анг",
+  "each.containers.EditForm.active": "Активен",
   "each.containers.EditForm.location": "Локации",
   "each.containers.EditForm.choices": "Варианты",
   "each.containers.EditForm.correct": "Правильный",
@@ -81,6 +82,8 @@
   "each.containers.EditListItem.edit": "Изменить",
   "each.containers.EditListItem.delete": "Удалить",
   "each.containers.EditListItem.view_comments": "Посмотреть комментарии",
+  "each.containers.EditListItem.active": "Активен",
+  "each.containers.EditListItem.nonactive": "Не активен",
   "each.containers.EditListItem.deleteFeed":
     "Вы уверены, что хотите удалить эту новость?",
   "each.containers.EditListItem.deleteMuseum":

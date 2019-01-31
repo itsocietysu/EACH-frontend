@@ -74,6 +74,10 @@ export default defineMessages({
       },
     },
   },
+  active: {
+    id: 'each.containers.EditForm.active',
+    defaultMessage: 'Active',
+  },
   location: {
     id: 'each.containers.EditForm.location',
     defaultMessage: 'Location',

@@ -281,6 +281,7 @@ export const configs = {
     description: {
       locales: [getText('name', '256', '2'), getText('desc', '4000', '3')],
       images: [image],
+      checkboxes: [{ field: 'active' }],
     },
     empty: {
       eid: '0',

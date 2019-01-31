@@ -33,10 +33,10 @@ export const getValues = {
     addProps: [],
   },
   quest: {
-    fields: ['name', 'desc'],
-    noLocales: [],
+    fields: ['name', 'desc', 'active'],
+    noLocales: ['active'],
     locales: ['name', 'desc'],
-    getProps: ['image', 'scenario', 'rating', 'comment'],
+    getProps: ['image', 'scenario', 'rating', 'comment', 'active'],
     updProps: ['image'],
     addProps: ['image', 'game'],
   },

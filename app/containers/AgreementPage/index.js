@@ -40,8 +40,10 @@ export class AgreementPage extends React.Component {
     const dataListProps = {
       loading,
       error,
-      data: data ? [data] : false,
-      component: item => <p style={{ whiteSpace: 'pre-wrap' }}>{item.item}</p>,
+      data,
+      component: item => (
+        <p style={{ whiteSpace: 'pre-wrap' }}>{item.item.text}</p>
+      ),
       scroll: false,
     };
     return (
@@ -65,7 +67,7 @@ export class AgreementPage extends React.Component {
 AgreementPage.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  data: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  data: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   load: PropTypes.func,
 };
 

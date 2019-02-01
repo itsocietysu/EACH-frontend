@@ -25,7 +25,7 @@ export function loadData() {
 /**
  * Dispatched when data is loaded by the request saga
  *
- * @param  {string} data The current agreement
+ * @param  {array} data The current agreement
  *
  * @return {object} An action object with a type of LOAD_DATA_SUCCESS passing the data
  */

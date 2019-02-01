@@ -137,7 +137,7 @@ export function loadData(page) {
 /**
  * Dispatched when data is loaded by the request saga
  *
- * @param  {array} data The current locations
+ * @param  {array} data The current items
  *
  * @param  {number} count The count of all items
  *

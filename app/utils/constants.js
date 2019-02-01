@@ -13,6 +13,7 @@ export const MUSEUM_CFG = 'museum';
 export const FEED_CFG = 'feed';
 export const LOCATION_CFG = 'location';
 export const QUEST_CFG = 'quest';
+export const AGREEMENT_CFG = 'agreement';
 
 const startUrl = 'http://each.itsociety.su:4201/each/';
 
@@ -60,5 +61,9 @@ export const urls = {
   scenario: {
     get: eid => `${startUrl}scenario/${eid}`,
     update: `${startUrl}scenario`,
+  },
+  agreement: {
+    get: `${startUrl}agreement/get`,
+    update: `${startUrl}agreement/update`,
   },
 };

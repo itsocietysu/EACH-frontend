@@ -290,6 +290,18 @@ export const configs = {
       desc: { RU: '', EN: '' },
     },
   },
+  agreement: {
+    name: 'agreement',
+    type: 'form',
+    flexDirection: 'column',
+    isPlaceholder: false,
+    description: {
+      files: [{ field: 'user_agreement', accept: 'text/plain' }],
+    },
+    empty: {
+      user_agreement: null,
+    },
+  },
   text_question,
   location_question,
   ar_paint_question,

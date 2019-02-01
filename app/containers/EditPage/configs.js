@@ -5,6 +5,7 @@ export const settings = {
   feed: configs.feed.description,
   location: configs.location.description,
   quest: configs.quest.description,
+  agreement: configs.agreement.description,
 };
 
 export const getValues = {

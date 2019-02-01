@@ -21,6 +21,7 @@ import H1 from '../../components/H1';
 import { withAuthAdmin } from '../../utils/auth';
 
 import { colors } from '../../utils/constants';
+import AgreementEditForm from '../AgreementEditForm';
 
 export class EditContentPage extends React.Component {
   render() {
@@ -48,6 +49,7 @@ export class EditContentPage extends React.Component {
         <H1>
           <FormattedMessage {...messages.header} />
         </H1>
+        <AgreementEditForm />
         <nav style={{ margin: '.67em 0' }}>
           <Ul flexDirection="row">{Content}</Ul>
         </nav>

@@ -17,6 +17,7 @@ export const translateToForm = {
   feed: item => ({ feed: item }),
   location: item => ({ location: item }),
   quest: item => ({ quest: item }),
+  agreement: item => ({ agreement: item }),
   bonus: item => {
     const res = { bonus: { select: item.type } };
     switch (item.type) {
@@ -114,6 +115,7 @@ export const translateFromForm = {
   feed: item => item.feed,
   location: item => item.location,
   quest: item => item.quest,
+  agreement: item => item.agreement,
   bonus: item => {
     const res = { type: item.bonus.select, desc: {} };
     switch (item.bonus.select) {

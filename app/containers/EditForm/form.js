@@ -93,7 +93,7 @@ function _isEmptyTagSelectField(data, description, keys) {
 function _isEmptyForm(data, description) {
   const empty = [];
   const keys = Object.keys(description);
-  const simple = ['texts', 'numbers', 'images'];
+  const simple = ['texts', 'numbers', 'images', 'files'];
   const length = ['req_selects', 'tags'];
   empty.push(_isEmptyLocaleField(data, description, keys));
   simple.forEach(name =>
@@ -128,6 +128,7 @@ class Form extends React.Component {
     this._onChangeData = this._onChangeData.bind(this);
     this._onChangeField = this._onChangeField.bind(this);
     this._onChangeTextLocale = this._onChangeTextLocale.bind(this);
+    this._onChangeImageFile = this._onChangeImageFile.bind(this);
     this._onChangeFile = this._onChangeFile.bind(this);
     this._onChangeCrop = this._onChangeCrop.bind(this);
     this._onChangeNumber = this._onChangeNumber.bind(this);
@@ -135,6 +136,7 @@ class Form extends React.Component {
     this._onSubmit = this._onSubmit.bind(this);
     this._onClose = this._onClose.bind(this);
     this._getImageField = this._getImageField.bind(this);
+    this._getFileField = this._getFileField.bind(this);
     this._getCheckboxField = this._getCheckboxField.bind(this);
     this._getNumberField = this._getNumberField.bind(this);
     this._getReqSelectField = this._getReqSelectField.bind(this);
@@ -189,7 +191,7 @@ class Form extends React.Component {
     this.setState(this.state);
   }
 
-  _onChangeFile(evt, field, ratio) {
+  _onChangeImageFile(evt, field, ratio) {
     if (evt.target.files[0])
       File2Base64(evt.target.files[0], res => {
         bigImage(
@@ -241,6 +243,10 @@ class Form extends React.Component {
     }
   }
 
+  _onChangeFile(evt, field) {
+    if (evt.target.files[0]) this._onChangeField(evt.target.files[0], field);
+  }
+
   _onChangeOpenMsg(message, cancel, onSubmit, onClose) {
     onChangeOpenMessage(message, cancel, onSubmit, onClose, this);
   }
@@ -255,6 +261,10 @@ class Form extends React.Component {
     if (keys.includes('images'))
       description.images.forEach(image => {
         dataToPost[name][image.field] = crops[image.field];
+      });
+    if (keys.includes('files'))
+      description.files.forEach(file => {
+        dataToPost[name][file.field] = formData[file.field];
       });
     if (_isEmptyForm(dataToPost[name], description)) {
       onEmptyForm(this);
@@ -455,7 +465,7 @@ class Form extends React.Component {
               <LabelFile
                 id={`file-${image.field}-${name}`}
                 change={evt =>
-                  this._onChangeFile(evt, image.field, image.ratio)
+                  this._onChangeImageFile(evt, image.field, image.ratio)
                 }
                 accept="image/*"
               />
@@ -482,11 +492,34 @@ class Form extends React.Component {
     return images;
   }
 
+  _getFileField(data, keys, name, description) {
+    const files = [];
+    if (keys.includes('files')) {
+      description.files.forEach(file => {
+        files.push(
+          <div key={`${file.field}-${name}`} style={fontStyle}>
+            <FormattedMessage {...messages[file.field]} />
+            {data[file.field] && <p>{data[file.field].name}</p>}
+            <div style={{ marginBottom: '0.5em' }}>
+              <LabelFile
+                id={`file-${file.field}-${name}`}
+                change={evt => this._onChangeFile(evt, file.field)}
+                accept={file.accept}
+              />
+            </div>
+          </div>,
+        );
+      });
+    }
+    return files;
+  }
+
   _getFields(data, keys, name, description, isPlaceholder) {
     const getters = [
       this._getImageField,
       this._getCheckboxField,
       this._getNumberField,
+      this._getFileField,
       this._getReqSelectField,
       this._getTagSelectField,
       this._getTagField,

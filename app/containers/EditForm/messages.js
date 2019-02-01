@@ -78,6 +78,10 @@ export default defineMessages({
     id: 'each.containers.EditForm.active',
     defaultMessage: 'Active',
   },
+  user_agreement: {
+    id: 'each.containers.EditForm.user_agreement',
+    defaultMessage: 'User agreement',
+  },
   location: {
     id: 'each.containers.EditForm.location',
     defaultMessage: 'Location',

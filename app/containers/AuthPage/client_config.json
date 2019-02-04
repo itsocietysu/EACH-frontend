@@ -4,7 +4,7 @@
     "each": {
       "client_id": "Gu2SCEBUwQV3TSlNIu8uMzvKRMYuGP5ePh044jGErO6O9RR0",
       "scopes": ["email"],
-      "authorization_url": "http://each.itsociety.su:5000/oauth2/authorize"
+      "authorization_url": "http://eachdev.itsociety.su:5000/oauth2/authorize"
     },
     "vkontakte": {
       "client_id": "6682398",

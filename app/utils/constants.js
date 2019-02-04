@@ -15,7 +15,7 @@ export const LOCATION_CFG = 'location';
 export const QUEST_CFG = 'quest';
 export const AGREEMENT_CFG = 'agreement';
 
-const startUrl = 'http://each.itsociety.su:4201/each/';
+const startUrl = 'http://eachdev.itsociety.su:4201/each/';
 
 export const urls = {
   museum: {

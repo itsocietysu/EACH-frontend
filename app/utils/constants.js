@@ -1,4 +1,3 @@
-import config from '../containers/AuthPage/client_config.json';
 import { getOAuth, getSession } from '../cookieManager';
 
 export const RESTART_ON_REMOUNT = '@@saga-injector/restart-on-remount';
@@ -15,55 +14,84 @@ export const LOCATION_CFG = 'location';
 export const QUEST_CFG = 'quest';
 export const AGREEMENT_CFG = 'agreement';
 
-const startUrl = 'http://eachdev.itsociety.su:4201/each/';
+const isProd = process.env.NODE_ENV === 'production';
+const backUri = isProd
+  ? 'http://134.0.116.13:4201/each/'
+  : 'http://eachdev.itsociety.su:4201/each/';
+const oauthUri = isProd
+  ? 'http://134.0.116.13:5000/'
+  : 'http://eachdev.itsociety.su:5000/';
+
+const config = {
+  clients_arr: ['each', 'vkontakte', 'google'],
+  clients: {
+    each: {
+      client_id: 'Gu2SCEBUwQV3TSlNIu8uMzvKRMYuGP5ePh044jGErO6O9RR0',
+      scopes: ['email'],
+      authorization_url: `${oauthUri}oauth2/authorize`,
+    },
+    vkontakte: {
+      client_id: '6682398',
+      scopes: ['email', 'offline'],
+      authorization_url: 'https://oauth.vk.com/authorize',
+    },
+    google: {
+      client_id:
+        '190923403189-srp0gleu6imvtph8gcauf03uhb66q65h.apps.googleusercontent.com',
+      scopes: ['email', 'profile'],
+      authorization_url: 'https://accounts.google.com/o/oauth2/auth',
+    },
+  },
+};
 
 export const urls = {
   museum: {
-    add: `${startUrl}add`,
-    update: `${startUrl}update`,
-    delete: eid => `${startUrl}museum/${eid}?hard=true`,
+    add: `${backUri}add`,
+    update: `${backUri}update`,
+    delete: eid => `${backUri}museum/${eid}?hard=true`,
     tape: (reqProps, firstM, lastM) =>
-      `${startUrl}museum/tape?FirstMuseum=${firstM}&LastMuseum=${lastM}`,
-    get_by_id: eid => `${startUrl}museum/${eid}`,
+      `${backUri}museum/tape?FirstMuseum=${firstM}&LastMuseum=${lastM}`,
+    get_by_id: eid => `${backUri}museum/${eid}`,
   },
   feed: {
-    add: `${startUrl}feed`,
-    update: `${startUrl}feed`,
-    delete: eid => `${startUrl}feed/${eid}?hard=true`,
+    add: `${backUri}feed`,
+    update: `${backUri}feed`,
+    delete: eid => `${backUri}feed/${eid}?hard=true`,
     tape: (reqProps, firstF, lastF) =>
-      `${startUrl}feed/tape?FirstFeed=${firstF}&LastFeed=${lastF}`,
-    get_by_id: eid => `${startUrl}feed/${eid}`,
+      `${backUri}feed/tape?FirstFeed=${firstF}&LastFeed=${lastF}`,
+    get_by_id: eid => `${backUri}feed/${eid}`,
   },
   location: {
-    add: `${startUrl}location`,
+    add: `${backUri}location`,
     update: '',
-    delete: eid => `${startUrl}location/${eid}?hard=true`,
+    delete: eid => `${backUri}location/${eid}?hard=true`,
     tape: (reqProps, firstL, lastL) =>
-      `${startUrl}location/tape?FirstLocation=${firstL}&LastLocation=${lastL}`,
-    startswith: value => `${startUrl}location?startswith=${value}`,
+      `${backUri}location/tape?FirstLocation=${firstL}&LastLocation=${lastL}`,
+    startswith: value => `${backUri}location?startswith=${value}`,
   },
   quest: {
-    add: `${startUrl}game`,
-    update: `${startUrl}game?feedback=true`,
-    delete: eid => `${startUrl}game/${eid}?hard=true`,
+    add: `${backUri}game`,
+    update: `${backUri}game?feedback=true`,
+    delete: eid => `${backUri}game/${eid}?hard=true`,
     tape: reqProps =>
-      `${startUrl}game/all/museum/${reqProps.museumId}?feedback=true`,
+      `${backUri}game/all/museum/${reqProps.museumId}?feedback=true`,
   },
   auth: {
-    access_token_url: `${startUrl}token/get?expansion=true`,
+    access_token_url: `${backUri}token/get?expansion=true`,
     token_info_url: expansion =>
-      `${startUrl}token/info?access_token=${getSession()}&type=${
+      `${backUri}token/info?access_token=${getSession()}&type=${
         config.clients_arr[getOAuth()]
       }&expansion=${expansion}`,
-    revoke_token_url: `${startUrl}token/revoke`,
+    revoke_token_url: `${backUri}token/revoke`,
     oauth2RedirectUrl: '/auth',
+    clients: config,
   },
   scenario: {
-    get: eid => `${startUrl}scenario/${eid}`,
-    update: `${startUrl}scenario`,
+    get: eid => `${backUri}scenario/${eid}`,
+    update: `${backUri}scenario`,
   },
   agreement: {
-    get: `${startUrl}agreement/get`,
-    update: `${startUrl}agreement/update`,
+    get: `${backUri}agreement/get`,
+    update: `${backUri}agreement/update`,
   },
 };

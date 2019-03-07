@@ -16,7 +16,7 @@ export const AGREEMENT_CFG = 'agreement';
 
 const isProd = process.env.NODE_ENV === 'production';
 const backUri = isProd
-  ? 'http://134.0.116.13:4201/each/'
+  ? 'http://134.0.116.13:4200/each/'
   : 'http://eachdev.itsociety.su:4201/each/';
 const oauthUri = isProd
   ? 'http://134.0.116.13:5000/'

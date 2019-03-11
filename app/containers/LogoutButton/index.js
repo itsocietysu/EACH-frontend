@@ -22,8 +22,9 @@ import {
 import Button from './Button';
 import { userDataGot } from '../../containers/App/actions';
 import requestAuth from '../../utils/requestAuth';
-import config from '../AuthPage/client_config.json';
 import { urls } from '../../utils/constants';
+
+const config = urls.auth.clients;
 
 export function Logout() {
   setLogined(false);

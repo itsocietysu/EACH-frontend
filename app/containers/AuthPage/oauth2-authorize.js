@@ -3,8 +3,9 @@ import request from '../../utils/request';
 import { setLogined, setOAuth, setSession, setUser } from '../../cookieManager';
 import { appEnum } from '../AuthList/configs';
 import { parseQueryString } from '../../utils/utils';
-import config from './client_config.json';
 import { urls } from '../../utils/constants';
+
+const config = urls.auth.clients;
 
 const btoa = str => {
   let buffer;

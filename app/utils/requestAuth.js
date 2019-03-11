@@ -1,6 +1,9 @@
 import request from './request';
 import { getSession, getOAuth } from '../cookieManager';
-import clients from '../containers/AuthPage/client_config.json';
+
+import { urls } from '../utils/constants';
+
+const { clients } = urls.auth;
 
 /**
  * Requests a URL, returning a promise

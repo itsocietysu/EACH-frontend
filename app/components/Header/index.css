@@ -1,0 +1,27 @@
+.navBar {
+  overflow: hidden;
+  text-align: left;
+  border-bottom: 2px solid black;
+  padding-bottom: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.navBar .divNavBar {
+  float: left;
+}
+
+.navBar div H1 {
+  margin: 0 0.2em;
+}
+
+.toggle {
+  text-align: right;
+}
+
+@media screen and (max-width: 530px) {
+  .navBar .divNavBar img {
+    width: calc(10.362vw - 0.5186px);
+    height: calc(9.143vw - 0.4579px);
+    padding-right: calc(1.524vw - 0.0772px);
+  }
+}

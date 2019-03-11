@@ -1,0 +1,59 @@
+.login-container {
+  position: relative;
+  overflow: hidden;
+  margin: 2px;
+  cursor: pointer;
+  float: right;
+  display: flex;
+  flex-direction: row;
+  width: 17em;
+  height: 3.4em;
+}
+
+.login-overlay {
+  position: absolute;
+  right: 0;
+  width: 5em;
+  text-align: center;
+  overflow: hidden;
+  height: 100%;
+  transition: .5s ease;
+  display: flex;
+  flex-direction: row;
+}
+
+.login-overlay .login-icons {
+  position: relative;
+  right: 0;
+  margin: auto;
+}
+
+.login-overlay .login-icons img {
+  width: 2.5em;
+  height: 2.5em;
+  cursor: pointer;
+}
+
+.login-overlay .login-icons button {
+  outline: none;
+}
+
+.login-container:hover .login-overlay {
+  width: 100%;
+}
+
+@media screen and (max-width: 530px) {
+  .login-container {
+    height: calc(10.362vw - 0.5186px);
+    width: calc(51.8095vw - 2.59035px);
+  }
+
+  .login-overlay .login-icons img {
+    width: calc(7.619vw - 0.3807px);
+    height: calc(7.619vw - 0.3807px);
+  }
+
+  .login-overlay {
+    width: calc(15.238vw - 0.7614px);
+  }
+}

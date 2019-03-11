@@ -9,7 +9,15 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 
 const ToggleOption = ({ value, message, intl }) => (
-  <option value={value}>{message ? intl.formatMessage(message) : value}</option>
+  <option
+    value={value}
+    style={{
+      color: '#000',
+      fontFamily: "'Book Antiqua', Palatino, 'Palatino Linotype', serif",
+    }}
+  >
+    {message ? intl.formatMessage(message) : value}
+  </option>
 );
 
 ToggleOption.propTypes = {

@@ -8,7 +8,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="icon" href="/favicon.ico" />
-    <title>Each</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <title>MUSEEACH</title>
+
+    <script>
+      (function(){
+        let isTouch = false; //var to indicate current input type (is touch versus no touch)
+        let isTouchTimer;
+        let curRootClass = ''; //var indicating current document root class ("can-touch" or "")
+
+        function addTouchClass(e){
+          clearTimeout(isTouchTimer);
+          isTouch = true;
+          if (curRootClass !== 'can-touch'){ //add "can-touch' class if it's not already present
+            curRootClass = 'can-touch';
+            document.documentElement.classList.add(curRootClass)
+          }
+          isTouchTimer = setTimeout(function(){isTouch = false}, 500) //maintain "isTouch" state for 500ms so removeTouchClass doesn't get fired immediately following a touch event
+        }
+
+        function removeTouchClass(e){
+          if (!isTouch && curRootClass === 'can-touch'){ //remove 'can-touch' class if not triggered by a touch event and class is present
+            isTouch = false;
+            curRootClass = '';
+            document.documentElement.classList.remove('can-touch')
+          }
+        }
+
+        document.addEventListener('touchstart', addTouchClass, false); //this event only gets called when input type is touch
+        document.addEventListener('mouseover', removeTouchClass, false); //this event gets called when input type is everything from touch to mouse/ trackpad
+      })();
+    </script>
+
+    <style>
+      @font-face {
+        font-family: 'No Continue';
+        font-weight: normal;
+        font-style: normal;
+        src: url("/header.woff2") format('woff2');
+        src: url("/header.woff") format('woff');
+        src: url("/header.ttf")  format('truetype');
+      }
+
+      @font-face {
+        font-family: 'MurraySlab-Bold';
+        font-weight: bold;
+        font-style: normal;
+        src: url("/title.woff2") format('woff2');
+        src: url("/title.woff") format('woff');
+        src: url("/title.ttf")  format('truetype');
+      }
+
+      @font-face {
+        font-family: 'MurraySlab';
+        font-weight: normal;
+        font-style: normal;
+        src: url("/text.woff2") format('woff2');
+        src: url("/text.woff") format('woff');
+        src: url("/text.ttf")  format('truetype');
+      }
+    </style>
+
   </head>
   <body>
     <!-- Display a message if JS has been disabled on the browser. -->
@@ -16,8 +76,6 @@
 
     <!-- The app hooks into this div -->
     <div id="app"></div>
-    <!-- Open Sans Font -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
     <!-- A lot of magic happens in this file. HtmlWebpackPlugin automatically includes all assets (e.g. bundle.js, main.css) with the correct HTML tags, which is why they are missing in this HTML file. Don't add any assets here! (Check out the webpack config files in internals/webpack for details) -->
   </body>
 </html>

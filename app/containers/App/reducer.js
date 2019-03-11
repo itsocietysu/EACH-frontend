@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /*
  * AppReducer
  *
@@ -12,32 +13,35 @@
 
 import { fromJS } from 'immutable';
 
-import { CHECK_LOGIN_SUCCESS, CHECK_LOGIN, CHECK_LOGIN_ERROR } from './constants';
+import {
+  GET_USER_DATA_SUCCESS,
+  NEW_ERROR,
+  CLEAR_ERROR,
+} from './constants';
 
 // The initial state of the App
-const initialState = fromJS({
+export const initialState = fromJS({
+  userData: {
+    name: '',
+    access_type: 'user',
+    run: {
+      bonus: 0,
+    },
+  },
   loading: false,
-  error: false,
-  currentUser: false,
-  correctLogin: false,
+  errors: [],
 });
 
 function appReducer(state = initialState, action) {
   switch (action.type) {
-    case CHECK_LOGIN:
+    case CLEAR_ERROR:
+      return state.set('errors', fromJS([]));
+    case GET_USER_DATA_SUCCESS:
       return state
-        .set('loading', true)
-        .set('error', false)
-        .set('correctLogin', false)
-    case CHECK_LOGIN_SUCCESS:
-      return state
-        .set('correctLogin', true)
-        .set('loading', false)
-        .set('currentUser', action.username);
-    case CHECK_LOGIN_ERROR:
-      return state
-        .set('error', action.error)
+        .set('userData', action.data)
         .set('loading', false);
+    case NEW_ERROR:
+      return state.set('errors', state.get('errors').concat(action.error));
     default:
       return state;
   }

@@ -1,0 +1,96 @@
+.flex {
+  display: flex;
+  flex-direction: row;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin: 2px;
+  cursor: pointer;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: white;
+  width: 100%;
+  text-align: center;
+  overflow: hidden;
+  height: 10em;
+  transition: .5s ease;
+}
+
+.overlay .desc {
+  position: absolute;
+  top: 10em;
+}
+
+.overlay H3 {
+  width: 100%;
+  text-align: center;
+  transition: .5s ease;
+  font-family: 'Book Antiqua', Palatino, 'Palatino Linotype', serif;
+}
+
+.overlay div {
+  position: absolute;
+  bottom: -100%;
+  right: 0;
+  width: 100%;
+  text-align: center;
+  transition: .5s ease;
+  cursor: pointer;
+}
+
+.container:hover .overlay {
+  height: 100%;
+}
+
+html.can-touch .container:hover .overlay div {
+  bottom: 0;
+}
+
+@media screen and (max-width: 800px) {
+  .overlay {
+    height: calc(20vw);
+  }
+
+  .overlay .desc {
+    top: calc(20vw);
+  }
+
+  .overlay H3 {
+    font-size: calc(2.6vw - 2.08px);
+  }
+
+  .overlay H2 {
+    font-size: calc(3.3vw - 2.4px);
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .flex {
+    flex-direction: column;
+  }
+
+  .overlay {
+    height: calc(8.889vw + 39.1104px);
+  }
+
+  .overlay .desc {
+    top: 6em;
+  }
+
+  .overlay H3 {
+    font-size: calc(1.6vw + 4.32px);
+  }
+
+  .overlay H2 {
+    font-size: calc(2.089vw + 5.3504px);
+  }
+}

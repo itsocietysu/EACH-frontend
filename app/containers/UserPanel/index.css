@@ -1,0 +1,41 @@
+.user-panel {
+  float: right;
+  display: flex;
+  flex-direction: row;
+}
+
+.user-panel .user-points {
+  text-align: right;
+}
+
+.user-button {
+  width: 48px;
+  padding: 0;
+}
+
+.user-button i {
+  margin: auto;
+}
+
+.options-link-list {
+  width: 46px;
+}
+
+@media screen and (max-width: 530px) {
+  .options-link-list {
+    width: calc(9.238vw - 2.9614px);
+  }
+
+  .user-button {
+    width: calc(9.143vw - 0.4579px);
+    border-radius: calc(2.857vw - 5.1421px);;
+  }
+
+  .fa-3x {
+    font-size: calc(9.143vw - 0.4579px);
+  }
+
+  .fa-2x {
+    font-size: calc(6.095vw - 0.3035px);
+  }
+}

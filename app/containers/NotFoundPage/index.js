@@ -6,11 +6,14 @@
 
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { compose } from 'redux';
 
-import H1 from 'components/H1';
+import H1 from '../../components/H1';
 import messages from './messages';
 
-export default function NotFound() {
+import { withRequest } from '../../utils/auth';
+
+export function NotFound() {
   return (
     <article>
       <H1>
@@ -19,3 +22,5 @@ export default function NotFound() {
     </article>
   );
 }
+
+export default compose(withRequest)(NotFound);

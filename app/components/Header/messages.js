@@ -1,7 +1,7 @@
 /*
- * HomePage Messages
+ * Header Messages
  *
- * This contains all the text for the HomePage component.
+ * This contains all the text for the Header component.
  */
 import { defineMessages } from 'react-intl';
 
@@ -14,8 +14,8 @@ export default defineMessages({
     id: 'each.components.Header.features',
     defaultMessage: 'Features',
   },
-  login: {
-    id: 'each.components.Header.login',
-    defaultMessage: 'Login',
+  back: {
+    id: 'each.components.Header.back',
+    defaultMessage: 'Go back',
   },
 });

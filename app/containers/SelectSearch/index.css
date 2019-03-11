@@ -1,0 +1,31 @@
+.rc-select {
+  width: 423px;
+  max-width: 50em;
+}
+@media screen and (max-width: 420px) {
+  .rc-select {
+    max-width: 20em;
+  }
+}
+@media screen and (max-width: 340px) {
+  .rc-select {
+    max-width: 15em;
+  }
+}
+.rc-select-disabled {
+  cursor: default;
+}
+.rc-select-dropdown {
+  z-index: 9999;
+}
+.rc-select-focused .rc-select-selection {
+  border-color: #87a8e6;
+  box-shadow: 0 0 2px rgba(91, 123, 187, 0.8);
+}
+.rc-select-enabled .rc-select-selection:hover {
+  border-color: #87a8e6;
+  box-shadow: 0 0 2px rgba(91, 123, 187, 0.8);
+}
+.rc-select-enabled .rc-select-selection:active {
+  border-color: #87a8e6;
+}

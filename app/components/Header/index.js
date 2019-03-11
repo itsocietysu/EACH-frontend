@@ -1,39 +1,50 @@
+/* eslint-disable react/prefer-stateless-function,react/prop-types */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { withRouter } from 'react-router-dom';
 
-import A from './A';
 import Img from './Img';
-import NavBar from './NavBar';
 import HeaderLink from './HeaderLink';
 import messages from './messages';
-import Logo from './logo.png'
-import LocaleToggle from 'containers/LocaleToggle';
+import LocaleToggle from '../../containers/LocaleToggle';
+import UserButton from '../../components/UserButton';
+import H1 from '../../components/H1';
+import Button from '../../containers/UserPanel/Button';
+import './index.css';
 
-/* eslint-disable react/prefer-stateless-function */
 class Header extends React.Component {
   render() {
     return (
       <div>
-        <section style={{textAlign: 'right'}}>
+        <section className="toggle">
           <LocaleToggle />
         </section>
-        <A>
-          <Img src={Logo} alt="EACH - Logo" />
-        </A>
-        <NavBar>
-          <HeaderLink to="/">
-            <FormattedMessage {...messages.home} />
-          </HeaderLink>
-          <HeaderLink to="/features">
-            <FormattedMessage {...messages.features} />
-          </HeaderLink>
-          <HeaderLink to="/login">
-            <FormattedMessage {...messages.login} />
-          </HeaderLink>
-        </NavBar>
+        <div className="navBar">
+          <div className="divNavBar">
+            <HeaderLink to="/">
+              <Img src="/logo.svg" alt="MUSEEACH - Logo" />
+              <H1>МУЗЕИЧ</H1>
+            </HeaderLink>
+            {this.props.back && (
+              <Button
+                borderRadius="4px"
+                borderWidth="2px"
+                onClick={this.props.history.goBack}
+              >
+                <FormattedMessage {...messages.back} />
+              </Button>
+            )}
+          </div>
+          <UserButton />
+        </div>
       </div>
     );
   }
 }
 
-export default Header;
+Header.propTypes = {
+  back: PropTypes.bool,
+};
+
+export default withRouter(Header);

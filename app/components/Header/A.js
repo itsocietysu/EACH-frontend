@@ -1,7 +1,9 @@
-import NormalA from 'components/A';
+import NormalA from '../../components/A';
 
 const A = NormalA.extend`
-  padding: 2em 0;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
 `;
 
 export default A;

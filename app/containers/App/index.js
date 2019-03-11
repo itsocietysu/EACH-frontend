@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types,react/no-array-index-key */
 /**
  *
  * App
@@ -11,13 +12,8 @@ import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import { Switch, Route } from 'react-router-dom';
 
-import HomePage from 'containers/HomePage/Loadable';
-import FeaturePage from 'containers/FeaturePage/Loadable';
-import LoginPage from 'containers/LoginPage/Loadable';
-import RegistrationPage from 'containers/RegistrationPage/Loadable';
-import NotFoundPage from 'containers/NotFoundPage/Loadable';
-import Header from 'components/Header';
-import Footer from 'components/Footer';
+import routes from '../../utils/routeConfig';
+import CookieBanner from '../CookieBanner';
 
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
@@ -31,22 +27,23 @@ const AppWrapper = styled.div`
 
 export default function App() {
   return (
-    <AppWrapper>
-      <Helmet
-        titleTemplate="%s - EACH"
-        defaultTitle="EACH"
-      >
-        <meta name="description" content="A EACH application" />
-      </Helmet>
-      <Header />
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route path="/features" component={FeaturePage} />
-        <Route path="/login" component={LoginPage} />
-        <Route path="/registration" component={RegistrationPage} />
-        <Route path="" component={NotFoundPage} />
-      </Switch>
-      <Footer />
-    </AppWrapper>
+    <div>
+      <CookieBanner />
+      <AppWrapper>
+        <Helmet titleTemplate="%s - EACH" defaultTitle="EACH">
+          <meta name="description" content="An EACH application" />
+        </Helmet>
+        <Switch>
+          {routes.map((route, i) => (
+            <Route
+              key={i}
+              path={route.path}
+              exact={route.exact}
+              component={route.component}
+            />
+          ))}
+        </Switch>
+      </AppWrapper>
+    </div>
   );
 }

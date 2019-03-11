@@ -6,11 +6,7 @@
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
-  licenseMessage: {
-    id: 'each.components.Footer.license.message',
-    defaultMessage: 'This project is licensed under the ...',
-  },
-  authorMessage: {
+  author: {
     id: 'each.components.Footer.author.message',
     defaultMessage: 'Made by {author}.',
   },

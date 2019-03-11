@@ -1,0 +1,113 @@
+.wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: justify;
+}
+
+.divSep {
+  margin-right: 15px;
+  width: 30%;
+  overflow: auto;
+  float: left;
+  margin-left: 0;
+}
+
+.wrapper H2 {
+  margin-top: 0;
+  font-size: 32px;
+}
+
+.wrapper H3 {
+  margin-top: 0.5em;
+  font-size: 25px;
+}
+
+@media screen and (max-width: 800px) {
+  .divSep {
+    margin-right: 10px;
+  }
+
+  .wrapper H2 {
+    font-size: calc(5.625vw - 13px);
+  }
+
+  .wrapper H3 {
+    font-size: calc(5.625vw - 20px);
+  }
+
+  .wrapper P {
+    font-size: small;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .divSep {
+    margin-right: 6px;
+  }
+
+  .wrapper H2 {
+    font-size: calc(3.125vw + 3px);
+  }
+
+  .wrapper H3 {
+    font-size: calc(3.125vw);
+  }
+
+  .wrapper P {
+    font-size: small;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .divSep {
+    margin-right: 5px;
+  }
+
+  .wrapper H2 {
+    font-size: calc(2.5vw + 6px);
+  }
+
+  .wrapper H3 {
+    font-size: calc(2.5vw + 3px);
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .divSep {
+    margin-right: 5px;
+    width: 50%;
+  }
+
+  .wrapper H2 {
+    font-size: 16px;
+  }
+
+  .wrapper H3 {
+    display: none;
+  }
+
+  .wrapper P {
+    font-size: x-small;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .divSep {
+    margin-right: 5px;
+    width: 100%;
+  }
+
+  .wrapper H2 {
+    font-size: 16px;
+  }
+
+  .wrapper H3 {
+    display: none;
+  }
+
+  .wrapper P {
+    font-size: x-small;
+  }
+}

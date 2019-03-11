@@ -1,6 +1,6 @@
 {
   "name": "each",
-  "version": "3.6.0",
+  "version": "0.0.1",
   "repository": {
     "type": "git",
     "url": "git://github.com/itsocietysu/EACH-frontend.git"
@@ -19,10 +19,12 @@
     "preinstall": "npm run npmcheckversion",
     "postinstall": "npm run build:dll",
     "prebuild": "npm run build:clean",
-    "build": "cross-env NODE_ENV=production webpack --config internals/webpack/webpack.prod.babel.js --color -p --progress --hide-modules --display-optimization-bailout",
+    "build": "webpack --config internals/webpack/webpack.prod.babel.js --color -p --progress --hide-modules --display-optimization-bailout",
+    "build:prod": "cross-env NODE_ENV=production npm run build",
+    "build:dev": "cross-env NODE_ENV=development npm run build",
     "build:clean": "rimraf ./build",
     "build:dll": "node ./internals/scripts/dependencies.js",
-    "start": "cross-env NODE_ENV=development node server",
+    "start:dev": "cross-env NODE_ENV=development node server",
     "start:tunnel": "cross-env NODE_ENV=development ENABLE_TUNNEL=true node server",
     "start:production": "npm run test && npm run build && npm run start:prod",
     "start:prod": "cross-env NODE_ENV=production node server",
@@ -139,7 +141,8 @@
     "testRegex": "tests/.*\\.test\\.js$",
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
-    ]
+    ],
+    "testURL": "http://localhost"
   },
   "dependencies": {
     "babel-polyfill": "6.26.0",
@@ -147,7 +150,6 @@
     "compression": "1.7.2",
     "cross-env": "5.2.0",
     "express": "4.16.3",
-    "fontfaceobserver": "2.0.13",
     "history": "4.7.2",
     "hoist-non-react-statics": "2.5.5",
     "immutable": "3.8.2",
@@ -158,6 +160,7 @@
     "minimist": "1.2.0",
     "prop-types": "15.6.1",
     "react": "16.4.1",
+    "react-contextmenu": "2.9.4",
     "react-dom": "16.4.1",
     "react-helmet": "5.2.0",
     "react-intl": "2.4.0",
@@ -165,12 +168,17 @@
     "react-redux": "5.0.7",
     "react-router-dom": "4.3.1",
     "react-router-redux": "5.0.0-alpha.9",
+    "react-star-ratings": "2.3.0",
+    "react-image-crop": "^4.0.3",
+    "reactjs-popup": "1.1.1",
     "redux": "4.0.0",
     "redux-immutable": "4.0.0",
     "redux-saga": "0.16.0",
     "reselect": "3.0.1",
+    "rc-select": "8.4.0",
     "sanitize.css": "4.1.0",
     "styled-components": "3.3.2",
+    "universal-cookie": "2.2.0",
     "warning": "4.0.1",
     "whatwg-fetch": "2.0.4"
   },
@@ -223,6 +231,7 @@
     "node-plop": "0.15.0",
     "null-loader": "0.1.1",
     "offline-plugin": "5.0.5",
+    "pipeline-builder": "0.3.10-dev.298",
     "plop": "2.0.0",
     "pre-commit": "1.2.2",
     "prettier": "1.13.5",
